@@ -5,7 +5,7 @@ Last Updated: 2026-08-28
 ## Current Version
 **v0.2.5.2 – Client Image Compression for Vercel**
 
-Status：**v0.2.5.2 穩定化修正完成；等待人工驗收**
+Status：**v0.2.5.2 identity false-uncertain 修正完成；本機 QA 通過，等待 Vercel Preview 自動驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -550,6 +550,22 @@ v0.2.5.2 穩定化修正（2026-08-28）：
 - production localhost `/identify`：HTTP 200 ✅
 - production Catalog-only Detail：HTTP 200、Profile Builder href = 0、準備中 notice 顯示 ✅
 
+Machine Identity false-uncertain 修正（2026-08-28）：
+- identity title comparison 將開頭的 `L`、`スマスロ`、`パチスロ` 視為機種類型前綴差異；不修改 Catalog JSON
+- deterministic recovery 僅在高信心正式 title、移除前綴後核心名稱完整相等、Catalog 唯一匹配、版本無衝突時成立
+- `L とある魔術の禁書目録2` 與 `スマスロ とある魔術の禁書目録2` 均唯一匹配 `machine-th4uhu`
+- 圖片未顯示 manufacturer，或抽取結果為「メーカー：不明」，視為缺少證據，不再誤判為 manufacturer 衝突
+- 圖片明確顯示不同 manufacturer 時仍降為 `uncertain`
+- `一方通行`、續作數字、RE:2／RE:3、Roman numeral、V／V-30 與 generic GOD／DREAM／BONUS 的安全規則保持
+- 真實照片 `/Users/juicheliu/Downloads/Slot Companion 2.jpeg` localhost API QA：HTTP 200、`identified`、`matchedCatalogId=machine-th4uhu`、正式名稱 `スマスロ とある魔術の禁書目録2`、manufacturer `藤商事` ✅
+- `/identify` localhost smoke test：HTTP 200 ✅
+- Catalog-only follow-up regression：`/catalog/machine-th4uhu` ✅
+- lint ✅
+- typecheck ✅
+- tests：**151 / 151 passed** ✅
+- production build：Next.js webpack build ✅
+- Vercel Preview：等待本次 `dev` commit 推送後自動驗收
+
 ### v0.2.2.3 – Identity Precision & Debug
 - Phase 1 evidence schema 分離正式 title、franchise / IP、mode / stage 與 manufacturer mark
 - `visibleOfficialTitleCandidates` 包含文字與信心值；高信心正式 title 會啟用程式端 precision gate
@@ -632,9 +648,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 13. AI identified 且已匹配 Catalog、但尚無 Machine Profile 時，Production 只允許使用者確認後前往 Catalog Detail；不得自動跳轉或對 uncertain / unknown 顯示入口
 14. Profile Builder 是 development admin route，production build 會回 404；Production UI 不得輸出該 route 的操作連結
 15. 若未來要提供 Cloud Profile Lab，必須先完成管理者存取與可靠雲端持久儲存，不能沿用 server-side JSON 寫入假裝可用
+16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 
 ## Current Work
-**v0.2.5.2 – Client Image Compression for Vercel（穩定化修正完成；等待人工驗收）**
+**v0.2.5.2 – Client Image Compression for Vercel（identity false-uncertain 修正完成；本機 QA 通過，等待 Vercel Preview 自動驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -656,11 +673,11 @@ Catalog 目前只負責：
 - 攻略文章全文
 
 ## Next Step
-### 等待 v0.2.5.2 穩定化修正人工驗收
+### 完成 v0.2.5.2 Vercel Preview 自動驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.2 圖片壓縮與手機直接拍照 AI 辨識已通過；Catalog-only production 入口已穩定為只前往 Catalog Detail，不再導向 404。等待人工驗收，未經使用者明確授權不合併 `dev` → `main`，也不自行開始 v0.2.6。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.5.2 圖片壓縮、Catalog-only production presentation 與 `L`／`スマスロ` false-uncertain 本機修正均已通過；等待本次 `dev` Preview Ready 後以同一張真實照片自動驗收。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始 v0.2.6。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -752,6 +769,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 v0.2.5.2 Catalog-only Production 穩定化流程；未經使用者明確授權不合併 `dev` → `main`。**
+**等待本次 `dev` Vercel Preview Ready，以同一張真實照片自動驗收 Catalog match、Catalog Detail 入口與無 413／5xx。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。

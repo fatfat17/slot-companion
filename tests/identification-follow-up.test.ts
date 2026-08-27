@@ -34,3 +34,9 @@ test("catalog id is safely passed to the Catalog Detail route",()=>{
   if(action?.kind!=="catalog-only")throw new Error("Expected catalog-only action");
   assert.equal(action.primaryHref,"/catalog/catalog%2Fid%202");
 });
+
+test("real Toaru Catalog match produces the expected Catalog Detail route",()=>{
+  const action=getIdentificationFollowUp("identified",{...catalogOnly,matchedCatalogId:"machine-th4uhu"},"2026-08-28");
+  assert.equal(action?.kind,"catalog-only");
+  assert.equal(action?.primaryHref,"/catalog/machine-th4uhu");
+});
