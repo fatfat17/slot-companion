@@ -5,7 +5,7 @@ Last Updated: 2026-08-28
 ## Current Version
 **v0.2.6 – P-WORLD 機台指南 MVP**
 
-Status：**v0.2.6 開發與本機 QA 完成，等待 Vercel Preview 與人工驗收**
+Status：**v0.2.6 開發、本機 QA 與 Vercel Preview 自動驗收完成，等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -74,6 +74,15 @@ Regression QA：
 - production build：Next.js webpack build ✅
 - localhost `/`、`/identify`、`/catalog`、Catalog Detail、Guide route：HTTP 200 ✅
 - localhost guide API：HTTP 200、status `usable`、3 benchmarks ✅
+
+Vercel Preview QA（2026-08-28）：
+- product commit `ca65269` 已 push 至 `origin/dev`，固定 Preview 已切換到 v0.2.6 UI ✅
+- 固定網址：`https://slot-companion-git-dev-ben-liu.vercel.app` ✅
+- Catalog `machine-u0ht3u` 顯示「從 P-WORLD 建立機台指南」，舊 Profile Lab production notice 不再出現 ✅
+- 線上呼叫 P-WORLD 成功，建立後導向 `/guides/machine-u0ht3u` ✅
+- Preview guide 狀態 `可使用`，顯示 P-WORLD 來源、缺失資料、免責提示與「開始玩」✅
+- browser console 無 error；未上傳或重測任何 AI 辨識照片 ✅
+- 尚待使用者以手機驗收實際觸控、閱讀與開始 Session 流程
 
 ### v0.1.x
 - PWA 手機優先 UI
@@ -703,7 +712,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 
 ## Current Work
-**v0.2.6 – P-WORLD 機台指南 MVP（本機實作與 QA 完成；等待 Preview 與人工驗收）**
+**v0.2.6 – P-WORLD 機台指南 MVP（本機與 Vercel Preview 自動 QA 完成；等待手機人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -720,7 +729,7 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 
 Status：**不自行開始下一版本。**
 
-v0.2.6 已完成 P-WORLD 單一來源機台指南、Catalog-only 建立入口、指南頁、localStorage 快取與 Session snapshot 串接。本機 QA 與 10530 實頁 smoke 已通過；尚待固定 Vercel Preview 與使用者手機驗收。雲端持久化、跨裝置同步、付費資料庫、登入／權限與批次指南建立均未實作。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.6 已完成 P-WORLD 單一來源機台指南、Catalog-only 建立入口、指南頁、localStorage 快取與 Session snapshot 串接。本機 QA、10530 實頁 smoke 與固定 Vercel Preview 自動驗收均已通過；尚待使用者手機驗收。雲端持久化、跨裝置同步、付費資料庫、登入／權限與批次指南建立均未實作。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
