@@ -2,6 +2,7 @@
 @import "./identify.css";
 @import "./catalog-admin.css";
 @import "./catalog.css";
+@import "./machine-guide.css";
 @import "./profile-builder.css";
 
 .verified-empty{padding:14px;border-radius:14px;background:#101219;color:var(--muted);font-size:12px;line-height:1.6}.verified-metric-card{overflow:hidden;margin-top:11px;border:1px solid var(--line);border-radius:17px;background:#11131a}.verified-metric-card>header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:13px 14px;border-bottom:1px solid var(--line)}.verified-metric-card>header strong{font-size:13px;font-weight:900}.verified-metric-card>header small{max-width:55%;color:var(--accent);font-size:9px;line-height:1.45;text-align:right}.verified-table{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.verified-table table{width:100%;min-width:max-content;border-collapse:collapse;font-size:11px}.verified-table th,.verified-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.055);text-align:left;white-space:nowrap}.verified-table th{background:#0d0f14;color:var(--muted);font-size:9px;font-weight:800}.verified-table td:first-child{color:var(--accent);font-weight:850}.verified-table tbody tr:last-child td{border-bottom:0}.verified-metric-card>p{padding:10px 13px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;line-height:1.55}

@@ -3,9 +3,9 @@
 Last Updated: 2026-08-28
 
 ## Current Version
-**v0.2.5.2 – Client Image Compression for Vercel**
+**v0.2.6 – P-WORLD 機台指南 MVP**
 
-Status：**v0.2.5.2 identity false-uncertain 已解決；自動 QA、Preview deployment 與真實手機照片人工驗收均通過，等待版本核准**
+Status：**v0.2.6 開發與本機 QA 完成，等待 Vercel Preview 與人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -18,9 +18,9 @@ Git repository 初始 `main` 基準：**v0.2.5.1 current working snapshot（等�
 **Scan → Understand → Track → Estimate**
 
 - Scan：QR、說明書、截圖、機台照片
-- Understand：AI 轉成繁體中文並解釋玩法
-- Track：依 Machine Profile 建立 Smart Counter
-- Estimate：依 Verified benchmark + Session evidence 推定設定傾向
+- Understand：依已配對 Catalog 的公開 P-WORLD 資料建立繁體中文機台指南
+- Track：依既有 Machine Profile 或機台指南 Session snapshot 建立 Counter
+- Estimate：只用來源確實提供、可完整解析且能由 Session 觀測的機率做參考推測
 
 Catalog-only 辨識後目前可部署的 Production 流程：
 1. AI 辨識成功後，使用者確認該機台符合既有 Machine Catalog record
@@ -30,6 +30,50 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.6 – P-WORLD 機台指南 MVP
+Status：**Completed；等待人工驗收，尚未核准**
+
+- Catalog Detail 直接使用既有 P-WORLD machine detail `sourceUrl`，使用者不需重新搜尋或貼 URL
+- 新增專用 `PWorldMachineGuideProvider` 與 deterministic detail parser；只允許 P-WORLD canonical machine detail URL，不繞過登入、反爬蟲或存取限制
+- 新增結構化機台指南資料模型：`usable / partial / no_data`、section、table、missing section、source evidence、source URL、retrievedAt、可觀測 Counter 與安全 benchmark
+- parser 整理基本特色、玩法、通常流程、CZ、AT／ART、Bonus、天井、設定機率、出玉率／機械割、小役與特殊演出；不同頁面允許部分欄位缺失
+- `調査中`、未公開、空白與格式無法確認的數值維持缺失，不當成 0、不建立 benchmark、不補猜
+- Catalog-only 頁新增「從 P-WORLD 建立機台指南」；建立成功後直接進入 `/guides/[catalogId]`
+- 已有此裝置快取時顯示「查看機台指南」；指南頁保留 P-WORLD 來源與最後擷取時間
+- 機台指南 UI 使用 `可使用 / 部分資料 / 尚無資料`，不要求雙來源、Profile Verified 或人工核准才能查看與開始 Session
+- 指南建立安全 Session snapshot，支援觀測 G、CZ、AT／ART、Bonus、特殊演出及來源中完整可解析的額外計數項目
+- 只有完整設定 1～6 數值、現場可觀測 numerator 與明確 denominator 的資料才轉成 estimator benchmark
+- 指南型 Setting Estimator 明確標示 `參考推測 / PUBLIC SOURCE`，並提示不是準確設定判定或獲利保證
+- 既有 Profile、Published Profile、Session snapshot、TEST DATA、圖片壓縮與 AI identity pipeline 均保留
+- 今日紀錄改用 Session `profileSnapshot` 顯示 Catalog-only 指南機種，避免顯示為未知機種
+- runtime 不寫入 repository JSON 或 `data/profile-drafts.json`；指南僅保存於使用者目前瀏覽器的 localStorage
+- P-WORLD 取得失敗時顯示來源錯誤、保留 Catalog 與 Session，並保留「開啟 P-WORLD 來源」；若已有成功快取仍可繼續查看與開始 Session
+
+Storage limitation：
+- 目前不是雲端持久化或跨裝置同步；清除瀏覽器資料、換裝置或換瀏覽器後需重新建立指南
+- Vercel runtime 不進行本機檔案持久寫入；未建立外部付費資料庫、帳號或管理者系統
+
+P-WORLD 10530 integration smoke（2026-08-28）：
+- 成功使用 Catalog 內既有 `https://www.p-world.co.jp/machine/database/10530` 建立 `usable` guide ✅
+- 實頁抽出 features / play / flow / CZ / AT-ART / Bonus / setting rates / payout / special events ✅
+- 真實頁面可安全產生 3 個完整公開機率 benchmark；重複表格已去重 ✅
+- 實頁中無可靠正文／完整表格的 ceiling、small role section 維持 missing，不補猜 ✅
+- API response：HTTP 200，來源 URL 與 Catalog record 一致 ✅
+
+Regression QA：
+- minimal curated P-WORLD fixture，不保存完整來源頁或來源圖片 ✅
+- Catalog-only → 建立 guide data → Session snapshot ✅
+- `調査中` 不建立數值或 benchmark ✅
+- request failure 回傳明確錯誤 ✅
+- localStorage 成功快取與讀回 fallback ✅
+- Existing Profile、Machine Identity、Toaru false-uncertain、Catalog search、Session、Estimator 舊流程回歸 ✅
+- lint ✅
+- typecheck ✅
+- tests：**159 / 159 passed** ✅
+- production build：Next.js webpack build ✅
+- localhost `/`、`/identify`、`/catalog`、Catalog Detail、Guide route：HTTP 200 ✅
+- localhost guide API：HTTP 200、status `usable`、3 benchmarks ✅
 
 ### v0.1.x
 - PWA 手機優先 UI
@@ -659,7 +703,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 
 ## Current Work
-**v0.2.5.2 – Client Image Compression for Vercel（identity false-uncertain 已解決；自動 QA、Preview deployment 與真實手機照片人工驗收均通過，等待版本核准）**
+**v0.2.6 – P-WORLD 機台指南 MVP（本機實作與 QA 完成；等待 Preview 與人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -669,23 +713,14 @@ v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
 
 v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 
-Catalog 目前只負責：
-**這是哪一台**
-
-暫不混入：
-- CZ / AT 機率
-- 天井
-- Zone
-- 設定差
-- Setting Estimator benchmark
-- 攻略文章全文
+Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 等待 v0.2.5.2 版本核准／下一步討論
+### 等待 v0.2.6 Vercel Preview／手機人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.2 圖片壓縮、Catalog-only production presentation、`L`／`スマスロ` false-uncertain deterministic 修正、自動 regression 與真實手機 Preview 均已通過；false-uncertain 已解決。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始 P-WORLD 機台指南、v0.2.6 或其他下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.6 已完成 P-WORLD 單一來源機台指南、Catalog-only 建立入口、指南頁、localStorage 快取與 Session snapshot 串接。本機 QA 與 10530 實頁 smoke 已通過；尚待固定 Vercel Preview 與使用者手機驗收。雲端持久化、跨裝置同步、付費資料庫、登入／權限與批次指南建立均未實作。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -750,9 +785,9 @@ v0.2.2 目前實際保存：
 有 URL 時優先直接解析網址，不必先 OCR。
 
 ## Hard Rules
-1. AI 搜到資料 ≠ Verified
-2. Setting Estimator 只吃 verified benchmark
-3. 有來源衝突時不得直接進 estimator
+1. AI 搜到資料不等於來源已提供可解析數值
+2. Setting Estimator 只使用實際來源提供、完整且可由 Session 可靠觀測的 benchmark；TEST DATA 永遠明確分離
+3. 單一 P-WORLD 來源足以建立可使用指南；第二來源未來只作補充，不是使用門檻
 4. 不把攻略文章全文存進自己的資料庫
 5. Catalog 與 Machine Profile 分離
 6. 確定數字由程式計算
@@ -777,6 +812,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待使用者明確核准 v0.2.5.2 或討論下一步；不自行開始任何新功能。**
+**完成 v0.2.6 dev Preview 驗證後，等待使用者進行手機驗收；不自行開始任何新功能。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。

@@ -131,6 +131,8 @@ export type Machine = {
   previousProfileVersion?: number;
   publishedAt?: string;
   sourceDraftId?: string;
+  guideStatus?: "usable" | "partial";
+  guideSourceUrl?: string;
 };
 
 export type SessionCounter = { sessionId: string; counterKey: string; count: number };
