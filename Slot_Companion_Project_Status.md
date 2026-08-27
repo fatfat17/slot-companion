@@ -5,7 +5,7 @@ Last Updated: 2026-08-28
 ## Current Version
 **v0.2.5.2 – Client Image Compression for Vercel**
 
-Status：**v0.2.5.2 identity false-uncertain 修正完成；本機 QA 通過，等待 Vercel Preview 自動驗收**
+Status：**v0.2.5.2 identity false-uncertain 修正完成；自動 QA 與 Preview deployment 通過，等待真實手機照片人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -558,14 +558,17 @@ Machine Identity false-uncertain 修正（2026-08-28）：
 - Preview QA 發現 Phase 1 亦可能將 `PACHISLOT`／`INDEX` 等非廠商文字放入 manufacturer marks；只有可對應 shortlist 已知 manufacturer／brand 的 mark 才具備衝突效力
 - 圖片明確顯示不同 manufacturer 時仍降為 `uncertain`
 - `一方通行`、續作數字、RE:2／RE:3、Roman numeral、V／V-30 與 generic GOD／DREAM／BONUS 的安全規則保持
-- 真實照片 `/Users/juicheliu/Downloads/Slot Companion 2.jpeg` localhost API QA：HTTP 200、`identified`、`matchedCatalogId=machine-th4uhu`、正式名稱 `スマスロ とある魔術の禁書目録2`、manufacturer `藤商事` ✅
+- 既有 AI response failure shape 與 deterministic pipeline regression：`identified`、`matchedCatalogId=machine-th4uhu`、正式名稱 `スマスロ とある魔術の禁書目録2`、manufacturer `藤商事` ✅
 - `/identify` localhost smoke test：HTTP 200 ✅
 - Catalog-only follow-up regression：`/catalog/machine-th4uhu` ✅
 - lint ✅
 - typecheck ✅
 - tests：**152 / 152 passed** ✅
 - production build：Next.js webpack build ✅
-- Vercel Preview `9acd7c9`：Deployment Ready，確認 source commit 正確；真實照片 HTTP request 無 413／5xx，但非廠商 mark 仍造成 false manufacturer conflict，已完成第二輪 deterministic hardening，等待新 Preview 重驗
+- Vercel Preview `9acd7c9`：Deployment Ready 且 source commit 正確；線上 QA 顯示非廠商 mark 仍可能造成 false manufacturer conflict，因此完成第二輪 deterministic hardening
+- Vercel Preview `fdbe255`：Deployment Ready，source commit 確認為 `fdbe255`，immutable URL `https://slot-companion-olak61exj-ben-liu.vercel.app` ✅
+- 原指定路徑 `/Users/juicheliu/Downloads/Slot Companion 2.jpeg` 已由使用者更正為不存在；停止自動重試，不以其他照片冒充本案例
+- 真實手機照片 Preview 驗收待使用者手動執行；目前不宣稱本案例的線上圖片辨識已通過
 
 ### v0.2.2.3 – Identity Precision & Debug
 - Phase 1 evidence schema 分離正式 title、franchise / IP、mode / stage 與 manufacturer mark
@@ -652,7 +655,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 
 ## Current Work
-**v0.2.5.2 – Client Image Compression for Vercel（identity false-uncertain 修正完成；本機 QA 通過，等待 Vercel Preview 自動驗收）**
+**v0.2.5.2 – Client Image Compression for Vercel（identity false-uncertain 修正、自動 QA 與 Preview deployment 完成；等待真實手機照片人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -674,11 +677,11 @@ Catalog 目前只負責：
 - 攻略文章全文
 
 ## Next Step
-### 完成 v0.2.5.2 Vercel Preview 自動驗收
+### 等待 v0.2.5.2 真實手機照片 Preview 人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.2 圖片壓縮、Catalog-only production presentation 與 `L`／`スマスロ` false-uncertain 本機修正均已通過；等待本次 `dev` Preview Ready 後以同一張真實照片自動驗收。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始 v0.2.6。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.5.2 圖片壓縮、Catalog-only production presentation、`L`／`スマスロ` false-uncertain deterministic 修正與自動 regression 均已通過；`fdbe255` Preview 已 Ready。因原指定圖片路徑已確認不存在，真實手機照片線上辨識改由使用者手動驗收，不以其他照片代替。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始 v0.2.6。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -770,6 +773,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待本次 `dev` Vercel Preview Ready，以同一張真實照片自動驗收 Catalog match、Catalog Detail 入口與無 413／5xx。**
+**由使用者以原始真實手機照片在 `fdbe255` Preview 手動驗收 identified、`machine-th4uhu`、Catalog Detail 入口與無 413／5xx。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
