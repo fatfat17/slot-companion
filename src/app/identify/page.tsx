@@ -8,6 +8,7 @@ import type { MachineIdentificationCandidate, MachineIdentificationResult } from
 import { catalogProfileStatus } from "@/lib/ai/matching";
 import { compressIdentificationImage, type CompressedImage } from "@/lib/ai/imageCompression";
 import { formatImageBytes } from "@/lib/ai/imageLimits";
+import { getIdentificationFollowUp } from "@/lib/ai/identificationFollowUp";
 
 const confidenceLabel=(value:number)=>value>=.8?"高":value>=.5?"中":"低";
 const identityBasisLabel:Record<MachineIdentificationCandidate["identityBasis"],string>={catalog_match:"已匹配 Machine Catalog",official_title_visible:"看見正式機種名稱",multi_visual_evidence:"多項視覺證據",visual_text:"僅依畫面文字推測",inferred:"依有限線索推測",unknown:"無法辨識"};
@@ -34,15 +35,15 @@ export default function IdentifyPage(){
 
 function IdentificationResult({result,candidate,selected,onSelect,onReset}:{result:MachineIdentificationResult;candidate?:MachineIdentificationCandidate;selected:number;onSelect:(index:number)=>void;onReset:()=>void}){
   const reliable=result.status==="identified"&&candidate;
-  const href=candidate?.matchedMachineId?`/machines/${candidate.matchedMachineId}?ai=1&confidence=${candidate.confidence}&timestamp=${encodeURIComponent(new Date().toISOString())}`:"";
+  const followUp=getIdentificationFollowUp(result.status,candidate,new Date().toISOString());
   return <section className="section result-card ai-identification-result">
     <div className="result-label"><span>{result.provider==="mock"?"MOCK AI":"AI 辨識結果"}</span><b>{result.status.toUpperCase()}</b></div>
     {!reliable&&<div className="uncertain-message"><strong>{result.status==="uncertain"?"目前只能確認系列 / IP，無法可靠確認正式機種。":"目前無法辨識機種"}</strong><p>請再拍整台、正式機種名稱、筐體上方或側面銘板，避免只拍角色、演出文字或資料機。</p></div>}
     {result.researchStatus==="pending_new_machine"&&<div className="profile-missing">待研究新機種：目前 Catalog 沒有足夠候選，不會自動建立 Machine Profile。</div>}
     {candidate&&<><h2>{candidate.machineNameJa||"正式機種名未確認"}</h2><p className="identified-name-zh">{candidate.machineNameZh||"中文顯示名未確認"}</p><div className="result-meta"><span>メーカー：{candidate.manufacturer||"不明"}</span><span>信心：{confidenceLabel(candidate.confidence)}</span></div><div className="identity-basis"><span>辨識方式：</span><strong>{identityBasisLabel[candidate.identityBasis]}</strong></div>{catalogProfileStatus(candidate)&&<div className="catalog-profile-status">{catalogProfileStatus(candidate)}</div>}<p className="identify-reason">{candidate.reason}</p><ul className="visible-evidence">{candidate.visibleEvidence.map(item=><li key={item}>{item}</li>)}</ul></>}
     {result.candidates.length>1&&<div className="candidate-list"><strong>其他候選</strong>{result.candidates.map((item,index)=><button className={selected===index?"active":""} key={`${item.machineNameJa}-${index}`} onClick={()=>onSelect(index)}><span>{item.machineNameZh||item.machineNameJa}</span><small>可信度：{confidenceLabel(item.confidence)}</small></button>)}</div>}
-    {reliable&&candidate.matchedMachineId&&<Link href={href} className="primary-button mt-4">✓ 就是這台 · 載入現有 Profile</Link>}
-    {reliable&&candidate.matchedCatalogId&&!candidate.matchedMachineId&&<div className="profile-missing">已匹配 Machine Catalog｜尚未建立攻略 Profile</div>}
+    {followUp?.kind==="existing-profile"&&<Link href={followUp.primaryHref} className="primary-button mt-4">{followUp.primaryLabel}</Link>}
+    {followUp?.kind==="catalog-only"&&<><div className="profile-missing">已匹配 Machine Catalog｜尚未建立攻略 Profile</div><Link href={followUp.primaryHref} className="primary-button mt-4">{followUp.primaryLabel}</Link><Link href={followUp.secondaryHref} className="secondary-button mt-2">{followUp.secondaryLabel}</Link></>}
     {result.debug&&<details className="identity-debug"><summary>Development · Identification Debug</summary><section><h3>Phase 1 Evidence</h3><pre>{JSON.stringify(result.debug.phase1Evidence,null,2)}</pre><h3>Search Query Terms</h3><pre>{JSON.stringify(result.debug.searchQueryTerms,null,2)}</pre><h3>Top 20 Shortlist</h3>{result.debug.shortlist.map(item=><article key={item.id}><strong>{item.officialNameJa}</strong><span>score {item.score}</span><small>{item.matchReasons.join(" · ")}</small></article>)}<h3>Phase 2 Decision</h3><pre>{JSON.stringify(result.debug.phase2,null,2)}</pre></section></details>}
     <Link href="/machines" className="secondary-button mt-2">⌕ 手動選擇</Link><button className="secondary-button mt-2" onClick={onReset}>📷 重拍／重選</button>
   </section>;

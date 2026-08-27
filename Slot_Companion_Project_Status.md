@@ -5,7 +5,7 @@ Last Updated: 2026-08-27
 ## Current Version
 **v0.2.5.2 – Client Image Compression for Vercel**
 
-Status：**Completed；等待人工驗收**
+Status：**Completed；圖片壓縮、手機 AI 辨識與 Catalog-only 後續入口已完成，等待人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -466,7 +466,7 @@ Regression QA：
 - production build：Next.js webpack build ✅
 
 ### v0.2.5.2 – Client Image Compression for Vercel
-Status：**Completed；等待人工驗收，尚未核准**
+Status：**Completed；桌面與手機 Vercel Preview 真實 AI 辨識通過，Catalog-only 後續入口等待人工驗收**
 
 - AI 機種辨識選圖後先在 browser client-side 解碼與壓縮，原始圖片不送往 API route
 - 最大長邊 1920px，維持直向／橫向與原始長寬比例；使用 orientation-aware browser decode
@@ -491,6 +491,35 @@ Regression QA：
 - lint ✅
 - typecheck ✅
 - tests：**134 / 134 passed** ✅
+- production build：Next.js webpack build ✅
+
+Vercel Preview 桌面人工驗收（2026-08-27）：
+- `dev` commit `e269740` 建立全新 Preview Deployment，Preview 環境變數確認完整 ✅
+- 實測原始圖片 6.21 MB（4284 × 5712）成功壓縮為 1.02 MB（1440 × 1920 JPEG）✅
+- `/api/ai/identify-machine` 不再出現 `FUNCTION_PAYLOAD_TOO_LARGE` / HTTP 413 ✅
+- OpenAI 真實辨識請求成功，圖片正確辨識為 `L 東京喰種`，狀態 `identified` ✅
+- 本次 request User Agent 為 Macintosh；手機相機／相簿實機流程尚未驗收
+- `main` / Production 尚未合併或更新 ✅
+
+Vercel Preview 手機實機驗收（2026-08-27）：
+- 手機「直接拍照」成功取得 2.26 MB、3024 × 4032 圖片 ✅
+- client-side 成功壓縮為 804.1 KB、1440 × 1920 JPEG ✅
+- OpenAI 真實辨識成功，正確匹配 `スマスロ とある魔術の禁書目録2` Catalog record，狀態 `identified` ✅
+- 未再出現 HTTP 413 或 Preview API Key 錯誤 ✅
+- 發現 Catalog-only 辨識結果只有「尚未建立攻略 Profile」狀態，沒有連至 Catalog Detail／「建立攻略 Profile」的確認後續入口
+
+Catalog-only 後續流程修正：
+- 僅在 `identified + matchedCatalogId + 無 matchedMachineId` 時顯示確認後續操作
+- 主要入口「✓ 就是這台 · 建立攻略 Profile」連至 `/admin/profile-builder/{matchedCatalogId}`
+- 次要入口「查看 Machine Catalog 資料」連至 `/catalog/{matchedCatalogId}`
+- 不自動跳轉；必須由使用者點擊確認後才進入 Profile Builder 或 Catalog Detail
+- uncertain、unknown 或沒有可靠 Catalog ID 時不顯示建立 Profile 入口
+- 已有 Machine Profile 時維持「✓ 就是這台 · 載入現有 Profile」，不顯示重複建立入口
+- Catalog ID 經 URL encoding 後傳入兩個 dynamic routes
+- 未修改 AI prompt、Catalog matching / identity safety、Profile Builder 寫入核准、Session、Setting Estimator、benchmark 或圖片壓縮參數
+- lint ✅
+- typecheck ✅
+- tests：**139 / 139 passed** ✅
 - production build：Next.js webpack build ✅
 
 ### v0.2.2.3 – Identity Precision & Debug
@@ -572,9 +601,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 10. Approval API 不得 silent truncate；前端 batching 後仍須以 API processed count 驗證完整性
 11. Git 日常開發固定使用 `dev`；未經使用者明確驗收，不得 merge 回 `main`
 12. Vercel Function request payload 上限為 4.5 MB；辨識圖片必須在 client-side 壓縮並為 multipart overhead 保留空間
+13. AI identified 且已匹配 Catalog、但尚無 Machine Profile 時，必須由使用者確認後自行前往 Catalog Detail／Profile Builder；不得自動跳轉或對 uncertain / unknown 顯示建立入口
 
 ## Current Work
-**v0.2.5.2 – Client Image Compression for Vercel（Completed；等待人工驗收）**
+**v0.2.5.2 – Client Image Compression for Vercel（壓縮、手機 AI 辨識與 Catalog-only 後續入口完成；等待人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -596,11 +626,11 @@ Catalog 目前只負責：
 - 攻略文章全文
 
 ## Next Step
-### 等待 v0.2.5.2 人工驗收
+### 等待 v0.2.5.2 Catalog-only 後續入口人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.2 已完成並等待使用者驗收；不自行開始下一版本。v0.2.3.1 維持核准穩定基準。
+v0.2.5.2 圖片壓縮與手機直接拍照 AI 辨識已通過；Catalog-only 結果的 Profile Builder 與 Catalog Detail 確認入口已補齊，等待人工驗收。未經使用者明確授權不合併 `dev` → `main`，也不自行開始下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -685,6 +715,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 v0.2.5.2 Client Image Compression for Vercel；v0.2.3.1 仍為核准穩定基準，不自行開始下一版本。**
+**驗收 AI identified + Catalog-only 的使用者確認與兩個後續入口；未經使用者明確授權不合併 `dev` → `main`。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
