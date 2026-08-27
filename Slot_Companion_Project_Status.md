@@ -1,11 +1,11 @@
 # Slot Companion Project Status
 
-Last Updated: 2026-08-27
+Last Updated: 2026-08-28
 
 ## Current Version
 **v0.2.5.2 – Client Image Compression for Vercel**
 
-Status：**Completed；圖片壓縮、手機 AI 辨識與 Catalog-only 後續入口已完成，等待人工驗收**
+Status：**v0.2.5.2 穩定化修正完成；等待人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -21,6 +21,13 @@ Git repository 初始 `main` 基準：**v0.2.5.1 current working snapshot（等�
 - Understand：AI 轉成繁體中文並解釋玩法
 - Track：依 Machine Profile 建立 Smart Counter
 - Estimate：依 Verified benchmark + Session evidence 推定設定傾向
+
+Catalog-only 辨識後目前可部署的 Production 流程：
+1. AI 辨識成功後，使用者確認該機台符合既有 Machine Catalog record
+2. 若已有 Verified Profile，直接載入正式攻略並開始 Session
+3. 若尚無 Profile，只前往 Machine Catalog Detail，不直接進入 production 不可達的 development Builder
+4. Catalog Detail 清楚顯示「攻略 Profile 尚未建立」與「Profile Lab 雲端建立功能準備中」
+5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
 
@@ -466,7 +473,7 @@ Regression QA：
 - production build：Next.js webpack build ✅
 
 ### v0.2.5.2 – Client Image Compression for Vercel
-Status：**Completed；桌面與手機 Vercel Preview 真實 AI 辨識通過，Catalog-only 後續入口等待人工驗收**
+Status：**穩定化修正完成；等待人工驗收，尚未核准**
 
 - AI 機種辨識選圖後先在 browser client-side 解碼與壓縮，原始圖片不送往 API route
 - 最大長邊 1920px，維持直向／橫向與原始長寬比例；使用 orientation-aware browser decode
@@ -521,6 +528,27 @@ Catalog-only 後續流程修正：
 - typecheck ✅
 - tests：**139 / 139 passed** ✅
 - production build：Next.js webpack build ✅
+
+人工驗收前架構檢查發現 blocker：
+- 主要入口目前連至 `/admin/profile-builder/{catalogId}`，但該 route 在 `NODE_ENV === "production"` 時直接 `notFound()`
+- Vercel Preview 使用 production build，因此「建立攻略 Profile」在 Preview 預期會回 404；現有 automated test 只驗證 href，未驗證實際 route 可達性
+- Profile Draft 目前保存於 server-side `data/profile-drafts.json`；Vercel Serverless 不應視為可靠持久寫入位置
+- 在決定 Preview／Production 權限與持久儲存方案前，不得把此入口視為通過人工驗收，也不得合併 `main`
+
+v0.2.5.2 穩定化修正（2026-08-28）：
+- Identify 的 Catalog-only 結果移除 `/admin/profile-builder/{catalogId}` 入口
+- Catalog-only 只顯示單一主要按鈕「✓ 就是這台 · 查看機種資料」，連至 `/catalog/{matchedCatalogId}`
+- 已有 Profile 仍只顯示「✓ 就是這台 · 載入現有 Profile」
+- uncertain、unknown 或沒有可靠 Catalog ID 時不顯示 Catalog-only 確認入口
+- Catalog Detail 在 production 顯示「攻略 Profile 尚未建立」與「Profile Lab 雲端建立功能準備中」，不輸出不可達 Builder href
+- Catalog Detail 在 localhost development 保留既有 Profile Builder 開發入口
+- 未修改圖片壓縮參數、AI prompt、Catalog matching、identity safety、Profile Builder 核心、Session、Setting Estimator、benchmark、Catalog JSON 或 Published Profile
+- lint ✅
+- typecheck ✅
+- tests：**142 / 142 passed** ✅
+- production build：Next.js webpack build ✅
+- production localhost `/identify`：HTTP 200 ✅
+- production Catalog-only Detail：HTTP 200、Profile Builder href = 0、準備中 notice 顯示 ✅
 
 ### v0.2.2.3 – Identity Precision & Debug
 - Phase 1 evidence schema 分離正式 title、franchise / IP、mode / stage 與 manufacturer mark
@@ -601,10 +629,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 10. Approval API 不得 silent truncate；前端 batching 後仍須以 API processed count 驗證完整性
 11. Git 日常開發固定使用 `dev`；未經使用者明確驗收，不得 merge 回 `main`
 12. Vercel Function request payload 上限為 4.5 MB；辨識圖片必須在 client-side 壓縮並為 multipart overhead 保留空間
-13. AI identified 且已匹配 Catalog、但尚無 Machine Profile 時，必須由使用者確認後自行前往 Catalog Detail／Profile Builder；不得自動跳轉或對 uncertain / unknown 顯示建立入口
+13. AI identified 且已匹配 Catalog、但尚無 Machine Profile 時，Production 只允許使用者確認後前往 Catalog Detail；不得自動跳轉或對 uncertain / unknown 顯示入口
+14. Profile Builder 是 development admin route，production build 會回 404；Production UI 不得輸出該 route 的操作連結
+15. 若未來要提供 Cloud Profile Lab，必須先完成管理者存取與可靠雲端持久儲存，不能沿用 server-side JSON 寫入假裝可用
 
 ## Current Work
-**v0.2.5.2 – Client Image Compression for Vercel（壓縮、手機 AI 辨識與 Catalog-only 後續入口完成；等待人工驗收）**
+**v0.2.5.2 – Client Image Compression for Vercel（穩定化修正完成；等待人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -626,11 +656,11 @@ Catalog 目前只負責：
 - 攻略文章全文
 
 ## Next Step
-### 等待 v0.2.5.2 Catalog-only 後續入口人工驗收
+### 等待 v0.2.5.2 穩定化修正人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.2 圖片壓縮與手機直接拍照 AI 辨識已通過；Catalog-only 結果的 Profile Builder 與 Catalog Detail 確認入口已補齊，等待人工驗收。未經使用者明確授權不合併 `dev` → `main`，也不自行開始下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.5.2 圖片壓縮與手機直接拍照 AI 辨識已通過；Catalog-only production 入口已穩定為只前往 Catalog Detail，不再導向 404。等待人工驗收，未經使用者明確授權不合併 `dev` → `main`，也不自行開始 v0.2.6。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -654,6 +684,13 @@ v0.2.2 目前實際保存：
 不保存來源圖片檔案、攻略全文、天井、Zone、設定差或 benchmark。
 
 ## Future Roadmap
+
+### Cloud Profile Lab（規劃中，尚未實作）
+- 管理者存取控制
+- 雲端持久儲存；不再依賴 Vercel Serverless 本機 JSON 寫入
+- Profile lifecycle 分級：Draft／Usable／Verified
+- 兩來源 URL 輸入／候選預填與既有 Evidence review 流程整合
+- 本節僅為後續規劃，不代表任何雲端功能、資料庫或 production Builder 已完成
 
 ### v0.2.3 – Verified Machine Data
 建議來源：
@@ -715,6 +752,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 AI identified + Catalog-only 的使用者確認與兩個後續入口；未經使用者明確授權不合併 `dev` → `main`。**
+**驗收 v0.2.5.2 Catalog-only Production 穩定化流程；未經使用者明確授權不合併 `dev` → `main`。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
