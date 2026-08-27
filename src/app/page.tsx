@@ -7,7 +7,8 @@ import type { Session } from "@/types";
 import { getMachine, machines } from "@/data/machines";
 
 const entries = [
-  { href: "/identify", icon: "📷", title: "拍機台", sub: "照片選擇・模擬辨識", tone: "pink" },
+  { href: "/identify", icon: "📷", title: "拍機台", sub: "拍照・AI 機種辨識", tone: "pink" },
+  { href: "/catalog", icon: "📚", title: "機種資料庫", sub: "搜尋已收錄機種與攻略狀態", tone: "yellow" },
   { href: "/records", icon: "📊", title: "今日紀錄", sub: "查看今天的實戰", tone: "blue" },
   { href: "/hunter", icon: "🌙", title: "晚上撿台", sub: "快速評估表單", tone: "purple" },
 ];
@@ -33,7 +34,7 @@ export default function Home() {
         <span className="flex-1">
           <small>{active ? "進行中的 SESSION" : "準備好了嗎？"}</small>
           <strong>{active ? `繼續 ${activeMachine?.nameZh ?? "Session"}` : "開始 Session"}</strong>
-          <em>{active ? `${active.actualG} G · 投入 ¥${active.investmentYen.toLocaleString()}` : "選擇機種，立即開始記錄"}</em>
+          <em>{active ? `${active.trackers[activeMachine?.profile.gameTrackers.find(item=>item.primary)?.key??"dataGame"]??active.actualG} G · 投入 ¥${active.investmentYen.toLocaleString()}` : "選擇機種，立即開始記錄"}</em>
         </span>
         <b>›</b>
       </Link>
@@ -49,7 +50,7 @@ export default function Home() {
       </div>
 
       <section className="section">
-        <div className="section-title"><h2>內建機種</h2><span>Mock data</span></div>
+        <div className="section-title"><h2>已建立攻略 Profile</h2><span>3 台</span></div>
         <div className="machine-strip">
           {machines.map((machine) => (
             <Link key={machine.id} href={`/machines/${machine.id}`} className="mini-machine" style={{ "--machine-accent": machine.accent } as React.CSSProperties}>

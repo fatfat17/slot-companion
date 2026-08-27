@@ -1,0 +1,33 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import test from "node:test";
+import { catalogLibraryOptions,catalogSummary,defaultCatalogLibraryFilters,profileForCatalog,queryCatalogLibrary,type CatalogProfileLink } from "../src/lib/catalog/library.ts";
+import { searchCatalogRecordsForLibrary } from "../src/lib/catalog/core.ts";
+import type { MachineCatalogRecord } from "../src/types/catalog.ts";
+
+const records=JSON.parse(readFileSync(new URL("../data/machine-catalog.json",import.meta.url),"utf8")) as MachineCatalogRecord[];
+const profiles:CatalogProfileLink[]=[{catalogId:"tokyo-ghoul",machineId:"tokyo-ghoul",nameZh:"東京喰種"},{catalogId:"karakuri-2",machineId:"karakuri-2",nameZh:"機關馬戲團 2"},{catalogId:"million-god",machineId:"million-god",nameZh:"GOD 神之軌跡"}];
+const query=(patch:Partial<typeof defaultCatalogLibraryFilters>)=>queryCatalogLibrary(records,profiles,{...defaultCatalogLibraryFilters,...patch});
+
+test("Catalog 總數由 runtime records 計算",()=>assert.equal(catalogSummary(records,profiles).total,records.length));
+test("Profile ready / Catalog only 分類正確",()=>{const summary=catalogSummary(records,profiles);assert.equal(summary.profileReady,3);assert.equal(summary.catalogOnly,records.length-3)});
+test("officialNameJa 名稱搜尋",()=>assert.ok(query({query:"ビッグドリーム"}).items.some(item=>item.id==="machine-1ryjocr")));
+test("alias 搜尋",()=>assert.equal(query({query:"Tokyo Ghoul"}).items[0]?.id,"tokyo-ghoul"));
+test("manufacturer 搜尋",()=>assert.ok(query({query:"サミー"}).items.every(item=>item.manufacturer.includes("サミー"))));
+test("introducedAt 月份篩選",()=>assert.ok(query({introducedMonth:"2026-06"}).items.every(item=>item.introducedAt?.startsWith("2026-06"))));
+test("machineType 篩選使用現存值",()=>{const type=catalogLibraryOptions(records).machineTypes[0],result=query({machineType:type});assert.ok(result.items.length>0);assert.ok(result.items.every(item=>item.machineType===type))});
+test("catalogStatus 篩選",()=>assert.ok(query({catalogStatus:"reviewed"}).items.every(item=>item.catalogStatus==="reviewed")));
+test("Profile ready 篩選",()=>assert.equal(query({profileStatus:"ready"}).total,3));
+test("Catalog only 篩選",()=>assert.equal(query({profileStatus:"catalog-only"}).total,records.length-3));
+test("導入日預設新到舊排序",()=>{const result=query({pageSize:records.length}).items.filter(item=>item.introducedAt);assert.ok(result.every((item,index)=>index===0||result[index-1].introducedAt!>=item.introducedAt!))});
+test("pagination 每頁 25 筆",()=>{const result=query({pageSize:25,page:1});assert.equal(result.items.length,25);assert.equal(result.totalPages,Math.ceil(records.length/25))});
+test("Catalog detail 所需 identity 欄位存在",()=>{const record=records.find(item=>item.id==="machine-1ryjocr")!;assert.equal(record.officialNameJa,"スマスロ ビッグドリーム THE GOLDEN PUSHER");assert.ok(record.sourceUrl);assert.ok(record.retrievedAt)});
+test("有 Profile 時可取得 Machine Card route id",()=>assert.equal(profileForCatalog("tokyo-ghoul",profiles)?.machineId,"tokyo-ghoul"));
+test("無 Profile 時不建立 Profile",()=>assert.equal(profileForCatalog("machine-1ryjocr",profiles),undefined));
+test("空結果與 Catalog empty fallback 可安全計算",()=>{assert.equal(query({query:"__NO_SUCH_MACHINE__"}).total,0);assert.deepEqual(catalogSummary([],profiles),{total:0,profileReady:0,catalogOnly:0,imported:0,reviewed:0,verified:0})});
+test("Library BIG DREAM parity",()=>assert.ok(query({query:"BIG DREAM"}).items.some(item=>item.id==="machine-1ryjocr")));
+test("Library Tokyo Ghoul parity",()=>assert.ok(query({query:"Tokyo Ghoul"}).items.some(item=>item.id==="tokyo-ghoul")));
+test("Library big-dream 忽略大小寫、空白與 dash",()=>assert.ok(query({query:"big-dream"}).items.some(item=>item.id==="machine-1ryjocr")));
+test("Library 片假名名稱搜尋",()=>assert.ok(query({query:"ビッグドリーム"}).items.some(item=>item.id==="machine-1ryjocr")));
+test("Library generic GOD 可回傳多個相關候選但不是 identity exact",()=>{const base=records.find(item=>item.id==="million-god")!,fixtures=[{...base,id:"god-a",officialNameJa:"TEST ALPHA",aliases:["GOD ALPHA"]},{...base,id:"god-b",officialNameJa:"TEST BETA",aliases:["GOD BETA"]}],result=searchCatalogRecordsForLibrary(fixtures,"GOD");assert.deepEqual(result.map(item=>item.id).sort(),["god-a","god-b"]);assert.ok(result.every(item=>item.searchScore<100))});
+test("parity 搜尋可與篩選、排序、pagination 共用",()=>{const result=query({query:"BIG DREAM",manufacturer:"サミー",machineType:"スマスロ",catalogStatus:"imported",profileStatus:"catalog-only",introducedMonth:"2026-05",sort:"name",pageSize:1,page:1});assert.equal(result.total,1);assert.equal(result.items[0]?.id,"machine-1ryjocr");assert.equal(result.totalPages,1)});

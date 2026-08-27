@@ -1,0 +1,719 @@
+[
+  {
+    "catalogId": "tokyo-ghoul",
+    "activeVersion": 1,
+    "versions": [
+      {
+        "profileVersion": 0,
+        "publishedAt": "2026-08-27T09:52:15.911Z",
+        "sourceDraftId": "baseline-placeholder",
+        "machine": {
+          "id": "tokyo-ghoul",
+          "catalogId": "tokyo-ghoul",
+          "nameZh": "東京喰種",
+          "nameJa": "L 東京喰種",
+          "aliases": [
+            "東京喰種",
+            "Tokyo Ghoul",
+            "L東京喰種"
+          ],
+          "manufacturer": "メーカー資料待驗證",
+          "category": "智慧型角子機｜スマスロ",
+          "accent": "#f45b78",
+          "profileStatus": "placeholder",
+          "journey": [
+            "通常遊戲",
+            "機會區間（示意）",
+            "CZ／AT（示意）"
+          ],
+          "watchPoints": [
+            "先確認目前所處狀態",
+            "留意機台提示與畫面變化",
+            "用 Session 記錄自己的實戰節奏"
+          ],
+          "milestones": [
+            "關鍵節點資料待 Verified Machine Data",
+            "本版不顯示天井或 Zone",
+            "不根據未驗證資訊建議續打或離席"
+          ],
+          "funPoints": [
+            "狀態推進時的演出變化",
+            "達成契機後的節奏轉換"
+          ],
+          "pitfalls": [
+            "畫面熱鬧不代表保證當選",
+            "Counter 比率不能單獨用來判定設定"
+          ],
+          "playGuide": "請依機台提示操作；詳細打ち方待接入已驗證資料。",
+          "profile": {
+            "smartCounters": [
+              {
+                "id": "tokyo-ghoul-focusRole",
+                "machineId": "tokyo-ghoul",
+                "key": "focusRole",
+                "labelZh": "關注小役 A",
+                "labelJa": "注目役 A（仮）",
+                "icon": "🎯",
+                "description": "此項目由該機種的 Machine Profile 動態提供，目前為操作示範。",
+                "recognition": "辨識方式待接入已驗證機種資料；請勿依此佔位名稱判斷實際圖樣。",
+                "reason": "用來示範每台機種可以有不同的 Smart Counter 組合。",
+                "type": "count",
+                "denominatorMetricKey": "observedTotalGame"
+              },
+              {
+                "id": "tokyo-ghoul-specialCue",
+                "machineId": "tokyo-ghoul",
+                "key": "specialCue",
+                "labelZh": "契機結果",
+                "labelJa": "契機結果（仮）",
+                "icon": "🩸",
+                "description": "此項目由該機種的 Machine Profile 動態提供，目前為操作示範。",
+                "recognition": "辨識方式待接入已驗證機種資料；請勿依此佔位名稱判斷實際圖樣。",
+                "reason": "用來示範每台機種可以有不同的 Smart Counter 組合。",
+                "type": "event",
+                "eventState": "special",
+                "parentCounterKey": "focusRole",
+                "trialRelationshipId": "ghoul-focus-trial"
+              },
+              {
+                "id": "tokyo-ghoul-sceneMemo",
+                "machineId": "tokyo-ghoul",
+                "key": "sceneMemo",
+                "labelZh": "畫面紀錄",
+                "labelJa": "画面メモ（仮）",
+                "icon": "📷",
+                "description": "此項目由該機種的 Machine Profile 動態提供，目前為操作示範。",
+                "recognition": "辨識方式待接入已驗證機種資料；請勿依此佔位名稱判斷實際圖樣。",
+                "reason": "用來示範每台機種可以有不同的 Smart Counter 組合。",
+                "type": "photo"
+              },
+              {
+                "id": "tokyo-ghoul-testSettingEvidence",
+                "machineId": "tokyo-ghoul",
+                "key": "testSettingEvidence",
+                "labelZh": "TEST 判定畫面",
+                "labelJa": "TEST DATA",
+                "icon": "🧪",
+                "description": "此項目由該機種的 Machine Profile 動態提供，目前為操作示範。",
+                "recognition": "辨識方式待接入已驗證機種資料；請勿依此佔位名稱判斷實際圖樣。",
+                "reason": "用來示範每台機種可以有不同的 Smart Counter 組合。",
+                "type": "choice",
+                "choices": [
+                  {
+                    "value": "none",
+                    "labelZh": "TEST：無",
+                    "labelJa": "なし"
+                  },
+                  {
+                    "value": "gte4",
+                    "labelZh": "TEST：設定4以上濃厚",
+                    "labelJa": "設定4以上濃厚"
+                  },
+                  {
+                    "value": "s6",
+                    "labelZh": "TEST：設定6濃厚",
+                    "labelJa": "設定6濃厚"
+                  }
+                ]
+              }
+            ],
+            "gameTrackers": [
+              {
+                "key": "dataGame",
+                "labelZh": "資料 G",
+                "labelJa": "データ G",
+                "primary": true,
+                "quickAdd": 10
+              },
+              {
+                "key": "lcdGame",
+                "labelZh": "液晶 G",
+                "labelJa": "液晶 G",
+                "primary": false
+              }
+            ],
+            "nightHunterFields": [
+              {
+                "key": "currentG",
+                "labelZh": "現在 G",
+                "labelJa": "現在 G",
+                "inputType": "number",
+                "placeholder": "0"
+              },
+              {
+                "key": "budgetYen",
+                "labelZh": "剩餘單台預算",
+                "labelJa": "残り予算",
+                "inputType": "number",
+                "placeholder": "¥"
+              },
+              {
+                "key": "leaveAt",
+                "labelZh": "預計離店時間",
+                "labelJa": "退店予定",
+                "inputType": "time",
+                "placeholder": ""
+              }
+            ],
+            "initialHitMetrics": [
+              {
+                "metricKey": "czInitialRate",
+                "counterKey": "cz",
+                "labelZh": "CZ 初當率",
+                "labelJa": "CZ 初当り",
+                "denominatorMetricKey": "observedNormalGame"
+              }
+            ],
+            "measurementMetrics": [
+              {
+                "key": "observedTotalGame",
+                "labelZh": "本 Session 已觀測",
+                "labelJa": "セッション観測 G",
+                "source": {
+                  "type": "observedTotalGame"
+                }
+              },
+              {
+                "key": "observedNormalGame",
+                "labelZh": "通常狀態觀測",
+                "labelJa": "通常時観測 G",
+                "source": {
+                  "type": "observedNormalGame"
+                }
+              },
+              {
+                "key": "dataGameDelta",
+                "labelZh": "資料 G 差值",
+                "labelJa": "データ G 差分",
+                "source": {
+                  "type": "trackerDelta",
+                  "trackerKey": "dataGame"
+                }
+              }
+            ],
+            "trialRelationships": [
+              {
+                "id": "ghoul-focus-trial",
+                "trialCounterKey": "focusRole",
+                "outcomeCounterKey": "specialCue"
+              }
+            ],
+            "benchmarks": [
+              {
+                "id": "tokyo-ghoul-test-rate",
+                "labelZh": "TEST CZ 初當",
+                "labelJa": "TEST DATA",
+                "metricKey": "czInitialRate",
+                "kind": "rate",
+                "observation": {
+                  "type": "rate",
+                  "numeratorKey": "cz",
+                  "denominatorMetricKey": "observedNormalGame",
+                  "valueMode": "oneIn"
+                },
+                "settingValues": {
+                  "1": 180,
+                  "2": 160,
+                  "3": 142,
+                  "4": 125,
+                  "5": 108,
+                  "6": 92
+                },
+                "minimumSample": 600,
+                "source": "Slot Companion TEST DATA fixture",
+                "updatedAt": "2026-08-27",
+                "verified": true,
+                "testData": true
+              },
+              {
+                "id": "tokyo-ghoul-test-trial",
+                "labelZh": "TEST 契機成功率",
+                "labelJa": "TEST DATA",
+                "metricKey": "testTrialSuccess",
+                "kind": "trialOutcome",
+                "observation": {
+                  "type": "trialOutcome",
+                  "relationshipId": "ghoul-focus-trial"
+                },
+                "settingValues": {
+                  "1": 0.12,
+                  "2": 0.16,
+                  "3": 0.21,
+                  "4": 0.28,
+                  "5": 0.36,
+                  "6": 0.46
+                },
+                "minimumSample": 20,
+                "source": "Slot Companion TEST DATA fixture",
+                "updatedAt": "2026-08-27",
+                "verified": true,
+                "testData": true
+              },
+              {
+                "id": "tokyo-ghoul-test-gte4",
+                "labelZh": "TEST 設定4以上濃厚",
+                "labelJa": "TEST DATA",
+                "metricKey": "testConstraintGte4",
+                "kind": "constraint",
+                "observation": {
+                  "type": "constraint",
+                  "counterKey": "testSettingEvidence",
+                  "equals": "gte4"
+                },
+                "settingValues": {
+                  "1": 0.02,
+                  "2": 0.02,
+                  "3": 0.04,
+                  "4": 1,
+                  "5": 1,
+                  "6": 1
+                },
+                "minimumSample": 1,
+                "source": "Slot Companion TEST DATA fixture",
+                "updatedAt": "2026-08-27",
+                "verified": true,
+                "testData": true
+              },
+              {
+                "id": "tokyo-ghoul-test-s6",
+                "labelZh": "TEST 設定6濃厚",
+                "labelJa": "TEST DATA",
+                "metricKey": "testConstraintS6",
+                "kind": "constraint",
+                "observation": {
+                  "type": "constraint",
+                  "counterKey": "testSettingEvidence",
+                  "equals": "s6"
+                },
+                "settingValues": {
+                  "1": 0.01,
+                  "2": 0.01,
+                  "3": 0.01,
+                  "4": 0.02,
+                  "5": 0.05,
+                  "6": 1
+                },
+                "minimumSample": 1,
+                "source": "Slot Companion TEST DATA fixture",
+                "updatedAt": "2026-08-27",
+                "verified": true,
+                "testData": true
+              }
+            ]
+          },
+          "profileVersion": 0
+        }
+      },
+      {
+        "profileVersion": 1,
+        "previousProfileVersion": 0,
+        "publishedAt": "2026-08-27T09:52:15.911Z",
+        "sourceDraftId": "profile-draft-tokyo-ghoul",
+        "machine": {
+          "id": "tokyo-ghoul",
+          "catalogId": "tokyo-ghoul",
+          "nameZh": "東京喰種",
+          "nameJa": "L 東京喰種",
+          "aliases": [
+            "東京喰種",
+            "Tokyo Ghoul",
+            "L東京喰種"
+          ],
+          "manufacturer": "メーカー資料待驗證",
+          "category": "智慧型角子機｜スマスロ",
+          "accent": "#f45b78",
+          "profileStatus": "verified",
+          "journey": [
+            "通常遊戲",
+            "機會區間（示意）",
+            "CZ／AT（示意）"
+          ],
+          "watchPoints": [
+            "先確認目前所處狀態",
+            "留意機台提示與畫面變化",
+            "用 Session 記錄自己的實戰節奏"
+          ],
+          "milestones": [
+            "關鍵節點資料待 Verified Machine Data",
+            "本版不顯示天井或 Zone",
+            "不根據未驗證資訊建議續打或離席"
+          ],
+          "funPoints": [
+            "狀態推進時的演出變化",
+            "達成契機後的節奏轉換"
+          ],
+          "pitfalls": [
+            "畫面熱鬧不代表保證當選",
+            "Counter 比率不能單獨用來判定設定"
+          ],
+          "playGuide": "請依機台提示操作；詳細打ち方待接入已驗證資料。",
+          "profile": {
+            "smartCounters": [
+              {
+                "id": "tokyo-ghoul-endScreenIndications",
+                "machineId": "tokyo-ghoul",
+                "key": "endScreenIndications",
+                "labelZh": "結束畫面示唆",
+                "labelJa": "結束畫面示唆",
+                "icon": "🖼️",
+                "description": "人工核准的已驗證來源示唆資料。",
+                "recognition": "請依實際終了畫面選擇對應項目。",
+                "reason": "保存已驗證的終了畫面 Evidence。",
+                "type": "choice",
+                "choices": [
+                  {
+                    "value": "choice-1",
+                    "labelZh": "金木研 L 東京喰種 AT終了画面 金木研｜デフォルト",
+                    "labelJa": "金木研 L 東京喰種 AT終了画面 金木研"
+                  },
+                  {
+                    "value": "choice-2",
+                    "labelZh": "亜門鋼太朗&真戸暁 L 東京喰種 AT終了画面 亜門鋼太朗&真戸暁｜奇数示唆",
+                    "labelJa": "亜門鋼太朗&真戸暁 L 東京喰種 AT終了画面 亜門鋼太朗&真戸暁"
+                  },
+                  {
+                    "value": "choice-3",
+                    "labelZh": "鈴屋什造&篠原幸紀 L 東京喰種 AT終了画面 鈴屋什造&篠原幸紀｜偶数示唆",
+                    "labelJa": "鈴屋什造&篠原幸紀 L 東京喰種 AT終了画面 鈴屋什造&篠原幸紀"
+                  },
+                  {
+                    "value": "choice-4",
+                    "labelZh": "神代利世 L 東京喰種 AT終了画面 神代利世｜設定1否定",
+                    "labelJa": "神代利世 L 東京喰種 AT終了画面 神代利世"
+                  },
+                  {
+                    "value": "choice-5",
+                    "labelZh": "笛口雛実&笛口リョーコ L 東京喰種 AT終了画面 笛口雛実&笛口リョーコ｜高設定示唆（弱）",
+                    "labelJa": "笛口雛実&笛口リョーコ L 東京喰種 AT終了画面 笛口雛実&笛口リョーコ"
+                  },
+                  {
+                    "value": "choice-6",
+                    "labelZh": "ウタ&イトリ&四方蓮示 L 東京喰種 AT終了画面 ウタ&イトリ&四方蓮示｜高設定示唆（強）",
+                    "labelJa": "ウタ&イトリ&四方蓮示 L 東京喰種 AT終了画面 ウタ&イトリ&四方蓮示"
+                  },
+                  {
+                    "value": "choice-7",
+                    "labelZh": "金木研&霧嶋董香 L 東京喰種 AT終了画面 金木研&霧嶋董香｜設定4以上",
+                    "labelJa": "金木研&霧嶋董香 L 東京喰種 AT終了画面 金木研&霧嶋董香"
+                  },
+                  {
+                    "value": "choice-8",
+                    "labelZh": "あんていく全員集合 L 東京喰種 AT終了画面 あんていく全員集合｜設定6",
+                    "labelJa": "あんていく全員集合 L 東京喰種 AT終了画面 あんていく全員集合"
+                  }
+                ]
+              }
+            ],
+            "gameTrackers": [
+              {
+                "key": "dataGame",
+                "labelZh": "資料 G",
+                "labelJa": "データ G",
+                "primary": true,
+                "quickAdd": 10
+              },
+              {
+                "key": "lcdGame",
+                "labelZh": "液晶 G",
+                "labelJa": "液晶 G",
+                "primary": false
+              }
+            ],
+            "nightHunterFields": [
+              {
+                "key": "currentG",
+                "labelZh": "現在 G",
+                "labelJa": "現在 G",
+                "inputType": "number",
+                "placeholder": "0"
+              },
+              {
+                "key": "budgetYen",
+                "labelZh": "剩餘單台預算",
+                "labelJa": "残り予算",
+                "inputType": "number",
+                "placeholder": "¥"
+              },
+              {
+                "key": "leaveAt",
+                "labelZh": "預計離店時間",
+                "labelJa": "退店予定",
+                "inputType": "time",
+                "placeholder": ""
+              }
+            ],
+            "initialHitMetrics": [
+              {
+                "metricKey": "czInitialRate",
+                "counterKey": "cz",
+                "labelZh": "CZ 初當率",
+                "labelJa": "CZ 初当り",
+                "denominatorMetricKey": "observedNormalGame"
+              },
+              {
+                "metricKey": "atInitialRate",
+                "counterKey": "at",
+                "labelZh": "AT 初當率",
+                "labelJa": "atInitialRate",
+                "denominatorMetricKey": "observedNormalGame"
+              }
+            ],
+            "measurementMetrics": [
+              {
+                "key": "observedTotalGame",
+                "labelZh": "本 Session 已觀測",
+                "labelJa": "セッション観測 G",
+                "source": {
+                  "type": "observedTotalGame"
+                }
+              },
+              {
+                "key": "observedNormalGame",
+                "labelZh": "通常狀態觀測",
+                "labelJa": "通常時観測 G",
+                "source": {
+                  "type": "observedNormalGame"
+                }
+              },
+              {
+                "key": "dataGameDelta",
+                "labelZh": "資料 G 差值",
+                "labelJa": "データ G 差分",
+                "source": {
+                  "type": "trackerDelta",
+                  "trackerKey": "dataGame"
+                }
+              }
+            ],
+            "trialRelationships": [
+              {
+                "id": "ghoul-focus-trial",
+                "trialCounterKey": "focusRole",
+                "outcomeCounterKey": "specialCue"
+              }
+            ],
+            "benchmarks": [
+              {
+                "id": "tokyo-ghoul-real-atInitialRate-v1",
+                "labelZh": "AT 初當率",
+                "labelJa": "atInitialRate",
+                "metricKey": "atInitialRate",
+                "kind": "rate",
+                "observation": {
+                  "type": "rate",
+                  "numeratorKey": "at",
+                  "denominatorMetricKey": "observedNormalGame",
+                  "valueMode": "oneIn"
+                },
+                "settingValues": {
+                  "1": 394.4,
+                  "2": 380.5,
+                  "3": 357,
+                  "4": 325.9,
+                  "5": 291.2,
+                  "6": 261.3
+                },
+                "minimumSample": 100,
+                "source": "一撃 + なな徹",
+                "updatedAt": "2026-08-27T09:52:15.911Z",
+                "verified": true,
+                "testData": false,
+                "evidenceIds": [
+                  "source-1-atInitialRate-0",
+                  "source-2-atInitialRate-0"
+                ]
+              },
+              {
+                "id": "tokyo-ghoul-real-czInitialRate-v1",
+                "labelZh": "CZ 初當率",
+                "labelJa": "czInitialRate",
+                "metricKey": "czInitialRate",
+                "kind": "rate",
+                "observation": {
+                  "type": "rate",
+                  "numeratorKey": "cz",
+                  "denominatorMetricKey": "observedNormalGame",
+                  "valueMode": "oneIn"
+                },
+                "settingValues": {
+                  "1": 262.6,
+                  "2": 255.6,
+                  "3": 246.5,
+                  "4": 233.1,
+                  "5": 216.4,
+                  "6": 203.7
+                },
+                "minimumSample": 100,
+                "source": "一撃 + なな徹",
+                "updatedAt": "2026-08-27T09:52:15.911Z",
+                "verified": true,
+                "testData": false,
+                "evidenceIds": [
+                  "source-1-czInitialRate-2",
+                  "source-2-czInitialRate-1"
+                ]
+              }
+            ],
+            "verifiedMetrics": [
+              {
+                "metricKey": "atInitialRate",
+                "value": [
+                  "設定 | AT初当り確率",
+                  "1 | 1/394.4",
+                  "2 | 1/380.5",
+                  "3 | 1/357.0",
+                  "4 | 1/325.9",
+                  "5 | 1/291.2",
+                  "6 | 1/261.3"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "agree"
+              },
+              {
+                "metricKey": "endScreenIndications",
+                "value": [
+                  "画面 | 示唆",
+                  "金木研 L 東京喰種 AT終了画面 金木研 | デフォルト",
+                  "亜門鋼太朗&真戸暁 L 東京喰種 AT終了画面 亜門鋼太朗&真戸暁 | 奇数示唆",
+                  "鈴屋什造&篠原幸紀 L 東京喰種 AT終了画面 鈴屋什造&篠原幸紀 | 偶数示唆",
+                  "神代利世 L 東京喰種 AT終了画面 神代利世 | 設定1否定",
+                  "笛口雛実&笛口リョーコ L 東京喰種 AT終了画面 笛口雛実&笛口リョーコ | 高設定示唆（弱）",
+                  "ウタ&イトリ&四方蓮示 L 東京喰種 AT終了画面 ウタ&イトリ&四方蓮示 | 高設定示唆（強）",
+                  "金木研&霧嶋董香 L 東京喰種 AT終了画面 金木研&霧嶋董香 | 設定4以上",
+                  "あんていく全員集合 L 東京喰種 AT終了画面 あんていく全員集合 | 設定6"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "conflict"
+              },
+              {
+                "metricKey": "czInitialRate",
+                "value": [
+                  "設定 | CZ出現率トータル",
+                  "1 | 1/262.6",
+                  "2 | 1/255.6",
+                  "3 | 1/246.5",
+                  "4 | 1/233.1",
+                  "5 | 1/216.4",
+                  "6 | 1/203.7"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "agree"
+              },
+              {
+                "metricKey": "weakCherryCzSuccessRate",
+                "value": [
+                  "設定 | 通常 | 高確 | 超高確",
+                  "1 | 0.27% | 0.59% | 40.27%",
+                  "2 | 0.29% | 0.63% | 現在調査中",
+                  "3 | 0.31% | 0.69% | 現在調査中",
+                  "4 | 0.33% | 0.73% | 現在調査中",
+                  "5 | 0.38% | 0.83% | 現在調査中",
+                  "6 | 0.43% | 0.95% | 現在調査中"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "incomparable"
+              },
+              {
+                "metricKey": "within100GameHitRate",
+                "value": [
+                  "設定 | 規定ゲーム数100G以内 当選率",
+                  "1 | 19.58%",
+                  "2 | 21.04%",
+                  "3 | 23.15%",
+                  "4 | 26.37%",
+                  "5 | 31.96%",
+                  "6 | 36.01%"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "agree"
+              },
+              {
+                "metricKey": "atDirectHitRate",
+                "value": [
+                  "設定 | リプレイ成立時のAT直撃抽選",
+                  "1 | 1/28460.6",
+                  "2 | 1/24453.5",
+                  "3 | 1/18093.0",
+                  "4 | 1/12019.5",
+                  "5 | 1/8615.4",
+                  "6 | 1/7036.8"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "agree"
+              },
+              {
+                "metricKey": "atReturnRate",
+                "value": [
+                  "設定 | AT引き戻し当選率",
+                  "1 | 7.81%",
+                  "2 | 7.81%",
+                  "3 | 9.38%",
+                  "4 | 10.94%",
+                  "5 | 12.50%",
+                  "6 | 15.23%"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "agree"
+              },
+              {
+                "metricKey": "lowerReplayRate",
+                "value": [
+                  "設定 | 下段リプレイ",
+                  "1 | 1/1260.3",
+                  "2 | 1/1213.6",
+                  "3 | 1/1170.3",
+                  "4 | 1/1129.9",
+                  "5 | 1/1092.3",
+                  "6 | 1/1024.0"
+                ],
+                "sourceNames": [
+                  "一撃",
+                  "なな徹"
+                ],
+                "verificationStatus": "agree"
+              },
+              {
+                "metricKey": "czEndScreenIndications",
+                "value": [
+                  "エンドカード | 示唆",
+                  "鈴屋什造 L 東京喰種 CZ終了画面（エンドカード） 鈴屋什造 | 偶数設定濃厚",
+                  "梟 L 東京喰種 CZ終了画面（エンドカード） 梟 | 設定4以上",
+                  "有馬貴将 L 東京喰種 CZ終了画面（エンドカード） 有馬貴将 | 設定6"
+                ],
+                "sourceNames": [
+                  "なな徹"
+                ],
+                "verificationStatus": "single"
+              }
+            ]
+          },
+          "profileVersion": 1,
+          "previousProfileVersion": 0,
+          "publishedAt": "2026-08-27T09:52:15.911Z",
+          "sourceDraftId": "profile-draft-tokyo-ghoul"
+        }
+      }
+    ]
+  }
+]

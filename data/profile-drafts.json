@@ -1,0 +1,1188 @@
+[
+  {
+    "id": "profile-draft-tokyo-ghoul",
+    "catalogId": "tokyo-ghoul",
+    "machineId": "tokyo-ghoul",
+    "status": "verified",
+    "basedOnStatus": "placeholder",
+    "createdAt": "2026-08-27T08:13:43.382Z",
+    "updatedAt": "2026-08-27T09:43:47.128Z",
+    "sources": [
+      {
+        "id": "source-1",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "status": "extracted",
+        "extractedEvidenceCount": 8
+      },
+      {
+        "id": "source-2",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "status": "extracted",
+        "extractedEvidenceCount": 9
+      }
+    ],
+    "evidence": [
+      {
+        "id": "source-1-atInitialRate-0",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "atInitialRate",
+        "sectionKey": "atInitialRate",
+        "extractedValue": [
+          "設定 | AT初当り確率",
+          "1 | 1/394.4",
+          "2 | 1/380.5",
+          "3 | 1/357.0",
+          "4 | 1/325.9",
+          "5 | 1/291.2",
+          "6 | 1/261.3"
+        ],
+        "rawLabel": "AT初当り確率",
+        "sectionTitle": "AT初当り確率",
+        "tableHeaders": [
+          "設定",
+          "AT初当り確率"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/394.4"
+          ],
+          [
+            "2",
+            "1/380.5"
+          ],
+          [
+            "3",
+            "1/357.0"
+          ],
+          [
+            "4",
+            "1/325.9"
+          ],
+          [
+            "5",
+            "1/291.2"
+          ],
+          [
+            "6",
+            "1/261.3"
+          ]
+        ],
+        "note": null,
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-1-endScreenIndications-1",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "endScreenIndications",
+        "sectionKey": "endScreenIndications",
+        "extractedValue": [
+          "終了画面 | 示唆内容",
+          "金木研 Ｌ 東京喰種のAT終了画面「金木研」 | 基本パターン",
+          "亜門鋼太郎＆真戸暁 Ｌ 東京喰種のAT終了画面「亜門鋼太郎＆真戸暁」 | 奇数設定 示唆",
+          "鈴屋什造＆篠原幸紀 Ｌ 東京喰種のAT終了画面「鈴屋什造＆篠原幸紀」 | 偶数設定 示唆",
+          "神代利世 Ｌ 東京喰種のAT終了画面「神代利世」 | 設定1 否定!?",
+          "笛口雛実＆笛口リョーコ Ｌ 東京喰種のAT終了画面「笛口雛実＆笛口リョーコ」 | 高設定示唆 （弱）",
+          "四方蓮示＆イトリ＆ウタ Ｌ 東京喰種のAT終了画面「四方蓮示＆イトリ＆ウタ」 | 高設定示唆 （強）",
+          "金木研＆霧嶋薫香 （金枠） Ｌ 東京喰種のAT終了画面「金木研＆霧嶋薫香」 | 設定4以上 濃厚!?",
+          "あんていく全員集合 （虹枠） Ｌ 東京喰種のAT終了画面「あんていく全員集合」 | 設定6 濃厚!?"
+        ],
+        "rawLabel": "AT終了画面",
+        "sectionTitle": "AT終了画面",
+        "tableHeaders": [
+          "終了画面",
+          "示唆内容"
+        ],
+        "rows": [
+          [
+            "金木研 Ｌ 東京喰種のAT終了画面「金木研」",
+            "基本パターン"
+          ],
+          [
+            "亜門鋼太郎＆真戸暁 Ｌ 東京喰種のAT終了画面「亜門鋼太郎＆真戸暁」",
+            "奇数設定 示唆"
+          ],
+          [
+            "鈴屋什造＆篠原幸紀 Ｌ 東京喰種のAT終了画面「鈴屋什造＆篠原幸紀」",
+            "偶数設定 示唆"
+          ],
+          [
+            "神代利世 Ｌ 東京喰種のAT終了画面「神代利世」",
+            "設定1 否定!?"
+          ],
+          [
+            "笛口雛実＆笛口リョーコ Ｌ 東京喰種のAT終了画面「笛口雛実＆笛口リョーコ」",
+            "高設定示唆 （弱）"
+          ],
+          [
+            "四方蓮示＆イトリ＆ウタ Ｌ 東京喰種のAT終了画面「四方蓮示＆イトリ＆ウタ」",
+            "高設定示唆 （強）"
+          ],
+          [
+            "金木研＆霧嶋薫香 （金枠） Ｌ 東京喰種のAT終了画面「金木研＆霧嶋薫香」",
+            "設定4以上 濃厚!?"
+          ],
+          [
+            "あんていく全員集合 （虹枠） Ｌ 東京喰種のAT終了画面「あんていく全員集合」",
+            "設定6 濃厚!?"
+          ]
+        ],
+        "note": "AT終了画面の種類に応じて設定の示唆を行っている。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "rejected"
+      },
+      {
+        "id": "source-1-czInitialRate-2",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "czInitialRate",
+        "sectionKey": "czInitialRate",
+        "extractedValue": [
+          "設定 | CZ出現率トータル",
+          "1 | 1/262.6",
+          "2 | 1/255.6",
+          "3 | 1/246.5",
+          "4 | 1/233.1",
+          "5 | 1/216.4",
+          "6 | 1/203.7"
+        ],
+        "rawLabel": "CZ出現率",
+        "sectionTitle": "CZ出現率",
+        "tableHeaders": [
+          "設定",
+          "CZ出現率トータル"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/262.6"
+          ],
+          [
+            "2",
+            "1/255.6"
+          ],
+          [
+            "3",
+            "1/246.5"
+          ],
+          [
+            "4",
+            "1/233.1"
+          ],
+          [
+            "5",
+            "1/216.4"
+          ],
+          [
+            "6",
+            "1/203.7"
+          ]
+        ],
+        "note": "※レミニセンス［CZ］と大喰いのリゼ［上位CZ］の合算値",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-1-weakCherryCzSuccessRate-3",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "weakCherryCzSuccessRate",
+        "sectionKey": "weakCherryCzSuccessRate",
+        "extractedValue": [
+          "設定 | 通常滞在時 | 高確滞在時",
+          "1 | 0.27% | 0.59%",
+          "2 | 0.29% | 0.63%",
+          "3 | 0.31% | 0.69%",
+          "4 | 0.33% | 0.73%",
+          "5 | 0.38% | 0.83%",
+          "6 | 0.43% | 0.95%"
+        ],
+        "rawLabel": "弱チェリーのCZ当選率に設定差あり!?",
+        "sectionTitle": "弱チェリーのCZ当選率に設定差あり!?",
+        "tableHeaders": [
+          "設定",
+          "通常滞在時",
+          "高確滞在時"
+        ],
+        "rows": [
+          [
+            "1",
+            "0.27%",
+            "0.59%"
+          ],
+          [
+            "2",
+            "0.29%",
+            "0.63%"
+          ],
+          [
+            "3",
+            "0.31%",
+            "0.69%"
+          ],
+          [
+            "4",
+            "0.33%",
+            "0.73%"
+          ],
+          [
+            "5",
+            "0.38%",
+            "0.83%"
+          ],
+          [
+            "6",
+            "0.43%",
+            "0.95%"
+          ]
+        ],
+        "note": "通常時の弱チェリー成立時のCZ当選率に設定差が設けられている。 設定1と6では約2倍の当選率があるため、複数回確認できれば高設定に期待できる。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "rejected"
+      },
+      {
+        "id": "source-1-within100GameHitRate-4",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "within100GameHitRate",
+        "sectionKey": "within100GameHitRate",
+        "extractedValue": [
+          "設定 | 規定ゲーム数100G以内 当選率",
+          "1 | 19.58%",
+          "2 | 21.04%",
+          "3 | 23.15%",
+          "4 | 26.37%",
+          "5 | 31.96%",
+          "6 | 36.01%"
+        ],
+        "rawLabel": "規定ゲーム数による当選率【100G以内】",
+        "sectionTitle": "規定ゲーム数による当選率【100G以内】",
+        "tableHeaders": [
+          "設定",
+          "規定ゲーム数100G以内 当選率"
+        ],
+        "rows": [
+          [
+            "1",
+            "19.58%"
+          ],
+          [
+            "2",
+            "21.04%"
+          ],
+          [
+            "3",
+            "23.15%"
+          ],
+          [
+            "4",
+            "26.37%"
+          ],
+          [
+            "5",
+            "31.96%"
+          ],
+          [
+            "6",
+            "36.01%"
+          ]
+        ],
+        "note": "規定ゲーム数【100G以内】によるCZ以上の内容当選率に設定差が設けられている。 ※朝イチ状態は除く",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-1-atDirectHitRate-5",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "atDirectHitRate",
+        "sectionKey": "atDirectHitRate",
+        "extractedValue": [
+          "設定 | リプレイ成立時のAT直撃抽選",
+          "1 | 1/28460.6",
+          "2 | 1/24453.5",
+          "3 | 1/18093.0",
+          "4 | 1/12019.5",
+          "5 | 1/8615.4",
+          "6 | 1/7036.8"
+        ],
+        "rawLabel": "AT直撃当選率",
+        "sectionTitle": "AT直撃当選率",
+        "tableHeaders": [
+          "設定",
+          "リプレイ成立時のAT直撃抽選"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/28460.6"
+          ],
+          [
+            "2",
+            "1/24453.5"
+          ],
+          [
+            "3",
+            "1/18093.0"
+          ],
+          [
+            "4",
+            "1/12019.5"
+          ],
+          [
+            "5",
+            "1/8615.4"
+          ],
+          [
+            "6",
+            "1/7036.8"
+          ]
+        ],
+        "note": "通常時のリプレイ成立時の一部でAT直撃抽選を行っており、高設定ほど当選しやすい。 また、 AT直撃は【AT引き戻し、AT天井を除くエピソードボーナス非経由以外】で当選したAT が対象になる。 ※上記はAT引き戻し、AT天井を除くエピソードボーナス非経由のAT直撃の数値",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-1-atReturnRate-6",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "atReturnRate",
+        "sectionKey": "atReturnRate",
+        "extractedValue": [
+          "設定 | AT引き戻し当選率",
+          "1 | 7.81%",
+          "2 | 7.81%",
+          "3 | 9.38%",
+          "4 | 10.94%",
+          "5 | 12.50%",
+          "6 | 15.23%"
+        ],
+        "rawLabel": "AT引き戻し当選率",
+        "sectionTitle": "AT引き戻し当選率",
+        "tableHeaders": [
+          "設定",
+          "AT引き戻し当選率"
+        ],
+        "rows": [
+          [
+            "1",
+            "7.81%"
+          ],
+          [
+            "2",
+            "7.81%"
+          ],
+          [
+            "3",
+            "9.38%"
+          ],
+          [
+            "4",
+            "10.94%"
+          ],
+          [
+            "5",
+            "12.50%"
+          ],
+          [
+            "6",
+            "15.23%"
+          ]
+        ],
+        "note": "AT引き戻し当選率は高設定ほど優遇されており、設定1と設定6では約2倍の差が設けられている。 ※引き戻し当選時はAT終了後の前兆を経由して告知される",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-1-lowerReplayRate-7",
+        "sourceName": "一撃",
+        "sourceUrl": "https://1geki.jp/slot/l_tokyoghoul/0/?utm_source=chatgpt.com",
+        "retrievedAt": "2026-08-27T08:56:19.784Z",
+        "metricKey": "lowerReplayRate",
+        "sectionKey": "lowerReplayRate",
+        "extractedValue": [
+          "設定 | 下段リプレイ",
+          "1 | 1/1260.3",
+          "2 | 1/1213.6",
+          "3 | 1/1170.3",
+          "4 | 1/1129.9",
+          "5 | 1/1092.3",
+          "6 | 1/1024.0"
+        ],
+        "rawLabel": "下段リプレイの出現率",
+        "sectionTitle": "下段リプレイの出現率",
+        "tableHeaders": [
+          "設定",
+          "下段リプレイ"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/1260.3"
+          ],
+          [
+            "2",
+            "1/1213.6"
+          ],
+          [
+            "3",
+            "1/1170.3"
+          ],
+          [
+            "4",
+            "1/1129.9"
+          ],
+          [
+            "5",
+            "1/1092.3"
+          ],
+          [
+            "6",
+            "1/1024.0"
+          ]
+        ],
+        "note": "Ｌ 東京喰種の下段リプレイの配当 赫眼状態へ移行する下段リプレイの出現率に設定差が設けられており、高設定ほど出現しやすくなっている。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-atInitialRate-0",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "atInitialRate",
+        "sectionKey": "atInitialRate",
+        "extractedValue": [
+          "設定 | AT確率",
+          "1 | 1/394.4",
+          "2 | 1/380.5",
+          "3 | 1/357.0",
+          "4 | 1/325.9",
+          "5 | 1/291.2",
+          "6 | 1/261.3"
+        ],
+        "rawLabel": "AT初当たり確率",
+        "sectionTitle": "AT初当たり確率",
+        "tableHeaders": [
+          "設定",
+          "AT確率"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/394.4"
+          ],
+          [
+            "2",
+            "1/380.5"
+          ],
+          [
+            "3",
+            "1/357.0"
+          ],
+          [
+            "4",
+            "1/325.9"
+          ],
+          [
+            "5",
+            "1/291.2"
+          ],
+          [
+            "6",
+            "1/261.3"
+          ]
+        ],
+        "note": "AT の 初当たり確率 は設定差が大きく、 設定推測を行う際のメインとなる要素。 ただし、CZ（ レミニセンス / 大喰いの利世 ）の成功率によって数値が大きくブレる可能性もあるため注意しておこう。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-czInitialRate-1",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "czInitialRate",
+        "sectionKey": "czInitialRate",
+        "extractedValue": [
+          "設定 | CZ合算確率",
+          "1 | 1/262.6",
+          "2 | 1/255.6",
+          "3 | 1/246.5",
+          "4 | 1/233.1",
+          "5 | 1/216.4",
+          "6 | 1/203.7"
+        ],
+        "rawLabel": "CZ（レミニセンス/大喰いの利世）確率",
+        "sectionTitle": "CZ（レミニセンス/大喰いの利世）確率",
+        "tableHeaders": [
+          "設定",
+          "CZ合算確率"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/262.6"
+          ],
+          [
+            "2",
+            "1/255.6"
+          ],
+          [
+            "3",
+            "1/246.5"
+          ],
+          [
+            "4",
+            "1/233.1"
+          ],
+          [
+            "5",
+            "1/216.4"
+          ],
+          [
+            "6",
+            "1/203.7"
+          ]
+        ],
+        "note": "CZ（ レミニセンス / 大喰いの利世 ）確率は高設定ほど優遇されている。 特に上位CZ「大喰いの利世」は出現率こそ高くないが、設定1と6で約2倍の設定差 があるため要注目！",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-within100GameHitRate-2",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "within100GameHitRate",
+        "sectionKey": "within100GameHitRate",
+        "extractedValue": [
+          "設定 | 当選率",
+          "1 | 19.58%",
+          "2 | 21.04%",
+          "3 | 23.15%",
+          "4 | 26.37%",
+          "5 | 31.96%",
+          "6 | 36.01%"
+        ],
+        "rawLabel": "100G以内のCZ当選率",
+        "sectionTitle": "100G以内のCZ当選率",
+        "tableHeaders": [
+          "設定",
+          "当選率"
+        ],
+        "rows": [
+          [
+            "1",
+            "19.58%"
+          ],
+          [
+            "2",
+            "21.04%"
+          ],
+          [
+            "3",
+            "23.15%"
+          ],
+          [
+            "4",
+            "26.37%"
+          ],
+          [
+            "5",
+            "31.96%"
+          ],
+          [
+            "6",
+            "36.01%"
+          ]
+        ],
+        "note": "※朝一モードを除いた平均値 高設定ほど100G+α以内でCZ（ レミニセンス / 大喰いの利世 ）などに当選しやすくなっている。 AT初当たり確率 と同様に 設定差が大きく、設定判別のメインとなる要素。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-atDirectHitRate-3",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "atDirectHitRate",
+        "sectionKey": "atDirectHitRate",
+        "extractedValue": [
+          "設定 | 確率",
+          "1 | 1/28460.6",
+          "2 | 1/24453.5",
+          "3 | 1/18093.0",
+          "4 | 1/12019.5",
+          "5 | 1/8615.4",
+          "6 | 1/7036.8"
+        ],
+        "rawLabel": "リプレイのAT直撃確率",
+        "sectionTitle": "リプレイのAT直撃確率",
+        "tableHeaders": [
+          "設定",
+          "確率"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/28460.6"
+          ],
+          [
+            "2",
+            "1/24453.5"
+          ],
+          [
+            "3",
+            "1/18093.0"
+          ],
+          [
+            "4",
+            "1/12019.5"
+          ],
+          [
+            "5",
+            "1/8615.4"
+          ],
+          [
+            "6",
+            "1/7036.8"
+          ]
+        ],
+        "note": "リプレイ成立時に AT直撃抽選 が行われる。 AT引き戻し ・ AT間天井 ・ エピソードボーナス 非経由での AT 当選が直撃 となる。特大の設定差があるためAT直撃を数回確認できた場合は粘る価値アリ！",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-atReturnRate-4",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "atReturnRate",
+        "sectionKey": "atReturnRate",
+        "extractedValue": [
+          "設定 | 当選率",
+          "1 | 7.81%",
+          "2 | 7.81%",
+          "3 | 9.38%",
+          "4 | 10.94%",
+          "5 | 12.50%",
+          "6 | 15.23%"
+        ],
+        "rawLabel": "AT引き戻し確率",
+        "sectionTitle": "AT引き戻し確率",
+        "tableHeaders": [
+          "設定",
+          "当選率"
+        ],
+        "rows": [
+          [
+            "1",
+            "7.81%"
+          ],
+          [
+            "2",
+            "7.81%"
+          ],
+          [
+            "3",
+            "9.38%"
+          ],
+          [
+            "4",
+            "10.94%"
+          ],
+          [
+            "5",
+            "12.50%"
+          ],
+          [
+            "6",
+            "15.23%"
+          ]
+        ],
+        "note": "引き戻し確率 は高設定ほど優遇されている。設定1・2と6で約2倍の設定差が存在するため、設定判別の際は引き戻しの挙動に注目しよう。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-czEndScreenIndications-5",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "czEndScreenIndications",
+        "sectionKey": "czEndScreenIndications",
+        "extractedValue": [
+          "エンドカード | 示唆",
+          "鈴屋什造 L 東京喰種 CZ終了画面（エンドカード） 鈴屋什造 | 偶数設定濃厚",
+          "梟 L 東京喰種 CZ終了画面（エンドカード） 梟 | 設定4以上",
+          "有馬貴将 L 東京喰種 CZ終了画面（エンドカード） 有馬貴将 | 設定6"
+        ],
+        "rawLabel": "CZ終了画面（エンドカード）",
+        "sectionTitle": "CZ終了画面（エンドカード）",
+        "tableHeaders": [
+          "エンドカード",
+          "示唆"
+        ],
+        "rows": [
+          [
+            "鈴屋什造 L 東京喰種 CZ終了画面（エンドカード） 鈴屋什造",
+            "偶数設定濃厚"
+          ],
+          [
+            "梟 L 東京喰種 CZ終了画面（エンドカード） 梟",
+            "設定4以上"
+          ],
+          [
+            "有馬貴将 L 東京喰種 CZ終了画面（エンドカード） 有馬貴将",
+            "設定6"
+          ]
+        ],
+        "note": "CZ（ レミニセンス / 大喰いの利世 ） 失敗時にPUSHボタンを押すと 「終了画面（エンドカード）」 が出現 し、上記3種類が出現した場合は設定示唆が行われる。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-endScreenIndications-6",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "endScreenIndications",
+        "sectionKey": "endScreenIndications",
+        "extractedValue": [
+          "画面 | 示唆",
+          "金木研 L 東京喰種 AT終了画面 金木研 | デフォルト",
+          "亜門鋼太朗&真戸暁 L 東京喰種 AT終了画面 亜門鋼太朗&真戸暁 | 奇数示唆",
+          "鈴屋什造&篠原幸紀 L 東京喰種 AT終了画面 鈴屋什造&篠原幸紀 | 偶数示唆",
+          "神代利世 L 東京喰種 AT終了画面 神代利世 | 設定1否定",
+          "笛口雛実&笛口リョーコ L 東京喰種 AT終了画面 笛口雛実&笛口リョーコ | 高設定示唆（弱）",
+          "ウタ&イトリ&四方蓮示 L 東京喰種 AT終了画面 ウタ&イトリ&四方蓮示 | 高設定示唆（強）",
+          "金木研&霧嶋董香 L 東京喰種 AT終了画面 金木研&霧嶋董香 | 設定4以上",
+          "あんていく全員集合 L 東京喰種 AT終了画面 あんていく全員集合 | 設定6"
+        ],
+        "rawLabel": "AT終了画面",
+        "sectionTitle": "AT終了画面",
+        "tableHeaders": [
+          "画面",
+          "示唆"
+        ],
+        "rows": [
+          [
+            "金木研 L 東京喰種 AT終了画面 金木研",
+            "デフォルト"
+          ],
+          [
+            "亜門鋼太朗&真戸暁 L 東京喰種 AT終了画面 亜門鋼太朗&真戸暁",
+            "奇数示唆"
+          ],
+          [
+            "鈴屋什造&篠原幸紀 L 東京喰種 AT終了画面 鈴屋什造&篠原幸紀",
+            "偶数示唆"
+          ],
+          [
+            "神代利世 L 東京喰種 AT終了画面 神代利世",
+            "設定1否定"
+          ],
+          [
+            "笛口雛実&笛口リョーコ L 東京喰種 AT終了画面 笛口雛実&笛口リョーコ",
+            "高設定示唆（弱）"
+          ],
+          [
+            "ウタ&イトリ&四方蓮示 L 東京喰種 AT終了画面 ウタ&イトリ&四方蓮示",
+            "高設定示唆（強）"
+          ],
+          [
+            "金木研&霧嶋董香 L 東京喰種 AT終了画面 金木研&霧嶋董香",
+            "設定4以上"
+          ],
+          [
+            "あんていく全員集合 L 東京喰種 AT終了画面 あんていく全員集合",
+            "設定6"
+          ]
+        ],
+        "note": "AT 終了画面の種類で設定示唆を行っている。 虹枠エフェクト付きの 「あんていく全員集合」 は設定6濃厚！",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-lowerReplayRate-7",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "lowerReplayRate",
+        "sectionKey": "lowerReplayRate",
+        "extractedValue": [
+          "設定 | 確率",
+          "1 | 1/1260.3",
+          "2 | 1/1213.6",
+          "3 | 1/1170.3",
+          "4 | 1/1129.9",
+          "5 | 1/1092.3",
+          "6 | 1/1024.0"
+        ],
+        "rawLabel": "下段リプレイ確率",
+        "sectionTitle": "下段リプレイ確率",
+        "tableHeaders": [
+          "設定",
+          "確率"
+        ],
+        "rows": [
+          [
+            "1",
+            "1/1260.3"
+          ],
+          [
+            "2",
+            "1/1213.6"
+          ],
+          [
+            "3",
+            "1/1170.3"
+          ],
+          [
+            "4",
+            "1/1129.9"
+          ],
+          [
+            "5",
+            "1/1092.3"
+          ],
+          [
+            "6",
+            "1/1024.0"
+          ]
+        ],
+        "note": "下段リプレイ確率 は高設定ほど優遇されているが、設定差自体はそこまで大きくない。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "source-2-weakCherryCzSuccessRate-8",
+        "sourceName": "なな徹",
+        "sourceUrl": "https://nana-press.com/kaiseki/machine/889/27249/",
+        "retrievedAt": "2026-08-27T08:56:34.655Z",
+        "metricKey": "weakCherryCzSuccessRate",
+        "sectionKey": "weakCherryCzSuccessRate",
+        "extractedValue": [
+          "設定 | 通常 | 高確 | 超高確",
+          "1 | 0.27% | 0.59% | 40.27%",
+          "2 | 0.29% | 0.63% | 現在調査中",
+          "3 | 0.31% | 0.69% | 現在調査中",
+          "4 | 0.33% | 0.73% | 現在調査中",
+          "5 | 0.38% | 0.83% | 現在調査中",
+          "6 | 0.43% | 0.95% | 現在調査中"
+        ],
+        "rawLabel": "弱チェリーのCZ当選率",
+        "sectionTitle": "弱チェリーのCZ当選率",
+        "tableHeaders": [
+          "設定",
+          "通常",
+          "高確",
+          "超高確"
+        ],
+        "rows": [
+          [
+            "1",
+            "0.27%",
+            "0.59%",
+            "40.27%"
+          ],
+          [
+            "2",
+            "0.29%",
+            "0.63%",
+            "現在調査中"
+          ],
+          [
+            "3",
+            "0.31%",
+            "0.69%",
+            "現在調査中"
+          ],
+          [
+            "4",
+            "0.33%",
+            "0.73%",
+            "現在調査中"
+          ],
+          [
+            "5",
+            "0.38%",
+            "0.83%",
+            "現在調査中"
+          ],
+          [
+            "6",
+            "0.43%",
+            "0.95%",
+            "現在調査中"
+          ]
+        ],
+        "note": "通常 or 高確 滞在時の弱チェリーによるCZ（ レミニセンス / 大喰いの利世 ）当選率は設定差が大きいが、設定6でも数値自体が小さいため 確認できた場合でも低設定の可能性が十分にある。",
+        "extractedFrom": "table",
+        "confidence": 0.9,
+        "reviewStatus": "approved"
+      }
+    ],
+    "metrics": [
+      {
+        "metricKey": "atInitialRate",
+        "value": [
+          "設定 | AT初当り確率",
+          "1 | 1/394.4",
+          "2 | 1/380.5",
+          "3 | 1/357.0",
+          "4 | 1/325.9",
+          "5 | 1/291.2",
+          "6 | 1/261.3"
+        ],
+        "evidenceIds": [
+          "source-1-atInitialRate-0",
+          "source-2-atInitialRate-0"
+        ],
+        "verificationStatus": "agree",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ]
+      },
+      {
+        "metricKey": "endScreenIndications",
+        "value": [
+          "画面 | 示唆",
+          "金木研 L 東京喰種 AT終了画面 金木研 | デフォルト",
+          "亜門鋼太朗&真戸暁 L 東京喰種 AT終了画面 亜門鋼太朗&真戸暁 | 奇数示唆",
+          "鈴屋什造&篠原幸紀 L 東京喰種 AT終了画面 鈴屋什造&篠原幸紀 | 偶数示唆",
+          "神代利世 L 東京喰種 AT終了画面 神代利世 | 設定1否定",
+          "笛口雛実&笛口リョーコ L 東京喰種 AT終了画面 笛口雛実&笛口リョーコ | 高設定示唆（弱）",
+          "ウタ&イトリ&四方蓮示 L 東京喰種 AT終了画面 ウタ&イトリ&四方蓮示 | 高設定示唆（強）",
+          "金木研&霧嶋董香 L 東京喰種 AT終了画面 金木研&霧嶋董香 | 設定4以上",
+          "あんていく全員集合 L 東京喰種 AT終了画面 あんていく全員集合 | 設定6"
+        ],
+        "evidenceIds": [
+          "source-1-endScreenIndications-1",
+          "source-2-endScreenIndications-6"
+        ],
+        "verificationStatus": "conflict",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ],
+        "resolutionStatus": "source_selected",
+        "resolvedAt": "2026-08-27T09:19:44.166Z",
+        "resolutionType": "source_selected",
+        "selectedEvidenceIds": [
+          "source-2-endScreenIndications-6"
+        ],
+        "rejectedEvidenceIds": [
+          "source-1-endScreenIndications-1"
+        ]
+      },
+      {
+        "metricKey": "czInitialRate",
+        "value": [
+          "設定 | CZ出現率トータル",
+          "1 | 1/262.6",
+          "2 | 1/255.6",
+          "3 | 1/246.5",
+          "4 | 1/233.1",
+          "5 | 1/216.4",
+          "6 | 1/203.7"
+        ],
+        "evidenceIds": [
+          "source-1-czInitialRate-2",
+          "source-2-czInitialRate-1"
+        ],
+        "verificationStatus": "agree",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ]
+      },
+      {
+        "metricKey": "weakCherryCzSuccessRate",
+        "value": [
+          "設定 | 通常 | 高確 | 超高確",
+          "1 | 0.27% | 0.59% | 40.27%",
+          "2 | 0.29% | 0.63% | 現在調査中",
+          "3 | 0.31% | 0.69% | 現在調査中",
+          "4 | 0.33% | 0.73% | 現在調査中",
+          "5 | 0.38% | 0.83% | 現在調査中",
+          "6 | 0.43% | 0.95% | 現在調査中"
+        ],
+        "evidenceIds": [
+          "source-1-weakCherryCzSuccessRate-3",
+          "source-2-weakCherryCzSuccessRate-8"
+        ],
+        "verificationStatus": "incomparable",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ],
+        "resolutionStatus": "source_selected",
+        "resolvedAt": "2026-08-27T09:19:48.011Z",
+        "resolutionType": "source_selected",
+        "selectedEvidenceIds": [
+          "source-2-weakCherryCzSuccessRate-8"
+        ],
+        "rejectedEvidenceIds": [
+          "source-1-weakCherryCzSuccessRate-3"
+        ]
+      },
+      {
+        "metricKey": "within100GameHitRate",
+        "value": [
+          "設定 | 規定ゲーム数100G以内 当選率",
+          "1 | 19.58%",
+          "2 | 21.04%",
+          "3 | 23.15%",
+          "4 | 26.37%",
+          "5 | 31.96%",
+          "6 | 36.01%"
+        ],
+        "evidenceIds": [
+          "source-1-within100GameHitRate-4",
+          "source-2-within100GameHitRate-2"
+        ],
+        "verificationStatus": "agree",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ]
+      },
+      {
+        "metricKey": "atDirectHitRate",
+        "value": [
+          "設定 | リプレイ成立時のAT直撃抽選",
+          "1 | 1/28460.6",
+          "2 | 1/24453.5",
+          "3 | 1/18093.0",
+          "4 | 1/12019.5",
+          "5 | 1/8615.4",
+          "6 | 1/7036.8"
+        ],
+        "evidenceIds": [
+          "source-1-atDirectHitRate-5",
+          "source-2-atDirectHitRate-3"
+        ],
+        "verificationStatus": "agree",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ]
+      },
+      {
+        "metricKey": "atReturnRate",
+        "value": [
+          "設定 | AT引き戻し当選率",
+          "1 | 7.81%",
+          "2 | 7.81%",
+          "3 | 9.38%",
+          "4 | 10.94%",
+          "5 | 12.50%",
+          "6 | 15.23%"
+        ],
+        "evidenceIds": [
+          "source-1-atReturnRate-6",
+          "source-2-atReturnRate-4"
+        ],
+        "verificationStatus": "agree",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ]
+      },
+      {
+        "metricKey": "lowerReplayRate",
+        "value": [
+          "設定 | 下段リプレイ",
+          "1 | 1/1260.3",
+          "2 | 1/1213.6",
+          "3 | 1/1170.3",
+          "4 | 1/1129.9",
+          "5 | 1/1092.3",
+          "6 | 1/1024.0"
+        ],
+        "evidenceIds": [
+          "source-1-lowerReplayRate-7",
+          "source-2-lowerReplayRate-7"
+        ],
+        "verificationStatus": "agree",
+        "sourceCount": 2,
+        "sourceNames": [
+          "一撃",
+          "なな徹"
+        ]
+      },
+      {
+        "metricKey": "czEndScreenIndications",
+        "value": [
+          "エンドカード | 示唆",
+          "鈴屋什造 L 東京喰種 CZ終了画面（エンドカード） 鈴屋什造 | 偶数設定濃厚",
+          "梟 L 東京喰種 CZ終了画面（エンドカード） 梟 | 設定4以上",
+          "有馬貴将 L 東京喰種 CZ終了画面（エンドカード） 有馬貴将 | 設定6"
+        ],
+        "evidenceIds": [
+          "source-2-czEndScreenIndications-5"
+        ],
+        "verificationStatus": "single",
+        "sourceCount": 1,
+        "sourceNames": [
+          "なな徹"
+        ]
+      }
+    ],
+    "benchmarkDrafts": [],
+    "smartCounterSuggestions": [
+      {
+        "id": "suggest-endScreenIndications",
+        "metricKey": "endScreenIndications",
+        "definition": {
+          "key": "endScreenIndications",
+          "labelZh": "結束畫面示唆",
+          "labelJa": "結束畫面示唆",
+          "type": "choice"
+        },
+        "reason": "來源資料包含設定示唆；需人工確認選項或照片規則。",
+        "approved": true
+      }
+    ]
+  }
+]
