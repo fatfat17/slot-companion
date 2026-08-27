@@ -3,7 +3,7 @@
 Last Updated: 2026-08-27
 
 ## Current Version
-**v0.2.5.1 – Verified Machine Card Presentation**
+**v0.2.5.2 – Client Image Compression for Vercel**
 
 Status：**Completed；等待人工驗收**
 
@@ -465,6 +465,34 @@ Regression QA：
 - tests：**128 / 128 passed** ✅
 - production build：Next.js webpack build ✅
 
+### v0.2.5.2 – Client Image Compression for Vercel
+Status：**Completed；等待人工驗收，尚未核准**
+
+- AI 機種辨識選圖後先在 browser client-side 解碼與壓縮，原始圖片不送往 API route
+- 最大長邊 1920px，維持直向／橫向與原始長寬比例；使用 orientation-aware browser decode
+- 輸出統一為 JPEG，初始 quality 0.82，必要時最低降至 0.75 並逐步縮小尺寸
+- 壓縮目標小於 1.9 MiB；硬上限小於 3.8 MiB，超過時阻擋辨識
+- HEIC / HEIF 若瀏覽器可解碼則轉成 JPEG；無法解碼時明確提示改用 JPEG / PNG 或先轉存
+- UI 顯示原始大小、壓縮後大小、原始尺寸、輸出尺寸與 JPEG 格式
+- client race protection：快速重選照片時，舊壓縮結果不會覆蓋新選擇
+- server-side image 上限由 8 MiB 降為 3.8 MiB，並在 `formData()` 前以 4.2 MiB request guard 檢查 Content-Length
+- 上限保留 multipart overhead，低於 Vercel Functions 官方 4.5 MB request payload ceiling
+- 未修改 AI prompt、Catalog matching、Machine Profile、Session、Setting Estimator 或既有 identity safety rules
+
+Known limitation：
+- HEIC / HEIF 支援取決於使用者瀏覽器是否具備原生解碼能力；本版本不加入大型第三方 decoder
+
+Regression QA：
+- landscape / portrait 1920px resize 與 orientation ratio ✅
+- 小圖不放大 ✅
+- HEIC / HEIF extension eligibility ✅
+- target / hard max / request ceiling boundary ✅
+- 原始與壓縮大小格式化 ✅
+- lint ✅
+- typecheck ✅
+- tests：**134 / 134 passed** ✅
+- production build：Next.js webpack build ✅
+
 ### v0.2.2.3 – Identity Precision & Debug
 - Phase 1 evidence schema 分離正式 title、franchise / IP、mode / stage 與 manufacturer mark
 - `visibleOfficialTitleCandidates` 包含文字與信心值；高信心正式 title 會啟用程式端 precision gate
@@ -543,9 +571,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 9. AI 搜到資料 ≠ Verified
 10. Approval API 不得 silent truncate；前端 batching 後仍須以 API processed count 驗證完整性
 11. Git 日常開發固定使用 `dev`；未經使用者明確驗收，不得 merge 回 `main`
+12. Vercel Function request payload 上限為 4.5 MB；辨識圖片必須在 client-side 壓縮並為 multipart overhead 保留空間
 
 ## Current Work
-**v0.2.5.1 – Verified Machine Card Presentation（Completed；等待人工驗收）**
+**v0.2.5.2 – Client Image Compression for Vercel（Completed；等待人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -567,11 +596,11 @@ Catalog 目前只負責：
 - 攻略文章全文
 
 ## Next Step
-### 等待 v0.2.5.1 人工驗收
+### 等待 v0.2.5.2 人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.1 已完成並等待使用者驗收；不自行開始下一版本。v0.2.3.1 維持核准穩定基準。
+v0.2.5.2 已完成並等待使用者驗收；不自行開始下一版本。v0.2.3.1 維持核准穩定基準。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -656,6 +685,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 v0.2.5.1 Verified Machine Card Presentation；v0.2.3.1 仍為核准穩定基準，不自行開始下一版本。**
+**驗收 v0.2.5.2 Client Image Compression for Vercel；v0.2.3.1 仍為核准穩定基準，不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
