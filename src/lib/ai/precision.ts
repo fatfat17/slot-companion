@@ -19,7 +19,13 @@ function titleAlignment(title:string,record:MachineCatalogEntry){const searchabl
 function comparableTitles(record:MachineCatalogEntry){return[record.officialNameJa,...record.aliases,record.displayNameZh].filter(Boolean).map(normalizeIdentityTitle)}
 function exactCoreTitleMatch(title:string,record:MachineCatalogEntry){const normalizedTitle=normalizeIdentityTitle(title);return normalizedTitle.length>=4&&comparableTitles(record).includes(normalizedTitle)}
 function normalizedManufacturer(value:string){return value.normalize("NFKC").toLocaleLowerCase().replace(/株式会社|有限会社|㈱|メーカー|製|ロゴ|[\s\-‐‑‒–—―ー・･·_~～!！'’"“”/／]/g,"")}
-function manufacturerConflict(evidence:CatalogVisibleEvidence,record:MachineCatalogEntry){const marks=evidence.visibleManufacturerMarks.map(normalizedManufacturer).filter(mark=>mark&&!mark.includes("不明")&&!mark.includes("unknown")&&!mark.includes("判別不可")),catalogMarks=[record.manufacturer,record.brand].map(normalizedManufacturer).filter(Boolean);return marks.length>0&&!marks.some(mark=>catalogMarks.some(catalogMark=>catalogMark.includes(mark)||mark.includes(catalogMark)))}
+function markMatchesManufacturer(mark:string,manufacturer:string){return manufacturer.includes(mark)||mark.includes(manufacturer)}
+function manufacturerConflict(evidence:CatalogVisibleEvidence,record:MachineCatalogEntry,shortlist:MachineCatalogEntry[]){
+  const marks=evidence.visibleManufacturerMarks.map(normalizedManufacturer).filter(mark=>mark&&!mark.includes("不明")&&!mark.includes("unknown")&&!mark.includes("判別不可"));
+  const catalogMarks=[record.manufacturer,record.brand].map(normalizedManufacturer).filter(Boolean),knownMarks=shortlist.flatMap(item=>[item.manufacturer,item.brand]).map(normalizedManufacturer).filter(Boolean);
+  const recognizedMarks=marks.filter(mark=>knownMarks.some(manufacturer=>markMatchesManufacturer(mark,manufacturer)));
+  return recognizedMarks.length>0&&!recognizedMarks.some(mark=>catalogMarks.some(manufacturer=>markMatchesManufacturer(mark,manufacturer)));
+}
 function uniqueExactTitleRecord(titles:Array<{text:string}>,shortlist:MachineCatalogEntry[]){const matches=shortlist.filter(record=>titles.some(title=>exactCoreTitleMatch(title.text,record)));return matches.length===1?matches[0]:undefined}
 function candidateMatchesOfficialTitle(candidate:MachineIdentificationResult["candidates"][number],titles:Array<{text:string}>){const candidateNames=[candidate.machineNameJa,candidate.machineNameZh].filter(Boolean).map(normalizeIdentityTitle);return titles.some(item=>{const title=normalizeIdentityTitle(item.text);return title.length>=4&&candidateNames.includes(title)})}
 
@@ -29,14 +35,14 @@ export function applyIdentityPrecisionGate(result:MachineIdentificationResult,ev
   const candidates=result.candidates.map(candidate=>{
     let record=candidate.matchedCatalogId?shortlist.find(item=>item.id===candidate.matchedCatalogId):undefined;
     const candidateMatchesVisibleTitle=candidateMatchesOfficialTitle(candidate,officialTitles);
-    if(deterministicRecord&&candidateMatchesVisibleTitle&&manufacturerConflict(evidence,deterministicRecord)){rejected=true;const reason=`Phase 2 rejected：圖片中的 manufacturer 與 Catalog（${deterministicRecord.manufacturer}）明確衝突。`;decisionReasons.push(reason);return{...candidate,identityBasis:"inferred" as const,confidence:Math.min(candidate.confidence,.49),reason:`${candidate.reason} ${reason}`}}
-    if(deterministicRecord&&candidateMatchesVisibleTitle&&!manufacturerConflict(evidence,deterministicRecord)){
+    if(deterministicRecord&&candidateMatchesVisibleTitle&&manufacturerConflict(evidence,deterministicRecord,shortlist)){rejected=true;const reason=`Phase 2 rejected：圖片中的 manufacturer 與 Catalog（${deterministicRecord.manufacturer}）明確衝突。`;decisionReasons.push(reason);return{...candidate,identityBasis:"inferred" as const,confidence:Math.min(candidate.confidence,.49),reason:`${candidate.reason} ${reason}`}}
+    if(deterministicRecord&&candidateMatchesVisibleTitle&&!manufacturerConflict(evidence,deterministicRecord,shortlist)){
       record=deterministicRecord;
       candidate={...candidate,machineNameJa:record.officialNameJa,machineNameZh:record.displayNameZh,manufacturer:record.manufacturer||"不明",matchedCatalogId:record.id,identityBasis:"catalog_match" as const};
       decisionReasons.push(`Deterministic accepted：移除機種類型前綴後，正式標題唯一匹配 ${record.officialNameJa}。`);
     }
     if(officialTitles.length===0)return candidate;
-    if(record&&manufacturerConflict(evidence,record)){rejected=true;const reason=`Phase 2 rejected：圖片中的 manufacturer 與 Catalog（${record.manufacturer}）明確衝突。`;decisionReasons.push(reason);return{...candidate,identityBasis:"inferred" as const,confidence:Math.min(candidate.confidence,.49),reason:`${candidate.reason} ${reason}`}}
+    if(record&&manufacturerConflict(evidence,record,shortlist)){rejected=true;const reason=`Phase 2 rejected：圖片中的 manufacturer 與 Catalog（${record.manufacturer}）明確衝突。`;decisionReasons.push(reason);return{...candidate,identityBasis:"inferred" as const,confidence:Math.min(candidate.confidence,.49),reason:`${candidate.reason} ${reason}`}}
     if(result.status!=="identified"&&!record)return candidate;
     if(!record){rejected=true;const reason="Phase 2 rejected：高信心正式標題存在，但候選沒有有效 Catalog match。";decisionReasons.push(reason);return{...candidate,identityBasis:"inferred" as const,confidence:Math.min(candidate.confidence,.49),reason:`${candidate.reason} ${reason}`}}
     const conflicts=officialTitles.filter(item=>hasVersionConflict(item.text,record.officialNameJa));

@@ -555,6 +555,7 @@ Machine Identity false-uncertain 修正（2026-08-28）：
 - deterministic recovery 僅在高信心正式 title、移除前綴後核心名稱完整相等、Catalog 唯一匹配、版本無衝突時成立
 - `L とある魔術の禁書目録2` 與 `スマスロ とある魔術の禁書目録2` 均唯一匹配 `machine-th4uhu`
 - 圖片未顯示 manufacturer，或抽取結果為「メーカー：不明」，視為缺少證據，不再誤判為 manufacturer 衝突
+- Preview QA 發現 Phase 1 亦可能將 `PACHISLOT`／`INDEX` 等非廠商文字放入 manufacturer marks；只有可對應 shortlist 已知 manufacturer／brand 的 mark 才具備衝突效力
 - 圖片明確顯示不同 manufacturer 時仍降為 `uncertain`
 - `一方通行`、續作數字、RE:2／RE:3、Roman numeral、V／V-30 與 generic GOD／DREAM／BONUS 的安全規則保持
 - 真實照片 `/Users/juicheliu/Downloads/Slot Companion 2.jpeg` localhost API QA：HTTP 200、`identified`、`matchedCatalogId=machine-th4uhu`、正式名稱 `スマスロ とある魔術の禁書目録2`、manufacturer `藤商事` ✅
@@ -562,9 +563,9 @@ Machine Identity false-uncertain 修正（2026-08-28）：
 - Catalog-only follow-up regression：`/catalog/machine-th4uhu` ✅
 - lint ✅
 - typecheck ✅
-- tests：**151 / 151 passed** ✅
+- tests：**152 / 152 passed** ✅
 - production build：Next.js webpack build ✅
-- Vercel Preview：等待本次 `dev` commit 推送後自動驗收
+- Vercel Preview `9acd7c9`：Deployment Ready，確認 source commit 正確；真實照片 HTTP request 無 413／5xx，但非廠商 mark 仍造成 false manufacturer conflict，已完成第二輪 deterministic hardening，等待新 Preview 重驗
 
 ### v0.2.2.3 – Identity Precision & Debug
 - Phase 1 evidence schema 分離正式 title、franchise / IP、mode / stage 與 manufacturer mark
