@@ -5,7 +5,7 @@ Last Updated: 2026-08-28
 ## Current Version
 **v0.2.5.2 – Client Image Compression for Vercel**
 
-Status：**v0.2.5.2 identity false-uncertain 修正完成；自動 QA 與 Preview deployment 通過，等待真實手機照片人工驗收**
+Status：**v0.2.5.2 identity false-uncertain 已解決；自動 QA、Preview deployment 與真實手機照片人工驗收均通過，等待版本核准**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -568,7 +568,11 @@ Machine Identity false-uncertain 修正（2026-08-28）：
 - Vercel Preview `9acd7c9`：Deployment Ready 且 source commit 正確；線上 QA 顯示非廠商 mark 仍可能造成 false manufacturer conflict，因此完成第二輪 deterministic hardening
 - Vercel Preview `fdbe255`：Deployment Ready，source commit 確認為 `fdbe255`，immutable URL `https://slot-companion-olak61exj-ben-liu.vercel.app` ✅
 - 原指定路徑 `/Users/juicheliu/Downloads/Slot Companion 2.jpeg` 已由使用者更正為不存在；停止自動重試，不以其他照片冒充本案例
-- 真實手機照片 Preview 驗收待使用者手動執行；目前不宣稱本案例的線上圖片辨識已通過
+- 真實手機原始照片 Vercel Preview 人工驗收通過：原始 3.52 MB（3024 × 4032）成功壓縮為 1.12 MB（1440 × 1920 JPEG）✅
+- 線上辨識結果為 `IDENTIFIED`，正確辨識 `スマスロ とある魔術の禁書目録2`，manufacturer `藤商事`、信心高 ✅
+- 成功配對 Machine Catalog，顯示並可使用「✓ 就是這台 · 查看機種資料」✅
+- 成功進入正確 Catalog Detail，資料來源顯示 P-WORLD ✅
+- 本次 false-uncertain 問題已由真實手機照片 Preview QA 確認解決 ✅
 
 ### v0.2.2.3 – Identity Precision & Debug
 - Phase 1 evidence schema 分離正式 title、franchise / IP、mode / stage 與 manufacturer mark
@@ -655,7 +659,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 
 ## Current Work
-**v0.2.5.2 – Client Image Compression for Vercel（identity false-uncertain 修正、自動 QA 與 Preview deployment 完成；等待真實手機照片人工驗收）**
+**v0.2.5.2 – Client Image Compression for Vercel（identity false-uncertain 已解決；自動 QA、Preview deployment 與真實手機照片人工驗收均通過，等待版本核准）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -677,11 +681,11 @@ Catalog 目前只負責：
 - 攻略文章全文
 
 ## Next Step
-### 等待 v0.2.5.2 真實手機照片 Preview 人工驗收
+### 等待 v0.2.5.2 版本核准／下一步討論
 
 Status：**不自行開始下一版本。**
 
-v0.2.5.2 圖片壓縮、Catalog-only production presentation、`L`／`スマスロ` false-uncertain deterministic 修正與自動 regression 均已通過；`fdbe255` Preview 已 Ready。因原指定圖片路徑已確認不存在，真實手機照片線上辨識改由使用者手動驗收，不以其他照片代替。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始 v0.2.6。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.5.2 圖片壓縮、Catalog-only production presentation、`L`／`スマスロ` false-uncertain deterministic 修正、自動 regression 與真實手機 Preview 均已通過；false-uncertain 已解決。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始 P-WORLD 機台指南、v0.2.6 或其他下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -773,6 +777,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**由使用者以原始真實手機照片在 `fdbe255` Preview 手動驗收 identified、`machine-th4uhu`、Catalog Detail 入口與無 413／5xx。**
+**等待使用者明確核准 v0.2.5.2 或討論下一步；不自行開始任何新功能。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
