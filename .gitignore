@@ -1,0 +1,11 @@
+/node_modules
+/.next
+/out
+
+# Local environment variables and secrets
+.env*
+!.env.example
+
+.DS_Store
+*.log
+work/
