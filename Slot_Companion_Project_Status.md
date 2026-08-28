@@ -54,7 +54,10 @@ v0.2.7.0 QA：
 - lint ✅；typecheck ✅；完整 tests：**215 / 215 passed** ✅
 - production build：Next.js 16.3.2 webpack build ✅
 - localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、Session、Summary route 均 HTTP 200 ✅
-- 固定 dev Preview route／互動 smoke：待本次 commit push 後確認
+- 固定 dev Preview 已確認載入 product commit `976127d`，首頁、辨識、Catalog、Catalog Detail、Guide、Session 與 Summary routes 均可正常開啟，console 無 error ✅
+- 固定 dev Preview 以 P-WORLD 10530（喰靈）重新建立指南並開始 Session 成功；畫面直接顯示 4 個快速 controls，另外 2 個收進「更多記錄（2）」✅
+- Preview 實測具名 CZ 計數後，展開更多記錄、開啟／關閉指南 drawer 與重新載入 Session，計數仍維持 1 次，route 與 Session state 未遺失 ✅
+- Session 內指南依目前「超自然災害モード」狀態顯示相關內容，並可查看基本流程、辨認方式、注意項目、按鈕時機、名詞、P-WORLD 來源與擷取時間 ✅
 
 ### v0.2.6.3 – Adaptive Session UI Foundation
 Status：**Completed；手機人工驗收通過**
@@ -923,7 +926,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.7.0 已完成實作與自動 QA；等待 localhost／固定 dev Preview smoke 與手機人工驗收**
+**v0.2.7.0 已完成實作、自動 QA、localhost 與固定 dev Preview smoke；等待手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
