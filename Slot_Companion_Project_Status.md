@@ -5,7 +5,7 @@ Last Updated: 2026-08-29
 ## Current Version
 **v0.2.6.3 – Adaptive Session UI Foundation**
 
-Status：**Completed；等待手機人工驗收**
+Status：**Completed；手機人工驗收通過**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -32,7 +32,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 ## Completed
 
 ### v0.2.6.3 – Adaptive Session UI Foundation
-Status：**Completed；等待手機人工驗收**
+Status：**Completed；手機人工驗收通過**
 
 - v0.2.6.2 capability contract 已通過產品／架構驗收；本版將 contract 接到既有單一模式 SessionScreen，未開始完整新手／老手模式
 - 有 capability snapshot 的 Session 只由 snapshot 產生 operational controls；不再無條件顯示固定 CZ、AT、特殊畫面與全部 Machine smartCounters
@@ -72,7 +72,17 @@ v0.2.6.3 手機驗收 hotfix（2026-08-29）：
 - lint ✅；typecheck ✅；完整 tests：**209 / 209 passed** ✅；production build ✅
 - localhost production smoke：`/`、`/catalog`、Catalog Detail、Guide、Session、Summary route 均 HTTP 200 ✅
 - Vercel Preview source commit `d110870`：Ready ✅
-- 固定 dev Preview `/`、`/catalog`、Catalog Detail、Guide、Session、Summary route smoke 通過，無 console error；v0.2.6.3 維持等待手機複驗 ✅
+- 固定 dev Preview `/`、`/catalog`、Catalog Detail、Guide、Session、Summary route smoke 通過，無 console error ✅
+
+v0.2.6.3 手機人工複驗（使用者確認，2026-08-29）：
+- 喰靈終了畫面 choices 已完成去重，共顯示 **8 個**不重複選項 ✅
+- 喰靈 Summary 不再顯示不適用的固定 `CZ 0`／`AT 0` ✅
+- 喰靈具名事件、BIG、REG 與終了畫面 choice 均正確保存 ✅
+- 戰國乙女 unavailable 終了畫面不再出現在 Session 或 Summary ✅
+- 戰國乙女具名 CZ／AT 計數與 Summary 顯示一致 ✅
+- G 數、通常狀態 G、Smart Counter 與 choice 均正確保存至結算頁 ✅
+- capability-driven Session 與 Summary 手機人工驗收通過 ✅
+- **v0.2.6.3 手機人工驗收通過**；完整新手／老手模式與其他下一版本仍未開始
 
 ### v0.2.6.2 – Session Capability Contract
 Status：**Completed；產品／架構驗收通過**
@@ -888,7 +898,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.6.3 手機驗收 blockers 已修正並通過本機 QA；等待固定 dev Preview 與手機複驗**
+**v0.2.6.3 已完成並通過手機人工驗收；下一版本等待產品討論**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -901,11 +911,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.6.3 hotfix 固定 dev Preview 手機複驗
+### 下一版本待產品討論
 
 Status：**不自行開始下一版本。**
 
-重新建立喰靈指南後確認終了畫面 choices 無重複，並驗證戰國乙女、喰靈、GOD 的結算頁只顯示該 Session snapshot 可操作的資料。完整新手／老手模式、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得合併 `dev` → `main`。
+v0.2.6.3 已完成 capability-driven Session／Summary 與手機人工驗收。目前不預設下一版本內容；完整新手／老手模式、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得開始新版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
