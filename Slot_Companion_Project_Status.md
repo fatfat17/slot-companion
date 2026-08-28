@@ -59,6 +59,15 @@ v0.2.7.0 QA：
 - Preview 實測具名 CZ 計數後，展開更多記錄、開啟／關閉指南 drawer 與重新載入 Session，計數仍維持 1 次，route 與 Session state 未遺失 ✅
 - Session 內指南依目前「超自然災害モード」狀態顯示相關內容，並可查看基本流程、辨認方式、注意項目、按鈕時機、名詞、P-WORLD 來源與擷取時間 ✅
 
+v0.2.7.0 Session drawer copy polish（手機驗收追加）：
+- 新增共用 player-guide selector；主要內容不再顯示「公開資料中的事件」、結構化表格數量、parser／compiler 說明、重複來源聲明或內部 section path
+- 有可靠事件時只顯示「這是什麼／看到什麼／何時記錄」；操作提示統一為「機台明確顯示『事件名』時記錄 1 次」，choice 則提示選擇對應項目，不補猜玩法
+- 沒有可靠玩法／辨認資料時分別顯示「目前尚無玩法說明」與「目前尚無辨認說明」
+- P-WORLD 來源與更新時間只在 drawer 底部集中顯示一次；「來源與資料狀態」可展開查看缺失 section、evidence 數與來源連結
+- Session snapshot 新增 optional `missingSections`／`evidence` 相容欄位；原始 sourceUrl、retrievedAt、evidence 與缺失資料未刪除，Catalog Detail／完整 Machine Guide 未改動
+- 新增 3 項 selector／UI regression；完整 tests：**218 / 218 passed**，lint、typecheck、production build 均通過 ✅
+- localhost 實際建立 10530 指南與 Session：主要 drawer 無技術文字，來源／時間／資料狀態位於底部；切換到具名 CZ 後「現在看什麼」正確更新，計數仍保存 ✅
+
 ### v0.2.6.3 – Adaptive Session UI Foundation
 Status：**Completed；手機人工驗收通過**
 
@@ -926,7 +935,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.7.0 已完成實作、自動 QA、localhost 與固定 dev Preview smoke；等待手機人工驗收**
+**v0.2.7.0 已完成實作與 Session drawer copy polish；自動 QA、localhost smoke 通過，等待固定 dev Preview 快速複驗與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -939,11 +948,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.7.0 固定 dev Preview 手機人工驗收
+### v0.2.7.0 固定 dev Preview copy polish 快速複驗與手機人工驗收
 
 Status：**不自行開始下一版本。**
 
-驗證快速記錄前四項／更多記錄、choice 與 −1 修正、目前 state 指南內容、drawer 關閉後 Session 保存，以及舊 Session fallback。第一次玩／快速開始／完整記錄模式、照片保存、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得開始新版本或合併 `dev` → `main`。
+驗證主要指南不再出現 parser／compiler／結構化表格技術文案，來源與更新時間集中在底部、資料狀態可展開，並複驗快速記錄、目前 state 指南內容、drawer 關閉後 Session 保存及舊 Session fallback。第一次玩／快速開始／完整記錄模式、照片保存、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得開始新版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

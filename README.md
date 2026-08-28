@@ -30,7 +30,7 @@ pnpm dev
 - Session 開始時會保存當下的 capability、狀態與 Machine snapshot；日後指南更新不會靜默改寫既有 Session。
 - Session UI 與 Summary 已由 capability snapshot 產生；read-only／unavailable 項目只留在指南參考，不顯示空白或無作用控制項。
 - 快速記錄優先順序固定使用 capability 種類與來源 contract 順序：具名 CZ → AT／ART → Bonus → 其他 operational event／choice，不依機台名稱猜測。
-- 新建立的 Session snapshot 會保存精簡結構化指南，不包含 P-WORLD 圖片；舊 Session 沒有此 snapshot 時安全顯示「尚無資料」。
+- 新建立的 Session snapshot 會保存精簡結構化指南與可追溯 evidence，不包含 P-WORLD 圖片；Session drawer 只顯示玩家可用的玩法／辨認／記錄提示，parser、compiler 與內部 section path 集中在底部資料狀態或不進入主要內容。舊 Session 沒有此 snapshot 時使用一致的簡短缺失提示。
 - 本版仍是單一操作模式；完整新手／老手模式尚未開始。
 - P-WORLD `調査中`、未公開、空白或無法確認的值維持缺失，不補猜、不當成 0。
 - 指南整理結構化事實、數值、自行撰寫的中文提示、來源 URL 與擷取時間；不保存完整攻略文章或來源圖片。
