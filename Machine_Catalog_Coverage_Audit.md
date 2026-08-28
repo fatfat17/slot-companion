@@ -261,6 +261,16 @@ compiler 只有在正文出現特定且組合完整的 deterministic signature �
 - `big_reg_bonus` 是合併 module，但 compiler events 可能是多個具名 Bonus；資料彙總規則尚未定義。
 - Guide 的 `sessionModules` 沒有被 `machineFromGuide` 保存到 Profile snapshot；目前 Session 主要消費 `smartCounters` 和固定 tracker，這是「compiler 已產生」與「可使用」之間的主要斷點。
 
+### 7.4 v0.2.6.2／v0.2.6.3 後續處理（2026-08-28）
+
+- v0.2.6.2 已將 `sessionCapabilities`、denominator contract 與 guide states 保存進新 Session 的 Machine snapshot；舊 Session 缺少 capability snapshot 時維持 legacy fallback。
+- v0.2.6.3 Session UI 改由 snapshot 產生 game-state buttons、generic action controls 與 Smart Counters，只呈現 `operational` capability。
+- 具名 CZ、AT、ART、BIG、REG 各自使用 stable observation；同一事件不再同時產生 generic 與 named control ownership，ART 不寫入 AT。
+- Set、cycle、points、CZ failures、dual games、role streak 目前仍為 read-only／planned，因此不在 Session 顯示可操作控制項。
+- 終了示唆只有來源提供可靠 choices 且 capability operational 時才顯示；空 choices 與 unavailable capability 均被過濾。
+- Estimator runtime 會再次核對 Session snapshot 的 operational numerator 與 denominator，不只依賴 compiler 產生時的 eligibility。
+- 本節記錄 contract 與單一模式 UI foundation；不代表完整新手／老手 Adaptive Session UI 已完成。
+
 ## 8. Setting Estimator Coverage
 
 ### 8.1 Profile 資料
