@@ -5,7 +5,7 @@ Last Updated: 2026-08-28
 ## Current Version
 **v0.2.6.1 – Adaptive Machine Guide Schema & Compiler**
 
-Status：**v0.2.6.1 開發完成，等待人工驗收**
+Status：**v0.2.6.1 手機 QA hotfix 完成，等待手機複驗**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -68,6 +68,21 @@ v0.2.6.1 QA：
 - Preview 由 Catalog 建立 10530 v2 guide 成功，可見新手指南、動態 Session template 與「開始玩」✅
 - Preview 建立 10473 guide 成功，依機型顯示週期到達、點數到達、CZ 失敗模組；console 無 error ✅
 - 固定 Preview：`https://slot-companion-git-dev-ben-liu.vercel.app` ✅
+
+v0.2.6.1 手機 QA hotfix（2026-08-28）：
+- 手機驗收發現戰國乙女5 將 `期待度`、`当選時に`、`本前兆中は` 等日文句子碎片誤建為 event／Smart Counter；已改為只從引號中的正式模式名與結構化 `名稱(CZ/AT/ART)について` 標題建立事件
+- 新增通用候選語意檢查：排除助詞／語法片段開頭或結尾，以及期待度、當選時、非當選時、本前兆、突入、濃厚等不可獨立觀測／計數文字；無可靠事件時允許 events 與 counters 為空
+- 戰國乙女5 真實 runtime 已確認上述七類錯誤碎片不再出現；週期、點數、CZ 失敗、AT、終了畫面模組仍保留 ✅
+- 手機驗收發現ミリオンゴッド指南混入 `#bbs` 玩家留言與投稿日期；parser 現在只解析 `#spec` 起至 `#bbs` 前的官方資料範圍，並排除留言、評論、廣告、導覽與頁尾
+- 圖片 alt 不再轉成表格值；完全相同列、完全相同表格、無有效欄名及只含重複頁名的破碎表格會被排除，不猜測空值
+- `missingSections` 改依清理後可靠 table facts 補足 AT／ART、小役、Bonus、終了畫面／設定示唆／Plate；污染內容不計入 completeness
+- 喰霊-零-Re 正向 runtime regression 保留：超自然災害モード、解放の刻、喰霊CHANCE、BIG BONUS、REG BONUS、終了畫面／設定示唆 ✅
+- ミリオンゴッド真實 runtime 不再含留言／投稿日期，且 `at_art`、`small_roles`、`special_events` 不再誤列缺失；保留 AT、Set、小役連續、終了畫面／示唆模組 ✅
+- 新增最小 TEST DATA DOM fixture；不保存完整 P-WORLD 頁面或來源圖片
+- lint ✅；typecheck ✅；tests：**170 / 170 passed** ✅；Machine Guide regression：**18 / 18 passed** ✅；production build ✅
+- localhost `/`、`/identify`、`/catalog`、Catalog Detail、Guide route：HTTP 200 ✅
+- 五個既有 P-WORLD runtime smoke 均為 schema v2 / usable，且指定留言污染檢查皆為 false ✅
+- 本 hotfix 未修改 SessionScreen 固定狀態列、Adaptive Session UI、照片辨識、雲端儲存或 Profile／Estimator 數學
 
 v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
 - 可由 Catalog 使用既有 P-WORLD sourceUrl 建立機台指南 ✅
@@ -755,9 +770,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 14. Profile Builder 是 development admin route，production build 會回 404；Production UI 不得輸出該 route 的操作連結
 15. 若未來要提供 Cloud Profile Lab，必須先完成管理者存取與可靠雲端持久儲存，不能沿用 server-side JSON 寫入假裝可用
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
+17. P-WORLD 官方解析必須以官方 DOM section 邊界為準；頁面關鍵字不足以證明是機台資料，`#bbs`、玩家留言與投稿日期不得進入 facts
+18. Machine Guide event 只有在可確認為玩家可觀察、可計數的正式模式／Bonus 名稱時才建立；寧可無 event，也不把日文句子碎片補成 Counter
 
 ## Current Work
-**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（等待人工驗收）**
+**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（手機 QA hotfix 完成，等待手機複驗）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -770,11 +787,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 等待 v0.2.6.1 Vercel Preview／手機人工驗收
+### 等待 v0.2.6.1 固定 Vercel Preview Ready／手機複驗
 
 Status：**不自行開始下一版本。**
 
-v0.2.6 的 Catalog → P-WORLD Guide → Session 手機流程已由使用者驗收。v0.2.6.1 已完成 adaptive schema/compiler、受控 Session module 選擇、明確 estimator denominator 與 v1 cache 隔離；等待固定 Preview 與手機人工驗收。雲端持久化、跨裝置同步、付費資料庫、登入／權限與批次指南建立均未實作。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始下一版本。
+v0.2.6.1 手機 QA hotfix 已修正事件碎片、掲示板污染、重複／破碎表格與 completeness 誤判；等待固定 Preview Ready 後由使用者以喰霊、戰國乙女5、ミリオンゴッド手機複驗。Adaptive Session UI、固定狀態列調整、雲端持久化與下一版本均未開始。未經使用者明確授權不得合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

@@ -3,9 +3,9 @@ import type { GuideDenominator, GuideMachineType, GuideStateType, MachineGuide, 
 import { sessionModule } from "./modules.ts";
 
 const missing=/^(調査中|未公開|不明|—|-)?$/;
-const genericNames=new Set(["CZ","AT","ART","BONUS","ボーナス"]);
+const genericNames=new Set(["CZ","AT","ART","BONUS","ボーナス","期待度","当選時","非当選時","本前兆中","突入","濃厚"]);
 function slug(value:string){return value.normalize("NFKC").toLowerCase().replace(/[^a-z0-9\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"").slice(0,48)||"event"}
-function allText(facts:ParsedMachineGuideFacts){return[facts.officialNameJa,...facts.sections.flatMap(s=>[s.titleJa,...s.paragraphsJa,...s.tables.flatMap(t=>[t.title,...t.headers,...t.rows.flat()])])].join("\n")}
+function allText(facts:ParsedMachineGuideFacts){return[facts.officialNameJa,...facts.sections.flatMap(s=>[...s.paragraphsJa,...s.tables.flatMap(t=>[t.title,...t.headers,...t.rows.flat()])])].join("\n")}
 function classify(text:string):GuideMachineType{
   if(/Aタイプ|ノーマルタイプ/.test(text)&&!/\b(?:AT|ART)\b/.test(text))return"a_type";
   if(/リアルボーナス|ボーナス.*ART|ART.*ボーナス/.test(text)&&/ART/.test(text))return"bonus_art";
@@ -19,19 +19,17 @@ function classify(text:string):GuideMachineType{
 function state(id:string,ja:string,type:GuideStateType,sourceUrl:string):MachineGuideState{return{id:`state:${id}`,displayNameZh:ja,originalNameJa:ja,type,sourceUrl}}
 function event(ja:string,category:MachineGuideEvent["category"],sourceUrl:string):MachineGuideEvent{const id=`event:${slug(ja)}`;return{id,labelZh:ja,labelJa:ja,category,whatToSee:`機台顯示「${ja}」時`,countingRule:"每次明確進入或出現時計 1 次。",sessionModuleIds:[],affectsEstimator:false,sourceUrl,unavailableReason:null}}
 function unique<T extends{id:string}>(items:T[]){return[...new Map(items.map(item=>[item.id,item])).values()]}
-function names(text:string,pattern:RegExp){return[...text.matchAll(pattern)].map(m=>(m[1]??"").trim()).filter(name=>name.length>=2&&!genericNames.has(name)&&!/について|終了画面|確率|関連/.test(name))}
+function observableName(name:string){const value=name.normalize("NFKC").replace(/^[\s「『【（(]+|[\s」』】）)]+$/g,"").trim();if(value.length<2||value.length>40||genericNames.has(value))return null;if(/^(?:の|へ|を|に|で|が|は|と|や|非当選時|当選時|本前兆中)|(?:の|へ|を|に|で|が|は|と|や|時|中|当選時|非当選時|期待度|濃厚|突入|獲得)$/.test(value))return null;if(/期待度|非当選時|当選時|当選で|本前兆中|セットストック獲得|突入濃厚|獲得濃厚/.test(value))return null;return value}
+function structuredStateNames(facts:ParsedMachineGuideFacts){const found:{name:string;category:"cz"|"at"|"art"}[]=[],text=allText(facts),titles=facts.sections.flatMap(section=>section.tables.map(table=>table.title));for(const title of titles){const match=title.match(/^(.{2,40}?)\s*\((CZ|AT|ART)\)(?:について|関連|中|$)/i),name=match&&observableName(match[1]);if(name&&match)found.push({name,category:match[2].toLowerCase() as "cz"|"at"|"art"})}for(const match of text.matchAll(/(?:CZ|AT|ART)\s*[「『]([^」』]{2,40})[」』]/giu)){const name=observableName(match[1]),category=match[0].slice(0,3).match(/^ART/i)?"art":match[0].match(/^AT/i)?"at":"cz";if(name)found.push({name,category})}for(const match of text.matchAll(/[「『]([^」』]{2,40})[」』]\s*(CZ|AT|ART)/giu)){const name=observableName(match[1]),category=match[2].toLowerCase() as "cz"|"at"|"art";if(name)found.push({name,category})}return[...new Map(found.map(item=>[`${item.category}:${item.name}`,item])).values()]}
 function deriveIdentity(facts:ParsedMachineGuideFacts,type:GuideMachineType){const text=allText(facts),source=facts.sourceUrl,states=[state("normal","通常", "normal",source)],events:MachineGuideEvent[]=[];
-  const bonusNames=names(text,/(?:^|[\s、／・])((?:[A-Z][A-Z ]{1,18}|[\p{Script=Katakana}ー]{2,16})(?:BONUS|ボーナス))/gmu);
-  const czNames=names(text,/(?:CZ|チャンスゾーン)[「『:]?\s*([\p{L}\p{N}ー・]{3,24})/gu);
-  const atNames=names(text,/(?:AT)[「『:]?\s*([\p{L}\p{N}ー・]{3,24})/gu);
-  const artNames=names(text,/(?:ART)[「『:]?\s*([\p{L}\p{N}ー・]{3,24})/gu);
+  const bonusNames=[...text.matchAll(/(?:^|[\s、／・])((?:[A-Z][A-Z ]{1,18}|[\p{Script=Katakana}ー]{2,16})(?:BONUS|ボーナス))/gmu)].map(match=>observableName(match[1])).filter((name):name is string=>Boolean(name)),structured=structuredStateNames(facts),czNames=structured.filter(item=>item.category==="cz").map(item=>item.name),atNames=structured.filter(item=>item.category==="at").map(item=>item.name),artNames=structured.filter(item=>item.category==="art").map(item=>item.name);
   for(const name of bonusNames)events.push(event(name,"bonus",source));for(const name of czNames)events.push(event(name,"cz",source));if(type!=="a_type"&&type!=="bonus_loop"&&type!=="bonus_art")for(const name of atNames)events.push(event(name,"at",source));if(type==="bonus_art"||type==="generic")for(const name of artNames)events.push(event(name,"art",source));
   if(/BIG/.test(text))events.push(event("BIG BONUS","bonus",source));if(/REG/.test(text))events.push(event("REG BONUS","bonus",source));
   if(type!=="a_type"&&type!=="bonus_loop"&&/\bCZ\b|チャンスゾーン/.test(text))states.push(state("cz",czNames[0]??"CZ","chance_zone",source));
   if(type!=="a_type"&&type!=="bonus_loop"&&type!=="bonus_art"&&/\bAT\b/.test(text))states.push(state("at",atNames[0]??"AT","at",source));
   if((type==="bonus_art"||type==="generic")&&/\bART\b/.test(text))states.push(state("art",artNames[0]??"ART","art",source));
   if(bonusNames.length||/BIG|REG|ボーナス/.test(text))states.push(state("bonus",bonusNames[0]??"Bonus","bonus",source));
-  if(/終了画面|設定示唆/.test(text))events.push(event("終了畫面／設定示唆","indication",source));
+  const hasIndicationTable=facts.sections.some(section=>section.tables.some(table=>{const structured=[table.title,...table.headers].join(" ");return/終了画面|設定示唆/.test(structured)||/プレート/.test(structured)&&/示唆/.test(structured)}));if(hasIndicationTable)events.push(event("終了畫面／設定示唆","indication",source));
   return{states:unique(states),events:unique(events)};
 }
 function parsedNumber(value:string){if(missing.test(value.trim()))return null;const ratio=value.replace(/／/g,"/").match(/1\s*\/\s*([\d.]+)/);if(ratio)return{mode:"oneIn" as const,value:Number(ratio[1])};const pct=value.replace(/％/g,"%").match(/([\d.]+)\s*%/);return pct?{mode:"probability" as const,value:Number(pct[1])/100}:null}
