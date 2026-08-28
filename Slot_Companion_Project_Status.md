@@ -5,7 +5,7 @@ Last Updated: 2026-08-28
 ## Current Version
 **v0.2.6.1 – Adaptive Machine Guide Schema & Compiler**
 
-Status：**v0.2.6.1 手機 QA hotfix 完成，等待手機複驗**
+Status：**v0.2.6.1 手機人工複驗通過**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -32,7 +32,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 ## Completed
 
 ### v0.2.6.1 – Adaptive Machine Guide Schema & Compiler
-Status：**Completed；等待人工驗收，尚未核准**
+Status：**Completed；手機人工驗收通過**
 
 - Machine Guide 升級為 schema v2；parser 只整理來源 facts，獨立 compiler 才決定機型、狀態、事件、Session 模組與 estimator eligibility
 - 支援 `a_type / bonus_art / cycle_point_at / bonus_loop / multi_zone_at / set_based_at / generic`；資料不足時安全回 `generic`
@@ -97,7 +97,16 @@ v0.2.6.1 第二次手機 QA blocker 修正（2026-08-28）：
 - localhost smoke：Catalog 建立 guide 成功；Guide 頁手動 refresh 後擷取時間更新，console 無 error ✅
 - 固定 Vercel dev Preview 已載入本次 cache revision：裝置原有舊 v2 guide 被明確標為失效並顯示重建入口；重建後可看到乾淨的喰霊具名事件與手動 refresh 按鈕 ✅
 - Preview 手動 refresh 後擷取時間由 20:40:51 更新為 20:41:01，route 維持正確且 console 無 error ✅
-- v0.2.6.1 仍等待手機複驗；Adaptive Session UI、固定狀態列、雲端同步與下一版本均未開始
+- 此項修正完成時先維持等待手機複驗；後續實際結果記錄於下方「手機人工複驗」段落
+
+v0.2.6.1 手機人工複驗（使用者確認，2026-08-28）：
+- 戰國乙女5 不再將日文句子碎片建立為 Smart Counter ✅
+- GOD 機台指南不再混入掲示板或玩家留言 ✅
+- GOD 正確提供 AT、Set、小役／圖示連續及終了畫面模組 ✅
+- Setting Estimator 在沒有 Session 樣本時正確顯示「尚未開始推測」✅
+- `compilerRevision` 快取失效與「重新整理 P-WORLD 機台指南」在手機端正常運作 ✅
+- 既有 Session 未受影響 ✅
+- **v0.2.6.1 手機人工驗收通過**；本紀錄不代表 v0.2.6.2 或 Adaptive Session UI 已開始
 
 v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
 - 可由 Catalog 使用既有 P-WORLD sourceUrl 建立機台指南 ✅
@@ -790,7 +799,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 19. MachineGuide schema version 不足以代表 parser/compiler 資料品質 revision；資料清理規則變更時必須獨立失效 guide cache，且不得連帶清除 Session 或其他 localStorage
 
 ## Current Work
-**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（第二次手機 QA cache blocker 已修正，等待手機複驗）**
+**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（手機人工複驗通過）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -803,11 +812,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 等待 v0.2.6.1 固定 Vercel Preview Ready／手機複驗
+### 下一版本待討論
 
 Status：**不自行開始下一版本。**
 
-v0.2.6.1 已補上獨立 Machine Guide compiler revision 與手動重新整理功能；舊 schema v2 cache 不再載入。等待固定 Preview Ready 後由使用者在手機重新建立喰霊、戰國乙女5、ミリオンゴッド指南並複驗。Adaptive Session UI、固定狀態列調整、雲端持久化與下一版本均未開始。未經使用者明確授權不得合併 `dev` → `main`。
+v0.2.6.1 已通過手機人工複驗。v0.2.6.2、Adaptive Session UI、固定狀態列調整、雲端持久化與其他下一階段均未開始；等待使用者明確指定後續方向。未經使用者明確授權不得合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -899,6 +908,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**完成 v0.2.6.1 dev Preview 驗證後，等待使用者進行手機驗收；不自行開始任何新功能。**
+**v0.2.6.1 手機人工驗收已通過；等待使用者討論並明確指定下一版本，不自行開始任何新功能。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
