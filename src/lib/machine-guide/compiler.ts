@@ -19,7 +19,7 @@ function classify(text:string):GuideMachineType{
 function state(id:string,ja:string,type:GuideStateType,sourceUrl:string):MachineGuideState{return{id:`state:${id}`,displayNameZh:ja,originalNameJa:ja,type,sourceUrl}}
 function event(ja:string,category:MachineGuideEvent["category"],sourceUrl:string):MachineGuideEvent{const id=`event:${slug(ja)}`;return{id,labelZh:ja,labelJa:ja,category,whatToSee:`機台顯示「${ja}」時`,countingRule:"每次明確進入或出現時計 1 次。",sessionModuleIds:[],affectsEstimator:false,sourceUrl,unavailableReason:null}}
 function unique<T extends{id:string}>(items:T[]){return[...new Map(items.map(item=>[item.id,item])).values()]}
-function names(text:string,pattern:RegExp){return[...text.matchAll(pattern)].map(m=>(m[1]??"").trim()).filter(name=>name.length>=2&&!genericNames.has(name))}
+function names(text:string,pattern:RegExp){return[...text.matchAll(pattern)].map(m=>(m[1]??"").trim()).filter(name=>name.length>=2&&!genericNames.has(name)&&!/について|終了画面|確率|関連/.test(name))}
 function deriveIdentity(facts:ParsedMachineGuideFacts,type:GuideMachineType){const text=allText(facts),source=facts.sourceUrl,states=[state("normal","通常", "normal",source)],events:MachineGuideEvent[]=[];
   const bonusNames=names(text,/(?:^|[\s、／・])((?:[A-Z][A-Z ]{1,18}|[\p{Script=Katakana}ー]{2,16})(?:BONUS|ボーナス))/gmu);
   const czNames=names(text,/(?:CZ|チャンスゾーン)[「『:]?\s*([\p{L}\p{N}ー・]{3,24})/gu);
