@@ -31,6 +31,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Machine Catalog Coverage Audit（只讀分析，2026-08-28）
+
+- 以 v0.2.6.1 手機驗收通過基準，完成 repository-local Catalog／Guide／Profile／Session／Estimator coverage audit；未請求 202 個 P-WORLD 頁面、未批次建立指南、未修改產品程式或資料
+- 正式 Catalog：202；Confirmed：5（2.5%）；Probable：20（9.9%，全部仍屬推測）；Unknown／Needs Source Analysis：177（87.6%）
+- 202 / 202 Catalog 均有 canonical P-WORLD detail URL；已有 Profile 3、Catalog-only 199；primary source URL duplicate 與 normalized official identity duplicate 均為 0
+- 現有七種 GuideMachineType 已由正式 Catalog 證明 5 種；`a_type` 目前只有 TEST DATA fixture，`generic` 是安全 fallback，不代表玩法已被確認
+- 發現主要架構斷點：compiler `sessionModules` 會顯示於 Guide，但尚未完整轉成 Session controls；Set、cycle、points、CZ failures、dual games、role streak 等不能因資料存在就宣稱 UI 已可操作
+- 發現 guide benchmark dependency 風險：TEST DATA sample 中 `bigBonus`、`art`、`guide-弱チェリー` 雖被標為 eligible，但目前 Session 沒有同 key numerator counter；需在未來產品修改前先建立 module/control 與 benchmark dependency contract
+- 建議後續以 18 個代表案例做受控來源分析，不對全部 Catalog 進行人工或網路批次驗證；Adaptive Session UI 與 v0.2.6.2 均尚未開始
+- 完整報告：`Machine_Catalog_Coverage_Audit.md`
+
 ### v0.2.6.1 – Adaptive Machine Guide Schema & Compiler
 Status：**Completed；手機人工驗收通過**
 
@@ -797,9 +808,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 17. P-WORLD 官方解析必須以官方 DOM section 邊界為準；頁面關鍵字不足以證明是機台資料，`#bbs`、玩家留言與投稿日期不得進入 facts
 18. Machine Guide event 只有在可確認為玩家可觀察、可計數的正式模式／Bonus 名稱時才建立；寧可無 event，也不把日文句子碎片補成 Counter
 19. MachineGuide schema version 不足以代表 parser/compiler 資料品質 revision；資料清理規則變更時必須獨立失效 guide cache，且不得連帶清除 Session 或其他 localStorage
+20. Catalog URL coverage（202 / 202）不等於玩法 coverage；目前正式 Catalog 只有 5 筆 Confirmed，177 筆仍需來源分析
+21. `sessionModules` 存在或顯示於 Guide 不等於 Session UI 已可操作；必須分別標示 schema、compiler、Guide UI、Session control 與人工驗收層級
+22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（手機人工複驗通過）**
+**Machine Catalog Coverage Audit 已完成；等待使用者討論 audit 結論**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -812,11 +826,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 下一版本待討論
+### 討論 Machine Catalog Coverage Audit 與代表性測試優先順序
 
 Status：**不自行開始下一版本。**
 
-v0.2.6.1 已通過手機人工複驗。v0.2.6.2、Adaptive Session UI、固定狀態列調整、雲端持久化與其他下一階段均未開始；等待使用者明確指定後續方向。未經使用者明確授權不得合併 `dev` → `main`。
+v0.2.6.1 已通過手機人工複驗，Coverage Audit 亦已完成。下一步只等待使用者討論 18 個代表案例、module/control mapping 與 benchmark dependency；v0.2.6.2、Adaptive Session UI、固定狀態列調整、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -908,6 +922,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**v0.2.6.1 手機人工驗收已通過；等待使用者討論並明確指定下一版本，不自行開始任何新功能。**
+**閱讀並討論 `Machine_Catalog_Coverage_Audit.md`；不自行開始 v0.2.6.2、Adaptive Session UI 或任何新功能。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
