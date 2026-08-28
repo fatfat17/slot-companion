@@ -94,6 +94,9 @@ v0.2.6.1 第二次手機 QA blocker 修正（2026-08-28）：
 - cache revision、v1 拒絕、Session snapshot 隔離、refresh success overwrite、refresh failure preservation 與 UI rebuild/refresh actions 均有 regression coverage
 - parser/compiler pollution、sentence-fragment、喰霊正向與 schema v2 Session snapshot regression 持續通過；此次未重新修改 production parser/compiler，僅補齊最小 TEST DATA fixture 中原測試要求但缺漏的「解放の刻」內容
 - lint ✅；typecheck ✅；tests：**176 / 176 passed** ✅；production build：Next.js 16.3.2 webpack build ✅
+- localhost smoke：Catalog 建立 guide 成功；Guide 頁手動 refresh 後擷取時間更新，console 無 error ✅
+- 固定 Vercel dev Preview 已載入本次 cache revision：裝置原有舊 v2 guide 被明確標為失效並顯示重建入口；重建後可看到乾淨的喰霊具名事件與手動 refresh 按鈕 ✅
+- Preview 手動 refresh 後擷取時間由 20:40:51 更新為 20:41:01，route 維持正確且 console 無 error ✅
 - v0.2.6.1 仍等待手機複驗；Adaptive Session UI、固定狀態列、雲端同步與下一版本均未開始
 
 v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
