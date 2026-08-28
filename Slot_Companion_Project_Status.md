@@ -3,9 +3,9 @@
 Last Updated: 2026-08-28
 
 ## Current Version
-**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler**
+**v0.2.6.2 – Session Capability Contract**
 
-Status：**v0.2.6.1 手機人工複驗通過**
+Status：**Completed；等待人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,36 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.6.2 – Session Capability Contract
+Status：**Completed；等待人工驗收**
+
+- 新增集中式、exhaustive 的 14 種 `SessionModuleKind` capability contract；新 module 未加入 mapping 時會明確失敗，不能靜默落入 generic control
+- 每個實際 module capability 保存 control type、日中 label、canonical observation key、Session write target、state effect、operational／read-only／unavailable 狀態與原因、estimator usability、choice 與 numerator／denominator dependency
+- Machine Guide compiler 現在產生 `sessionCapabilities` 與 `denominatorCapabilities`；`machineFromGuide` 將 capabilities、guide states 與來源當下 Machine 一起保存於 Session `profileSnapshot`
+- 既有 Session 沒有 capability snapshot 仍可載入；新指南或 cache 更新不會回頭改寫、重算或刪除既有 Session
+- Game State 資料模型補齊 `art / bonus / other`；本版只完成 snapshot／contract，不宣稱固定手機狀態列或 Adaptive Session UI 已完成
+- 具名 CZ／AT 使用 stable event observation；只有沒有可靠具名 CZ 時才保留 generic CZ fallback contract；ART 維持獨立 observation 與 `art` state，絕不寫入 AT
+- BIG／REG／其他 Bonus 各自保存具名 counter observation；Bonus total 定義為 derived，不另做會重複計數的按鈕
+- 終了畫面只有來源存在可靠 option table 才建立 operational choice；choices 保存 stable id、日中 label、來源說明與 reference flag，沒有 choices 時保持 unavailable
+- estimator dependency validator 同時檢查完整設定 1～6、唯一 operational numerator、operational denominator、最小樣本及重複記錄路徑；完整 table 仍可顯示，但 dependency 不完整者不進 estimator
+- audit 的三個錯誤 eligible sample 已修正：`bigBonus` 綁到具名 BIG event 後可安全使用；沒有 ART control 的 `art` 與沒有弱チェリー control 的 `guide-弱チェリー` 共 **2 個**被 validator 阻擋
+- denominator contract 已涵蓋 total games、normal games、bonus interval、cycle arrivals、point arrivals、CZ trials、AT／ART ends 與 specific trials；目前只有有實際 control 的 denominator 為 operational，其餘維持 planned／unavailable
+- 本版沒有重做 SessionScreen、沒有宣稱 Set／cycle／points／CZ failures／dual games／role streak 手機 UI 可用，也沒有開始 Adaptive Session UI
+
+Representative source analysis（2026-08-28）：
+- 依 audit 選定範圍，17 個正式 Catalog canonical P-WORLD detail URL 各依序讀取一次：17 success、0 blocked；10513 只使用最小 **TEST DATA** fixture，不冒充正式 Catalog runtime
+- coverage 最新分級：Confirmed **17**、Probable **14**、Unknown／Needs Source Analysis **171**
+- 未新增 archetype 或 module kind；六個 Probable A-type／BT 案例雖來源成功，多數仍落入 `generic`，記錄為日後跨案例 classifier signature 改善候選，不做單機 hardcode
+- 完整結果：`Machine_Catalog_Representative_Source_Analysis.md`；`Machine_Catalog_Coverage_Audit.md` 已同步更新 confirmed finding
+
+v0.2.6.2 QA：
+- capability contract、legacy Session、snapshot isolation、canonical CZ／AT／ART／Bonus、end choice、denominator 與 estimator dependency regression 已加入
+- TEST DATA fixtures 仍只用於測試，不代表真實機種資料
+- lint ✅；typecheck ✅；完整 tests：**195 / 195 passed** ✅
+- production build：Next.js 16.3.2 webpack build ✅（Turbopack 在受限執行環境無法綁定內部 CSS worker port，因此沿用專案既有 webpack production QA 路徑）
+- localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、legacy Session route 均 HTTP 200 ✅
+- 固定 Vercel dev Preview deployment／smoke 待 push 後確認
 
 ### Machine Catalog Coverage Audit（只讀分析，2026-08-28）
 
@@ -813,7 +843,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**Machine Catalog Coverage Audit 已完成；等待使用者討論 audit 結論**
+**v0.2.6.2 已完成實作；等待最終 QA 與人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -826,11 +856,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 討論 Machine Catalog Coverage Audit 與代表性測試優先順序
+### v0.2.6.2 架構驗收；Adaptive Session UI 尚未開始
 
 Status：**不自行開始下一版本。**
 
-v0.2.6.1 已通過手機人工複驗，Coverage Audit 亦已完成。下一步只等待使用者討論 18 個代表案例、module/control mapping 與 benchmark dependency；v0.2.6.2、Adaptive Session UI、固定狀態列調整、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得合併 `dev` → `main`。
+v0.2.6.1 已通過手機人工複驗；Coverage Audit 與 v0.2.6.2 capability contract／18 案例受控來源分析均已完成。下一步只等待使用者驗收本版架構；Adaptive Session UI、固定狀態列調整、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -922,6 +952,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**閱讀並討論 `Machine_Catalog_Coverage_Audit.md`；不自行開始 v0.2.6.2、Adaptive Session UI 或任何新功能。**
+**驗收 v0.2.6.2 Session Capability Contract；不自行開始 Adaptive Session UI 或任何新功能。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。

@@ -7,6 +7,16 @@ export type MachineGuideSectionKey = "features" | "play" | "flow" | "cz" | "at_a
 export type GuideStateType = "normal" | "chance_zone" | "at" | "art" | "bonus" | "special" | "entry" | "end" | "beginner" | "source";
 export type SessionModuleKind = "total_games" | "normal_games" | "big_reg_bonus" | "named_cz" | "at" | "art" | "set" | "cycle" | "points" | "cz_failures" | "dual_games" | "role_streak" | "end_evidence" | "custom_event";
 export type GuideDenominator = "total_games" | "normal_games" | "bonus_interval_games" | "cycle_arrivals" | "point_arrivals" | "cz_trials" | "at_art_ends" | "specific_trials";
+export type CapabilityStatus = "operational" | "read_only" | "unavailable";
+export type CapabilityControlType = "tracker" | "event" | "choice" | "relationship" | "derived" | "none";
+export type SessionObservationTarget = {type:"metric"|"counter"|"relationship"|"derived";key:string};
+export type SessionCapability = {
+  moduleId:string;moduleKind:SessionModuleKind;controlType:CapabilityControlType;labelZh:string;labelJa:string;
+  observationKey:string;writeTarget:SessionObservationTarget;stateEffect:import("@/types").GameState|null;
+  status:CapabilityStatus;reason:string|null;estimatorUsable:boolean;choicesRequired:boolean;choicesAvailable:boolean;
+  numeratorDependency:string|null;denominatorDependency:GuideDenominator|null;eventId?:string;
+};
+export type DenominatorCapability = {key:GuideDenominator;observationKey:string;status:"operational"|"planned"|"unavailable";requiredControl:string;requiredRelationship:string|null;reason:string|null};
 
 export type MachineGuideTable = {id:string;title:string;headers:string[];rows:string[][];note:string|null;sourceUrl:string};
 export type MachineGuideSection = {key:MachineGuideSectionKey;titleZh:string;titleJa:string;summaryZh:string|null;paragraphsJa:string[];tables:MachineGuideTable[]};
@@ -21,7 +31,7 @@ export type BeginnerGuide = {corePlay:string|null;keyThings:Array<{id:string;lab
 export type MachineGuide = {
   schemaVersion:2;catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;machineType:GuideMachineType;introducedAt:string|null;status:MachineGuideStatus;
   availability:{guide:GuideAvailability;sessionTemplate:GuideAvailability;settingEstimator:GuideAvailability;reasons:string[]};
-  beginnerGuide:BeginnerGuide;states:MachineGuideState[];recordableEvents:MachineGuideEvent[];sessionModules:MachineGuideSessionModule[];estimatorMetrics:MachineGuideMetric[];
+  beginnerGuide:BeginnerGuide;states:MachineGuideState[];recordableEvents:MachineGuideEvent[];sessionModules:MachineGuideSessionModule[];sessionCapabilities:SessionCapability[];denominatorCapabilities:DenominatorCapability[];estimatorMetrics:MachineGuideMetric[];
   sections:MachineGuideSection[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];benchmarks:SettingBenchmark[];smartCounters:CounterDefinition[];
   sourceName:"P-WORLD";sourceUrl:string;retrievedAt:string;
 };

@@ -11,7 +11,7 @@ Product baseline：v0.2.6.1（手機人工複驗通過）
 最重要的結論：
 
 - Catalog 實際共有 **202 筆**正式 records；**202 / 202（100.0%）**都有目前 provider 可接受的 canonical P-WORLD detail URL。
-- 只有 **5 筆（2.5%）**正式 Catalog 有 fixture、runtime smoke 或手機 QA 足以列為 Confirmed；另有 **20 筆（9.9%）**可依本機名稱線索保守列為 Probable `a_type`，但仍未完成來源驗證；其餘 **177 筆（87.6%）**必須標為 Unknown／Needs Source Analysis。
+- 原始只讀 audit 有 **5 筆（2.5%）** Confirmed、20 筆 Probable、177 筆 Unknown。v0.2.6.2 後續依本報告建議完成 17 個正式 Catalog canonical URL 的受控來源分析後，最新分級為 **17 Confirmed、14 Probable、171 Unknown**；詳細證據見 `Machine_Catalog_Representative_Source_Analysis.md`。
 - 現有七種 GuideMachineType 已證明能處理五種正式 Catalog 結構；`a_type` 目前只有 TEST DATA fixture，`generic` 是安全 fallback，不是已確認的玩法 archetype。
 - **不需要為每一台機器寫專屬程式。** 應以共用 archetype、來源規則與 Session module 組合涵蓋大多數機台；只有來源結構或玩法無法由既有 archetype 表達時才需要新增共用能力。
 - 最大的實際架構缺口不在 Catalog，而在 **compiler 產生的 `sessionModules` 尚未完整轉成 Session 可操作控制項**。Set、cycle、points、CZ failures、dual games、role streak 等目前主要只在指南中列出。
@@ -147,9 +147,9 @@ Provider 規則為 `https://www.p-world.co.jp/machine/database/{number}`（允�
 
 | 證據等級 | 正式 Catalog 數量 | 比例 |
 |---|---:|---:|
-| Confirmed | 5 | 2.5% |
-| Probable | 20 | 9.9% |
-| Unknown／Needs Source Analysis | 177 | 87.6% |
+| Confirmed | 17 | 8.4% |
+| Probable | 14 | 6.9% |
+| Unknown／Needs Source Analysis | 171 | 84.7% |
 | 合計 | 202 | 100.0% |
 
 ### 5.2 Confirmed 正式 Catalog
@@ -161,6 +161,18 @@ Provider 規則為 `https://www.p-world.co.jp/machine/database/{number}`（允�
 | 10508 | ヤバチバ | `bonus_loop` | fixture、runtime smoke |
 | 10485 | L からくりサーカス2 | `multi_zone_at` | fixture、runtime smoke |
 | 10424 | スマスロ ミリオンゴッド－神々の軌跡－ | `set_based_at` | fixture、runtime smoke、手機 QA |
+| 10009 | ジャグラーガールズSS | `generic` | v0.2.6.2 受控實頁分析；來源成功，A-type classifier signature 尚未命中 |
+| 9998 | スマート沖スロ ドラゴンハナハナ~閃光~ | `generic` | v0.2.6.2 受控實頁分析；來源成功，A-type classifier signature 尚未命中 |
+| 10164 | A‐SLOT+ ディスクアップ ULTRAREMIX | `generic` | v0.2.6.2 受控實頁分析 |
+| 10254 | スマスロニューパルサーBT | `generic` | v0.2.6.2 受控實頁分析 |
+| 10318 | マジカルハロウィン ボーナストリガー | `generic` | v0.2.6.2 受控實頁分析 |
+| 10383 | L不二子BT | `generic` | v0.2.6.2 受控實頁分析 |
+| 10207 | L 東京喰種 | `multi_zone_at` | v0.2.6.2 受控實頁分析 |
+| 10516 | スマスロ とある魔術の禁書目録2 | `generic` | v0.2.6.2 受控實頁分析 |
+| 10446 | スマスロ ビッグドリーム THE GOLDEN PUSHER | `multi_zone_at` | v0.2.6.2 受控實頁分析 |
+| 10368 | スマスロ 沖ドキ!DUO アンコール | `generic` | v0.2.6.2 受控實頁分析 |
+| 10471 | 戦国コレクション6 | `cycle_point_at` | v0.2.6.2 受控實頁分析 |
+| 10531 | スマスロ ストリートファイター6 | `set_based_at` | v0.2.6.2 受控實頁分析 |
 
 P-WORLD 10513 的 `a_type` 僅有最小 TEST DATA fixture；本機 Catalog 沒有 10513 record，因此不能計入 202 筆正式 Catalog 的 Confirmed 數。
 
@@ -171,21 +183,15 @@ P-WORLD 10513 的 `a_type` 僅有最小 TEST DATA fixture；本機 Catalog 沒�
 | Catalog ID | officialNameJa | P-WORLD ID |
 |---|---|---:|
 | machine-1dwft26 | ドラゴンハナハナ~閃光~ | 9980 |
-| machine-nzyfox | スマート沖スロ ドラゴンハナハナ~閃光~ | 9998 |
-| machine-1sbpobu | ジャグラーガールズSS | 10009 |
 | machine-14moq6f | アオハル♪操 A‐LIVE | 10049 |
 | machine-gw74kg | ミスタージャグラー | 10056 |
 | machine-73a4j7 | A‐SLOT+ この素晴らしい世界に祝福を! | 10081 |
 | machine-5cdl9t | ウルトラミラクルジャグラー | 10145 |
 | machine-febfi2 | スマート沖スロ スターハナハナ | 10162 |
-| machine-3q0io6 | A‐SLOT+ ディスクアップ ULTRAREMIX | 10164 |
 | machine-b91mt2 | スターハナハナ‐30 | 10143 |
-| machine-1069y1a | スマスロニューパルサーBT | 10254 |
-| machine-gb14me | マジカルハロウィン ボーナストリガー | 10318 |
 | machine-8fytrk | クレアの秘宝伝 ~はじまりの扉と太陽の石~ ボーナストリガーver. | 10325 |
 | machine-sgt9wz | ネオアイムジャグラーEX | 10269 |
 | machine-mf1b3s | SHAKE BONUS TRIGGER | 10361 |
-| machine-cmokk2 | L不二子BT | 10383 |
 | machine-1o9wfds | スマート沖スロ ニューキングハナハナV | 10374 |
 | machine-o7hm8g | ニューキングハナハナV‐30 | 10375 |
 | machine-wj7icu | A‐SLOT+ 異世界かるてっとBT | 10425 |
@@ -199,13 +205,13 @@ P-WORLD 10513 的 `a_type` 僅有最小 TEST DATA fixture；本機 Catalog 沒�
 
 | GuideMachineType | Confirmed Catalog | Probable Catalog | 本機證據與限制 |
 |---|---:|---:|---|
-| `a_type` | 0 | 20 | 10513 只有 TEST DATA fixture；20 筆依名稱線索推測 |
+| `a_type` | 0 | 14 | 10513 只有 TEST DATA fixture；其餘 14 筆依名稱線索推測 |
 | `bonus_art` | 1 | 0 | 10530 已 fixture、runtime、手機驗收 |
-| `cycle_point_at` | 1 | 0 | 10473 已 fixture、runtime、手機驗收 |
+| `cycle_point_at` | 2 | 0 | 10473、10471 已受控來源分析；10473 另有 fixture、runtime、手機驗收 |
 | `bonus_loop` | 1 | 0 | 10508 已 fixture、runtime |
-| `multi_zone_at` | 1 | 0 | 10485 已 fixture、runtime |
-| `set_based_at` | 1 | 0 | 10424 已 fixture、runtime、手機驗收 |
-| `generic` | 0 | 0 | 安全 fallback；不代表玩法已被理解 |
+| `multi_zone_at` | 3 | 0 | 10485、10207、10446 已受控來源分析 |
+| `set_based_at` | 2 | 0 | 10424、10531 已受控來源分析；10424 另有 fixture、runtime、手機驗收 |
+| `generic` | 8 | 0 | 受控來源可取得但現有 signature 未形成具體 archetype；不代表玩法已完全理解 |
 
 ### 為什麼會落入 `generic`
 

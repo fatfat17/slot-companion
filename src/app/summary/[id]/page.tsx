@@ -8,7 +8,7 @@ import { loadSessions } from "@/lib/storage";
 import type { MetricDefinition, Session } from "@/types";
 
 function duration(s:Session){const ms=new Date(s.endedAt??Date.now()).getTime()-new Date(s.startedAt).getTime();const min=Math.max(0,Math.floor(ms/60000));return `${Math.floor(min/60)} 小時 ${min%60} 分`}
-const stateLabels = { normal: "通常", prelude: "前兆", cz: "CZ", at: "AT", special: "特殊" } as const;
+const stateLabels = { normal: "通常", prelude: "前兆", cz: "CZ", at: "AT", art: "ART", bonus: "Bonus", special: "特殊", other: "其他" } as const;
 function metricValue(session:Session,definition:MetricDefinition|undefined,key:string){if(!definition)return session.metrics[key]??0;const source=definition.source;if(source.type==="trackerDelta"){const baseline=session.trackerBaselines[source.trackerKey];return baseline===undefined?0:Math.max(0,(session.trackers[source.trackerKey]??0)-baseline)}if(source.type==="custom")return session.metrics[source.sessionMetricKey]??0;return session.metrics[source.type]??0}
 export default function SummaryPage(){const {id}=useParams<{id:string}>();const [s,setS]=useState<Session>();useEffect(()=>setS(loadSessions().find(x=>x.id===id)),[id]);if(!s)return <main className="page"><div className="empty">找不到結算資料<Link href="/" className="secondary-button mt-5">回首頁</Link></div></main>;const m=s.profileSnapshot??getMachine(s.machineId);return <main className="page summary-page">
   <div className="summary-check">✓</div><p className="eyebrow text-center">SESSION COMPLETE</p><h1>結算完成</h1><p className="summary-machine">{m?.nameZh} · 台號 {s.machineNumber}</p>

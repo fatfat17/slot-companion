@@ -9,7 +9,7 @@ export type CounterDefinition = {
   recognition: string;
   reason: string;
   type: "count" | "event" | "choice" | "photo";
-  choices?: Array<{ value: string; labelZh: string; labelJa: string }>;
+  choices?: Array<{ value: string; labelZh: string; labelJa: string; sourceDescription?: string; referenceOnly?: boolean }>;
   eventState?: GameState;
   denominatorMetricKey?: string;
   parentCounterKey?: string;
@@ -95,7 +95,7 @@ export type SettingBenchmark = {
 
 export type MachineProfileStatus = "placeholder" | "draft" | "reviewed" | "verified";
 
-export type GameState = "normal" | "prelude" | "cz" | "at" | "special";
+export type GameState = "normal" | "prelude" | "cz" | "at" | "art" | "bonus" | "special" | "other";
 
 export type MachineProfile = {
   smartCounters: CounterDefinition[];
@@ -105,6 +105,9 @@ export type MachineProfile = {
   measurementMetrics: MetricDefinition[];
   trialRelationships: TrialRelationship[];
   benchmarks: SettingBenchmark[];
+  sessionCapabilities?: import("./machineGuide").SessionCapability[];
+  denominatorCapabilities?: import("./machineGuide").DenominatorCapability[];
+  guideStates?: import("./machineGuide").MachineGuideState[];
   verifiedMetrics?: Array<{metricKey:string;value:string|string[];sourceNames:string[];verificationStatus:string}>;
 };
 
