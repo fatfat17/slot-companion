@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.7.0 – Session Quick Guide & Compact Controls**
+**v0.2.7.1 – Session 使用模式入口**
 
-Status：**Completed；手機人工驗收通過**
+Status：**Completed；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,32 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.7.1 – Session 使用模式入口
+Status：**Completed；等待手機人工驗收**
+
+- Machine Guide 的「開始玩」不再直接建立 Session，先以手機友善 modal 顯示「第一次玩這台／快速開始／完整記錄」三個大型選項
+- 「第一次玩這台」先顯示基本流程、CZ、AT／ART／Bonus、最多三個注意事項與操作提示；內容只來自既有 Machine Guide／operational controls，缺失顯示「目前沒有這項說明」，可完成或略過後開始
+- 快速開始與第一次玩進入後沿用 v0.2.7.0 精簡 UI：最多直接顯示 4 個主要 controls，其餘收進「更多記錄」
+- 完整記錄直接顯示全部 operational record controls；read-only、unavailable 與空 choice 仍由既有共用 presentation model 排除
+- 三種模式共用同一個 `Session`、profile snapshot、capability contract、counter、Timeline 與 estimator；只新增 optional `mode` snapshot，不建立互不相容的資料結構
+- Session header 新增小型「模式」入口；中途切換只更新 presentation mode，不改寫 capability snapshot 或 G 數、投入、持枚、事件、choice 與 estimator observation
+- 每台機器以獨立 localStorage preference 記住最近一次模式；再次按「開始玩」仍顯示全部三項，並在最近選擇旁標示「上次使用」，不永久分類使用者
+- 舊 v0.2.7.0 Session 沒有 mode 時由 storage compatibility layer 安全回退為 `quick`；重新載入後 mode 與既有紀錄均保留
+- Session 指南入口在三種模式中共用且持續可用；未加入 P-WORLD 圖片、照片保存、雲端同步或下一版本功能
+
+Representative regression：
+- 三種模式建立相同 Session shape，具名 CZ、AT、ART、BIG、REG、choice 維持獨立 ✅
+- 快速／第一次玩最多 4 個主要 controls；完整模式顯示全部 operational controls 且無 overflow ✅
+- 每機種模式 preference 分離；中途切換與 JSON reload 不會清除 Session observation ✅
+- 舊 Session fallback、第一次玩教學與 guide snapshot 共用均通過 ✅
+
+v0.2.7.1 QA：
+- lint ✅；typecheck ✅；完整 tests：**228 / 228 passed** ✅
+- production build：Next.js 16.3.2 webpack build ✅
+- localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、records、Session、Summary route 均 HTTP 200 ✅
+- localhost 10530 實際流程：三入口與教學正常；第一次玩進入精簡 Session，完整模式直接顯示 6 個 operational controls，切回快速並 reload 後 CZ 計數仍保存，指南可開啟 ✅
+- 同機種再次開啟模式入口，最近使用的「快速開始」正確標示「上次使用」✅
 
 ### v0.2.7.0 – Session Quick Guide & Compact Controls
 Status：**Completed；手機人工驗收通過**
@@ -942,9 +968,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 21. `sessionModules` 存在或顯示於 Guide 不等於 Session UI 已可操作；必須分別標示 schema、compiler、Guide UI、Session control 與人工驗收層級
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 23. 非阻擋觀察：同一事件可能同時出現在「怎麼辨認」、「今天最值得注意」與「什麼時候按記錄」，完整 Session 指南仍可能偏長；後續應由第一次玩／快速開始／完整記錄的顯示層級處理，本版本不再繼續改動
+24. Session 使用模式只能是 presentation snapshot；切換模式不得複製或重建 capability、counter、Timeline 或 estimator observation，舊 Session 必須以 quick 安全回退
 
 ## Current Work
-**v0.2.7.0 已完成實作、Session drawer copy polish、自動 QA、Preview 與手機人工驗收**
+**v0.2.7.1 已完成實作、自動 QA 與 localhost smoke；等待固定 dev Preview 與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -957,11 +984,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 下一版本待產品討論
+### v0.2.7.1 固定 dev Preview 與手機人工驗收
 
 Status：**不自行開始下一版本。**
 
-第一次玩／快速開始／完整記錄的顯示層級、照片保存、雲端持久化與其他下一階段均未開始。等待使用者完成產品討論並明確指定下一版本；不得自行開始新功能或合併 `dev` → `main`。
+驗證三模式入口、第一次玩教學、同機種「上次使用」、快速／完整 controls、中途切換與 reload 保存、舊 Session fallback，以及三種模式的指南入口。照片保存、雲端持久化與其他下一階段均未開始；不得自行開始新功能或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

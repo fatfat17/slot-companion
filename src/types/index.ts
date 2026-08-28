@@ -140,6 +140,7 @@ export type Machine = {
 };
 
 export type SessionCounter = { sessionId: string; counterKey: string; count: number };
+export type SessionMode = "first_time" | "quick" | "full";
 
 export type CounterValue = number | string | { fileName: string; capturedAt: string };
 
@@ -175,6 +176,7 @@ export type Session = {
   status: "active" | "completed";
   counters: Record<string, CounterValue>;
   events: SessionEvent[];
+  mode?: SessionMode;
   identifiedByAI?: boolean;
   identificationConfidence?: number;
   identificationTimestamp?: string;
