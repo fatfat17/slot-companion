@@ -71,7 +71,8 @@ v0.2.6.3 手機驗收 hotfix（2026-08-29）：
 - 新增最小 duplicate ending-choice **TEST DATA** fixture；涵蓋去重與順序、戰國乙女 unavailable end evidence、喰靈 generic totals 隱藏、GOD AT／choice、snapshot reload／summary 與 legacy Session 回歸
 - lint ✅；typecheck ✅；完整 tests：**209 / 209 passed** ✅；production build ✅
 - localhost production smoke：`/`、`/catalog`、Catalog Detail、Guide、Session、Summary route 均 HTTP 200 ✅
-- 固定 dev Preview：待本次 commit push 後部署與 smoke；v0.2.6.3 維持等待手機複驗
+- Vercel Preview source commit `d110870`：Ready ✅
+- 固定 dev Preview `/`、`/catalog`、Catalog Detail、Guide、Session、Summary route smoke 通過，無 console error；v0.2.6.3 維持等待手機複驗 ✅
 
 ### v0.2.6.2 – Session Capability Contract
 Status：**Completed；產品／架構驗收通過**
