@@ -59,7 +59,9 @@ v0.2.6.2 QA：
 - lint ✅；typecheck ✅；完整 tests：**195 / 195 passed** ✅
 - production build：Next.js 16.3.2 webpack build ✅（Turbopack 在受限執行環境無法綁定內部 CSS worker port，因此沿用專案既有 webpack production QA 路徑）
 - localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、legacy Session route 均 HTTP 200 ✅
-- 固定 Vercel dev Preview deployment／smoke 待 push 後確認
+- Vercel Preview source commit `aaef54e`：Ready ✅
+- 固定 dev Preview `/`、`/identify`、`/catalog`、Catalog Detail、Guide route smoke 通過，console 無 error；舊 capability revision guide 會明確標為 stale 並提供重建入口，不影響既有 Session ✅
+- 固定 Preview：`https://slot-companion-git-dev-ben-liu.vercel.app` ✅
 
 ### Machine Catalog Coverage Audit（只讀分析，2026-08-28）
 
