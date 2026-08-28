@@ -67,6 +67,7 @@ v0.2.7.0 Session drawer copy polish（手機驗收追加）：
 - Session snapshot 新增 optional `missingSections`／`evidence` 相容欄位；原始 sourceUrl、retrievedAt、evidence 與缺失資料未刪除，Catalog Detail／完整 Machine Guide 未改動
 - 新增 3 項 selector／UI regression；完整 tests：**218 / 218 passed**，lint、typecheck、production build 均通過 ✅
 - localhost 實際建立 10530 指南與 Session：主要 drawer 無技術文字，來源／時間／資料狀態位於底部；切換到具名 CZ 後「現在看什麼」正確更新，計數仍保存 ✅
+- 固定 dev Preview source commit `120f9bf`：Ready；直接重開既有 10530 Session 後原 CZ 計數仍保存，drawer 無 parser／compiler／結構化表格技術文字，底部來源、更新時間與「來源與資料狀態」均正常 ✅
 
 ### v0.2.6.3 – Adaptive Session UI Foundation
 Status：**Completed；手機人工驗收通過**
@@ -935,7 +936,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.7.0 已完成實作與 Session drawer copy polish；自動 QA、localhost smoke 通過，等待固定 dev Preview 快速複驗與手機人工驗收**
+**v0.2.7.0 已完成實作與 Session drawer copy polish；自動 QA、localhost 與固定 dev Preview smoke 通過，等待手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
