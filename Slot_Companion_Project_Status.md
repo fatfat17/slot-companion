@@ -56,6 +56,8 @@ v0.2.7.1 QA：
 - localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、records、Session、Summary route 均 HTTP 200 ✅
 - localhost 10530 實際流程：三入口與教學正常；第一次玩進入精簡 Session，完整模式直接顯示 6 個 operational controls，切回快速並 reload 後 CZ 計數仍保存，指南可開啟 ✅
 - 同機種再次開啟模式入口，最近使用的「快速開始」正確標示「上次使用」✅
+- 固定 dev Preview source commit `0386f8b`：Ready；10530 Guide 顯示三種入口與完整第一次玩教學，無 parser／compiler／capability 內部術語 ✅
+- Preview 直接開啟既有 v0.2.7.0 Session：安全回退快速模式、既有 CZ 計數保持 1 次，模式與指南入口均正常 ✅
 
 ### v0.2.7.0 – Session Quick Guide & Compact Controls
 Status：**Completed；手機人工驗收通過**
