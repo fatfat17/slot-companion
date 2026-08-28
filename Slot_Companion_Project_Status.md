@@ -3,9 +3,9 @@
 Last Updated: 2026-08-28
 
 ## Current Version
-**v0.2.6 – P-WORLD 機台指南 MVP**
+**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler**
 
-Status：**v0.2.6 開發、本機 QA 與 Vercel Preview 自動驗收完成，等待手機人工驗收**
+Status：**v0.2.6.1 開發完成，等待人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,47 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.6.1 – Adaptive Machine Guide Schema & Compiler
+Status：**Completed；等待人工驗收，尚未核准**
+
+- Machine Guide 升級為 schema v2；parser 只整理來源 facts，獨立 compiler 才決定機型、狀態、事件、Session 模組與 estimator eligibility
+- 支援 `a_type / bonus_art / cycle_point_at / bonus_loop / multi_zone_at / set_based_at / generic`；資料不足時安全回 `generic`
+- guide、Session template、Setting Estimator 各自保存 `available / partial / unavailable` 與原因，不再用單一 Verified 門檻代表全部能力
+- 新手指南保存核心玩法、最多 5 個關鍵事件、何時記錄與日中術語；缺失欄位顯示「尚無資料」
+- 動態狀態保留 stable id、顯示名、來源原文與 `normal / chance_zone / at / art / bonus / special` 等類型；AT 與 ART 分離
+- recordable events 依來源建立，不再無條件加入 generic Bonus 或特殊演出
+- 新增固定受控 Session module library：總 G、通常 G、BIG／REG／Bonus、具名 CZ、AT、ART、Set、週期、點數、CZ 失敗、雙 G、小役／圖示連續、終了畫面／示唆與自訂事件
+- estimator metric 明確保存 numerator、denominator、適用狀態、最低樣本、設定值、來源與不可用原因；無可靠分母或無可記錄事件時只作參考，不進 estimator
+- 無 Session 樣本時 UI 顯示「尚未開始推測」，不再顯示六個 16.7% 造成假精準
+- guide Session compatibility snapshot 改用 `profileStatus: reviewed`，不再把單一來源指南誤稱為 Verified Profile；既有 Profile lifecycle 不變
+- localStorage key 升級為 `slot-companion-machine-guide-v2:`；v1 cache 不會被當成 v2 使用，需重新取得來源；既有 Session snapshot 不修改、不重算
+- 六個最小整理 fixture 均明確標示 TEST DATA，不保存完整 P-WORLD 頁面：10530、10473、10513、10508、10485、10424
+
+Reference coverage：
+- 10530 Bonus + ART：Bonus 與 ART 分離
+- 10473 週期／點數／具名 CZ → AT：選擇 cycle、points、CZ failure 模組
+- 10513 A-type：BIG／REG；不產生 CZ／AT／ART
+- 10508 擬似 Bonus loop：不套用 generic CZ／AT
+- 10485 多 CZ／AT／雙 G：優先具名 CZ 並選擇 dual-games
+- 10424 Set 管理 AT／小役連續：選擇 set 與 role-streak 模組
+
+v0.2.6.1 QA：
+- lint ✅
+- typecheck ✅
+- tests：**165 / 165 passed** ✅
+- production build：Next.js 16.3.2 webpack build ✅
+- localhost `/`、`/identify`、`/catalog`、Catalog Detail、Guide route：HTTP 200 ✅
+- parser / compiler fixtures：13 / 13 passed；包含六種機型、AT／ART 分離、可靠 denominator、missing data 與 v1 cache invalidation ✅
+- Catalog 真實來源 integration smoke：10530=`bonus_art`、10473=`cycle_point_at`、10508=`bonus_loop`、10485=`multi_zone_at`、10424=`set_based_at`，均 schema v2 / usable ✅
+- 10513 目前不在本機 Catalog，因此只用最小整理 TEST DATA fixture 驗證 A-type；尚未聲稱完成 Catalog runtime 實頁驗證
+
+v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
+- 可由 Catalog 使用既有 P-WORLD sourceUrl 建立機台指南 ✅
+- 可從 Catalog 進入並閱讀機台指南 ✅
+- 可從指南開始 Session ✅
+- 手機直向流程可操作 ✅
+- 本紀錄只代表上述實際驗證項目；不推定未測項目
 
 ### v0.2.6 – P-WORLD 機台指南 MVP
 Status：**Completed；等待人工驗收，尚未核准**
@@ -712,7 +753,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 
 ## Current Work
-**v0.2.6 – P-WORLD 機台指南 MVP（本機與 Vercel Preview 自動 QA 完成；等待手機人工驗收）**
+**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（等待人工驗收）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -725,11 +766,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 等待 v0.2.6 Vercel Preview／手機人工驗收
+### 等待 v0.2.6.1 Vercel Preview／手機人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.6 已完成 P-WORLD 單一來源機台指南、Catalog-only 建立入口、指南頁、localStorage 快取與 Session snapshot 串接。本機 QA、10530 實頁 smoke 與固定 Vercel Preview 自動驗收均已通過；尚待使用者手機驗收。雲端持久化、跨裝置同步、付費資料庫、登入／權限與批次指南建立均未實作。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始下一版本。v0.2.3.1 維持目前核准穩定基準，Production 仍維持 `main` 的 v0.2.5.1 working snapshot。
+v0.2.6 的 Catalog → P-WORLD Guide → Session 手機流程已由使用者驗收。v0.2.6.1 已完成 adaptive schema/compiler、受控 Session module 選擇、明確 estimator denominator 與 v1 cache 隔離；等待固定 Preview 與手機人工驗收。雲端持久化、跨裝置同步、付費資料庫、登入／權限與批次指南建立均未實作。未經使用者明確授權不得合併 `dev` → `main`，也不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -821,6 +862,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**完成 v0.2.6 dev Preview 驗證後，等待使用者進行手機驗收；不自行開始任何新功能。**
+**完成 v0.2.6.1 dev Preview 驗證後，等待使用者進行手機驗收；不自行開始任何新功能。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
