@@ -82,6 +82,7 @@ v0.2.6.1 手機 QA hotfix（2026-08-28）：
 - lint ✅；typecheck ✅；tests：**170 / 170 passed** ✅；Machine Guide regression：**18 / 18 passed** ✅；production build ✅
 - localhost `/`、`/identify`、`/catalog`、Catalog Detail、Guide route：HTTP 200 ✅
 - 五個既有 P-WORLD runtime smoke 均為 schema v2 / usable，且指定留言污染檢查皆為 false ✅
+- 固定 Vercel dev Preview 已完成 hotfix deployment；線上重建ミリオンゴッド指南後顯示 AT、Set、小役連續、終了畫面／示唆模組，無指定留言污染，missing 僅為實際未取得的 features／CZ／Bonus，console 無 error ✅
 - 本 hotfix 未修改 SessionScreen 固定狀態列、Adaptive Session UI、照片辨識、雲端儲存或 Profile／Estimator 數學
 
 v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
