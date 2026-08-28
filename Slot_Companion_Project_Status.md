@@ -58,7 +58,9 @@ v0.2.6.3 QA：
 - lint ✅；typecheck ✅；完整 tests：**205 / 205 passed** ✅
 - production build：Next.js 16.3.2 webpack build ✅（沿用專案既有、可在受限執行環境穩定執行的 production QA 路徑）
 - localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、Session route 均 HTTP 200 ✅
-- 固定 dev Preview deployment 與 route smoke：待本次 commit push 後確認
+- Vercel Preview source commit `1678247`：Ready ✅
+- 固定 dev Preview `/`、`/identify`、`/catalog`、Catalog Detail、Guide route smoke 通過，無 console error ✅
+- 固定 Preview：`https://slot-companion-git-dev-ben-liu.vercel.app` ✅
 
 ### v0.2.6.2 – Session Capability Contract
 Status：**Completed；產品／架構驗收通過**
@@ -874,7 +876,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.6.3 已完成實作與本機 QA；等待固定 dev Preview 與手機人工驗收**
+**v0.2.6.3 已完成實作、本機 QA 與固定 dev Preview smoke；等待手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
