@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.6.3 – Adaptive Session UI Foundation**
+**v0.2.7.0 – Session Quick Guide & Compact Controls**
 
-Status：**Completed；手機人工驗收通過**
+Status：**Completed；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,31 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.7.0 – Session Quick Guide & Compact Controls
+Status：**Completed；等待手機人工驗收**
+
+- 本版只完成單一模式的 Session 精簡操作與 Session 內機台指南；未開始第一次玩／快速開始／完整記錄模式、照片保存或下一版本
+- operational record controls 使用共用 presentation model；穩定優先順序為具名 CZ → AT／ART → Bonus → 其他 operational event／choice，同級保留 capability contract 原始順序，不依名稱猜測或建立單機例外
+- Session 直接顯示最多 4 個兩欄大型快速記錄 controls；其餘收進可展開／收合的「更多記錄（N）」；不足 4 個時不補假按鈕
+- 具名 CZ、AT、ART、BIG、REG 與其他事件仍保存獨立 observation；choice 開啟專用選單，數字事件提供 `−1 修正`
+- read-only、unavailable 與空 choices 不進快速或更多記錄；Set、cycle、points、CZ failures、dual games、role streak 等既有 Guide 參考項目不會冒充 control
+- 新 Guide Session snapshot 保存精簡結構化 `sessionGuide`：基本流程、事件、值得注意項目、名詞、來源 URL 與擷取時間；不保存、下載、代理或嵌入 P-WORLD 圖片
+- Session header 提供固定「指南」入口；drawer 不離開 route，依目前 state 優先顯示對應 CZ／AT／ART／Bonus／示唆事件，關閉後保留 Session 畫面與所有紀錄
+- 指南的「何時按記錄」只使用 snapshot capability、Counter recognition 與既有 guide event counting rule；缺失一律顯示「尚無資料」，不補猜
+- 舊 Session 沒有 capability snapshot 時保留完整 legacy Counter fallback；有 capability、但沒有新版 `sessionGuide` 的既有 Session 仍可記錄與結算，指南缺失欄位安全顯示「尚無資料」
+
+Representative regression：
+- 喰靈：operational controls 超過 4 個，穩定分成快速記錄與更多記錄；具名 CZ、ART、Bonus、choice 保持獨立 ✅
+- 戰國乙女5：只有 operational 具名 CZ／AT；cycle、points、CZ failures 與 unavailable 終了畫面不進 controls ✅
+- GOD：operational AT 與終了畫面 choice 保留；Set／role streak 不進 controls ✅
+- 事件不足 4 個的機台不補假按鈕；目前 state 的指南事件 selection、Session snapshot reload 與 legacy fallback 均通過 ✅
+
+v0.2.7.0 QA：
+- lint ✅；typecheck ✅；完整 tests：**215 / 215 passed** ✅
+- production build：Next.js 16.3.2 webpack build ✅
+- localhost production smoke：`/`、`/identify`、`/catalog`、Catalog Detail、Guide、Session、Summary route 均 HTTP 200 ✅
+- 固定 dev Preview route／互動 smoke：待本次 commit push 後確認
 
 ### v0.2.6.3 – Adaptive Session UI Foundation
 Status：**Completed；手機人工驗收通過**
@@ -898,7 +923,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 
 ## Current Work
-**v0.2.6.3 已完成並通過手機人工驗收；下一版本等待產品討論**
+**v0.2.7.0 已完成實作與自動 QA；等待 localhost／固定 dev Preview smoke 與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -911,11 +936,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 下一版本待產品討論
+### v0.2.7.0 固定 dev Preview 手機人工驗收
 
 Status：**不自行開始下一版本。**
 
-v0.2.6.3 已完成 capability-driven Session／Summary 與手機人工驗收。目前不預設下一版本內容；完整新手／老手模式、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得開始新版本或合併 `dev` → `main`。
+驗證快速記錄前四項／更多記錄、choice 與 −1 修正、目前 state 指南內容、drawer 關閉後 Session 保存，以及舊 Session fallback。第一次玩／快速開始／完整記錄模式、照片保存、雲端持久化與其他下一階段均未開始。未經使用者明確授權不得開始新版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

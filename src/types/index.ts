@@ -136,6 +136,7 @@ export type Machine = {
   sourceDraftId?: string;
   guideStatus?: "usable" | "partial";
   guideSourceUrl?: string;
+  sessionGuide?: import("./machineGuide").SessionQuickGuide;
 };
 
 export type SessionCounter = { sessionId: string; counterKey: string; count: number };
