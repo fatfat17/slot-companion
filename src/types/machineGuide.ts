@@ -26,5 +26,5 @@ export type MachineGuide = {
   sourceName:"P-WORLD";sourceUrl:string;retrievedAt:string;
 };
 export type MachineGuideApiResponse = {guide:MachineGuide}|{error:string;code:string};
-export type CachedMachineGuide = {guide:MachineGuide;cachedAt:string};
+export type CachedMachineGuide = {guide:MachineGuide;cachedAt:string;compilerRevision:string};
 export type GuideMachineSnapshot = Machine & {guideStatus:Exclude<MachineGuideStatus,"no_data">;guideSourceUrl:string};

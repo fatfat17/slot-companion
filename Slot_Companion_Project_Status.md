@@ -85,6 +85,17 @@ v0.2.6.1 手機 QA hotfix（2026-08-28）：
 - 固定 Vercel dev Preview 已完成 hotfix deployment；線上重建ミリオンゴッド指南後顯示 AT、Set、小役連續、終了畫面／示唆模組，無指定留言污染，missing 僅為實際未取得的 features／CZ／Bonus，console 無 error ✅
 - 本 hotfix 未修改 SessionScreen 固定狀態列、Adaptive Session UI、照片辨識、雲端儲存或 Profile／Estimator 數學
 
+v0.2.6.1 第二次手機 QA blocker 修正（2026-08-28）：
+- 第二次手機驗收確認裝置仍載入 parser hotfix 前已保存的 schema v2 localStorage guide；戰國乙女5 舊句子碎片與ミリオンゴッド舊留言污染因此仍出現。此現象屬快取 revision 缺口，不是新鮮 runtime parser regression
+- MachineGuide schemaVersion 維持 2；新增獨立 `compilerRevision = 2026-08-28-data-quality-1`。缺少 revision 或 revision 不一致的舊 schema v2 cache、以及既有 v1 cache，讀取時均標為 stale 並拒絕載入
+- cache invalidation 只檢查 `slot-companion-machine-guide-v2:{catalogId}` 與既有 v1 guide key；不清除、不重寫 Session、遊玩紀錄、Catalog 或任何其他 localStorage 資料
+- Catalog Detail 對 stale guide 顯示清楚原因與「重新建立 P-WORLD 機台指南」；有效 guide 顯示「重新整理 P-WORLD 機台指南」與最新擷取時間
+- Machine Guide 頁同樣提供重新建立／重新整理；刷新成功才以最新 compiler 結果覆蓋該機 guide cache，失敗則保留上一份有效 guide 並顯示錯誤
+- cache revision、v1 拒絕、Session snapshot 隔離、refresh success overwrite、refresh failure preservation 與 UI rebuild/refresh actions 均有 regression coverage
+- parser/compiler pollution、sentence-fragment、喰霊正向與 schema v2 Session snapshot regression 持續通過；此次未重新修改 production parser/compiler，僅補齊最小 TEST DATA fixture 中原測試要求但缺漏的「解放の刻」內容
+- lint ✅；typecheck ✅；tests：**176 / 176 passed** ✅；production build：Next.js 16.3.2 webpack build ✅
+- v0.2.6.1 仍等待手機複驗；Adaptive Session UI、固定狀態列、雲端同步與下一版本均未開始
+
 v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
 - 可由 Catalog 使用既有 P-WORLD sourceUrl 建立機台指南 ✅
 - 可從 Catalog 進入並閱讀機台指南 ✅
@@ -773,9 +784,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 16. 已修正手機實測 `L とある魔術の禁書目録2` 的 false uncertain：型態前綴差異可在唯一完整 core title match 時 deterministic 對應；manufacturer 缺席／不明不視為衝突，明確衝突仍維持安全降級
 17. P-WORLD 官方解析必須以官方 DOM section 邊界為準；頁面關鍵字不足以證明是機台資料，`#bbs`、玩家留言與投稿日期不得進入 facts
 18. Machine Guide event 只有在可確認為玩家可觀察、可計數的正式模式／Bonus 名稱時才建立；寧可無 event，也不把日文句子碎片補成 Counter
+19. MachineGuide schema version 不足以代表 parser/compiler 資料品質 revision；資料清理規則變更時必須獨立失效 guide cache，且不得連帶清除 Session 或其他 localStorage
 
 ## Current Work
-**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（手機 QA hotfix 完成，等待手機複驗）**
+**v0.2.6.1 – Adaptive Machine Guide Schema & Compiler（第二次手機 QA cache blocker 已修正，等待手機複驗）**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -792,7 +804,7 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 
 Status：**不自行開始下一版本。**
 
-v0.2.6.1 手機 QA hotfix 已修正事件碎片、掲示板污染、重複／破碎表格與 completeness 誤判；等待固定 Preview Ready 後由使用者以喰霊、戰國乙女5、ミリオンゴッド手機複驗。Adaptive Session UI、固定狀態列調整、雲端持久化與下一版本均未開始。未經使用者明確授權不得合併 `dev` → `main`。
+v0.2.6.1 已補上獨立 Machine Guide compiler revision 與手動重新整理功能；舊 schema v2 cache 不再載入。等待固定 Preview Ready 後由使用者在手機重新建立喰霊、戰國乙女5、ミリオンゴッド指南並複驗。Adaptive Session UI、固定狀態列調整、雲端持久化與下一版本均未開始。未經使用者明確授權不得合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
