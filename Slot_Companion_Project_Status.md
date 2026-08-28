@@ -64,6 +64,10 @@ v0.2.6.1 QA：
 - parser / compiler fixtures：13 / 13 passed；包含六種機型、AT／ART 分離、可靠 denominator、missing data 與 v1 cache invalidation ✅
 - Catalog 真實來源 integration smoke：10530=`bonus_art`、10473=`cycle_point_at`、10508=`bonus_loop`、10485=`multi_zone_at`、10424=`set_based_at`，均 schema v2 / usable ✅
 - 10513 目前不在本機 Catalog，因此只用最小整理 TEST DATA fixture 驗證 A-type；尚未聲稱完成 Catalog runtime 實頁驗證
+- 固定 Vercel dev Preview 已載入 schema v2 UI；舊 v1 cache 明確要求重建，未冒充 v2 ✅
+- Preview 由 Catalog 建立 10530 v2 guide 成功，可見新手指南、動態 Session template 與「開始玩」✅
+- Preview 建立 10473 guide 成功，依機型顯示週期到達、點數到達、CZ 失敗模組；console 無 error ✅
+- 固定 Preview：`https://slot-companion-git-dev-ben-liu.vercel.app` ✅
 
 v0.2.6 手機人工 QA（使用者確認，2026-08-28）：
 - 可由 Catalog 使用既有 P-WORLD sourceUrl 建立機台指南 ✅
