@@ -6,6 +6,20 @@ Code baseline：`dev` · v0.2.8.2 Estimator Observation Contract
 
 Scope：`data/machine-catalog.json` 全部 202 筆正式 Catalog records
 
+## Visual Guide Scale Pilot（第二批 20 台）
+
+本節是圖文資產範圍與容量 audit，不改變下方 202 台 Control／Estimator coverage 統計。可重現報告位於 `reports/visual-guide-scale-pilot.json`，由 `scripts/audit-visual-guide-pilot.ts` 從既有 Catalog ID 與 canonical P-WORLD URL 產生，不保存來源 HTML 或圖片內容。
+
+- 第二批代表機種：20 台，涵蓋 A-type、Bonus、ART、CZ→AT、多 Zone、Set／loop 與不同資料完整度。
+- P-WORLD runtime：20 / 20 成功；兩次不下載圖片的獨立 audit JSON（排除 `generatedAt`）完全一致。
+- 官方區段候選圖片：284 張；通過格式與 1 MB 單圖上限：283 張。
+- 合規圖片總量：38,452,833 bytes（約 36.67 MiB）；所有單機都低於 12 MB warning threshold。
+- Hyper Rush 有 1 張來源圖為 1,281,108 bytes，超過硬上限而被排除；系統保留 warning，不以缺失內容補猜。
+- 20 台中 11 台具至少一個符合既有 observation contract 的 estimator metric；這不是額外放寬安全門檻。
+- 本批次共用同一套 official-section parser、Control Evidence Gate、visual selector、Supabase object ownership 與 Session snapshot；沒有建立逐機 UI 或 parser 特例。
+- 雲端資產新增 versioned manifest。只有該機台本次所有圖片皆成功後，才刪除同一 Catalog ID 下不在新 manifest 的舊檔；部分失敗時跳過 cleanup，避免留下半套指南。
+- 本次僅把圖文 Pilot 擴為 25 / 202 台；其餘 177 台仍不在圖文資產 registry，不可把本節解讀為全 Catalog 長期容量或來源權利已核准。
+
 ## v0.2.8.2 Estimator Observation Contract
 
 本節是目前有效的 Estimator audit。工具連續執行兩次，兩輪皆為 202/202 來源成功，JSON 完全相同，SHA-256：`3952488d8912d305c4f583537cad3c0c0833a160e7e64f1f6f421ada74635d09`。

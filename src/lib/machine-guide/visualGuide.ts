@@ -1,16 +1,41 @@
 import { createHash } from "node:crypto";
 import type { MachineGuideImage,MachineGuideSectionKey } from "@/types/machineGuide";
 
-export const VISUAL_GUIDE_PILOT_CATALOG_IDS=[
+export const VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS=[
   "machine-1y0erql",
   "machine-1bh564g",
   "machine-u0ht3u",
   "tokyo-ghoul",
   "machine-1xl2y3d",
 ] as const;
+export const VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS=[
+  "machine-1cxlsjr",
+  "machine-1sbpobu",
+  "machine-cmokk2",
+  "machine-vrfegw",
+  "machine-yj5szs",
+  "machine-1712ndq",
+  "machine-5f0b6m",
+  "machine-th4uhu",
+  "machine-lbz92e",
+  "karakuri-2",
+  "machine-1ryjocr",
+  "million-god",
+  "machine-7bn1a1",
+  "machine-1ar2ivp",
+  "machine-nhun8m",
+  "machine-wkwdec",
+  "machine-73a4j7",
+  "machine-wmlmat",
+  "machine-9pj2ap",
+  "machine-12i4zri",
+] as const;
+export const VISUAL_GUIDE_PILOT_CATALOG_IDS=[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS] as const;
 export const VISUAL_GUIDE_MAX_IMAGES=18;
 export const VISUAL_GUIDE_MAX_IMAGE_BYTES=1_000_000;
+export const VISUAL_GUIDE_WARNING_BYTES=12_000_000;
 export const VISUAL_GUIDE_BUCKET="machine-guide-assets";
+export const VISUAL_GUIDE_ASSET_REVISION="visual-assets-2";
 
 const visualGuidePilotCatalogIds=new Set<string>(VISUAL_GUIDE_PILOT_CATALOG_IDS);
 export function isVisualGuidePilotCatalog(catalogId:string){return visualGuidePilotCatalogIds.has(catalogId)}

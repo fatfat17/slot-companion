@@ -1,0 +1,1883 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-29T19:08:36.743Z",
+  "materialize": true,
+  "summary": {
+    "pilot": "second",
+    "requested": 20,
+    "successful": 20,
+    "failed": 0,
+    "selectedImages": 284,
+    "materializedImages": 283,
+    "totalBytes": 38452833,
+    "capacityWarnings": 0,
+    "basicRecordMode": 0,
+    "estimatorEligible": 11
+  },
+  "results": [
+    {
+      "catalogId": "machine-1cxlsjr",
+      "machineName": "LBトリプルクラウンX‐300",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10542",
+      "status": "success",
+      "family": {
+        "family": "a_type",
+        "confidence": "high"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 9,
+      "materializedImageCount": 9,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 9,
+        "totalBytes": 679014,
+        "maximumImageBytes": 139079,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:07:51.068Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 2,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-1sbpobu",
+      "machineName": "ジャグラーガールズSS",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10009",
+      "status": "success",
+      "family": {
+        "family": "a_type",
+        "confidence": "high"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 5,
+      "materializedImageCount": 5,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 5,
+        "totalBytes": 711075,
+        "maximumImageBytes": 491227,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:07:52.973Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:スペシャルボーナス",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "スペシャルボーナス"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:state:state:スペシャルボーナス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "スペシャルボーナス"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 2,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-cmokk2",
+      "machineName": "L不二子BT",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10383",
+      "status": "success",
+      "family": {
+        "family": "generic",
+        "confidence": "low"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 12,
+      "materializedImageCount": 12,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 12,
+        "totalBytes": 1882164,
+        "maximumImageBytes": 772821,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:07:55.154Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-vrfegw",
+      "machineName": "パチスロ ダンジョンに出会いを求めるのは間違っているだろうか2",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10033",
+      "status": "success",
+      "family": {
+        "family": "bonus_art",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2351643,
+        "maximumImageBytes": 469808,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:07:57.827Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:ファミリアボーナス",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "ファミリアボーナス"
+        },
+        {
+          "id": "control:module:named_cz:event:戦争遊戯-ウォーゲーム",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "戦争遊戯 ウォーゲーム"
+        },
+        {
+          "id": "control:module:named_cz:event:豊穣の女神フレイヤ",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "豊穣の女神フレイヤ"
+        },
+        {
+          "id": "control:module:art:event:ファミリア-ミィス",
+          "type": "counter",
+          "eventType": "art",
+          "label": "ファミリア・ミィス"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:戦争遊戯-ウォーゲーム",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "戦争遊戯 ウォーゲーム"
+        },
+        {
+          "id": "control:state:state:豊穣の女神フレイヤ",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "豊穣の女神フレイヤ"
+        },
+        {
+          "id": "control:state:state:ファミリア-ミィス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "ファミリア・ミィス"
+        },
+        {
+          "id": "control:state:state:ファミリアボーナス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "ファミリアボーナス"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-yj5szs",
+      "machineName": "ヤバチバ",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10508",
+      "status": "success",
+      "family": {
+        "family": "bonus_loop",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 12,
+      "materializedImageCount": 12,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 12,
+        "totalBytes": 1643529,
+        "maximumImageBytes": 793580,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:00.220Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-1712ndq",
+      "machineName": "L戦国乙女5 業火を穿つ宿焔の双刃",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10473",
+      "status": "success",
+      "family": {
+        "family": "cycle_point_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2731775,
+        "maximumImageBytes": 704444,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:02.930Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:named_cz:event:乙女アタック",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "乙女アタック"
+        },
+        {
+          "id": "control:module:named_cz:event:本能寺の変",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "本能寺の変"
+        },
+        {
+          "id": "control:module:named_cz:event:剣聖chance",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "剣聖CHANCE"
+        },
+        {
+          "id": "control:module:named_cz:event:カシンバトル",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "カシンバトル"
+        },
+        {
+          "id": "control:module:at:event:強カワrush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "強カワRUSH"
+        },
+        {
+          "id": "control:module:at:event:真強カワrush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "真強カワRUSH"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:乙女アタック",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "乙女アタック"
+        },
+        {
+          "id": "control:state:state:本能寺の変",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "本能寺の変"
+        },
+        {
+          "id": "control:state:state:剣聖chance",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "剣聖CHANCE"
+        },
+        {
+          "id": "control:state:state:カシンバトル",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "カシンバトル"
+        },
+        {
+          "id": "control:state:state:強カワrush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "強カワRUSH"
+        },
+        {
+          "id": "control:state:state:真強カワrush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "真強カワRUSH"
+        }
+      ],
+      "estimatorEligibleCount": 1,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-5f0b6m",
+      "machineName": "Lパチスロ 革命機ヴァルヴレイヴ2",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10352",
+      "status": "success",
+      "family": {
+        "family": "cycle_point_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2399561,
+        "maximumImageBytes": 728138,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:05.306Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:named_cz:event:ドルシア攻防戦",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "ドルシア攻防戦"
+        },
+        {
+          "id": "control:module:named_cz:event:革命の剣",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "革命の剣"
+        },
+        {
+          "id": "control:module:at:event:革命rush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "革命RUSH"
+        },
+        {
+          "id": "control:module:at:event:超革命rush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "超革命RUSH"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:ドルシア攻防戦",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "ドルシア攻防戦"
+        },
+        {
+          "id": "control:state:state:革命の剣",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "革命の剣"
+        },
+        {
+          "id": "control:state:state:革命rush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "革命RUSH"
+        },
+        {
+          "id": "control:state:state:超革命rush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "超革命RUSH"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-th4uhu",
+      "machineName": "スマスロ とある魔術の禁書目録2",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10516",
+      "status": "success",
+      "family": {
+        "family": "multi_zone_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2438287,
+        "maximumImageBytes": 754348,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:07.858Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:named_cz:event:神の力-ガブリエル-battle",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "神の力 ガブリエル BATTLE"
+        },
+        {
+          "id": "control:module:at:event:幻想殺し-イマジンブレイカー-rush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "幻想殺し イマジンブレイカー RUSH"
+        },
+        {
+          "id": "control:module:at:event:幻想殺しrush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "幻想殺しRUSH"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:神の力-ガブリエル-battle",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "神の力 ガブリエル BATTLE"
+        },
+        {
+          "id": "control:state:state:幻想殺し-イマジンブレイカー-rush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "幻想殺し イマジンブレイカー RUSH"
+        },
+        {
+          "id": "control:state:state:幻想殺しrush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "幻想殺しRUSH"
+        }
+      ],
+      "estimatorEligibleCount": 1,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-lbz92e",
+      "machineName": "スマスロ ゴッドイーター リザレクション",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10086",
+      "status": "success",
+      "family": {
+        "family": "multi_zone_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2663910,
+        "maximumImageBytes": 924922,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:10.169Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:at:event:アラガミバースト",
+          "type": "counter",
+          "eventType": "at",
+          "label": "アラガミバースト"
+        },
+        {
+          "id": "control:module:at:event:神堕",
+          "type": "counter",
+          "eventType": "at",
+          "label": "神堕"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:アラガミバースト",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "アラガミバースト"
+        },
+        {
+          "id": "control:state:state:神堕",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "神堕"
+        }
+      ],
+      "estimatorEligibleCount": 1,
+      "warnings": []
+    },
+    {
+      "catalogId": "karakuri-2",
+      "machineName": "L からくりサーカス2",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10485",
+      "status": "success",
+      "family": {
+        "family": "multi_zone_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2347905,
+        "maximumImageBytes": 761817,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:12.594Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:named_cz:event:激情ジャッジ",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "激情ジャッジ"
+        },
+        {
+          "id": "control:module:named_cz:event:運命の一劇",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "運命の一劇"
+        },
+        {
+          "id": "control:module:named_cz:event:機械仕掛けの女神-デアエクスマキナ",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "機械仕掛けの女神 デアエクスマキナ"
+        },
+        {
+          "id": "control:module:named_cz:event:幕間チャンス",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "幕間チャンス"
+        },
+        {
+          "id": "control:module:named_cz:event:劇場-シアター-ジャッジ",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "劇場 シアター ジャッジ"
+        },
+        {
+          "id": "control:module:named_cz:event:機械仕掛けの神-デウスエクスマキナ",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "機械仕掛けの神 デウスエクスマキナ"
+        },
+        {
+          "id": "control:module:at:event:からくりサーカス",
+          "type": "counter",
+          "eventType": "at",
+          "label": "からくりサーカス"
+        },
+        {
+          "id": "control:module:at:event:超からくりサーカス",
+          "type": "counter",
+          "eventType": "at",
+          "label": "超からくりサーカス"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:激情ジャッジ",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "激情ジャッジ"
+        },
+        {
+          "id": "control:state:state:運命の一劇",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "運命の一劇"
+        },
+        {
+          "id": "control:state:state:機械仕掛けの女神-デアエクスマキナ",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "機械仕掛けの女神 デアエクスマキナ"
+        },
+        {
+          "id": "control:state:state:幕間チャンス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "幕間チャンス"
+        },
+        {
+          "id": "control:state:state:劇場-シアター-ジャッジ",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "劇場 シアター ジャッジ"
+        },
+        {
+          "id": "control:state:state:機械仕掛けの神-デウスエクスマキナ",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "機械仕掛けの神 デウスエクスマキナ"
+        },
+        {
+          "id": "control:state:state:からくりサーカス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "からくりサーカス"
+        },
+        {
+          "id": "control:state:state:超からくりサーカス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "超からくりサーカス"
+        }
+      ],
+      "estimatorEligibleCount": 1,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-1ryjocr",
+      "machineName": "スマスロ ビッグドリーム THE GOLDEN PUSHER",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10446",
+      "status": "success",
+      "family": {
+        "family": "multi_zone_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2728353,
+        "maximumImageBytes": 765857,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:14.884Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:named_cz:event:dream-jp-chance",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "DREAM JP CHANCE"
+        },
+        {
+          "id": "control:module:at:event:dream-rush",
+          "type": "counter",
+          "eventType": "at",
+          "label": "DREAM RUSH"
+        },
+        {
+          "id": "control:module:at:event:golden-bonus",
+          "type": "counter",
+          "eventType": "at",
+          "label": "GOLDEN BONUS"
+        },
+        {
+          "id": "control:module:at:event:dream-jp-bonus",
+          "type": "counter",
+          "eventType": "at",
+          "label": "DREAM JP BONUS"
+        },
+        {
+          "id": "control:module:at:event:超golden-bonus",
+          "type": "counter",
+          "eventType": "at",
+          "label": "超GOLDEN BONUS"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:dream-jp-chance",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "DREAM JP CHANCE"
+        },
+        {
+          "id": "control:state:state:dream-rush",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "DREAM RUSH"
+        },
+        {
+          "id": "control:state:state:golden-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "GOLDEN BONUS"
+        },
+        {
+          "id": "control:state:state:dream-jp-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "DREAM JP BONUS"
+        },
+        {
+          "id": "control:state:state:超golden-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "超GOLDEN BONUS"
+        }
+      ],
+      "estimatorEligibleCount": 1,
+      "warnings": []
+    },
+    {
+      "catalogId": "million-god",
+      "machineName": "スマスロ ミリオンゴッド－神々の軌跡－",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10424",
+      "status": "success",
+      "family": {
+        "family": "set_based_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 12,
+      "materializedImageCount": 12,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 12,
+        "totalBytes": 1851550,
+        "maximumImageBytes": 792904,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:17.127Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:at:event:god-game",
+          "type": "counter",
+          "eventType": "at",
+          "label": "GOD GAME"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:god-game",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "GOD GAME"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-7bn1a1",
+      "machineName": "忍魂参 ~奥義皆伝ノ章~",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10008",
+      "status": "success",
+      "family": {
+        "family": "cycle_point_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2390073,
+        "maximumImageBytes": 525047,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:19.873Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:named_cz:event:潜入",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "潜入"
+        },
+        {
+          "id": "control:module:at:event:月光ノ刻",
+          "type": "counter",
+          "eventType": "at",
+          "label": "月光ノ刻"
+        },
+        {
+          "id": "control:module:at:event:真神速",
+          "type": "counter",
+          "eventType": "at",
+          "label": "真神速"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:潜入",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "潜入"
+        },
+        {
+          "id": "control:state:state:月光ノ刻",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "月光ノ刻"
+        },
+        {
+          "id": "control:state:state:真神速",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "真神速"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        }
+      ],
+      "estimatorEligibleCount": 2,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-1ar2ivp",
+      "machineName": "スマスロ ストリートファイター6",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10531",
+      "status": "success",
+      "family": {
+        "family": "bonus_loop",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 16,
+      "materializedImageCount": 16,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 16,
+        "totalBytes": 2521712,
+        "maximumImageBytes": 664775,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:22.612Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-nhun8m",
+      "machineName": "ローティス",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10491",
+      "status": "success",
+      "family": {
+        "family": "bonus_loop",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 8,
+      "materializedImageCount": 8,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 8,
+        "totalBytes": 1332723,
+        "maximumImageBytes": 691246,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:24.551Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-wkwdec",
+      "machineName": "スマスロ 沖ドキ!DUO アンコール",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10368",
+      "status": "success",
+      "family": {
+        "family": "bonus_loop",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 10,
+      "materializedImageCount": 10,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 10,
+        "totalBytes": 1420038,
+        "maximumImageBytes": 794137,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:26.734Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:module:named_cz:event:ドキハナチャンス",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "ドキハナチャンス"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:ドキハナチャンス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "ドキハナチャンス"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-73a4j7",
+      "machineName": "A‐SLOT+ この素晴らしい世界に祝福を!",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10081",
+      "status": "success",
+      "family": {
+        "family": "set_based_at",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 18,
+      "materializedImageCount": 18,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 18,
+        "totalBytes": 2117489,
+        "maximumImageBytes": 828235,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:29.434Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:module:named_cz:event:サキュバスチャンス",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "サキュバスチャンス"
+        },
+        {
+          "id": "control:module:at:event:このすばタイム",
+          "type": "counter",
+          "eventType": "at",
+          "label": "このすばタイム"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:サキュバスチャンス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "サキュバスチャンス"
+        },
+        {
+          "id": "control:state:state:このすばタイム",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "このすばタイム"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 2,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-wmlmat",
+      "machineName": "パチスロ ガメラ2",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/9972",
+      "status": "success",
+      "family": {
+        "family": "cz_at",
+        "confidence": "high"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 17,
+      "materializedImageCount": 17,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 17,
+        "totalBytes": 1654530,
+        "maximumImageBytes": 431968,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:32.121Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:module:named_cz:event:ミニガメラバトル",
+          "type": "counter",
+          "eventType": "cz",
+          "label": "ミニガメラバトル"
+        },
+        {
+          "id": "control:module:end_evidence:event:終了畫面-設定示唆",
+          "type": "choice",
+          "eventType": "indication",
+          "label": "終了畫面／設定示唆"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:ミニガメラバトル",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "ミニガメラバトル"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 2,
+      "warnings": []
+    },
+    {
+      "catalogId": "machine-9pj2ap",
+      "machineName": "パチスロハイパーラッシュ",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10107",
+      "status": "success",
+      "family": {
+        "family": "bonus_loop",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 12,
+      "materializedImageCount": 11,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 11,
+        "totalBytes": 1455674,
+        "maximumImageBytes": 216489,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 1,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:34.598Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:ビッグボーナス",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "ビッグボーナス"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:state:state:ビッグボーナス",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "ビッグボーナス"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 2,
+      "warnings": [
+        "解説動画/遊戲流程 遊戲流程：圖片大小不符合限制（1281108 bytes）"
+      ]
+    },
+    {
+      "catalogId": "machine-12i4zri",
+      "machineName": "沖ドキ!BLACK",
+      "sourceUrl": "https://www.p-world.co.jp/machine/database/10051",
+      "status": "success",
+      "family": {
+        "family": "bonus_loop",
+        "confidence": "medium"
+      },
+      "guideStatus": "usable",
+      "selectedImageCount": 9,
+      "materializedImageCount": 9,
+      "basicRecordMode": false,
+      "visualAssetReport": {
+        "revision": "visual-assets-2",
+        "imageCount": 9,
+        "totalBytes": 1131828,
+        "maximumImageBytes": 413139,
+        "deduplicatedCount": 0,
+        "rejectedImageCount": 0,
+        "storageMode": "source",
+        "cleanupStatus": "not_applicable",
+        "removedAssetCount": 0,
+        "capacityLevel": "normal",
+        "generatedAt": "2026-08-29T19:08:36.743Z"
+      },
+      "operationalControls": [
+        {
+          "id": "control:module:total_games",
+          "type": "numeric_input",
+          "eventType": "game",
+          "label": "總遊玩 G"
+        },
+        {
+          "id": "control:module:normal_games",
+          "type": "derived_metric",
+          "eventType": "game",
+          "label": "通常遊玩 G"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:big-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:module:big_reg_bonus:event:reg-bonus",
+          "type": "counter",
+          "eventType": "bonus",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:state:state:normal",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "通常"
+        },
+        {
+          "id": "control:state:state:big-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "BIG BONUS"
+        },
+        {
+          "id": "control:state:state:reg-bonus",
+          "type": "state_switch",
+          "eventType": "state",
+          "label": "REG BONUS"
+        },
+        {
+          "id": "control:derived:bonus-total",
+          "type": "derived_metric",
+          "eventType": "derived",
+          "label": "Bonus 合成"
+        }
+      ],
+      "estimatorEligibleCount": 0,
+      "warnings": []
+    }
+  ]
+}

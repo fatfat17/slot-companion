@@ -54,6 +54,19 @@ export type MachineGuideImage = {
   contentType:string|null;
   storageStatus:"source"|"stored"|"skipped";
 };
+export type VisualGuideAssetReport = {
+  revision:string;
+  imageCount:number;
+  totalBytes:number;
+  maximumImageBytes:number;
+  deduplicatedCount:number;
+  rejectedImageCount:number;
+  storageMode:"cloud"|"source";
+  cleanupStatus:"not_applicable"|"completed"|"skipped"|"failed";
+  removedAssetCount:number;
+  capacityLevel:"normal"|"warning"|"blocked";
+  generatedAt:string;
+};
 export type MachineGuideSection = {key:MachineGuideSectionKey;titleZh:string;titleJa:string;summaryZh:string|null;paragraphsJa:string[];paragraphSourceUrls?:string[];tables:MachineGuideTable[]};
 export type MachineGuideEvidence = {sectionKey:MachineGuideSectionKey;rawLabel:string;extractedFrom:"heading"|"paragraph"|"table";sourceUrl:string};
 export type ParsedMachineGuideFacts = {catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;catalogMachineType:string;introducedAt:string|null;sections:MachineGuideSection[];images?:MachineGuideImage[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];sourceName:string;sourceUrl:string;retrievedAt:string;sources?:MachineGuideSource[];conflicts?:MachineGuideConflict[];conflictedTableIds?:string[];sourceWarnings?:string[];familyClassificationHint?:MachineFamilyClassification};
@@ -78,7 +91,7 @@ export type MachineGuide = {
   familyClassification?:MachineFamilyClassification;controlManifest?:ControlManifestItem[];
   playerGuideZh?:PlayerGuideZh;
   beginnerGuide:BeginnerGuide;states:MachineGuideState[];recordableEvents:MachineGuideEvent[];sessionModules:MachineGuideSessionModule[];sessionCapabilities:SessionCapability[];denominatorCapabilities:DenominatorCapability[];estimatorMetrics:MachineGuideMetric[];
-  sections:MachineGuideSection[];images?:MachineGuideImage[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];benchmarks:SettingBenchmark[];smartCounters:CounterDefinition[];
+  sections:MachineGuideSection[];images?:MachineGuideImage[];visualAssetReport?:VisualGuideAssetReport;evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];benchmarks:SettingBenchmark[];smartCounters:CounterDefinition[];
   sourceName:string;sourceUrl:string;retrievedAt:string;sources?:MachineGuideSource[];conflicts?:MachineGuideConflict[];sourceWarnings?:string[];
 };
 export type MachineGuideApiResponse = {guide:MachineGuide}|{error:string;code:string};

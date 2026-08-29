@@ -1,6 +1,7 @@
 import type { MachineGuide,MachineGuideImage } from "../../types/machineGuide.ts";
 import { supabaseServerHeaders } from "../catalog/supabaseAuth.ts";
 import { isVisualGuidePilotCatalog,VISUAL_GUIDE_BUCKET,VISUAL_GUIDE_MAX_IMAGE_BYTES,visualGuideAssetId,visualGuideAssetUrl,visualGuideObjectPath } from "./visualGuide.ts";
+import { buildVisualGuideAssetManifest,buildVisualGuideAssetReport,uniqueVisualGuideImages } from "./visualGuideGovernance.ts";
 
 type CloudConfig={url:string;key:string};
 type Requester=typeof fetch;
@@ -25,6 +26,36 @@ async function uploadAsset(config:CloudConfig,catalogId:string,image:MachineGuid
   if(!response.ok)throw new Error(`Supabase 圖片保存失敗（${response.status}）`);
 }
 
+async function uploadManifest(config:CloudConfig,catalogId:string,manifest:ReturnType<typeof buildVisualGuideAssetManifest>,request:Requester){
+  const response=await request(`${config.url}/storage/v1/object/${VISUAL_GUIDE_BUCKET}/${catalogId}/_manifest.json`,{method:"POST",headers:supabaseServerHeaders(config.key,{"Content-Type":"application/json","cache-control":"no-cache","x-upsert":"true"}),body:JSON.stringify(manifest)});
+  if(!response.ok)throw new Error(`Supabase 圖片 manifest 保存失敗（${response.status}）`);
+}
+
+async function listStoredAssetPaths(config:CloudConfig,catalogId:string,request:Requester){
+  const response=await request(`${config.url}/storage/v1/object/list/${VISUAL_GUIDE_BUCKET}`,{method:"POST",headers:supabaseServerHeaders(config.key,{"Content-Type":"application/json"}),body:JSON.stringify({prefix:`${catalogId}/`,limit:1000,offset:0,sortBy:{column:"name",order:"asc"}})});
+  if(!response.ok)throw new Error(`Supabase 圖片清單取得失敗（${response.status}）`);
+  const rows=await response.json() as Array<{name?:unknown}>;
+  return rows.flatMap(row=>{
+    if(typeof row.name!=="string")return[];
+    const name=row.name.replace(/^\/+/,"");
+    if(name==="_manifest.json"||name===`${catalogId}/_manifest.json`)return[];
+    return[name.startsWith(`${catalogId}/`)?name:`${catalogId}/${name}`];
+  });
+}
+
+async function deleteStoredAssets(config:CloudConfig,paths:string[],request:Requester){
+  if(!paths.length)return;
+  const response=await request(`${config.url}/storage/v1/object/${VISUAL_GUIDE_BUCKET}`,{method:"DELETE",headers:supabaseServerHeaders(config.key,{"Content-Type":"application/json"}),body:JSON.stringify({prefixes:paths})});
+  if(!response.ok)throw new Error(`Supabase 舊圖片清理失敗（${response.status}）`);
+}
+
+async function reconcileStoredAssets(config:CloudConfig,catalogId:string,images:MachineGuideImage[],request:Requester){
+  const manifest=buildVisualGuideAssetManifest(catalogId,images),active=new Set(manifest.assets.map(asset=>asset.path)),existing=await listStoredAssetPaths(config,catalogId,request),stale=existing.filter(path=>!active.has(path));
+  await deleteStoredAssets(config,stale,request);
+  await uploadManifest(config,catalogId,manifest,request);
+  return stale.length;
+}
+
 async function materializeOne(catalogId:string,image:MachineGuideImage,config:CloudConfig|null,request:Requester):Promise<MachineGuideImage>{
   const response=await request(image.sourceImageUrl,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Slot Companion visual guide pilot","Referer":image.sourcePageUrl},cache:"no-store",signal:AbortSignal.timeout(12_000)});
   if(!response.ok)throw new Error(`圖片來源回應 ${response.status}`);
@@ -38,15 +69,22 @@ async function materializeOne(catalogId:string,image:MachineGuideImage,config:Cl
 
 export async function materializeVisualGuideAssets(guide:MachineGuide,environment:ServerEnvironment=process.env,request:Requester=fetch){
   if(!isVisualGuidePilotCatalog(guide.catalogId)||!guide.images?.length)return guide;
-  const config=cloudConfig(environment),warnings:string[]=[];
+  const originalImageCount=guide.images.length,images=uniqueVisualGuideImages(guide.images),config=cloudConfig(environment),warnings:string[]=[];
   if(config)try{await ensureBucket(config,request)}catch(error){warnings.push(error instanceof Error?error.message:"Supabase 圖片儲存初始化失敗");}
   const canStore=config&&!warnings.length?config:null,next:MachineGuideImage[]=[];
-  for(let index=0;index<guide.images.length;index+=3){
-    const batch=guide.images.slice(index,index+3);
+  for(let index=0;index<images.length;index+=3){
+    const batch=images.slice(index,index+3);
     const settled=await Promise.allSettled(batch.map(image=>materializeOne(guide.catalogId,image,canStore,request)));
     settled.forEach((result,at)=>{if(result.status==="fulfilled")next.push(result.value);else warnings.push(`${batch[at].captionZh}：${result.reason instanceof Error?result.reason.message:"圖片處理失敗"}`);});
   }
-  return{...guide,images:next,sourceWarnings:[...new Set([...(guide.sourceWarnings??[]),...warnings])]};
+  let cleanupStatus:NonNullable<MachineGuide["visualAssetReport"]>["cleanupStatus"]=canStore?"skipped":"not_applicable",removedAssetCount=0;
+  if(canStore&&next.length===images.length){
+    try{removedAssetCount=await reconcileStoredAssets(canStore,guide.catalogId,next,request);cleanupStatus="completed"}
+    catch(error){cleanupStatus="failed";warnings.push(error instanceof Error?error.message:"Supabase 舊圖片治理失敗")}
+  }
+  const visualAssetReport=buildVisualGuideAssetReport({images:next,deduplicatedCount:originalImageCount-images.length,rejectedImageCount:images.length-next.length,cloud:Boolean(canStore),cleanupStatus,removedAssetCount});
+  if(visualAssetReport.capacityLevel!=="normal")warnings.push(`圖文資產容量為 ${visualAssetReport.capacityLevel}（${visualAssetReport.totalBytes} bytes）`);
+  return{...guide,images:next,visualAssetReport,sourceWarnings:[...new Set([...(guide.sourceWarnings??[]),...warnings])]};
 }
 
 export async function readStoredVisualGuideAsset(catalogId:string,sourceImageUrl:string,environment:ServerEnvironment=process.env,request:Requester=fetch){

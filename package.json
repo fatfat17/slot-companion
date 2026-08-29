@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "audit:controls": "node --experimental-strip-types scripts/audit-machine-controls.ts"
+    "audit:controls": "node --experimental-strip-types scripts/audit-machine-controls.ts",
+    "audit:visual-guides": "node --experimental-strip-types scripts/audit-visual-guide-pilot.ts"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.0",

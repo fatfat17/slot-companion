@@ -4,7 +4,8 @@ import fs from "node:fs";
 import { parsePWorldMachineFacts } from "../src/lib/machine-guide/pworld.ts";
 import { compileMachineGuide } from "../src/lib/machine-guide/compiler.ts";
 import { materializeVisualGuideAssets } from "../src/lib/machine-guide/visualGuideMaterializer.ts";
-import { VISUAL_GUIDE_PILOT_CATALOG_IDS } from "../src/lib/machine-guide/visualGuide.ts";
+import { VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,VISUAL_GUIDE_PILOT_CATALOG_IDS,VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS } from "../src/lib/machine-guide/visualGuide.ts";
+import { buildVisualGuideAssetManifest,buildVisualGuideAssetReport,visualGuideCapacityLevel } from "../src/lib/machine-guide/visualGuideGovernance.ts";
 import { buildVisualGuideDisplaySections } from "../src/lib/machine-guide/visualPresentation.ts";
 import type { MachineCatalogRecord } from "../src/types/catalog.ts";
 
@@ -24,7 +25,7 @@ test("P-WORLD visual guide extracts only official-scope useful images and keeps 
   assert.equal(JSON.stringify(images).includes("re3-small"),false);
 });
 
-test("all five pilot catalogs use the same evidence-gated visual parser",()=>{
+test("all scale pilot catalogs use the same evidence-gated visual parser",()=>{
   for(const pilot of pilotRecords){
     const facts=parsePWorldMachineFacts(fixture,pilot,"2026-08-30T00:00:00Z");
     assert.equal(facts.images?.length,3,pilot.id);
@@ -32,7 +33,14 @@ test("all five pilot catalogs use the same evidence-gated visual parser",()=>{
   }
 });
 
-test("catalogs outside the five-machine pilot do not receive visual assets",()=>{
+test("visual pilot registry contains five accepted and twenty second-batch machines",()=>{
+  assert.equal(VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS.length,5);
+  assert.equal(VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS.length,20);
+  assert.equal(VISUAL_GUIDE_PILOT_CATALOG_IDS.length,25);
+  assert.equal(new Set(VISUAL_GUIDE_PILOT_CATALOG_IDS).size,25);
+});
+
+test("catalogs outside the scale pilot do not receive visual assets",()=>{
   const other=parsePWorldMachineFacts(fixture,{...record,id:"machine-other"},"2026-08-30T00:00:00Z");
   assert.deepEqual(other.images,[]);
 });
@@ -48,11 +56,43 @@ test("visual guide assets are measured and routed through the app without cloud 
 test("configured Supabase stores each pilot image under its own catalog path",async()=>{
   const guide=compileMachineGuide(parsePWorldMachineFacts(fixture,record,"2026-08-30T00:00:00Z"));
   const uploaded:string[]=[];
-  const request:typeof fetch=async(input,init)=>{const url=String(input);if(url.endsWith("/storage/v1/bucket"))return Response.json({name:"machine-guide-assets"});if(url.includes("machine-image.p-world.co.jp"))return new Response(new Uint8Array([1,2,3]),{headers:{"Content-Type":"image/jpeg"}});if(url.includes("/storage/v1/object/machine-guide-assets/")){uploaded.push(url);assert.equal(init?.method,"POST");return Response.json({Key:"stored"})}throw new Error(`unexpected ${url}`)};
+  const request:typeof fetch=async(input,init)=>{const url=String(input);if(url.endsWith("/storage/v1/bucket"))return Response.json({name:"machine-guide-assets"});if(url.includes("machine-image.p-world.co.jp"))return new Response(new Uint8Array([1,2,3]),{headers:{"Content-Type":"image/jpeg"}});if(url.includes("/storage/v1/object/list/"))return Response.json([]);if(url.endsWith("/_manifest.json"))return Response.json({Key:"manifest"});if(url.includes("/storage/v1/object/machine-guide-assets/")){uploaded.push(url);assert.equal(init?.method,"POST");return Response.json({Key:"stored"})}throw new Error(`unexpected ${url}`)};
   const result=await materializeVisualGuideAssets(guide,{SUPABASE_URL:"https://project.supabase.co",SUPABASE_SECRET_KEY:"sb_secret_TEST"},request);
   assert.equal(uploaded.length,3);
   assert.ok(uploaded.every(url=>url.includes("/machine-guide-assets/machine-1y0erql/")));
   assert.ok(result.images?.every(image=>image.storageStatus==="stored"));
+  assert.equal(result.visualAssetReport?.cleanupStatus,"completed");
+  assert.equal(result.visualAssetReport?.storageMode,"cloud");
+});
+
+test("successful rebuild removes only stale assets owned by the same catalog",async()=>{
+  const guide=compileMachineGuide(parsePWorldMachineFacts(fixture,record,"2026-08-30T00:00:00Z")),deleted:string[][]=[];
+  const request:typeof fetch=async(input,init)=>{const url=String(input);if(url.endsWith("/storage/v1/bucket"))return Response.json({name:"machine-guide-assets"});if(url.includes("machine-image.p-world.co.jp"))return new Response(new Uint8Array([1]),{headers:{"Content-Type":"image/jpeg"}});if(url.includes("/storage/v1/object/list/"))return Response.json([{name:"old.jpg"},{name:"machine-1y0erql/older.jpg"},{name:"_manifest.json"},{name:"machine-1y0erql/_manifest.json"}]);if(init?.method==="DELETE"){deleted.push((JSON.parse(String(init.body)) as {prefixes:string[]}).prefixes);return Response.json({})}if(url.includes("/storage/v1/object/machine-guide-assets/"))return Response.json({Key:"stored"});throw new Error(`unexpected ${url}`)};
+  const result=await materializeVisualGuideAssets(guide,{SUPABASE_URL:"https://project.supabase.co",SUPABASE_SECRET_KEY:"sb_secret_TEST"},request);
+  assert.deepEqual(deleted,[["machine-1y0erql/old.jpg","machine-1y0erql/older.jpg"]]);
+  assert.equal(result.visualAssetReport?.removedAssetCount,2);
+});
+
+test("partial rebuild preserves previous cloud assets and skips cleanup",async()=>{
+  const guide=compileMachineGuide(parsePWorldMachineFacts(fixture,record,"2026-08-30T00:00:00Z"));let downloads=0,listCalls=0;
+  const request:typeof fetch=async(input)=>{const url=String(input);if(url.endsWith("/storage/v1/bucket"))return Response.json({name:"machine-guide-assets"});if(url.includes("machine-image.p-world.co.jp")){downloads++;return downloads===2?new Response("failed",{status:503}):new Response(new Uint8Array([1]),{headers:{"Content-Type":"image/jpeg"}})}if(url.includes("/storage/v1/object/list/")){listCalls++;return Response.json([])}if(url.includes("/storage/v1/object/machine-guide-assets/"))return Response.json({Key:"stored"});throw new Error(`unexpected ${url}`)};
+  const result=await materializeVisualGuideAssets(guide,{SUPABASE_URL:"https://project.supabase.co",SUPABASE_SECRET_KEY:"sb_secret_TEST"},request);
+  assert.equal(listCalls,0);
+  assert.equal(result.visualAssetReport?.cleanupStatus,"skipped");
+  assert.equal(result.images?.length,2);
+});
+
+test("asset manifest and capacity report are deterministic and contain no source HTML",()=>{
+  const guide=compileMachineGuide(parsePWorldMachineFacts(fixture,record,"2026-08-30T00:00:00Z")),images=(guide.images??[]).map(image=>({...image,byteSize:400_000,contentType:"image/jpeg",storageStatus:"stored" as const})),manifest=buildVisualGuideAssetManifest(record.id,images,"now"),report=buildVisualGuideAssetReport({images,deduplicatedCount:1,rejectedImageCount:2,cloud:true,cleanupStatus:"completed",removedAssetCount:2,generatedAt:"now"});
+  assert.equal(manifest.assets.length,3);
+  assert.ok(manifest.assets.every(asset=>asset.path.startsWith(`${record.id}/`)));
+  assert.equal(JSON.stringify(manifest).includes("<html"),false);
+  assert.equal(report.deduplicatedCount,1);
+  assert.equal(report.rejectedImageCount,2);
+  assert.equal(report.totalBytes,1_200_000);
+  assert.equal(report.capacityLevel,"normal");
+  assert.equal(visualGuideCapacityLevel(18,12_000_000),"warning");
+  assert.equal(visualGuideCapacityLevel(19,1),"blocked");
 });
 
 test("visual assets cannot cross-pollinate between pilot machines",async()=>{
