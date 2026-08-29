@@ -1,7 +1,7 @@
 import type { CachedMachineGuide, MachineGuide } from "@/types/machineGuide";
 const PREFIX="slot-companion-machine-guide-v2:";
 const LEGACY_PREFIX="slot-companion-machine-guide-v1:";
-export const MACHINE_GUIDE_COMPILER_REVISION="2026-08-29-chinese-player-guide-7";
+export const MACHINE_GUIDE_COMPILER_REVISION="2026-08-29-chinese-player-guide-8";
 export type GuideCacheState="current"|"stale"|"missing";
 export function guideCacheKey(catalogId:string){return`${PREFIX}${catalogId}`}
 export function legacyGuideCacheKey(catalogId:string){return`${LEGACY_PREFIX}${catalogId}`}
