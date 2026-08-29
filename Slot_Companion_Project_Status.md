@@ -5,7 +5,7 @@ Last Updated: 2026-08-29
 ## Current Version
 **v0.2.8.1 – Control Evidence Gate & Audit Tooling**
 
-Status：**Completed；Choice Evidence Gate blocker 已修正，等待手機人工驗收**
+Status：**Completed；手機人工驗收通過**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -51,7 +51,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 固定 dev Preview 完整自動回歸（390 × 844 與桌面視窗）：LB Triple Crown 僅有 BIG／REG，無 CZ／AT，並在 600G minimum sample 與有效 numerator 後才啟動 Estimator；Yajikita 保留具名 CZ／AT 且 Choice 僅有 `街道／茶屋／茜ちゃん`；ULTRAMAN 維持基本記錄模式，無推測 CZ／AT，自訂 Counter／Choice 可新增、修改、刪除、reload 與跨新 Session 沿用定義，數值歸零且不進 Estimator；喰霊的具名 CZ／ART／BIG／REG／Choice 保持獨立，8 個 Choice 無重複，Guide／模式入口、reload 與 Summary 均正常。
 - 本輪自動 QA 亦確認 per-machine 自訂項目不會跨機台污染、既有 Session snapshot 未被重新編譯、無小樣本過度推測；固定 Preview 的首頁、辨識、Catalog、Catalog Detail、Guide、Records 均可正常開啟，未見畫面崩潰或可見 4xx／5xx。這是自動瀏覽器 QA，**不等同實體手機人工驗收**。
 - 本輪重跑工程 QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **246 / 246 passed**；Next.js 16.3.2 webpack production build 通過；localhost `/`、`/identify`、`/catalog`、Yajikita Catalog Detail／Guide、`/records` 均 HTTP 200。未發現新 blocker，因此沒有修改產品程式。
-- Status：Choice blocker 修正、完整自動 QA 與固定 dev Preview 回歸完成，**等待實體手機人工驗收**。
+- 實體手機人工複驗通過：Yajikita 重新建立指南與全新 Session 後，終了畫面只顯示來源支持的 `街道／茶屋／茜ちゃん`；ULTRAMAN 維持基本記錄模式且無 CZ／AT，可新增並使用自訂 Counter／Choice，reload 後保存正常且自訂資料不進 Setting Estimator。
+- Status：Choice blocker 修正、自動 QA、固定 dev Preview 與實體手機人工複驗均完成，**v0.2.8.1 手機人工驗收通過**。
 
 ### Machine Catalog 自動分類與操作涵蓋率健檢（文件／調查，不變更產品版本）
 
@@ -1056,7 +1057,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
 
 ## Current Work
-**v0.2.8.1 Choice Evidence Gate blocker 已修正並通過完整自動 QA與固定 dev Preview 回歸；等待實體手機人工驗收**
+**v0.2.8.1 已完成並通過完整自動 QA、固定 dev Preview 與實體手機人工驗收；等待下一階段產品討論**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1069,11 +1070,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.8.1 手機人工驗收
+### 待產品討論
 
-Status：**等待驗收；不自行開始下一版本。**
+Status：**v0.2.8.1 驗收完成；不自行開始下一版本。**
 
-手機需重新整理代表機台指南並建立全新 Session；優先確認 Yajikita 終了畫面只顯示 `街道／茶屋／茜ちゃん`，再確認 LB Triple Crown、ULTRAMAN 與喰霊不退化。既有 Session 必須保持原 snapshot。下一版本維持待產品討論，不自行開發或合併 `dev` → `main`。
+下一版本範圍維持待產品討論；不自行開發或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1165,6 +1166,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**手機驗收 v0.2.8.1 Control Evidence Gate；不自行開始下一版本。**
+**v0.2.8.1 已通過手機人工驗收；等待下一階段產品討論，不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
