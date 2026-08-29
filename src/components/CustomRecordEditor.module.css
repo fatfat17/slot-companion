@@ -1,0 +1,6 @@
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#101219}
+.item strong,.item small{display:block}
+.item strong{font-size:12px}
+.item small{margin-top:3px;color:var(--muted);font-size:8px}
+.item button{min-height:36px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);color:var(--text);font-size:9px;font-weight:800}
+.error{color:var(--danger);font-size:10px}

@@ -39,13 +39,14 @@ Status：**Completed；等待手機人工驗收**
 - 既有 Session capability contract 保留為相容 snapshot，並同步 manifest presentation metadata；Session UI 的 operational filtering、具名 CZ／AT／ART／BIG／REG 分離、choice 安全與 quick/full/first-time 共用規則不退化。
 - `LBトリプルクラウンX‐300`（P-WORLD 10542）由 BB／RB 設定表分類為 high-confidence A-type：新 Session 有獨立 BIG／REG，Bonus 合成只做 derived metric；沒有來源的 CZ／AT 不會出現。
 - `スマスロ やじきた道中記参る!`（P-WORLD 10489）由多 CZ 與 AT 結構分類為 multi-zone AT；CZ、AT、有效終了畫面 choice operational，規定里程／Zone 說明不冒充可操作按鈕。
-- generic／unknown 沒有可靠事件時顯示「基本記錄模式」，仍保留總 G，且不自動補 generic CZ／AT。
-- 開始 Session 的模式入口新增 per-machine 自訂 Counter／Choice；可選是否進快速記錄，保存在 localStorage 並只套用新 Session。自訂 observation 固定 `estimatorUsable=false`，不會進 Setting Estimator。
+- generic／unknown 沒有可靠事件時顯示「基本記錄模式」，仍保留總 G，且不自動補 generic CZ／AT。手機 QA 發現僅有 CZ／AT 機率表的 `L ULTRAMAN 最終決戰` 仍被 compiler 建立 generic controls；已修正為「機率表只證明參考數值，不證明玩家可可靠辨認事件」，不再產生 CZ／AT Counter、state 或第一次玩教學項目。
+- 開始 Session 與進行中 Session 均提供 per-machine 自訂 Counter／Choice；Choice 至少需要 2 個選項，可選是否進快速記錄，支援修改／刪除並保存在 localStorage。新增或修改後目前 Session 立即取得 control；刪除定義不改寫既有 Session snapshot／歷史。自訂 observation 固定 `estimatorUsable=false`，不會進 Setting Estimator。
 - Estimator rate evidence 現要求 operational numerator／denominator、numerator 已觀測且 denominator 達 benchmark minimum sample；不足時維持「尚未開始推測」。Derived Bonus 合成不建立重複輸入，也不重複餵 estimator。
-- Machine Guide compiler cache revision 更新為 `2026-08-29-control-manifest-1`；重新整理只影響下一個 Session。舊 Session profile snapshot 不重編譯、不改寫，若指南已更新只顯示下次套用提示。
+- Machine Guide compiler cache revision 更新為 `2026-08-29-control-manifest-2`，使 QA 前錯誤 generic controls 的快取失效；重新整理只影響下一個 Session。舊 Session profile snapshot 不重編譯、不改寫，若指南已更新只顯示下次套用提示。
 - `StartSession 2.tsx` 調查：未被任何 import／route／測試引用，是 2026-08-27 的舊副本；依使用者要求保留原狀、未刪除且不納入本次 commit。
-- 新增 P-WORLD 10542／10489 最小整理 **TEST DATA** fixtures 與 control-foundation regression；完整 tests：**236 / 236 passed** ✅
+- 新增 P-WORLD 10542／10489 與 10514 資料不足案例的最小整理 **TEST DATA** fixtures；回歸涵蓋基本記錄模式、自訂 Counter／Choice 保存與 estimator 隔離，以及既有 A-type／multi-zone／set-based 行為；完整 tests：**239 / 239 passed** ✅
 - lint ✅（0 errors／0 warnings）；typecheck ✅；Next.js 16.3.2 webpack production build ✅。Turbopack 在受限 host 因 PostCSS worker 無法 bind port 失敗，改用專案既有 webpack production QA 路徑完成。
+- QA blocker 修正後 localhost production smoke：`/`、`/identify`、`/catalog`、`/catalog/machine-1xl2y3d`、`/records` 均 HTTP 200 ✅
 - localhost production routes `/`、`/identify`、`/catalog`、10542 Catalog Detail／Guide、records 均 HTTP 200 ✅
 - 固定 dev Preview 已實際以 P-WORLD 10542 建立 A-type 指南：只顯示 BIG／REG、設定表保留 Bonus 合成、無 CZ／AT；模式入口顯示 per-machine「新增自訂記錄」✅
 - 固定 dev Preview 已實際以 P-WORLD 10489 建立 multi-zone AT 指南：CZ、AT、終了畫面可記錄，里程／Zone 表格只留指南參考；browser console 0 errors ✅
@@ -1004,9 +1005,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 24. Session 使用模式只能是 presentation snapshot；切換模式不得複製或重建 capability、counter、Timeline 或 estimator observation，舊 Session 必須以 quick 安全回退
 25. Family 只能由來源結構化事實建立，機種名稱僅能作輔助；Control Manifest 才是新 Session control 的共同來源，來源不足時保留總 G 並安全降級
 26. 自訂記錄屬 browser-local 個人 observation，預設且固定不得進 Setting Estimator；Guide refresh 只影響新 Session，舊 snapshot 不重新編譯
+27. CZ／AT 設定別機率表不等於可觀測事件證據；若沒有具名事件、可靠辨認時機或已確認 family 語意，新 Session 必須安全降級，不能沿用 generic CZ／AT template
 
 ## Current Work
-**v0.2.8.0 已完成實作與 automated QA；等待固定 dev Preview smoke 與手機人工驗收**
+**v0.2.8.0 QA blocker 已修正並完成 automated QA；等待固定 dev Preview smoke 與手機人工複驗**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1019,11 +1021,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.8.0 固定 dev Preview 與手機人工驗收
+### v0.2.8.0 固定 dev Preview 與手機人工複驗
 
 Status：**不自行開始下一版本。**
 
-優先驗證 `LBトリプルクラウンX‐300` 的 BIG／REG／Bonus 合成與無 CZ／AT、`スマスロ やじきた道中記参る!` 的 CZ／AT／終了畫面及 Zone read-only、安全基本記錄、自訂 Counter／Choice、指南更新提示、三種模式一致與舊 Session snapshot 不變。不得自行開始下一版本或合併 `dev` → `main`。
+優先複驗 `L ULTRAMAN 最終決戰` 的全新 Session：不得出現無來源 CZ／AT，應顯示基本記錄模式；建立自訂 Counter／至少兩項 Choice 後可立即記錄、reload 與下一個 Session 保留，且不進 estimator。同時確認已通過的 `LBトリプルクラウンX‐300` 與 `スマスロ やじきた道中記参る!` 不退化。不得自行開始下一版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
