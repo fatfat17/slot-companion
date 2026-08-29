@@ -38,7 +38,10 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Catalog UI 將舊 Profile 狀態降為相容資訊；Catalog-only 機種改以「可建立機台指南」呈現，玩家流程不再以 Verified Profile 作為使用門檻。
 - Catalog Detail 與完整 Machine Guide 原有的單台 Guide refresh 保持；Session Guide drawer 新增「重新整理機台指南」，直接更新該機 browser-local Guide cache。成功或失敗均清楚回報，失敗保留上一份指南；目前 Session snapshot 與紀錄不改寫，新控制項只在下一個 Session 套用。
 - QA：lint 通過；typecheck 通過；完整 tests **267 / 267 passed**；Next.js 16.3.2 webpack production build 通過；localhost production smoke `/`、`/identify`、`/catalog`、東京喰種 Catalog Detail／Guide、`/records` 均 HTTP 200。
-- Status：功能與本機自動 QA 完成，**等待固定 dev Preview 與手機人工驗收**；未開始下一版本。
+- 固定 dev Preview 390 × 844 自動 QA：首頁不再出現「已建立攻略 Profile」，無 Active Session 的主操作與 Catalog 卡片均使用 Guide-first 文案；頁面 scroll width 390px，無水平溢出或 console error／warning。
+- 固定 dev Preview Catalog 自動 QA：顯示目前收錄 202 台；「更新機種資料庫」在 production build 正確 disabled，顯示「目前僅能在本機管理環境執行」，DOM 不含 `/admin/catalog-import` href，無 404 或假持久化入口。
+- Session drawer refresh 的成功覆寫、失敗保留有效 cache、只影響下一個 Session 與 snapshot 不改寫由 automated tests 覆蓋；自動驗收分頁沒有使用者目前 Session 的 browser-local record，因此未偽造或清除 Session 來觸發真實 P-WORLD refresh。
+- Status：功能、本機工程 QA 與固定 dev Preview 自動 QA 完成，**等待手機人工驗收**；自動 QA 不等同實體手機驗收，未開始下一版本。
 
 ### v0.2.9.1 – Session Legibility & Progressive Disclosure
 - Session 遊戲狀態改為手機兩欄大按鈕：主名稱 16px、日文對照 10px、最小高度 68px；長名稱可換行，不再為塞進五欄而縮成難讀小字。
@@ -1112,7 +1115,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 38. Catalog 更新與單台 Guide 更新是兩件不同工作：前者是 development-only 的 P-WORLD Machine Catalog Importer，後者是 browser-local 單台指南 refresh；UI 必須使用不同入口與文案，且不得在 Vercel 上假裝 repo JSON 可以永久寫入。
 
 ## Current Work
-**v0.2.9.2 首頁 Guide-first 導航、Catalog 維護入口與 Session Guide refresh 已完成本機 QA；等待固定 dev Preview 與手機人工驗收**
+**v0.2.9.2 首頁 Guide-first 導航、Catalog 維護入口與 Session Guide refresh 已完成本機及固定 dev Preview 自動 QA；等待手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1127,7 +1130,7 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 ## Next Step
 ### v0.2.9.2 驗收
 
-Status：**等待固定 dev Preview 與實體手機人工驗收；不自行開始下一版本。**
+Status：**固定 dev Preview 自動驗收通過；等待實體手機人工驗收，不自行開始下一版本。**
 
 使用固定 dev Preview 以 390 × 844 驗收：首頁不再顯示三台舊 Profile；Catalog 顯示目前收錄數與 production-safe 的資料庫更新狀態；Session Guide 可重新整理並提示只影響下一個 Session；目前 Session 與既有紀錄保持不變。不自行開始下一版本或合併 `dev` → `main`。
 
