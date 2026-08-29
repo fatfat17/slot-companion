@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.8.1 – Control Evidence Gate & Audit Tooling**
+**v0.2.8.2 – Estimator Observation Contract**
 
-Status：**Completed；手機人工驗收通過**
+Status：**Completed；等待人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.8.2 – Estimator Observation Contract
+- 每個 Machine Guide estimator metric 新增正式 observation contract：保存 eligibility、canonical numerator、唯一 operational control、denominator、denominator observation、minimum sample 與 blocker reason。
+- Setting Estimator 數學未修改；只有完整設定 1～6、唯一 operational numerator、operational denominator 與有效 minimum sample 全部成立時才產生 benchmark。
+- Audit report 升級為 `estimator-observation-contract-v2`，逐 Catalog／metric 輸出 observation ownership 與阻擋原因，不再只保留一段聚合錯誤文字。
+- Machine Guide compiler cache revision 更新為 `2026-08-29-estimator-observation-contract-5`；舊 Guide cache 需重建且只影響新 Session，既有 Session snapshot、G、Counter、Choice、自訂記錄與歷史不改寫。
+- 代表回歸：LB Triple Crown 的 BIG／REG 綁定總遊玩 G 與 600G minimum sample；ULTRAMAN rate-only 因缺唯一 numerator 維持 blocked；duplicate numerator 會被阻擋；ART 不寫入 AT；自訂項目仍不進 Estimator。
+- 全 Catalog Audit 連續兩輪 202/202 成功且輸出一致，SHA-256 `3952488d8912d305c4f583537cad3c0c0833a160e7e64f1f6f421ada74635d09`。60 台／153 metrics eligible；1658 metrics blocked；generic CZ／AT fallback 仍為 0；basic mode 維持 6 台。
+- QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **250 / 250 passed**；Next.js 16.3.2 webpack production build通過。
+- Status：功能與自動 QA 完成，等待固定 dev Preview 與人工驗收；未開始 numeric controls 或下一版本。
 
 ### v0.2.8.1 – Control Evidence Gate & Audit Tooling
 - 明確分離 `familyEvidence`、逐 control 的 `controlEvidence` 與 `estimatorEvidence`；family／機率表不再直接授權 Session control 或 numerator。
@@ -1057,7 +1067,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
 
 ## Current Work
-**v0.2.8.1 已完成並通過完整自動 QA、固定 dev Preview 與實體手機人工驗收；等待下一階段產品討論**
+**v0.2.8.2 Estimator Observation Contract 已完成程式與自動 QA；等待固定 dev Preview 與人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1070,11 +1080,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 待產品討論
+### v0.2.8.2 驗收
 
-Status：**v0.2.8.1 驗收完成；不自行開始下一版本。**
+Status：**等待驗收；不自行開始下一版本。**
 
-下一版本範圍維持待產品討論；不自行開發或合併 `dev` → `main`。
+重新建立代表機台指南並建立全新 Session，確認 LB Triple Crown Estimator 樣本門檻、ULTRAMAN 安全阻擋、やじきた與喰霊 controls 不退化。既有 Session 必須保持原 snapshot。不自行開始 numeric controls 或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1166,6 +1176,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**v0.2.8.1 已通過手機人工驗收；等待下一階段產品討論，不自行開始下一版本。**
+**驗收 v0.2.8.2 Estimator Observation Contract；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。

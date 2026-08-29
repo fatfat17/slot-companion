@@ -27,6 +27,15 @@ export type SessionCapability = {
   playerWhen?:string;sourceEvidence?:string[];controlEvidence?:GuideEvidenceReference[];evidenceGate?:ControlManifestItem["evidenceGate"];quickPriority?:number;manifestControlType?:ControlManifestItem["controlType"];
 };
 export type DenominatorCapability = {key:GuideDenominator;observationKey:string;status:"operational"|"planned"|"unavailable";requiredControl:string;requiredRelationship:string|null;reason:string|null};
+export type EstimatorObservationContract = {
+  status:"eligible"|"blocked";
+  numeratorKey:string|null;
+  numeratorControlId:string|null;
+  denominator:GuideDenominator|null;
+  denominatorObservationKey:string|null;
+  minimumSample:number|null;
+  reason:string|null;
+};
 
 export type MachineGuideTable = {id:string;title:string;headers:string[];rows:string[][];note:string|null;sourceUrl:string};
 export type MachineGuideSection = {key:MachineGuideSectionKey;titleZh:string;titleJa:string;summaryZh:string|null;paragraphsJa:string[];tables:MachineGuideTable[]};
@@ -35,7 +44,7 @@ export type ParsedMachineGuideFacts = {catalogId:string;officialNameJa:string;di
 export type MachineGuideState = {id:string;displayNameZh:string;originalNameJa:string;type:GuideStateType;sourceUrl:string};
 export type MachineGuideEvent = {id:string;labelZh:string;labelJa:string;category:"bonus"|"cz"|"at"|"art"|"role"|"indication"|"special";whatToSee:string;countingRule:string;sessionModuleIds:string[];affectsEstimator:boolean;sourceUrl:string;controlEvidence:GuideEvidenceReference[];unavailableReason:string|null};
 export type MachineGuideSessionModule = {id:string;kind:SessionModuleKind;labelZh:string;labelJa:string;eventId?:string;controlled:true};
-export type MachineGuideMetric = {id:string;metricKey:string;labelZh:string;numeratorEventId:string|null;denominator:GuideDenominator|null;applicableStateIds:string[];minimumSample:number|null;settingValues:SettingValues|null;sourceUrl:string;estimatorEvidence:GuideEvidenceReference[];estimatorEligible:boolean;unavailableReason:string|null};
+export type MachineGuideMetric = {id:string;metricKey:string;labelZh:string;numeratorEventId:string|null;denominator:GuideDenominator|null;applicableStateIds:string[];minimumSample:number|null;settingValues:SettingValues|null;sourceUrl:string;estimatorEvidence:GuideEvidenceReference[];observationContract:EstimatorObservationContract;estimatorEligible:boolean;unavailableReason:string|null};
 export type BeginnerGuide = {corePlay:string|null;keyThings:Array<{id:string;labelZh:string;labelJa:string;meaning:string;recordWhen:string}>;glossary:Array<{termJa:string;termZh:string}>;missingMessage:"尚無資料"|null};
 export type SessionQuickGuide = {corePlay:string|null;flow:string[];events:MachineGuideEvent[];keyThings:BeginnerGuide["keyThings"];glossary:BeginnerGuide["glossary"];sourceName:string;sourceUrl:string;retrievedAt:string;missingSections?:MachineGuideSectionKey[];evidence?:MachineGuideEvidence[]};
 

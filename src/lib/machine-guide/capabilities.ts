@@ -1,5 +1,5 @@
 import type { CounterDefinition, GameState, SettingValues } from "@/types";
-import type { DenominatorCapability, GuideDenominator, MachineGuideEvent, MachineGuideSessionModule, SessionCapability, SessionModuleKind } from "@/types/machineGuide";
+import type { DenominatorCapability, EstimatorObservationContract, GuideDenominator, MachineGuideEvent, MachineGuideSessionModule, SessionCapability, SessionModuleKind } from "@/types/machineGuide";
 
 type ContractTemplate={controlType:SessionCapability["controlType"];observationKey:string;writeTarget:SessionCapability["writeTarget"];stateEffect:GameState|null;defaultStatus:SessionCapability["status"];reason:string|null;estimatorUsable:boolean;choicesRequired:boolean};
 
@@ -49,12 +49,14 @@ export function buildDenominatorCapabilities(capabilities:SessionCapability[]):D
 export function hasCompleteSettingValues(values:SettingValues|null){return Boolean(values&&([1,2,3,4,5,6] as const).every(setting=>typeof values[setting]==="number"&&Number.isFinite(values[setting]!)))}
 
 export function validateEstimatorDependency(input:{settingValues:SettingValues|null;numeratorKey:string|null;denominator:GuideDenominator|null;minimumSample:number|null;capabilities:SessionCapability[];denominators:DenominatorCapability[]}){
-  if(!hasCompleteSettingValues(input.settingValues))return{eligible:false,reason:"設定 1～6 數值不完整"};
-  if(!input.numeratorKey)return{eligible:false,reason:"缺少唯一 canonical numerator"};
+  const blocked=(reason:string,numeratorControlId:string|null=null,denominatorObservationKey:string|null=null)=>({eligible:false,reason,contract:{status:"blocked",numeratorKey:input.numeratorKey,numeratorControlId,denominator:input.denominator,denominatorObservationKey,minimumSample:input.minimumSample,reason} satisfies EstimatorObservationContract});
+  if(!hasCompleteSettingValues(input.settingValues))return blocked("設定 1～6 數值不完整");
+  if(!input.numeratorKey)return blocked("缺少唯一 canonical numerator");
   const controls=input.capabilities.filter(c=>c.status==="operational"&&c.estimatorUsable&&(c.observationKey===input.numeratorKey||c.writeTarget.key===input.numeratorKey));
-  if(controls.length!==1)return{eligible:false,reason:controls.length?"numerator 存在重複記錄路徑":"Session 尚無可操作的 numerator control"};
-  if(!input.denominator)return{eligible:false,reason:"無法確認可靠分母"};const denominator=input.denominators.find(item=>item.key===input.denominator);
-  if(!denominator||denominator.status!=="operational")return{eligible:false,reason:denominator?.reason??"Session 尚無可操作的 denominator"};
-  if(!input.minimumSample||input.minimumSample<=0)return{eligible:false,reason:"缺少最小樣本門檻"};
-  return{eligible:true,reason:null};
+  if(controls.length!==1)return blocked(controls.length?"numerator 存在重複記錄路徑":"Session 尚無可操作的 numerator control");
+  const control=controls[0];
+  if(!input.denominator)return blocked("無法確認可靠分母",control.moduleId);const denominator=input.denominators.find(item=>item.key===input.denominator);
+  if(!denominator||denominator.status!=="operational")return blocked(denominator?.reason??"Session 尚無可操作的 denominator",control.moduleId,denominator?.observationKey??null);
+  if(!input.minimumSample||input.minimumSample<=0)return blocked("缺少最小樣本門檻",control.moduleId,denominator.observationKey);
+  return{eligible:true,reason:null,contract:{status:"eligible",numeratorKey:input.numeratorKey,numeratorControlId:control.moduleId,denominator:input.denominator,denominatorObservationKey:denominator.observationKey,minimumSample:input.minimumSample,reason:null} satisfies EstimatorObservationContract};
 }

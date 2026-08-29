@@ -2,9 +2,22 @@
 
 Audit date：2026-08-29
 
-Code baseline：`dev` · v0.2.8.1 Control Evidence Gate & Audit Tooling
+Code baseline：`dev` · v0.2.8.2 Estimator Observation Contract
 
 Scope：`data/machine-catalog.json` 全部 202 筆正式 Catalog records
+
+## v0.2.8.2 Estimator Observation Contract
+
+本節是目前有效的 Estimator audit。工具連續執行兩次，兩輪皆為 202/202 來源成功，JSON 完全相同，SHA-256：`3952488d8912d305c4f583537cad3c0c0833a160e7e64f1f6f421ada74635d09`。
+
+- 每個 metric 現在保存 `status`、canonical numerator key、唯一 numerator control id、denominator contract、denominator observation key、minimum sample、來源 evidence 與 blocked reason。
+- eligibility 仍為 **60 / 202 台**，代表本版沒有為提高覆蓋率而放寬安全門檻。
+- 完整可用 observation contracts：**153 metrics**。
+- 安全阻擋：**1658 metrics**；機台層級主因為 75 台缺唯一 canonical numerator、67 台沒有可用完整設定資料、另有 1 個 denominator blocker（原因口徑可重疊）。
+- Operational machines **196**、basic record mode **6**、generic CZ／AT fallback **0**，Control Evidence Gate 不退化。
+- 本次重新解析後 operational controls 為 **668**（560 Counter + 108 Choice）；Choice 數量較上一輪少 3，來自 v0.2.8.1 已核准的逐項 Choice evidence ownership 收斂，不是本版新增刪除規則。
+- LB Triple Crown 的 BIG／REG 對應 `observedTotalGame` 且 minimum sample 600；ULTRAMAN rate-only metric 因無唯一 operational numerator 維持 blocked；ART 不會映射到 AT；自訂項目仍不進 Estimator。
+- compiler cache revision：`2026-08-29-estimator-observation-contract-5`。舊 Guide cache 失效後需重新建立；既有 Session snapshot 與歷史紀錄保持不變。
 
 ## v0.2.8.1 Evidence Gate 重跑結果
 
