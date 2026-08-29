@@ -3,7 +3,7 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.7.1 – Session 使用模式入口**
+**v0.2.8.0 – Machine Control Foundation**
 
 Status：**Completed；等待手機人工驗收**
 
@@ -30,6 +30,24 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.8.0 – Machine Control Foundation
+Status：**Completed；等待手機人工驗收**
+
+- Machine Guide family 分類新增 confidence、source evidence 與 unsupported reasons；新增共用 `cz_at` family，來源不足時安全回退 generic，不用機種名稱逐台 hardcode。
+- 新增統一 Control Manifest：保存 id、label、event/control type、玩家何時按、observation key、state effect、estimator usability、numerator／denominator、source evidence、availability／reason 與 quick priority。
+- 既有 Session capability contract 保留為相容 snapshot，並同步 manifest presentation metadata；Session UI 的 operational filtering、具名 CZ／AT／ART／BIG／REG 分離、choice 安全與 quick/full/first-time 共用規則不退化。
+- `LBトリプルクラウンX‐300`（P-WORLD 10542）由 BB／RB 設定表分類為 high-confidence A-type：新 Session 有獨立 BIG／REG，Bonus 合成只做 derived metric；沒有來源的 CZ／AT 不會出現。
+- `スマスロ やじきた道中記参る!`（P-WORLD 10489）由結構化 CZ／AT 設定表分類為 high-confidence CZ→AT；CZ、AT、有效終了畫面 choice operational，規定里程／Zone 說明不冒充可操作按鈕。
+- generic／unknown 沒有可靠事件時顯示「基本記錄模式」，仍保留總 G，且不自動補 generic CZ／AT。
+- 開始 Session 的模式入口新增 per-machine 自訂 Counter／Choice；可選是否進快速記錄，保存在 localStorage 並只套用新 Session。自訂 observation 固定 `estimatorUsable=false`，不會進 Setting Estimator。
+- Estimator rate evidence 現要求 operational numerator／denominator、numerator 已觀測且 denominator 達 benchmark minimum sample；不足時維持「尚未開始推測」。Derived Bonus 合成不建立重複輸入，也不重複餵 estimator。
+- Machine Guide compiler cache revision 更新為 `2026-08-29-control-manifest-1`；重新整理只影響下一個 Session。舊 Session profile snapshot 不重編譯、不改寫，若指南已更新只顯示下次套用提示。
+- `StartSession 2.tsx` 調查：未被任何 import／route／測試引用，是 2026-08-27 的舊副本；依使用者要求保留原狀、未刪除且不納入本次 commit。
+- 新增 P-WORLD 10542／10489 最小整理 **TEST DATA** fixtures 與 control-foundation regression；完整 tests：**236 / 236 passed** ✅
+- lint ✅（0 errors／0 warnings）；typecheck ✅；Next.js 16.3.2 webpack production build ✅。Turbopack 在受限 host 因 PostCSS worker 無法 bind port 失敗，改用專案既有 webpack production QA 路徑完成。
+
+Coverage 更新：正式 Catalog 202 筆；Confirmed **19**、Probable **14**、Unknown **169**。各 family 的 operational／read-only coverage 只計已驗證代表案例，未把 TEST DATA 或名稱推測冒充正式支援。
 
 ### v0.2.7.1 – Session 使用模式入口
 Status：**Completed；等待手機人工驗收**
@@ -976,14 +994,16 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 17. P-WORLD 官方解析必須以官方 DOM section 邊界為準；頁面關鍵字不足以證明是機台資料，`#bbs`、玩家留言與投稿日期不得進入 facts
 18. Machine Guide event 只有在可確認為玩家可觀察、可計數的正式模式／Bonus 名稱時才建立；寧可無 event，也不把日文句子碎片補成 Counter
 19. MachineGuide schema version 不足以代表 parser/compiler 資料品質 revision；資料清理規則變更時必須獨立失效 guide cache，且不得連帶清除 Session 或其他 localStorage
-20. Catalog URL coverage（202 / 202）不等於玩法 coverage；目前正式 Catalog 只有 5 筆 Confirmed，177 筆仍需來源分析
+20. Catalog URL coverage（202 / 202）不等於玩法 coverage；v0.2.8.0 目前只有 19 筆 Confirmed，169 筆仍需來源分析，14 筆 Probable 不得冒充 confirmed
 21. `sessionModules` 存在或顯示於 Guide 不等於 Session UI 已可操作；必須分別標示 schema、compiler、Guide UI、Session control 與人工驗收層級
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
 23. v0.2.7.1 手機 QA 已處理同一事件在辨認、注意與記錄區重複的問題：首次教學與 Session drawer 共用單一重點 selector，前三項直接顯示，其餘預設收合；不修改來源或 capability
 24. Session 使用模式只能是 presentation snapshot；切換模式不得複製或重建 capability、counter、Timeline 或 estimator observation，舊 Session 必須以 quick 安全回退
+25. Family 只能由來源結構化事實建立，機種名稱僅能作輔助；Control Manifest 才是新 Session control 的共同來源，來源不足時保留總 G 並安全降級
+26. 自訂記錄屬 browser-local 個人 observation，預設且固定不得進 Setting Estimator；Guide refresh 只影響新 Session，舊 snapshot 不重新編譯
 
 ## Current Work
-**v0.2.7.1 QA polish 已完成實作、自動 QA 與 localhost 手機 smoke；等待固定 dev Preview 與手機人工複驗**
+**v0.2.8.0 已完成實作與 automated QA；等待固定 dev Preview smoke 與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -996,11 +1016,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.7.1 固定 dev Preview 與手機人工複驗
+### v0.2.8.0 固定 dev Preview 與手機人工驗收
 
 Status：**不自行開始下一版本。**
 
-驗證 60 秒第一次玩教學首屏三重點、更多事件預設收合、Session drawer 去重，以及三模式入口、同機種「上次使用」、快速／完整 controls、中途切換與 reload 保存、舊 Session fallback。照片保存、雲端持久化與其他下一階段均未開始；不得自行開始新功能或合併 `dev` → `main`。
+優先驗證 `LBトリプルクラウンX‐300` 的 BIG／REG／Bonus 合成與無 CZ／AT、`スマスロ やじきた道中記参る!` 的 CZ／AT／終了畫面及 Zone read-only、安全基本記錄、自訂 Counter／Choice、指南更新提示、三種模式一致與舊 Session snapshot 不變。不得自行開始下一版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1092,6 +1112,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**手機複驗 v0.2.7.1 第一次玩教學與 Session Guide 去重 polish；不自行開始下一版本。**
+**手機驗收 v0.2.8.0 Machine Control Foundation；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。

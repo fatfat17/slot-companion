@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**v0.2.7.1 – Session 使用模式入口**（`dev`，等待手機人工驗收）。
+目前開發版本：**v0.2.8.0 – Machine Control Foundation**（`dev`，等待手機人工驗收）。
 
 ## 本機啟動
 
@@ -18,7 +18,7 @@ pnpm dev
 1. 拍照／選擇圖片並在瀏覽器端壓縮。
 2. AI 辨識後由使用者確認 Machine Catalog record。
 3. Catalog Detail 使用既有 P-WORLD source URL 建立 Machine Guide v2。
-4. compiler 依機型與實際公開資料選擇 Session 模組，並建立可驗證的 control／observation／denominator capability contract。
+4. compiler 依結構化來源證據判定 Machine Family（含信心、理由與不支援原因），並產生共用 Control Manifest；不依機種名稱逐台硬編碼。
 5. 按下「開始玩」後選擇「第一次玩這台／快速開始／完整記錄」；第一次玩會先顯示既有指南產生的重點教學，三種模式都建立相同資料結構的 Session。
 6. 快速與第一次玩模式以兩欄顯示最多 4 個優先 operational controls，其餘收進「更多記錄」；完整模式直接顯示全部 operational controls。
 7. Session header 可隨時開啟機台指南 drawer 或切換使用模式；切換只改變畫面資訊量，不清除既有紀錄。
@@ -29,6 +29,9 @@ pnpm dev
 - Session、今日紀錄與 Machine Guide 只存在目前瀏覽器 localStorage，不是雲端同步。
 - v1 Guide cache 不會冒充 v2；需從 Catalog Detail 重新取得來源並編譯。
 - Session 開始時會保存當下的 capability、狀態與 Machine snapshot；日後指南更新不會靜默改寫既有 Session。
+- Control Manifest 統一定義 control type、玩家操作時機、observation、state effect、estimator dependency、來源 evidence、availability 與快速模式優先序；Session 仍保存相容 capability snapshot，舊 Session 不重新編譯。
+- 無可靠 operational control 時使用「基本記錄模式」，只保留總 G，不補 generic CZ／AT；使用者可建立 per-machine Counter／Choice 自訂記錄，自訂項目只存 localStorage 且永不參與 Setting Estimator。
+- 指南 cache compiler revision 已更新；重新整理指南後只影響下一個新 Session。既有 Session 若偵測到更新，僅顯示提示，不會改寫按鈕或紀錄。
 - Session UI 與 Summary 已由 capability snapshot 產生；read-only／unavailable 項目只留在指南參考，不顯示空白或無作用控制項。
 - 快速記錄優先順序固定使用 capability 種類與來源 contract 順序：具名 CZ → AT／ART → Bonus → 其他 operational event／choice，不依機台名稱猜測。
 - 新建立的 Session snapshot 會保存精簡結構化指南與可追溯 evidence，不包含 P-WORLD 圖片；Session drawer 只顯示玩家可用的玩法／辨認／記錄提示，parser、compiler 與內部 section path 集中在底部資料狀態或不進入主要內容。舊 Session 沒有此 snapshot 時使用一致的簡短缺失提示。

@@ -1,6 +1,7 @@
 import type { MachineCatalogRecord } from "@/types/catalog";
 import type { MachineGuide, MachineGuideSectionKey, MachineGuideTable, ParsedMachineGuideFacts } from "@/types/machineGuide";
-import { compileMachineGuide } from "./compiler.ts";
+import { classifyMachineFamily, compileMachineGuide } from "./compiler.ts";
+import { buildControlManifest } from "./controlManifest.ts";
 
 const SECTION_META:Record<MachineGuideSectionKey,{zh:string;ja:string;patterns:RegExp[]}>={
   features:{zh:"基本機種特色",ja:"基本情報",patterns:[/基本情報|基本仕様|情報$/]},
@@ -37,7 +38,7 @@ export function parsePWorldMachineFacts(html:string,record:MachineCatalogRecord,
   const evidence=sections.flatMap(section=>[...(section.paragraphsJa.length?[{sectionKey:section.key,rawLabel:section.titleJa,extractedFrom:"paragraph" as const,sourceUrl}]:[]),...section.tables.map(table=>({sectionKey:section.key,rawLabel:table.title,extractedFrom:"table" as const,sourceUrl}))]);
   return{catalogId:record.id,officialNameJa:record.officialNameJa,displayNameZh:record.displayNameZh,manufacturer:record.manufacturer,catalogMachineType:record.machineType,introducedAt:record.introducedAt,sections,evidence,missingSections,sourceName:"P-WORLD",sourceUrl,retrievedAt};
 }
-export function parsePWorldMachineGuide(html:string,record:MachineCatalogRecord,retrievedAt=new Date().toISOString()):MachineGuide{return compileMachineGuide(parsePWorldMachineFacts(html,record,retrievedAt))}
+export function parsePWorldMachineGuide(html:string,record:MachineCatalogRecord,retrievedAt=new Date().toISOString()):MachineGuide{const facts=parsePWorldMachineFacts(html,record,retrievedAt),guide=compileMachineGuide(facts);guide.familyClassification=classifyMachineFamily(facts);guide.controlManifest=buildControlManifest(guide.sessionCapabilities,guide.smartCounters,guide.recordableEvents,guide.states,guide.sections.flatMap(section=>section.tables.map(table=>table.id)));return guide}
 
 export class PWorldMachineGuideProvider{
   private request:typeof fetch;

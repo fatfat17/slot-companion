@@ -108,6 +108,8 @@ export type MachineProfile = {
   sessionCapabilities?: import("./machineGuide").SessionCapability[];
   denominatorCapabilities?: import("./machineGuide").DenominatorCapability[];
   guideStates?: import("./machineGuide").MachineGuideState[];
+  controlManifest?: import("./machineGuide").ControlManifestItem[];
+  familyClassification?: import("./machineGuide").MachineFamilyClassification;
   verifiedMetrics?: Array<{metricKey:string;value:string|string[];sourceNames:string[];verificationStatus:string}>;
 };
 

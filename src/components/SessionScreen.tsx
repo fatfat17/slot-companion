@@ -13,14 +13,17 @@ import { SettingEstimator } from "./SettingEstimator";
 import { SessionGuideDrawer } from "./SessionGuideDrawer";
 import { changeSessionMode, controlsForSessionMode, loadLastSessionMode, normalizeSessionMode, saveLastSessionMode } from "@/lib/sessionModes";
 import { SessionModePicker } from "./SessionModePicker";
+import { loadCachedGuide } from "@/lib/machine-guide/storage";
 
 type EditTarget = { kind: "tracker"; key: string } | { kind: "medals" } | null;
 const time = (iso:string) => new Intl.DateTimeFormat("zh-TW",{hour:"2-digit",minute:"2-digit"}).format(new Date(iso));
 export function SessionScreen({ id }: { id: string }) {
   const [session,setSession]=useState<Session>(); const [drawer,setDrawer]=useState(false); const [guideOpen,setGuideOpen]=useState(false); const [modeOpen,setModeOpen]=useState(false); const [lastMode,setLastMode]=useState<SessionMode>(); const [moreOpen,setMoreOpen]=useState(false); const [choiceTarget,setChoiceTarget]=useState<CounterDefinition>(); const [edit,setEdit]=useState<EditTarget>(null); const [editValue,setEditValue]=useState(""); const [help,setHelp]=useState<CounterDefinition>(); const [toast,setToast]=useState(""); const router=useRouter();
+  const [guideUpdated,setGuideUpdated]=useState(false);
   useEffect(()=>setSession(loadSessions().find(item=>item.id===id)),[id]);
   const machine=useMemo(()=>session?.profileSnapshot??(session?getMachine(session.machineId):undefined),[session]);
   useEffect(()=>{if(machine)setLastMode(loadLastSessionMode(machine.id))},[machine]);
+  useEffect(()=>{const catalogId=machine?.catalogId,retrievedAt=machine?.sessionGuide?.retrievedAt;if(!catalogId||!retrievedAt){setGuideUpdated(false);return}const current=loadCachedGuide(catalogId)?.guide;setGuideUpdated(Boolean(current&&current.retrievedAt!==retrievedAt))},[machine]);
   const uiModel=useMemo(()=>machine?buildSessionUiModel(machine):undefined,[machine]);
   const sessionMode=normalizeSessionMode(session?.mode),modeControls=uiModel?controlsForSessionMode(uiModel,sessionMode):undefined;
   function persist(next:Session){setSession(next);if(!saveSession(next)){setToast("儲存失敗，請確認瀏覽器空間");return;} setToast("已儲存");window.setTimeout(()=>setToast(""),900)}
@@ -62,6 +65,8 @@ export function SessionScreen({ id }: { id: string }) {
   return <>
     <header className="session-header"><Link href="/" className="icon-button">×</Link><div><span>SESSION · 台號 {session.machineNumber}</span><h1>{machine.nameZh}</h1><small>{time(session.startedAt)} 開始</small></div><nav className="session-header-actions"><button className="session-guide-button" onClick={()=>setGuideOpen(true)}>指南</button><button className="session-guide-button" onClick={()=>setModeOpen(true)}>模式</button><button className="session-more" onClick={()=>setDrawer(true)}>AI</button></nav></header>
     <main className="page session-page">
+      {guideUpdated&&<div className="observed-banner"><span>機台指南已更新</span><small>下一次建立 Session 時會套用新的記錄項目。</small></div>}
+      {!uiModel.legacy&&uiModel.basicMode&&<div className="observed-banner"><span>基本記錄模式</span><small>目前只有總遊玩 G 可可靠記錄；不會自動補上 CZ／AT。</small></div>}
       <section className="game-state-section">
         <div className="section-title"><h2>目前遊戲狀態</h2><span>手動切換</span></div>
         <div className="game-state-picker">{uiModel.gameStates.map(state=><button key={state.value} className={session.gameState===state.value?"active":""} aria-pressed={session.gameState===state.value} onClick={()=>setGameState(state.value)}><strong>{state.label}</strong><small>{state.ja}</small></button>)}</div>

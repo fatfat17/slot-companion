@@ -1,8 +1,8 @@
 # Machine Catalog Coverage Audit
 
-Audit date：2026-08-28  
+Audit date：2026-08-29
 Repository baseline：`dev` @ `88812fec1736eaf4905d8f95c95aa6b1c8a13218`  
-Product baseline：v0.2.6.1（手機人工複驗通過）
+Product baseline：v0.2.8.0（等待手機人工驗收）
 
 ## 1. Executive Summary
 
@@ -11,7 +11,7 @@ Product baseline：v0.2.6.1（手機人工複驗通過）
 最重要的結論：
 
 - Catalog 實際共有 **202 筆**正式 records；**202 / 202（100.0%）**都有目前 provider 可接受的 canonical P-WORLD detail URL。
-- 原始只讀 audit 有 **5 筆（2.5%）** Confirmed、20 筆 Probable、177 筆 Unknown。v0.2.6.2 後續依本報告建議完成 17 個正式 Catalog canonical URL 的受控來源分析後，最新分級為 **17 Confirmed、14 Probable、171 Unknown**；詳細證據見 `Machine_Catalog_Representative_Source_Analysis.md`。
+- 原始只讀 audit 有 **5 筆（2.5%）** Confirmed、20 筆 Probable、177 筆 Unknown。v0.2.8.0 再完成 P-WORLD 10542 與 10489 受控分析後，最新分級為 **19 Confirmed、14 Probable、169 Unknown**；推測分類仍不計入 Confirmed。
 - 現有七種 GuideMachineType 已證明能處理五種正式 Catalog 結構；`a_type` 目前只有 TEST DATA fixture，`generic` 是安全 fallback，不是已確認的玩法 archetype。
 - **不需要為每一台機器寫專屬程式。** 應以共用 archetype、來源規則與 Session module 組合涵蓋大多數機台；只有來源結構或玩法無法由既有 archetype 表達時才需要新增共用能力。
 - 最大的實際架構缺口不在 Catalog，而在 **compiler 產生的 `sessionModules` 尚未完整轉成 Session 可操作控制項**。Set、cycle、points、CZ failures、dual games、role streak 等目前主要只在指南中列出。
@@ -147,9 +147,9 @@ Provider 規則為 `https://www.p-world.co.jp/machine/database/{number}`（允�
 
 | 證據等級 | 正式 Catalog 數量 | 比例 |
 |---|---:|---:|
-| Confirmed | 17 | 8.4% |
+| Confirmed | 19 | 9.4% |
 | Probable | 14 | 6.9% |
-| Unknown／Needs Source Analysis | 171 | 84.7% |
+| Unknown／Needs Source Analysis | 169 | 83.7% |
 | 合計 | 202 | 100.0% |
 
 ### 5.2 Confirmed 正式 Catalog
@@ -225,6 +225,30 @@ compiler 只有在正文出現特定且組合完整的 deterministic signature �
 - `generic` 目前混合「真的通用」與「規則尚未辨識」兩種情況。若未來大量來源落入 generic，應先分析 signature 分布，再決定是否新增共用 archetype。
 
 ## 7. Session Module Coverage
+
+### v0.2.8.0 Machine Family／Control Manifest 更新
+
+本版新增 `cz_at`，並將分類輸出擴充為 family、confidence、evidence、unsupportedReasons。Confirmed 表示已有受控來源或 fixture／runtime 證據；Probable 仍只是待來源確認，不會被提升為事實。
+
+| Family | Confirmed | Probable | Unknown | 已驗證 operational coverage | 已驗證 read-only coverage | 尚未完整支援 |
+|---|---:|---:|---:|---:|---:|---|
+| A-type／Bonus | 1 | 14 | — | 1 | 0 | 技術介入、BT 細分 |
+| CZ → AT | 1 | 0 | — | 1 | 1 | Zone／里程操作時機 |
+| Bonus + ART | 1 | 0 | — | 1 | 0 | 更多正式來源案例 |
+| 週期／點數 AT | 2 | 0 | — | 1 | 1 | 週期、點數、CZ failure input |
+| 多 Zone AT | 3 | 0 | — | 1 | 1 | dual-game numeric input |
+| Set 管理 AT | 2 | 0 | — | 1 | 1 | Set、role streak input |
+| Bonus Loop | 1 | 0 | — | 1 | 0 | 更多正式來源案例 |
+| generic／unknown | 8 | 0 | 169 | 0 | 0 | 等待來源證據；安全降級為基本記錄 |
+
+這些 operational／read-only 數量只計已由代表 fixture 或 runtime regression 驗證的正式案例，不把同 family 的未逐一驗證機台推定為已支援。跨 family 共用 regression 至少覆蓋 A-type、CZ→AT、Bonus+ART、週期／點數、multi-zone、set-based、bonus-loop 與 generic 安全降級；部分 family 尚不足兩台正式來源，因此只列現有證據，不以 TEST DATA 冒充正式 Catalog coverage。
+
+- P-WORLD 10542 `LBトリプルクラウンX‐300`：設定表明確提供 BB／RB／Bonus 合成，分類為 high-confidence A-type；BIG 與 REG 為獨立 Counter，Bonus 合成為 derived metric，不建立第三個輸入，也不產生 CZ／AT。
+- P-WORLD 10489 `スマスロ やじきた道中記参る!`：設定表提供 CZ／AT，終了畫面提供有效 choices；分類為 high-confidence CZ→AT。規定里程／Zone 只有參考結構，操作時機不足，維持 read-only。
+- Control Manifest 統一定義事件、control type、玩家何時按、observation、state effect、estimator dependency、source evidence、availability 與 quick priority。Session snapshot 同時保留既有 capability contract 相容欄位。
+- estimator 只有在 operational numerator、operational denominator、至少一次事件且達最低樣本後才開始；derived 與 user custom observation 不參與。
+- custom Counter／Choice 只保存在目前瀏覽器 localStorage、依機台重用並於建立新 Session 時 snapshot；不是雲端同步，且不會影響既有 Session。
+- compiler revision 更新後舊 Guide cache 需重新建立；已開始的 Session 保留原 snapshot，只提示「下一次建立 Session」才套用新版控制項。
 
 ### 7.1 Module library 與 compiler 使用
 
