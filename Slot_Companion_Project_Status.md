@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **P-WORLD 圖文中文攻略 Five-Machine Pilot**
 
-Status：**五台 Pilot 已完成實作、真實來源、本機 QA 與固定 dev Preview 自動 QA；等待手機人工驗收**
+Status：**五台 Pilot 已完成實作、真實來源、工程 QA、固定 dev Preview 與實體手機人工驗收；驗收通過**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -41,6 +41,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 工程 QA：lint 通過；typecheck 通過；完整 tests **306 / 306 passed**；Next.js 16.3.2 webpack production build通過。
 - localhost 390 × 844 最終 UI QA：五台 Guide 均顯示「圖文指南」及 18 個 figure，scroll width 均為 390px，console 0 errors／warnings；同源圖片 API 可正常回傳 JPEG。這是自動 QA，不等同實體手機人工驗收。
 - 固定 dev Preview 已部署 commit `a4d669f`。五台均重新建立為新版 cache、各顯示 18 張圖與「私人雲端資產」，やじきた先前因摘要缺 section 而只顯示 14 張的情況已複驗為 18 張；五台頁面未見 alert 或 console error。Pilot 新增的やじきた同源圖片 API 已從舊版 404 變為正常圖片回應，確認固定網址指向本次部署。此項是自動 QA，不等同實體手機人工驗收。
+- 實體手機人工驗收（使用者確認，2026-08-30）：五台 Pilot 的圖文中文指南、圖片載入與使用流程均無誤，驗收成功。此結果只核准本次五台 Pilot，不代表其餘 197 台已完成圖文資產建立或容量／權利評估。
 - 容量邊界仍維持每台 18 張、單張 1 MB；本輪沒有批次處理其餘 197 台，也沒有宣稱已取得來源轉載授權或已完成完整 Catalog 的長期容量／流量方案。
 
 ### P-WORLD 圖文中文攻略 Golden Test（2026-08-30）
@@ -1233,7 +1234,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 
 ## Current Work
-**P-WORLD 圖文中文攻略 Five-Machine Pilot 已完成程式、真實來源、完整工程 QA、localhost 手機尺寸 QA 與固定 dev Preview 自動 QA；等待手機人工驗收。**
+**P-WORLD 圖文中文攻略 Five-Machine Pilot 已完成程式、真實來源、完整工程 QA、固定 dev Preview 與實體手機人工驗收；目前等待下一階段產品討論。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1246,13 +1247,13 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪只有五台 Pilot 的受限圖片資產可寫入 private Supabase Storage，未擴張到其餘 197 台。
 
 ## Next Step
-### 五台圖文中文攻略手機驗收
+### 下一階段產品討論
 
-Status：**尚未標記人工驗收通過。**
+Status：**待討論；尚未開始。**
 
-1. 在固定 dev Preview 依序抽查五台 Pilot 指南，確認每台流程、CZ、AT／ART、Bonus、打法圖可在實體手機正常載入。
-2. 各選一台 AT 類與 Bonus+ART 類建立新 Session，確認 Session drawer 可在原 route 開啟相同圖文、關閉後紀錄不變。
-3. 手機驗收通過後再討論下一批或容量治理；目前不批次下載完整 Catalog，不部署 Production，也不 merge `main`。
+1. 先討論是否擴張下一批圖文指南，以及每批合理機台數量與代表 family。
+2. 在擴張前確認 private Storage 容量、版本資產清理、來源權利與流量策略；目前不宣稱全量 202 台已具備長期營運條件。
+3. 未經產品確認不批次下載其餘 Catalog、不部署 Production，也不 merge `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
