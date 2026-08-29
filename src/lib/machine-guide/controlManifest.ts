@@ -1,8 +1,8 @@
 import type { CounterDefinition } from "@/types";
 import type { ControlManifestItem, MachineGuideEvent, MachineGuideState, SessionCapability } from "@/types/machineGuide";
 
-const PRIORITY={named_cz:10,at:20,art:20,big_reg_bonus:30,end_evidence:40,total_games:0,normal_games:1,set:60,cycle:60,points:60,cz_failures:70,dual_games:70,role_streak:70,custom_event:80} as const;
-function eventType(capability:SessionCapability):ControlManifestItem["eventType"]{if(capability.moduleKind==="named_cz")return"cz";if(capability.moduleKind==="at")return"at";if(capability.moduleKind==="art")return"art";if(capability.moduleKind==="big_reg_bonus")return"bonus";if(capability.moduleKind==="end_evidence")return"indication";if(capability.moduleKind==="total_games"||capability.moduleKind==="normal_games")return"game";return"numeric"}
+const PRIORITY={named_cz:10,at:20,art:20,big_reg_bonus:30,end_evidence:40,small_role:50,total_games:0,normal_games:1,set:60,cycle:60,points:60,cz_failures:70,dual_games:70,role_streak:70,custom_event:80} as const;
+function eventType(capability:SessionCapability):ControlManifestItem["eventType"]{if(capability.moduleKind==="named_cz")return"cz";if(capability.moduleKind==="at")return"at";if(capability.moduleKind==="art")return"art";if(capability.moduleKind==="big_reg_bonus")return"bonus";if(capability.moduleKind==="small_role")return"special";if(capability.moduleKind==="end_evidence")return"indication";if(capability.moduleKind==="total_games"||capability.moduleKind==="normal_games")return"game";return"numeric"}
 function controlType(capability:SessionCapability):ControlManifestItem["controlType"]{if(capability.controlType==="choice")return"choice";if(capability.controlType==="tracker")return capability.moduleKind==="normal_games"?"derived_metric":"numeric_input";if(capability.controlType==="derived")return"derived_metric";return capability.status==="operational"?"counter":"numeric_input"}
 
 export function buildControlManifest(capabilities:SessionCapability[],counters:CounterDefinition[],events:MachineGuideEvent[],states:MachineGuideState[]):ControlManifestItem[]{

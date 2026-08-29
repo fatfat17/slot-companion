@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**P-WORLD 圖文中文攻略 Full Catalog Expansion（202 / 202 台工程 QA 完成）**（`dev`）。
+目前開發版本：**Setting Estimator Coverage Expansion（102 / 202 台具安全 observation contract）**（`dev`）。
 
 ## 本機啟動
 
@@ -23,7 +23,7 @@ pnpm dev
 6. 按下「開始玩」後選擇「第一次玩這台／快速開始／完整記錄」；第一次玩會先顯示既有指南產生的重點教學，三種模式都建立相同資料結構的 Session。
 7. 快速與第一次玩模式以兩欄顯示最多 4 個優先 operational controls，其餘收進「更多記錄」；完整模式直接顯示全部 operational controls。
 8. Session header 可隨時開啟機台指南 drawer 或切換使用模式；有圖文 Guide 時會先依目前狀態顯示相關圖片，並可在 drawer 內原地展開完整圖文，不離開 Session。切換只改變畫面資訊量，不清除既有紀錄。
-9. Setting Estimator 只採用有完整設定值、唯一 operational numerator、明確 operational denominator 與 minimum sample 的來源資料；每個 metric 保存可追溯 observation contract，無樣本時顯示「尚未開始推測」。
+9. Setting Estimator 只採用有完整設定值、唯一 operational numerator、明確 operational denominator 與 minimum sample 的來源資料；具完整設定 1～6 表格的可觀測小役會建立自己的來源 evidence Counter，合成值、條件式機率與狀態內機率仍不會冒充可記錄分子。每個 metric 保存可追溯 observation contract，無樣本時顯示「尚未開始推測」。
 10. 首頁只保留現場玩家入口，不再展示三台舊 Profile；底層 Profile 仍保留供既有 Session 與相容流程使用。
 11. Machine Catalog 頁提供「更新機種資料庫」入口：localhost development 可直接使用；Vercel Preview 在 Supabase 與 `CATALOG_ADMIN_TOKEN` 設定完成時，會開啟需管理密碼的私人 P-WORLD Importer。
 12. Catalog Detail、完整 Guide 與 Session Guide 均可重新整理單台 P-WORLD 機台指南；Session 內更新只寫入 Guide cache，新記錄項目於下一個 Session 套用。
@@ -44,6 +44,7 @@ pnpm dev
 - Control Manifest 統一定義 control type、玩家操作時機、observation、state effect、estimator dependency、來源 evidence、availability 與快速模式優先序；Session 仍保存相容 capability snapshot，舊 Session 不重新編譯。
 - `pnpm audit:controls -- --output reports/machine-catalog-control-audit.json` 可依序重跑全 Catalog audit；工具只保存衍生統計與 Catalog traceability，不保存來源 HTML 或圖片，並對短暫來源失敗做有限重試。
 - Audit 的每個 estimator metric 會列出 eligibility、numerator key、對應 control、denominator observation、minimum sample、evidence 與 blocker；公開機率表本身不會自動建立 Session numerator。
+- 202 台最新重跑中有 **102 台／225 metrics** 可安全參與 Estimator；其餘 100 台維持停用（67 台沒有完整設定 1～6 metric、33 台缺少唯一 canonical numerator）。這是來源與觀測契約的實際邊界，不以猜測補齊。
 - 無可靠 operational control 時使用「基本記錄模式」，只保留總 G，不補 generic CZ／AT；使用者可建立 per-machine Counter／Choice 自訂記錄，自訂項目只存 localStorage 且永不參與 Setting Estimator。
 - 指南 cache compiler revision 已更新；重新整理指南後只影響下一個新 Session。既有 Session 若偵測到更新，僅顯示提示，不會改寫按鈕或紀錄。
 - Session UI 與 Summary 已由 capability snapshot 產生；read-only／unavailable 項目只留在指南參考，不顯示空白或無作用控制項。

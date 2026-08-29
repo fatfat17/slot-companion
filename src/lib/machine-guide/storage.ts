@@ -5,7 +5,7 @@ const LEGACY_PREFIX="slot-companion-machine-guide-v1:";
 const MARKER_PREFIX="slot-companion-machine-guide-index-v1:";
 const DB_NAME="slot-companion-machine-guides";
 const STORE_NAME="guides";
-export const MACHINE_GUIDE_COMPILER_REVISION="2026-08-30-visual-guide-all-catalog-15";
+export const MACHINE_GUIDE_COMPILER_REVISION="2026-08-30-estimator-observation-coverage-16";
 export type GuideCacheState="current"|"stale"|"missing";
 
 export function guideCacheKey(catalogId:string){return`${PREFIX}${catalogId}`}

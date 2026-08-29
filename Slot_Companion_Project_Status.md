@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**P-WORLD 圖文中文攻略 Full Catalog Expansion（202 / 202）**
+**Setting Estimator Coverage Expansion（102 / 202）**
 
-Status：**全 202 台共用圖文 pipeline、IndexedDB Guide cache、真實來源與容量 audit、工程 QA及固定 dev Preview 自動驗證已完成**
+Status：**全 202 台資料重跑、Estimator observation contract 擴張與本機工程 QA完成；等待固定 dev Preview 驗證**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,18 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Setting Estimator Coverage Expansion（2026-08-30）
+- 在全 202 台 Machine Guide 資料完成後，新增共用 `small_role` observation module：只有完整設定 1～6 表格且角色名稱可由玩家直接觀察時，才建立來源可追溯的 Counter 與 `observedTotalGame` denominator。
+- 具名 CZ／AT／ART／Bonus metric 改用正規化後的精確 event identity；僅無事件名的通用初當／出現率表頭可在唯一同類 capability 時採有限 context fallback，不逐機硬編碼。
+- `合成`、條件式當選率、狀態內機率、成功期待度與無可靠 denominator 的表格仍維持 blocked；Estimator 數學、minimum sample、完整設定值與重複／衝突 benchmark 防護均未放寬。
+- 修正 token 判斷：`BATTLE BONUS` 不再因字串中含 `AT` 而誤分類成 AT。
+- 兩次完整節流 audit 均為 **202 / 202 成功**且 JSON 完全一致（SHA-256 `ce367ffd471c27b32752b4ea6a596836dae5ce8be12b49615b2abdc654328db0`）。Estimator eligible 由 **79 台／118 metrics** 提升為 **102 台／225 metrics**；generic CZ／AT fallback 維持 0。
+- 其餘 100 台安全停用：67 台來源無完整設定 1～6 metric，33 台缺唯一 canonical numerator；沒有把缺失值當 0 或產生推測數值。
+- Machine Guide cache revision 更新為 `2026-08-30-estimator-observation-coverage-16`；既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史均不改寫，新結果只套用重新建立 Guide 後的新 Session。
+- 工程 QA：lint 通過；typecheck 通過；完整 automated tests **314 / 314 passed**；Next.js 16.3.2 webpack production build 通過。預設 Turbopack build 在受限 host 因 CSS worker 無法 bind port，沿用專案既有 webpack production QA 路徑完成。
+- localhost production smoke：`/`、`/catalog`、`/guides/machine-1y0erql`、`/identify`、`/records`、legacy Session fallback route 均 HTTP 200。
+- 可重現逐機報告：`reports/machine-catalog-control-audit.json`。
 
 ### P-WORLD 圖文中文攻略 Full Catalog Expansion（2026-08-30）
 - 取消歷史 50 台 registry 的功能 gate；Catalog 目前 **202 / 202 台**均使用相同的 official-section、evidence-gated 圖文 parser／compiler／materializer，沒有逐台新增 UI 或 parser 特例。
@@ -1279,9 +1291,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 47. 同一瀏覽器累積大量完整 Machine Guide JSON 會觸及 localStorage quota；圖片使用 private Supabase Storage 並不能解決 Guide JSON 本身的 browser-local 容量。後續擴張應優先採 IndexedDB 或雲端 Guide persistence，且不得清除既有 Session／Guide 資料作為日常解法。
 48. 全 Catalog source-only audit 顯示 202 台合計約 385.3 MiB 圖片；適合採「使用者建立／重新整理時按需 materialize」，不應把全部圖片預先下載到 browser，也不能把 source-only audit 誤稱為雲端預熱完成。
 49. Machine Guide JSON 已移至 IndexedDB；這解決同瀏覽器大量 Guide 的 localStorage quota blocker，但仍不是跨裝置同步或雲端 Guide persistence。
+50. 完整設定 1～6 表格仍不等於一定可計算；只有具體可觀察小役或能唯一對應 operational event 的 metric 才能建立 canonical numerator。合成值、條件式機率與狀態內率必須繼續 blocked。
+51. Estimator coverage 應同時報告「來源有完整設定值」與「Session 有安全 observation contract」；本輪 102 / 202 可用，另外 67 台缺完整設定值、33 台缺唯一 numerator，不應用猜測追求 100%。
 
 ## Current Work
-**P-WORLD 圖文中文攻略已擴張到全 202 台；真實來源／圖片容量 audit、IndexedDB persistence、工程 QA、dev 部署與固定 Preview 自動回歸均已完成。等待後續實際遊玩回饋，不逐台要求人工審視。**
+**全 202 台機台資料與 Setting Estimator 涵蓋率擴張的本機工程 QA 已完成；目前準備 dev 部署與固定 Preview 自動回歸。安全 coverage 為 102 / 202，未涵蓋機台仍保持停用。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1294,13 +1308,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 等待實際遊玩回饋
+### 完成 Estimator Expansion QA 後等待實際遊玩回饋
 
-Status：**全量工程與固定 Preview 自動 QA 通過；沒有開始下一版本。**
+Status：**程式、202 台可重現 audit、完整 tests、production build 與 localhost smoke 完成；尚待固定 Preview 驗證。**
 
-1. 使用者日後在日本實際遊玩時，針對個別來源缺漏、翻譯不清或圖片失效使用既有 Guide 回報／重新整理功能校準。
-2. 圖文資產維持按需建立，不執行沒有使用需求的 202 台一次性雲端預熱。
-3. 不部署 Production，也不 merge `main`；下一版本維持待產品討論。
+1. Commit／push `dev`，等待固定 Preview Ready 並完成自動回歸。
+2. 使用者日後在日本實際遊玩時，針對個別來源缺漏、翻譯不清、圖片失效或 observation mapping 使用既有 Guide 回報／重新整理功能校準。
+3. 圖文資產維持按需建立，不執行沒有使用需求的 202 台一次性雲端預熱。
+4. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1392,6 +1407,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 v0.2.9.1 Session Legibility & Progressive Disclosure；不自行開始下一版本。**
+**完成 Setting Estimator Coverage Expansion 的工程與固定 dev Preview QA；通過後等待使用者實際遊玩驗收，不自行開始下一版本。**
 
-目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
+目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。

@@ -1,10 +1,39 @@
 # Machine Catalog Coverage Audit
 
-Audit date：2026-08-29
+Audit date：2026-08-30
 
-Code baseline：`dev` · v0.2.8.2 Estimator Observation Contract
+Code baseline：`dev` · Setting Estimator Coverage Expansion
 
 Scope：`data/machine-catalog.json` 全部 202 筆正式 Catalog records
+
+## Setting Estimator Coverage Expansion（目前有效）
+
+完成全 202 台圖文資料檢查後，以相同 P-WORLD official-section parser、Control Evidence Gate 與 observation contract 重跑 Estimator audit。工具連續執行兩次，兩輪皆為 **202 / 202 來源成功**，輸出 JSON 完全一致，SHA-256：`ce367ffd471c27b32752b4ea6a596836dae5ce8be12b49615b2abdc654328db0`。完整逐機 traceability 位於 `reports/machine-catalog-control-audit.json`。
+
+| 指標 | 擴張前 | 擴張後 | 變化／解讀 |
+|---|---:|---:|---|
+| Estimator eligible machines | 79 | **102** | +23；39.1% → 50.5% |
+| Estimator eligible metrics | 118 | **225** | +107 個可安全觀測 metric |
+| Estimator ineligible machines | 123 | **100** | 不為提高比例而補猜 |
+| 缺唯一 canonical numerator | 56 | **33** | 只補可由來源直接證明的記錄項目 |
+| 無完整設定 1～6 metric | 67 | **67** | 來源缺值時保持停用 |
+| Operational controls | 685 | **743** | 635 Counter + 108 Choice |
+| Basic record mode | 2 | **1** | 新增的是具來源表格證據的小役 Counter |
+| Generic CZ／AT fallback | 0 | **0** | 安全降級不退化 |
+
+### 本次共用規則
+
+- 具完整設定 1～6 數值、且列名是玩家可直接觀察的小役表格，可建立 `small_role` Counter；denominator 固定為本 Session 實際總 G。
+- 正規化後與具名 operational event 精確一致的設定 metric，可綁定該事件；只有 `初当り／出現率／突入率／確率` 等無事件名的通用表頭，才允許在唯一同類 capability 時使用有限 context fallback。
+- `合成`、`当選時`、`成立時`、`高確率`、成功期待度、狀態內機率與衍生值不會自動建立 Counter，也不會取得 Session denominator。
+- `BATTLE BONUS` 等名稱不再因字串內含 `AT` 而誤判成 AT；事件類型使用 token-aware identity 判定。
+- Estimator 數學、完整設定值要求、minimum sample（一般 rate 最低 600G）、重複／衝突 benchmark 防護均未放寬。
+- Guide compiler cache revision 更新後只影響重新建立的 Guide 與之後的新 Session；既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史不改寫。
+
+### 尚未涵蓋的 100 台
+
+- **67 台**：P-WORLD 來源沒有可用的完整設定 1～6 metric；缺失值不當成 0，也不生成理論值。
+- **33 台**：雖有完整設定表，但無法唯一對應到一個可操作 Session numerator；維持 blocked，等待未來共用 relationship／control contract，而非逐台硬編碼。
 
 ## Visual Guide Scale Pilot（第三批 25 台）
 

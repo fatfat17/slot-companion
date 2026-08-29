@@ -14,7 +14,7 @@ export type ControlManifestItem={
 };
 export type MachineGuideSectionKey = "features" | "play" | "flow" | "cz" | "at_art" | "bonus" | "ceiling" | "setting_rates" | "payout" | "small_roles" | "special_events";
 export type GuideStateType = "normal" | "chance_zone" | "at" | "art" | "bonus" | "special" | "entry" | "end" | "beginner" | "source";
-export type SessionModuleKind = "total_games" | "normal_games" | "big_reg_bonus" | "named_cz" | "at" | "art" | "set" | "cycle" | "points" | "cz_failures" | "dual_games" | "role_streak" | "end_evidence" | "custom_event";
+export type SessionModuleKind = "total_games" | "normal_games" | "big_reg_bonus" | "named_cz" | "at" | "art" | "small_role" | "set" | "cycle" | "points" | "cz_failures" | "dual_games" | "role_streak" | "end_evidence" | "custom_event";
 export type GuideDenominator = "total_games" | "normal_games" | "bonus_interval_games" | "cycle_arrivals" | "point_arrivals" | "cz_trials" | "at_art_ends" | "specific_trials";
 export type CapabilityStatus = "operational" | "read_only" | "unavailable";
 export type CapabilityControlType = "tracker" | "event" | "choice" | "relationship" | "derived" | "none";
