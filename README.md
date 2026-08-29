@@ -50,7 +50,7 @@ pnpm dev
 - 快速記錄優先順序固定使用 capability 種類與來源 contract 順序：具名 CZ → AT／ART → Bonus → 其他 operational event／choice，不依機台名稱猜測。
 - 新建立的 Session snapshot 會保存精簡結構化指南與可追溯 evidence，不複製 P-WORLD 圖片；Session drawer 會從同機台現有 Guide cache 讀取圖文素材，依目前狀態優先顯示相關圖片並可原地展開完整圖文。沒有有效圖文 cache 時安全回退精簡文字；parser、compiler 與內部 section path 不進入玩家主要內容。
 - Session 保存所選模式 snapshot，並在每台機器各自記住上次使用模式；這不是永久的新手／老手分類。舊 Session 沒有 mode 時安全回退為快速模式。
-- Session 主操作將版面優先留給 G 數與快速記錄；目前狀態縮成單行狀態列，記錄具名 CZ／AT／ART／Bonus 時自動切換，只有需要修正或回到通常時才開啟小型狀態選單。同一狀態有多個具名事件時顯示通用 CZ／AT／ART／Bonus，避免任意名稱冒充目前事件。
+- Session 主操作將版面優先留給 G 數與快速記錄；目前狀態以 capability 驅動的一鍵分段按鈕顯示，只提供該 Session 支援的通常／CZ／AT／ART／Bonus 等通用狀態。記錄具名事件時會自動切換，回到通常可直接點一次；具名場景只保留在快速記錄，不會冒充目前狀態。
 - P-WORLD `調査中`、未公開、空白或無法確認的值維持缺失，不補猜、不當成 0。
 - P-WORLD 仍是 Machine Catalog identity、導入資訊與日後店鋪資料的主要來源；ちょんぼりすた目前只補充五台試點機種的玩法、具名事件與設定表，不會取代 Catalog，也不作全站爬取。
 - 多來源採欄位級合併：格式相同的數值會去重並保留來源；不同來源同一設定值衝突時，只停用該 estimator metric，不阻擋其餘指南。補充來源失敗時仍可使用 P-WORLD 指南。
