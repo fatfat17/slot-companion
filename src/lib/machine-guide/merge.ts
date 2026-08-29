@@ -1,0 +1,21 @@
+import type { MachineGuideConflict,MachineGuideSection,MachineGuideSectionKey,MachineGuideTable,ParsedMachineGuideFacts } from "@/types/machineGuide";
+
+function normalized(value:string){return value.normalize("NFKC").toLowerCase().replace(/[\s・:：／/()（）\[\]【】「」『』_-]+/g,"")}
+function tableIdentity(table:MachineGuideTable){const headers=table.headers.map(normalized);if(/設定/.test(table.headers[0]??"")){const metrics=headers.slice(1),bonusPair=metrics.some(metric=>/^(?:bb|big|bigbonus)$/.test(metric))&&metrics.some(metric=>/^(?:rb|reg|regbonus)$/.test(metric));if(bonusPair)return`settings:${headers.join("|")}`;const semanticTitle=normalized(table.title).replace(/設定判別|設定差|出現率|初当り確率|初当り|確率|解析|一覧|詳細/g,"");return`settings:${semanticTitle}:${headers.join("|")}`}return`${normalized(table.title)}:${headers.join("|")}`}
+function canonicalCell(value:string,column:number){const normalizedValue=value.normalize("NFKC").replace(/\s+/g,"").replace(/％/g,"%").replace(/／/g,"/");return column===0?normalizedValue.replace(/^設定/,""):normalizedValue}
+function tableValue(table:MachineGuideTable){return JSON.stringify(table.rows.map(row=>row.map(canonicalCell)).sort((a,b)=>a[0].localeCompare(b[0],"ja")))}
+function mergeTable(existing:MachineGuideTable,incoming:MachineGuideTable){return{...existing,sourceUrls:[...new Set([...(existing.sourceUrls??[existing.sourceUrl]),...(incoming.sourceUrls??[incoming.sourceUrl])])],sourceNames:[...new Set([...(existing.sourceNames??(existing.sourceName?[existing.sourceName]:[])),...(incoming.sourceNames??(incoming.sourceName?[incoming.sourceName]:[]))])]}}
+
+export function mergeMachineGuideFacts(primary:ParsedMachineGuideFacts,supplemental:ParsedMachineGuideFacts[]):ParsedMachineGuideFacts{
+  const sections=new Map<MachineGuideSectionKey,MachineGuideSection>(),conflicts:MachineGuideConflict[]=[...(primary.conflicts??[])],conflictedTableIds=new Set(primary.conflictedTableIds??[]);
+  for(const facts of [primary,...supplemental])for(const section of facts.sections){
+    const current=sections.get(section.key)??{key:section.key,titleZh:section.titleZh,titleJa:section.titleJa,summaryZh:section.summaryZh,paragraphsJa:[],paragraphSourceUrls:[],tables:[]};
+    const paragraphKeys=new Set(current.paragraphsJa.map(normalized));
+    section.paragraphsJa.forEach((paragraph,index)=>{const key=normalized(paragraph);if(paragraphKeys.has(key))return;paragraphKeys.add(key);current.paragraphsJa.push(paragraph);current.paragraphSourceUrls?.push(section.paragraphSourceUrls?.[index]??facts.sourceUrl)});
+    for(const table of section.tables){const identity=tableIdentity(table),same=current.tables.find(item=>tableIdentity(item)===identity&&item.sourceUrl!==table.sourceUrl);if(!same){current.tables.push(table);continue}if(tableValue(same)===tableValue(table)){const at=current.tables.indexOf(same);current.tables[at]=mergeTable(same,table);continue}const conflictId=`conflict:${section.key}:${identity}`;if(!conflicts.some(item=>item.id===conflictId))conflicts.push({id:conflictId,sectionKey:section.key,label:table.title,sourceUrls:[...new Set([...(same.sourceUrls??[same.sourceUrl]),...(table.sourceUrls??[table.sourceUrl])])],reason:"不同來源的同一設定表數值不一致，暫不提供設定推測。",status:"unresolved"});conflictedTableIds.add(same.id);conflictedTableIds.add(table.id);current.tables.push(table)}
+    sections.set(section.key,current);
+  }
+  const mergedSections=[...sections.values()],available=new Set(mergedSections.filter(section=>section.paragraphsJa.length||section.tables.length).map(section=>section.key));
+  const sources=[...(primary.sources??[{name:primary.sourceName,url:primary.sourceUrl,retrievedAt:primary.retrievedAt,role:"primary" as const,status:"available" as const}]),...supplemental.flatMap(item=>item.sources??[{name:item.sourceName,url:item.sourceUrl,retrievedAt:item.retrievedAt,role:"supplemental" as const,status:"available" as const}])];
+  return{...primary,sections:mergedSections,evidence:[...primary.evidence,...supplemental.flatMap(item=>item.evidence)],missingSections:primary.missingSections.filter(key=>!available.has(key)),sources:[...new Map(sources.map(source=>[source.url,source])).values()],conflicts,conflictedTableIds:[...conflictedTableIds],sourceWarnings:[...new Set([...(primary.sourceWarnings??[]),...supplemental.flatMap(item=>item.sourceWarnings??[])])]};
+}

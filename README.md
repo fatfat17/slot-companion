@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**Player Library & Quick Reference（固定 Preview 自動 QA 完成，等待手機人工驗收）**（`dev`）。
+目前開發版本：**Multi-source Machine Guide Pilot（等待手機人工驗收）**（`dev`）。
 
 ## 本機啟動
 
@@ -17,7 +17,7 @@ pnpm dev
 
 1. 拍照／選擇圖片並在瀏覽器端壓縮。
 2. AI 辨識後由使用者確認 Machine Catalog record。
-3. Catalog Detail 使用既有 P-WORLD source URL 建立 Machine Guide v2。
+3. Catalog Detail 使用既有 P-WORLD source URL 建立 Machine Guide v2；五台試點機種會再依 server-side registry 讀取ちょんぼりすた公開頁作補充來源。
 4. compiler 將 `familyEvidence`、每個按鈕自己的 `controlEvidence` 與 `estimatorEvidence` 分層；Machine Family 不再直接授權 Session 按鈕，只有具名且可追溯的事件／選項才能通過 Control Evidence Gate。
 5. Guide 預設顯示「60 秒看懂這台」、三個跨類型重點與繁中分區說明；日文段落和表格集中在預設收合的查證區。
 6. 按下「開始玩」後選擇「第一次玩這台／快速開始／完整記錄」；第一次玩會先顯示既有指南產生的重點教學，三種模式都建立相同資料結構的 Session。
@@ -51,7 +51,10 @@ pnpm dev
 - Session 保存所選模式 snapshot，並在每台機器各自記住上次使用模式；這不是永久的新手／老手分類。舊 Session 沒有 mode 時安全回退為快速模式。
 - Session 主操作使用較大的狀態／記錄按鈕與字級；Estimator 的來源、計算與 Evidence，以及 Session 指南的流程、名詞與來源資料改為按需展開，安全規則仍保留但不占用主要操作空間。
 - P-WORLD `調査中`、未公開、空白或無法確認的值維持缺失，不補猜、不當成 0。
-- 指南整理結構化事實、數值、自行撰寫的中文提示、來源 URL 與擷取時間；不保存完整攻略文章或來源圖片。
+- P-WORLD 仍是 Machine Catalog identity、導入資訊與日後店鋪資料的主要來源；ちょんぼりすた目前只補充五台試點機種的玩法、具名事件與設定表，不會取代 Catalog，也不作全站爬取。
+- 多來源採欄位級合併：格式相同的數值會去重並保留來源；不同來源同一設定值衝突時，只停用該 estimator metric，不阻擋其餘指南。補充來源失敗時仍可使用 P-WORLD 指南。
+- 指南整理結構化事實、數值、自行撰寫的中文提示、來源 URL 與擷取時間；不保存完整攻略文章、留言、導覽、推薦內容或來源圖片。
+- 目前多來源試點：`スマスロ バイオハザードRE:3`、`スマスロ やじきた道中記参る!`、`Lパチスロ 喰霊‐零‐Re`、`L 東京喰種`、`L ULTRAMAN 最終決戦`。其他 Catalog 機種仍沿用 P-WORLD 單一來源。
 - 設定可能性僅供參考，不是準確設定判定或獲利保證。
 - 既有三台 placeholder Profile 與其中的 **TEST DATA** 只供既有流程／測試使用，不得視為真實機種資料。
 - API key 只可放在 server-side `.env.local`，不得提交 Git。

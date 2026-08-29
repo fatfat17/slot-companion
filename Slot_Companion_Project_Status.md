@@ -1,11 +1,11 @@
 # Slot Companion Project Status
 
-Last Updated: 2026-08-29
+Last Updated: 2026-08-30
 
 ## Current Version
-**Player Library & Quick Reference（固定 Preview 自動 QA 完成）**
+**Multi-source Machine Guide Pilot**
 
-Status：**玩家導向 Machine Library、收藏／最近瀏覽、共用新手術語、Guide 快速目錄與跨日遊玩記帳已完成；固定 dev Preview 自動 QA 通過，等待手機人工驗收**
+Status：**P-WORLD 主來源＋ちょんぼりすた補充來源的五台試點已完成實作與本機 QA；等待固定 dev Preview 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,21 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Multi-source Machine Guide Pilot（2026-08-30）
+- 架構決策：P-WORLD 繼續負責 Machine Catalog identity、導入資訊與日後店鋪／設置資料；ちょんぼりすた只作可選的指南補充來源。使用者不需重新輸入網址，五台試點由 server-side registry 配對來源。
+- 五台試點：`スマスロ バイオハザードRE:3`、`スマスロ やじきた道中記参る!`、`Lパチスロ 喰霊‐零‐Re`、`L 東京喰種`、`L ULTRAMAN 最終決戦`。未列入 registry 的機種維持 P-WORLD 單一來源，不會被全站自動爬取。
+- 新增 `Machine Guide Source Provider` 相容層、ちょんぼりすた deterministic parser、依序補充來源取得與 field-level merge。Parser 僅讀取正文 container 的 heading／paragraph／table，排除 comments、使用者留言、導覽、推薦、廣告與圖片；測試只保存最小整理 **TEST DATA** fixture。
+- 多來源相同資料以 canonical value 去重並保留來源追溯；來源格式、全半形與設定列順序差異不會製造假衝突。不同來源同一設定表的數值衝突會留下 unresolved conflict，且只停用受影響的 estimator metric，不阻擋其他指南內容。
+- 補充來源 request failure 採安全隔離：P-WORLD 成功時仍可建立指南，UI 在底部來源區集中顯示失敗來源與擷取狀態；重新整理失敗仍保留瀏覽器上一份有效指南。
+- Family classification 固定以 P-WORLD primary facts 為主，補充頁的攻略用語不會把 A-type／Bonus+ART／multi-zone 等 family 誤改；每個 operational control 仍需通過既有 Control Evidence Gate。
+- Event compiler 新增雙語／片假名 canonical identity，避免 `NEMESIS BATTLE／ネメシスバトル`、`喰霊CHANCE／喰霊チャンス` 重複建立按鈕；不完整括號與句子碎片仍被排除。
+- Estimator 安全補強：相同 numerator／denominator／設定 1～6 理論值的重複表格只建立一個 benchmark 並合併 evidence；`AT中／CZ中` 等缺乏 Session denominator 的狀態內率不會冒充初當率。Setting Estimator 數學與 minimum sample 未修改。
+- Machine Guide cache revision 更新為 `2026-08-30-multi-source-guide-pilot-10`；只使舊 Guide cache 失效，既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史完全不改寫。新指南只套用下一個 Session。
+- 五台公開實頁 smoke 全部可取得 P-WORLD 與ちょんぼりすた，且合併後 unresolved conflicts 為 0；RE:3=`multi_zone_at`、やじきた=`multi_zone_at`、喰霊=`bonus_art`、東京喰種=`multi_zone_at`、ULTRAMAN=`multi_zone_at`，未被補充來源誤分類。
+- 最終工程 QA：lint **0 errors／0 warnings**；typecheck 通過；完整 tests **295 / 295 passed**；Next.js 16.3.2 webpack production build 通過。localhost production smoke 的 `/`、`/catalog`、RE:3 Catalog Detail／Guide、`/identify`、`/records` 均 HTTP 200。
+- RE:3 localhost API 實際多來源 smoke：P-WORLD 與ちょんぼりすた皆為 available、conflicts 0；相同 AT 初當表去重後只保留 **1 個** `AT初当り` benchmark，numerator 正確綁定主要 `HAZARD RUSH`，`AT中／上位AT中` 的狀態內率因缺可靠 Session denominator 不參與 estimator。
+- Status：實作、本機 parser／compiler、公開實頁與完整工程 QA 完成；等待固定 dev Preview 與手機人工驗收。此項尚未標記人工驗收通過。
 
 ### Estimator Primary／Upper Event Mapping Hotfix
 - 手機 QA 發現 `スマスロ バイオハザードRE:3` 已記錄 1,100G、具名 CZ／AT 後，Estimator 仍顯示「目前沒有可計算的設定資料」。根因不是缺少 P-WORLD 設定表或樣本不足，而是同機同時存在主要 `HAZARD RUSH` 與上位 `HAZARD RUSH INFERNO`，舊 compiler 因兩個 AT numerator 候選而安全阻擋 `AT初当り`。

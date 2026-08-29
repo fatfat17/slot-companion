@@ -37,10 +37,12 @@ export type EstimatorObservationContract = {
   reason:string|null;
 };
 
-export type MachineGuideTable = {id:string;title:string;headers:string[];rows:string[][];note:string|null;sourceUrl:string};
-export type MachineGuideSection = {key:MachineGuideSectionKey;titleZh:string;titleJa:string;summaryZh:string|null;paragraphsJa:string[];tables:MachineGuideTable[]};
+export type MachineGuideSource = {name:string;url:string;retrievedAt:string;role:"primary"|"supplemental";status:"available"|"failed"};
+export type MachineGuideConflict = {id:string;sectionKey:MachineGuideSectionKey;label:string;sourceUrls:string[];reason:string;status:"unresolved"};
+export type MachineGuideTable = {id:string;title:string;headers:string[];rows:string[][];note:string|null;sourceUrl:string;sourceName?:string;sourceUrls?:string[];sourceNames?:string[]};
+export type MachineGuideSection = {key:MachineGuideSectionKey;titleZh:string;titleJa:string;summaryZh:string|null;paragraphsJa:string[];paragraphSourceUrls?:string[];tables:MachineGuideTable[]};
 export type MachineGuideEvidence = {sectionKey:MachineGuideSectionKey;rawLabel:string;extractedFrom:"heading"|"paragraph"|"table";sourceUrl:string};
-export type ParsedMachineGuideFacts = {catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;catalogMachineType:string;introducedAt:string|null;sections:MachineGuideSection[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];sourceName:"P-WORLD";sourceUrl:string;retrievedAt:string};
+export type ParsedMachineGuideFacts = {catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;catalogMachineType:string;introducedAt:string|null;sections:MachineGuideSection[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];sourceName:string;sourceUrl:string;retrievedAt:string;sources?:MachineGuideSource[];conflicts?:MachineGuideConflict[];conflictedTableIds?:string[];sourceWarnings?:string[];familyClassificationHint?:MachineFamilyClassification};
 export type MachineGuideState = {id:string;displayNameZh:string;originalNameJa:string;type:GuideStateType;sourceUrl:string};
 export type MachineGuideEvent = {id:string;labelZh:string;labelJa:string;category:"bonus"|"cz"|"at"|"art"|"role"|"indication"|"special";whatToSee:string;countingRule:string;sessionModuleIds:string[];affectsEstimator:boolean;sourceUrl:string;controlEvidence:GuideEvidenceReference[];unavailableReason:string|null};
 export type MachineGuideSessionModule = {id:string;kind:SessionModuleKind;labelZh:string;labelJa:string;eventId?:string;controlled:true};
@@ -63,7 +65,7 @@ export type MachineGuide = {
   playerGuideZh?:PlayerGuideZh;
   beginnerGuide:BeginnerGuide;states:MachineGuideState[];recordableEvents:MachineGuideEvent[];sessionModules:MachineGuideSessionModule[];sessionCapabilities:SessionCapability[];denominatorCapabilities:DenominatorCapability[];estimatorMetrics:MachineGuideMetric[];
   sections:MachineGuideSection[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];benchmarks:SettingBenchmark[];smartCounters:CounterDefinition[];
-  sourceName:"P-WORLD";sourceUrl:string;retrievedAt:string;
+  sourceName:string;sourceUrl:string;retrievedAt:string;sources?:MachineGuideSource[];conflicts?:MachineGuideConflict[];sourceWarnings?:string[];
 };
 export type MachineGuideApiResponse = {guide:MachineGuide}|{error:string;code:string};
 export type CachedMachineGuide = {guide:MachineGuide;cachedAt:string;compilerRevision:string};

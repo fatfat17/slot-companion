@@ -20,6 +20,6 @@ export default async function CatalogDetailPage({params}:{params:Promise<{id:str
     <MachineGuideActions record={record}/>
     {profile&&<Link className="secondary-button mt-4" href={`/machines/${profile.id}`}>查看既有 Machine Card</Link>}
     {builder.available?<Link className="secondary-button mt-3" href={builder.href}>開發工具 · {builder.label}</Link>:null}
-    <div className="notice mt-3">機台指南使用 P-WORLD 單一公開來源即可建立；既有 Profile Builder 僅保留為開發工具，不再是查看指南或開始 Session 的門檻。</div>
+    <div className="notice mt-3">P-WORLD 是機種與店家資料主來源；部分試行機種會補充其他公開攻略資料。單一來源即可建立指南，不需要等待雙來源驗證。</div>
   </main></>;
 }
