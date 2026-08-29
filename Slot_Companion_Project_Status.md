@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **P-WORLD 圖文中文攻略 Five-Machine Pilot**
 
-Status：**五台 Pilot 已完成實作、真實來源與本機 QA；等待固定 dev Preview 與手機人工驗收**
+Status：**五台 Pilot 已完成實作、真實來源、本機 QA 與固定 dev Preview 自動 QA；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -40,6 +40,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Regression tests 新增五台 registry、試點外隔離、每機 Supabase object path ownership、跨機圖片不污染、逐來源 section 圖片不可被中文摘要漏掉等案例。
 - 工程 QA：lint 通過；typecheck 通過；完整 tests **306 / 306 passed**；Next.js 16.3.2 webpack production build通過。
 - localhost 390 × 844 最終 UI QA：五台 Guide 均顯示「圖文指南」及 18 個 figure，scroll width 均為 390px，console 0 errors／warnings；同源圖片 API 可正常回傳 JPEG。這是自動 QA，不等同實體手機人工驗收。
+- 固定 dev Preview 已部署 commit `a4d669f`。五台均重新建立為新版 cache、各顯示 18 張圖與「私人雲端資產」，やじきた先前因摘要缺 section 而只顯示 14 張的情況已複驗為 18 張；五台頁面未見 alert 或 console error。Pilot 新增的やじきた同源圖片 API 已從舊版 404 變為正常圖片回應，確認固定網址指向本次部署。此項是自動 QA，不等同實體手機人工驗收。
 - 容量邊界仍維持每台 18 張、單張 1 MB；本輪沒有批次處理其餘 197 台，也沒有宣稱已取得來源轉載授權或已完成完整 Catalog 的長期容量／流量方案。
 
 ### P-WORLD 圖文中文攻略 Golden Test（2026-08-30）
@@ -1232,7 +1233,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 
 ## Current Work
-**P-WORLD 圖文中文攻略 Five-Machine Pilot 已完成程式、真實來源、完整工程 QA 與 localhost 手機尺寸 QA；等待固定 dev Preview 與手機人工驗收。**
+**P-WORLD 圖文中文攻略 Five-Machine Pilot 已完成程式、真實來源、完整工程 QA、localhost 手機尺寸 QA 與固定 dev Preview 自動 QA；等待手機人工驗收。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1249,7 +1250,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 
 Status：**尚未標記人工驗收通過。**
 
-1. 等待 `dev` 固定 Preview 更新後，依序重新建立五台 Pilot 指南，確認每台流程、CZ、AT／ART、Bonus、打法圖可在手機正常載入。
+1. 在固定 dev Preview 依序抽查五台 Pilot 指南，確認每台流程、CZ、AT／ART、Bonus、打法圖可在實體手機正常載入。
 2. 各選一台 AT 類與 Bonus+ART 類建立新 Session，確認 Session drawer 可在原 route 開啟相同圖文、關閉後紀錄不變。
 3. 手機驗收通過後再討論下一批或容量治理；目前不批次下載完整 Catalog，不部署 Production，也不 merge `main`。
 
