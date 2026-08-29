@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **Multi-source Machine Guide Pilot**
 
-Status：**P-WORLD 主來源＋ちょんぼりすた補充來源的五台試點已完成實作與本機 QA；等待固定 dev Preview 與手機人工驗收**
+Status：**P-WORLD 主來源＋ちょんぼりすた補充來源的五台試點已完成實作、本機 QA 與固定 dev Preview 自動 QA；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -44,7 +44,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 五台公開實頁 smoke 全部可取得 P-WORLD 與ちょんぼりすた，且合併後 unresolved conflicts 為 0；RE:3=`multi_zone_at`、やじきた=`multi_zone_at`、喰霊=`bonus_art`、東京喰種=`multi_zone_at`、ULTRAMAN=`multi_zone_at`，未被補充來源誤分類。
 - 最終工程 QA：lint **0 errors／0 warnings**；typecheck 通過；完整 tests **295 / 295 passed**；Next.js 16.3.2 webpack production build 通過。localhost production smoke 的 `/`、`/catalog`、RE:3 Catalog Detail／Guide、`/identify`、`/records` 均 HTTP 200。
 - RE:3 localhost API 實際多來源 smoke：P-WORLD 與ちょんぼりすた皆為 available、conflicts 0；相同 AT 初當表去重後只保留 **1 個** `AT初当り` benchmark，numerator 正確綁定主要 `HAZARD RUSH`，`AT中／上位AT中` 的狀態內率因缺可靠 Session denominator 不參與 estimator。
-- Status：實作、本機 parser／compiler、公開實頁與完整工程 QA 完成；等待固定 dev Preview 與手機人工驗收。此項尚未標記人工驗收通過。
+- 固定 dev Preview 自動 QA（390 × 844）：RE:3 舊 Guide cache 正確失效，重建後顯示可使用的繁中指南，底部來源同時列出 P-WORLD 與ちょんぼりすた；第一次玩／快速開始／完整記錄三個 Session 入口正常，頁面 scroll width 390px，console 0 errors／warnings。這是自動 QA，不冒充實體手機人工驗收。
+- Status：實作、本機 parser／compiler、公開實頁、完整工程 QA 與固定 Preview 自動 QA 完成；等待手機人工驗收。此項尚未標記人工驗收通過。
 
 ### Estimator Primary／Upper Event Mapping Hotfix
 - 手機 QA 發現 `スマスロ バイオハザードRE:3` 已記錄 1,100G、具名 CZ／AT 後，Estimator 仍顯示「目前沒有可計算的設定資料」。根因不是缺少 P-WORLD 設定表或樣本不足，而是同機同時存在主要 `HAZARD RUSH` 與上位 `HAZARD RUSH INFERNO`，舊 compiler 因兩個 AT numerator 候選而安全阻擋 `AT初当り`。
