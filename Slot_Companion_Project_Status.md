@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **P-WORLD 圖文中文攻略 Full Catalog Expansion（202 / 202）**
 
-Status：**全 202 台共用圖文 pipeline、IndexedDB Guide cache、真實來源與容量 audit、工程 QA 已完成；等待固定 dev Preview 最終自動驗證**
+Status：**全 202 台共用圖文 pipeline、IndexedDB Guide cache、真實來源與容量 audit、工程 QA及固定 dev Preview 自動驗證已完成**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -40,6 +40,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 所有機台在 Vercel 以使用者建立／重新整理 Guide 時按需 materialize 到既有 private Supabase bucket；沒有假裝 3,133 張已全部預先上傳。來源失敗時維持既有 fallback 與安全排除。
 - 新增全 202 台共用 visual pipeline regression、IndexedDB 遷移與 Session key 不受影響測試；完整 automated tests **312 / 312 passed**。
 - 最終工程 QA：lint 通過；typecheck 通過；Next.js 16.3.2 webpack production build 通過。localhost production smoke 的 `/`、`/catalog`、`/guides/machine-1y0erql`、`/records` 均 HTTP 200。
+- 產品 commit `4947e6b` 已 push 至 `origin/dev`，固定 dev Preview 已更新。390 × 844 自動 QA 以歷史 50 台 registry 外的 `machine-frx2z3`（パチスロ武装神姫）建立新版指南：16 個 figure、首屏圖片 590px 正常載入、scroll width 390px、console error／warning 0，並顯示「此瀏覽器 IndexedDB」及「私人雲端資產」。
+- 固定 Preview 亦確認既有東京喰種 Session 可正常載入原 snapshot、控制項與既有計數；新版 Guide／compiler 沒有重寫舊 Session。上述是自動瀏覽器 QA，不冒充實體手機人工驗收。
 - 可重現報告：`reports/visual-guide-catalog-source-audit.json`、`reports/visual-guide-catalog-materialization-audit.json`。
 
 ### P-WORLD 圖文中文攻略 Scale Pilot — 第三批 25 台（2026-08-30）
@@ -1279,7 +1281,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 49. Machine Guide JSON 已移至 IndexedDB；這解決同瀏覽器大量 Guide 的 localStorage quota blocker，但仍不是跨裝置同步或雲端 Guide persistence。
 
 ## Current Work
-**P-WORLD 圖文中文攻略已擴張到全 202 台；真實來源／圖片容量 audit 與 IndexedDB persistence 已完成，正在完成最終工程 QA、dev 部署與固定 Preview 自動回歸。**
+**P-WORLD 圖文中文攻略已擴張到全 202 台；真實來源／圖片容量 audit、IndexedDB persistence、工程 QA、dev 部署與固定 Preview 自動回歸均已完成。等待後續實際遊玩回饋，不逐台要求人工審視。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1292,13 +1294,13 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 全 Catalog 固定 Preview 最終驗證
+### 等待實際遊玩回饋
 
-Status：**全量 source／materialization audit 通過；等待最終部署與固定 Preview 自動 QA。**
+Status：**全量工程與固定 Preview 自動 QA 通過；沒有開始下一版本。**
 
-1. 完成 lint、typecheck、完整 tests、production build 與 localhost smoke。
-2. Push `dev` 後等待固定 Preview Ready，抽查既有 Pilot、歷史 registry 外機種、IndexedDB cache 與 Session drawer。
-3. 不部署 Production，也不 merge `main`；不以清除既有 Session 或 localStorage 作為容量解法。
+1. 使用者日後在日本實際遊玩時，針對個別來源缺漏、翻譯不清或圖片失效使用既有 Guide 回報／重新整理功能校準。
+2. 圖文資產維持按需建立，不執行沒有使用需求的 202 台一次性雲端預熱。
+3. 不部署 Production，也不 merge `main`；下一版本維持待產品討論。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
