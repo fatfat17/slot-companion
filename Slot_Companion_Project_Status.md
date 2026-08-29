@@ -47,6 +47,7 @@ Status：**Completed；等待手機人工驗收**
 - 新增 P-WORLD 10542／10489 與 10514 資料不足案例的最小整理 **TEST DATA** fixtures；回歸涵蓋基本記錄模式、自訂 Counter／Choice 保存與 estimator 隔離，以及既有 A-type／multi-zone／set-based 行為；完整 tests：**239 / 239 passed** ✅
 - lint ✅（0 errors／0 warnings）；typecheck ✅；Next.js 16.3.2 webpack production build ✅。Turbopack 在受限 host 因 PostCSS worker 無法 bind port 失敗，改用專案既有 webpack production QA 路徑完成。
 - QA blocker 修正後 localhost production smoke：`/`、`/identify`、`/catalog`、`/catalog/machine-1xl2y3d`、`/records` 均 HTTP 200 ✅
+- 固定 dev Preview 已以 `L ULTRAMAN 最終決戰`（P-WORLD 10514）重新建立最新指南：Session Template 不再含 CZ／AT state 或 Counter，Setting Estimator 顯示無可安全參與資料；開始入口可找到 per-machine 自訂記錄編輯器 ✅。為保護瀏覽器中既有 active Session，本次未自動結束舊 Session，基本記錄模式與自訂項目實際計數／reload 留待手機人工複驗。
 - localhost production routes `/`、`/identify`、`/catalog`、10542 Catalog Detail／Guide、records 均 HTTP 200 ✅
 - 固定 dev Preview 已實際以 P-WORLD 10542 建立 A-type 指南：只顯示 BIG／REG、設定表保留 Bonus 合成、無 CZ／AT；模式入口顯示 per-machine「新增自訂記錄」✅
 - 固定 dev Preview 已實際以 P-WORLD 10489 建立 multi-zone AT 指南：CZ、AT、終了畫面可記錄，里程／Zone 表格只留指南參考；browser console 0 errors ✅
