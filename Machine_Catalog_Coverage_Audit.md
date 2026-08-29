@@ -173,6 +173,8 @@ Provider 規則為 `https://www.p-world.co.jp/machine/database/{number}`（允�
 | 10368 | スマスロ 沖ドキ!DUO アンコール | `generic` | v0.2.6.2 受控實頁分析 |
 | 10471 | 戦国コレクション6 | `cycle_point_at` | v0.2.6.2 受控實頁分析 |
 | 10531 | スマスロ ストリートファイター6 | `set_based_at` | v0.2.6.2 受控實頁分析 |
+| 10542 | LBトリプルクラウンX‐300 | `a_type` | v0.2.8.0 受控實頁分析；BB／RB 設定表與 Preview smoke |
+| 10489 | スマスロ やじきた道中記参る! | `multi_zone_at` | v0.2.8.0 受控實頁分析；多 CZ／AT／終了畫面與 Preview smoke |
 
 P-WORLD 10513 的 `a_type` 僅有最小 TEST DATA fixture；本機 Catalog 沒有 10513 record，因此不能計入 202 筆正式 Catalog 的 Confirmed 數。
 
@@ -205,11 +207,11 @@ P-WORLD 10513 的 `a_type` 僅有最小 TEST DATA fixture；本機 Catalog 沒�
 
 | GuideMachineType | Confirmed Catalog | Probable Catalog | 本機證據與限制 |
 |---|---:|---:|---|
-| `a_type` | 0 | 14 | 10513 只有 TEST DATA fixture；其餘 14 筆依名稱線索推測 |
+| `a_type` | 1 | 14 | 10542 已受控來源與 Preview smoke；10513 仍只有 TEST DATA fixture |
 | `bonus_art` | 1 | 0 | 10530 已 fixture、runtime、手機驗收 |
 | `cycle_point_at` | 2 | 0 | 10473、10471 已受控來源分析；10473 另有 fixture、runtime、手機驗收 |
 | `bonus_loop` | 1 | 0 | 10508 已 fixture、runtime |
-| `multi_zone_at` | 3 | 0 | 10485、10207、10446 已受控來源分析 |
+| `multi_zone_at` | 4 | 0 | 10485、10207、10446、10489 已受控來源分析 |
 | `set_based_at` | 2 | 0 | 10424、10531 已受控來源分析；10424 另有 fixture、runtime、手機驗收 |
 | `generic` | 8 | 0 | 受控來源可取得但現有 signature 未形成具體 archetype；不代表玩法已完全理解 |
 
@@ -233,10 +235,10 @@ compiler 只有在正文出現特定且組合完整的 deterministic signature �
 | Family | Confirmed | Probable | Unknown | 已驗證 operational coverage | 已驗證 read-only coverage | 尚未完整支援 |
 |---|---:|---:|---:|---:|---:|---|
 | A-type／Bonus | 1 | 14 | — | 1 | 0 | 技術介入、BT 細分 |
-| CZ → AT | 1 | 0 | — | 1 | 1 | Zone／里程操作時機 |
+| CZ → AT | 0 | 0 | — | 0 | 0 | 等待正式來源代表案例 |
 | Bonus + ART | 1 | 0 | — | 1 | 0 | 更多正式來源案例 |
 | 週期／點數 AT | 2 | 0 | — | 1 | 1 | 週期、點數、CZ failure input |
-| 多 Zone AT | 3 | 0 | — | 1 | 1 | dual-game numeric input |
+| 多 Zone AT | 4 | 0 | — | 2 | 2 | dual-game／Zone numeric input |
 | Set 管理 AT | 2 | 0 | — | 1 | 1 | Set、role streak input |
 | Bonus Loop | 1 | 0 | — | 1 | 0 | 更多正式來源案例 |
 | generic／unknown | 8 | 0 | 169 | 0 | 0 | 等待來源證據；安全降級為基本記錄 |
@@ -244,7 +246,7 @@ compiler 只有在正文出現特定且組合完整的 deterministic signature �
 這些 operational／read-only 數量只計已由代表 fixture 或 runtime regression 驗證的正式案例，不把同 family 的未逐一驗證機台推定為已支援。跨 family 共用 regression 至少覆蓋 A-type、CZ→AT、Bonus+ART、週期／點數、multi-zone、set-based、bonus-loop 與 generic 安全降級；部分 family 尚不足兩台正式來源，因此只列現有證據，不以 TEST DATA 冒充正式 Catalog coverage。
 
 - P-WORLD 10542 `LBトリプルクラウンX‐300`：設定表明確提供 BB／RB／Bonus 合成，分類為 high-confidence A-type；BIG 與 REG 為獨立 Counter，Bonus 合成為 derived metric，不建立第三個輸入，也不產生 CZ／AT。
-- P-WORLD 10489 `スマスロ やじきた道中記参る!`：設定表提供 CZ／AT，終了畫面提供有效 choices；分類為 high-confidence CZ→AT。規定里程／Zone 只有參考結構，操作時機不足，維持 read-only。
+- P-WORLD 10489 `スマスロ やじきた道中記参る!`：來源提供多個 CZ 結構、AT 設定表與有效終了畫面 choices；分類為 multi-zone AT。規定里程／Zone 只有參考結構，操作時機不足，維持 read-only。
 - Control Manifest 統一定義事件、control type、玩家何時按、observation、state effect、estimator dependency、source evidence、availability 與 quick priority。Session snapshot 同時保留既有 capability contract 相容欄位。
 - estimator 只有在 operational numerator、operational denominator、至少一次事件且達最低樣本後才開始；derived 與 user custom observation 不參與。
 - custom Counter／Choice 只保存在目前瀏覽器 localStorage、依機台重用並於建立新 Session 時 snapshot；不是雲端同步，且不會影響既有 Session。

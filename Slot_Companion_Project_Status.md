@@ -38,7 +38,7 @@ Status：**Completed；等待手機人工驗收**
 - 新增統一 Control Manifest：保存 id、label、event/control type、玩家何時按、observation key、state effect、estimator usability、numerator／denominator、source evidence、availability／reason 與 quick priority。
 - 既有 Session capability contract 保留為相容 snapshot，並同步 manifest presentation metadata；Session UI 的 operational filtering、具名 CZ／AT／ART／BIG／REG 分離、choice 安全與 quick/full/first-time 共用規則不退化。
 - `LBトリプルクラウンX‐300`（P-WORLD 10542）由 BB／RB 設定表分類為 high-confidence A-type：新 Session 有獨立 BIG／REG，Bonus 合成只做 derived metric；沒有來源的 CZ／AT 不會出現。
-- `スマスロ やじきた道中記参る!`（P-WORLD 10489）由結構化 CZ／AT 設定表分類為 high-confidence CZ→AT；CZ、AT、有效終了畫面 choice operational，規定里程／Zone 說明不冒充可操作按鈕。
+- `スマスロ やじきた道中記参る!`（P-WORLD 10489）由多 CZ 與 AT 結構分類為 multi-zone AT；CZ、AT、有效終了畫面 choice operational，規定里程／Zone 說明不冒充可操作按鈕。
 - generic／unknown 沒有可靠事件時顯示「基本記錄模式」，仍保留總 G，且不自動補 generic CZ／AT。
 - 開始 Session 的模式入口新增 per-machine 自訂 Counter／Choice；可選是否進快速記錄，保存在 localStorage 並只套用新 Session。自訂 observation 固定 `estimatorUsable=false`，不會進 Setting Estimator。
 - Estimator rate evidence 現要求 operational numerator／denominator、numerator 已觀測且 denominator 達 benchmark minimum sample；不足時維持「尚未開始推測」。Derived Bonus 合成不建立重複輸入，也不重複餵 estimator。
@@ -46,6 +46,9 @@ Status：**Completed；等待手機人工驗收**
 - `StartSession 2.tsx` 調查：未被任何 import／route／測試引用，是 2026-08-27 的舊副本；依使用者要求保留原狀、未刪除且不納入本次 commit。
 - 新增 P-WORLD 10542／10489 最小整理 **TEST DATA** fixtures 與 control-foundation regression；完整 tests：**236 / 236 passed** ✅
 - lint ✅（0 errors／0 warnings）；typecheck ✅；Next.js 16.3.2 webpack production build ✅。Turbopack 在受限 host 因 PostCSS worker 無法 bind port 失敗，改用專案既有 webpack production QA 路徑完成。
+- localhost production routes `/`、`/identify`、`/catalog`、10542 Catalog Detail／Guide、records 均 HTTP 200 ✅
+- 固定 dev Preview 已實際以 P-WORLD 10542 建立 A-type 指南：只顯示 BIG／REG、設定表保留 Bonus 合成、無 CZ／AT；模式入口顯示 per-machine「新增自訂記錄」✅
+- 固定 dev Preview 已實際以 P-WORLD 10489 建立 multi-zone AT 指南：CZ、AT、終了畫面可記錄，里程／Zone 表格只留指南參考；browser console 0 errors ✅
 
 Coverage 更新：正式 Catalog 202 筆；Confirmed **19**、Probable **14**、Unknown **169**。各 family 的 operational／read-only coverage 只計已驗證代表案例，未把 TEST DATA 或名稱推測冒充正式支援。
 
