@@ -9,7 +9,7 @@ export type CounterDefinition = {
   recognition: string;
   reason: string;
   type: "count" | "event" | "choice" | "photo";
-  choices?: Array<{ value: string; labelZh: string; labelJa: string; sourceDescription?: string; referenceOnly?: boolean }>;
+  choices?: Array<{ value: string; labelZh: string; labelJa: string; sourceDescription?: string; referenceOnly?: boolean; sourceUrl?: string; sourceSectionKey?: string; sourceTableId?: string; sourceEvidenceId?: string }>;
   eventState?: GameState;
   denominatorMetricKey?: string;
   parentCounterKey?: string;

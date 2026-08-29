@@ -10,7 +10,7 @@ export type ControlManifestItem={
   controlType:"counter"|"state_switch"|"choice"|"numeric_input"|"derived_metric";playerWhen:string;observationKey:string;
   stateEffect:import("@/types").GameState|null;estimatorUsable:boolean;numerator:string|null;denominator:GuideDenominator|null;
   sourceEvidence:string[];controlEvidence:GuideEvidenceReference[];evidenceGate:"passed"|"blocked"|"not_applicable";availability:CapabilityStatus;unavailableReason:string|null;quickPriority:number;moduleKind?:SessionModuleKind;eventId?:string;
-  choices?:Array<{value:string;labelZh:string;labelJa:string;sourceDescription?:string;referenceOnly?:boolean}>;
+  choices?:Array<{value:string;labelZh:string;labelJa:string;sourceDescription?:string;referenceOnly?:boolean;sourceUrl?:string;sourceSectionKey?:string;sourceTableId?:string;sourceEvidenceId?:string}>;
 };
 export type MachineGuideSectionKey = "features" | "play" | "flow" | "cz" | "at_art" | "bonus" | "ceiling" | "setting_rates" | "payout" | "small_roles" | "special_events";
 export type GuideStateType = "normal" | "chance_zone" | "at" | "art" | "bonus" | "special" | "entry" | "end" | "beginner" | "source";

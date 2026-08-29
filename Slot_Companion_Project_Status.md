@@ -5,7 +5,7 @@ Last Updated: 2026-08-29
 ## Current Version
 **v0.2.8.1 – Control Evidence Gate & Audit Tooling**
 
-Status：**Completed；手機人工驗收通過**
+Status：**Completed；Choice Evidence Gate blocker 已修正，等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -36,14 +36,18 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Control Evidence Gate 要求具名事件／選項、明確 control type、可追溯 official section／table、Session write target；Estimator 另驗證唯一 canonical numerator、operational denominator 與 minimum sample。
 - 移除 family-derived generic CZ／AT state／counter fallback；資料不足時保留基本記錄模式與 browser-local 自訂 Counter／Choice，且不修改舊 Session snapshot。
 - deterministic P-WORLD parser 新增官方 `articleBox-content` 支援，使具名官方玩法正文可作 control evidence；仍限制在官方 section scope，不保存全文或圖片。
-- Machine Guide compiler cache revision 更新為 `2026-08-29-control-evidence-gate-3`；舊 Guide cache 需重建，只影響之後的新 Session。
+- Machine Guide compiler cache revision 更新為 `2026-08-29-choice-evidence-gate-4`；舊 Guide cache 需重建，只影響之後的新 Session。
 - 新增可重跑的 `audit:controls` 工具與逐機 JSON report，包含 Catalog ID、機種名、來源 URL、family confidence、operational／blocked controls、basic mode 與 estimator eligibility。
 - 全 Catalog bounded-retry audit 連續兩次 202/202 成功，輸出 SHA-256 完全一致：`8f4648c8d01d26fce878a94419dbeab7453dc7e7b7c5cc02494e5343e67b0eaf`。
 - 修正前後：generic CZ／AT fallback **64 → 0**；basic mode **22 → 6**；operational machines **180 → 196**（新增皆須具名正文／表格證據）；Estimator eligible **69 → 60**；64 個 metrics／28 台被 gate 明確阻擋。
 - 代表回歸：LB Triple Crown BIG／REG、やじきた具名 CZ／AT／Choice、ULTRAMAN basic mode、喰霊具名 CZ／ART／Bonus／Choice 均通過自動測試。
 - QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **243 / 243 passed**；Next.js 16.3.2 webpack production build 通過。預設 Turbopack 在受限 host 無法建立 PostCSS worker port，沿用專案既有 webpack production QA 路徑。
 - Localhost production smoke：`/`、`/identify`、`/catalog`、`/catalog/machine-1xl2y3d`、`/guides/machine-1xl2y3d` 均 HTTP 200。
-- Status：完成工程與自動 QA，**等待手機人工驗收**。
+- 自動瀏覽器回歸發現 Yajikita 終了畫面 Choice 曾跨 Guide section 混入無法由該 Choice 來源追溯的通用牌色；根因是選項產生器在 Choice 容器通過 gate 後仍掃描所有 section 的 `設定示唆／プレート` 表格。
+- Choice Evidence Gate hotfix：內建 Choice 現只接受 `special_events` 可靠表格逐項支持的選項；每個選項保存 source URL、section、table 與 evidence ownership。不同機台／來源不共用選項；自訂 Choice 維持使用者自訂且不進 Estimator。
+- 舊 `control-evidence-gate-3` Guide cache 會失效；既有 Session snapshot、G、Counter、Choice 與自訂資料均不改寫。
+- Hotfix QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **246 / 246 passed**；Next.js 16.3.2 webpack production build 通過；localhost `/`、Yajikita Catalog／Guide 與 Session fallback routes 均 HTTP 200。
+- Status：Choice blocker 修正與自動 QA 完成，**等待固定 dev Preview／手機人工驗收**。
 
 ### Machine Catalog 自動分類與操作涵蓋率健檢（文件／調查，不變更產品版本）
 
@@ -1045,9 +1049,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 30. 69 台 compiler-eligible estimator 中有 40 台的 Manifest 同時含 generic CZ／AT fallback；下一步需逐 metric 驗證 numerator ownership，不能把 family-level control 當成 benchmark 已安全綁定
 31. v0.2.8.1 已將 generic CZ／AT fallback 由 64 台降為 0；官方具名 `articleBox-content` 可提供獨立 control evidence，但設定表／family evidence 仍只作分類或 metric evidence
 32. Evidence gate 後 Estimator eligible 由 69 降為 60；這是移除未能證明 canonical numerator ownership 的安全收斂，不是公式變更
+33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
 
 ## Current Work
-**v0.2.8.1 Control Evidence Gate 與可重現全 Catalog audit 已完成；等待固定 dev Preview 手機人工驗收**
+**v0.2.8.1 Choice Evidence Gate blocker 已修正並通過完整自動 QA；等待固定 dev Preview 手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1064,7 +1069,7 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 
 Status：**等待驗收；不自行開始下一版本。**
 
-手機需重新整理代表機台指南並建立全新 Session；確認 LB Triple Crown、やじきた、ULTRAMAN 與喰霊行為。既有 Session 必須保持原 snapshot。下一版本維持待產品討論，不自行開發或合併 `dev` → `main`。
+手機需重新整理代表機台指南並建立全新 Session；優先確認 Yajikita 終了畫面只顯示 `街道／茶屋／茜ちゃん`，再確認 LB Triple Crown、ULTRAMAN 與喰霊不退化。既有 Session 必須保持原 snapshot。下一版本維持待產品討論，不自行開發或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
