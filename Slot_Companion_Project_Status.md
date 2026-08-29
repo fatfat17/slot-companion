@@ -3,7 +3,7 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.8.2 – Estimator Observation Contract**
+**v0.2.9.0 – 中文機台指南**
 
 Status：**Completed；等待人工驗收**
 
@@ -30,6 +30,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.9.0 – 中文機台指南
+- Machine Guide 新增來源受限的繁體中文玩家指南：預設以「60 秒看懂這台」、最多三個跨類型重點、玩法摘要與明確記錄時機呈現；原始日文段落與表格集中於預設收合的查證區。
+- 中文指南輸入只使用既有 P-WORLD 結構化 facts、可靠 operational controls、Machine Family 與來源 section；不得以 family、derived metric 或未通過 gate 的資料生成可操作事件。
+- OpenAI 呼叫維持 server-side，模型集中於 `AI_CONFIG.openAIGuideModel`；支援 `OPENAI_MACHINE_GUIDE_MODEL`，未設定時沿用辨識模型。API key 缺失、請求失敗、結構錯誤、未知 section／control 或未受來源支持的數字均安全回退規則式繁中指南，不阻擋 Guide 建立。
+- 新 Session 的精簡 Guide snapshot 使用相同的繁中 overview 與 highlights；既有 Session snapshot 不重新編譯或改寫。
+- Machine Guide cache compiler revision 更新為 `2026-08-29-chinese-player-guide-6`；舊 Guide cache 需重新建立，僅影響指南快取及之後的新 Session，不清除既有 Session、Catalog 或自訂記錄。
+- 代表回歸：A-type 只解釋 BIG／REG、不補 CZ／AT；rate-only／資料不足機台顯示基本記錄模式；具名 CZ／AT／ART／Bonus 保持獨立；derived control 不會冒充玩家記錄重點；原始日文仍可追溯。
+- QA：lint 通過；typecheck 通過；完整 tests **257 / 257 passed**；Next.js 16.3.2 webpack production build 通過。
+- Local production API smoke 使用實際 server route 成功產生 `generator: openai` 的繁中指南；只有 BIG／REG operational control 成為重點，Bonus 合成等 derived metric 未混入。固定 dev Preview 與實體手機人工驗收仍待完成。
+- Status：功能與本機自動 QA 完成，**等待固定 dev Preview 與手機人工驗收**；未開始 numeric controls 或下一版本。
 
 ### v0.2.8.2 – Estimator Observation Contract
 - 每個 Machine Guide estimator metric 新增正式 observation contract：保存 eligibility、canonical numerator、唯一 operational control、denominator、denominator observation、minimum sample 與 blocker reason。
@@ -1068,9 +1079,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 31. v0.2.8.1 已將 generic CZ／AT fallback 由 64 台降為 0；官方具名 `articleBox-content` 可提供獨立 control evidence，但設定表／family evidence 仍只作分類或 metric evidence
 32. Evidence gate 後 Estimator eligible 由 69 降為 60；這是移除未能證明 canonical numerator ownership 的安全收斂，不是公式變更
 33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
+34. 中文指南是結構化來源的玩家顯示層，不是新的事實來源；任何 OpenAI 產出若引用未知 control／section 或新增來源未支持的數字，必須整份回退 deterministic guide。
+35. 原始日文與表格需要保留可追溯性，但不應占據玩家預設閱讀路徑；預設顯示簡短繁中，原文集中於單一收合區。
 
 ## Current Work
-**v0.2.8.2 Estimator Observation Contract 已完成程式、自動 QA、全 Catalog Audit 與固定 dev Preview smoke；等待人工驗收**
+**v0.2.9.0 中文機台指南已完成程式與本機自動 QA；等待固定 dev Preview 與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1083,11 +1096,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.8.2 驗收
+### v0.2.9.0 驗收
 
 Status：**等待驗收；不自行開始下一版本。**
 
-重新建立代表機台指南並建立全新 Session，確認 LB Triple Crown Estimator 樣本門檻、ULTRAMAN 安全阻擋、やじきた與喰霊 controls 不退化。既有 Session 必須保持原 snapshot。不自行開始 numeric controls 或合併 `dev` → `main`。
+在固定 dev Preview 重新建立 LB Triple Crown、ULTRAMAN、やじきた與喰霊指南，確認預設繁中摘要、三個重點、原始日文收合、control evidence 不退化，以及全新 Session 使用繁中 Guide snapshot。既有 Session 必須保持原 snapshot。不自行開始 numeric controls 或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1179,6 +1192,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 v0.2.8.2 Estimator Observation Contract；不自行開始下一版本。**
+**驗收 v0.2.9.0 中文機台指南；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。

@@ -46,12 +46,21 @@ export type MachineGuideEvent = {id:string;labelZh:string;labelJa:string;categor
 export type MachineGuideSessionModule = {id:string;kind:SessionModuleKind;labelZh:string;labelJa:string;eventId?:string;controlled:true};
 export type MachineGuideMetric = {id:string;metricKey:string;labelZh:string;numeratorEventId:string|null;denominator:GuideDenominator|null;applicableStateIds:string[];minimumSample:number|null;settingValues:SettingValues|null;sourceUrl:string;estimatorEvidence:GuideEvidenceReference[];observationContract:EstimatorObservationContract;estimatorEligible:boolean;unavailableReason:string|null};
 export type BeginnerGuide = {corePlay:string|null;keyThings:Array<{id:string;labelZh:string;labelJa:string;meaning:string;recordWhen:string}>;glossary:Array<{termJa:string;termZh:string}>;missingMessage:"尚無資料"|null};
+export type PlayerGuideZh = {
+  generator:"rules"|"openai";
+  overview:string;
+  goals:string[];
+  highlights:Array<{id:string;label:string;meaning:string;recordWhen:string;sourceSectionKeys:MachineGuideSectionKey[]}>;
+  sections:Array<{key:MachineGuideSectionKey;title:string;summary:string;points:string[];sourceSectionKeys:MachineGuideSectionKey[]}>;
+  generatedAt:string;
+};
 export type SessionQuickGuide = {corePlay:string|null;flow:string[];events:MachineGuideEvent[];keyThings:BeginnerGuide["keyThings"];glossary:BeginnerGuide["glossary"];sourceName:string;sourceUrl:string;retrievedAt:string;missingSections?:MachineGuideSectionKey[];evidence?:MachineGuideEvidence[]};
 
 export type MachineGuide = {
   schemaVersion:2;catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;machineType:GuideMachineType;introducedAt:string|null;status:MachineGuideStatus;
   availability:{guide:GuideAvailability;sessionTemplate:GuideAvailability;settingEstimator:GuideAvailability;reasons:string[]};
   familyClassification?:MachineFamilyClassification;controlManifest?:ControlManifestItem[];
+  playerGuideZh?:PlayerGuideZh;
   beginnerGuide:BeginnerGuide;states:MachineGuideState[];recordableEvents:MachineGuideEvent[];sessionModules:MachineGuideSessionModule[];sessionCapabilities:SessionCapability[];denominatorCapabilities:DenominatorCapability[];estimatorMetrics:MachineGuideMetric[];
   sections:MachineGuideSection[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];benchmarks:SettingBenchmark[];smartCounters:CounterDefinition[];
   sourceName:"P-WORLD";sourceUrl:string;retrievedAt:string;

@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**v0.2.8.2 – Estimator Observation Contract**（`dev`，等待人工驗收）。
+目前開發版本：**v0.2.9.0 – 中文機台指南**（`dev`，等待人工驗收）。
 
 ## 本機啟動
 
@@ -19,10 +19,11 @@ pnpm dev
 2. AI 辨識後由使用者確認 Machine Catalog record。
 3. Catalog Detail 使用既有 P-WORLD source URL 建立 Machine Guide v2。
 4. compiler 將 `familyEvidence`、每個按鈕自己的 `controlEvidence` 與 `estimatorEvidence` 分層；Machine Family 不再直接授權 Session 按鈕，只有具名且可追溯的事件／選項才能通過 Control Evidence Gate。
-5. 按下「開始玩」後選擇「第一次玩這台／快速開始／完整記錄」；第一次玩會先顯示既有指南產生的重點教學，三種模式都建立相同資料結構的 Session。
-6. 快速與第一次玩模式以兩欄顯示最多 4 個優先 operational controls，其餘收進「更多記錄」；完整模式直接顯示全部 operational controls。
-7. Session header 可隨時開啟機台指南 drawer 或切換使用模式；切換只改變畫面資訊量，不清除既有紀錄。
-8. Setting Estimator 只採用有完整設定值、唯一 operational numerator、明確 operational denominator 與 minimum sample 的來源資料；每個 metric 保存可追溯 observation contract，無樣本時顯示「尚未開始推測」。
+5. Guide 預設顯示「60 秒看懂這台」、三個跨類型重點與繁中分區說明；日文段落和表格集中在預設收合的查證區。
+6. 按下「開始玩」後選擇「第一次玩這台／快速開始／完整記錄」；第一次玩會先顯示既有指南產生的重點教學，三種模式都建立相同資料結構的 Session。
+7. 快速與第一次玩模式以兩欄顯示最多 4 個優先 operational controls，其餘收進「更多記錄」；完整模式直接顯示全部 operational controls。
+8. Session header 可隨時開啟機台指南 drawer 或切換使用模式；切換只改變畫面資訊量，不清除既有紀錄。
+9. Setting Estimator 只採用有完整設定值、唯一 operational numerator、明確 operational denominator 與 minimum sample 的來源資料；每個 metric 保存可追溯 observation contract，無樣本時顯示「尚未開始推測」。
 
 ## 資料與限制
 
@@ -43,5 +44,6 @@ pnpm dev
 - 設定可能性僅供參考，不是準確設定判定或獲利保證。
 - 既有三台 placeholder Profile 與其中的 **TEST DATA** 只供既有流程／測試使用，不得視為真實機種資料。
 - API key 只可放在 server-side `.env.local`，不得提交 Git。
+- 繁中摘要可選擇設定 `OPENAI_MACHINE_GUIDE_MODEL`；未設定時沿用辨識模型。沒有 API key、服務失敗或輸出未通過來源驗證時，自動使用規則式繁中指南，不阻擋 P-WORLD Guide。
 
 完整版本與 QA 狀態請見 `Slot_Companion_Project_Status.md`。
