@@ -39,7 +39,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 代表回歸：LB Triple Crown 的 BIG／REG 綁定總遊玩 G 與 600G minimum sample；ULTRAMAN rate-only 因缺唯一 numerator 維持 blocked；duplicate numerator 會被阻擋；ART 不寫入 AT；自訂項目仍不進 Estimator。
 - 全 Catalog Audit 連續兩輪 202/202 成功且輸出一致，SHA-256 `3952488d8912d305c4f583537cad3c0c0833a160e7e64f1f6f421ada74635d09`。60 台／153 metrics eligible；1658 metrics blocked；generic CZ／AT fallback 仍為 0；basic mode 維持 6 台。
 - QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **250 / 250 passed**；Next.js 16.3.2 webpack production build通過。
-- Status：功能與自動 QA 完成，等待固定 dev Preview 與人工驗收；未開始 numeric controls 或下一版本。
+- 固定 dev Preview smoke：首頁、辨識、Catalog、LB Triple Crown Catalog Detail／Guide、Records 均正常開啟，未見 Application Error 或 404。
+- Status：功能、自動 QA、全 Catalog Audit 與固定 dev Preview smoke 完成，**等待人工驗收**；未開始 numeric controls 或下一版本。
 
 ### v0.2.8.1 – Control Evidence Gate & Audit Tooling
 - 明確分離 `familyEvidence`、逐 control 的 `controlEvidence` 與 `estimatorEvidence`；family／機率表不再直接授權 Session control 或 numerator。
@@ -1067,7 +1068,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
 
 ## Current Work
-**v0.2.8.2 Estimator Observation Contract 已完成程式與自動 QA；等待固定 dev Preview 與人工驗收**
+**v0.2.8.2 Estimator Observation Contract 已完成程式、自動 QA、全 Catalog Audit 與固定 dev Preview smoke；等待人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
