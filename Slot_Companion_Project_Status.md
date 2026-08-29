@@ -38,7 +38,9 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Session Guide 預設只保留「現在看什麼」與「今天先記住這些」；基本流程、更多事件與名詞收進「基本玩法與更多說明」，來源、更新時間、缺失欄位與 evidence 收進「資料來源與更新」。所有可追溯資料仍保留。
 - 不修改 Machine Guide、Control Manifest、Session snapshot、Estimator 數學、來源資料或既有紀錄；本版本只調整 presentation hierarchy。
 - QA：lint 通過；typecheck 通過；完整 tests **264 / 264 passed**；Next.js 16.3.2 webpack production build 通過。
-- Status：功能與本機自動 QA 完成，**等待固定 dev Preview 與手機人工驗收**。
+- 固定 dev Preview 390 × 844 自動 QA：頁面寬度與 scroll width 均為 390px，沒有水平溢出；遊戲狀態維持兩欄，按鈕實測 173 × 82px、主文字 16px；快速記錄按鈕實測約 170 × 130px、名稱與次數 17px。
+- 固定 dev Preview 自動 QA：Session Guide 預設只顯示操作重點，「基本玩法與更多說明」及「資料來源與更新」均預設收合；Estimator 無樣本時只顯示簡短狀態，計算說明預設收合；console 無 error／warning。
+- Status：功能、本機工程 QA 與固定 dev Preview 自動 QA 完成，**等待實體手機人工驗收**；自動瀏覽器結果不得視為手機人工驗收。
 
 ### v0.2.9.0 – 中文機台指南
 - Machine Guide 新增來源受限的繁體中文玩家指南：預設以「60 秒看懂這台」、最多三個跨類型重點、玩法摘要與明確記錄時機呈現；原始日文段落與表格集中於預設收合的查證區。
@@ -1100,7 +1102,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 37. 資料安全規則應由系統持續執行，但不必在玩家主畫面反覆說明；主畫面優先呈現當下操作，來源、限制與 Evidence 以 progressive disclosure 保持可查而不搶占空間。
 
 ## Current Work
-**v0.2.9.1 Session 字級、按鈕與說明層級已完成本機 QA；等待固定 dev Preview 與手機人工驗收**
+**v0.2.9.1 Session 字級、按鈕與說明層級已完成本機及固定 dev Preview 自動 QA；等待實體手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1115,7 +1117,7 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 ## Next Step
 ### v0.2.9.1 驗收
 
-Status：**等待驗收；不自行開始下一版本。**
+Status：**固定 dev Preview 自動驗收通過；等待實體手機人工驗收，不自行開始下一版本。**
 
 使用固定 dev Preview 以 390 × 844 驗收狀態按鈕、快速記錄、Choice、Estimator 與 Session Guide 的閱讀性；確認收合說明仍可找到，所有 Session 紀錄及 estimator 結果不變。不自行開始下一版本或合併 `dev` → `main`。
 
