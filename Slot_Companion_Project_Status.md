@@ -45,7 +45,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Local production API smoke 使用實際 server route 成功產生 `generator: openai` 的繁中指南；只有 BIG／REG operational control 成為重點，Bonus 合成等 derived metric 未混入。
 - 固定 dev Preview 390 × 844 自動 QA：LB Triple Crown 顯示繁中 60 秒摘要與 BIG／REG，沒有 CZ／AT control；ULTRAMAN 無可靠 operational event 時維持基本記錄提示；やじきた保留具名 CZ／AT／終了畫面；喰霊三個重點依共用規則跨 CZ／ART／Bonus，且每項明確指出正確記錄按鈕。原始日文與表格均預設收合，代表頁面未見 console error。
 - Preview QA 過程發現的自由操作文案與同類重點集中問題均已完成最小修正、完整工程 QA 與部署後重測；這是自動瀏覽器 QA，**不等同實體手機人工驗收**。
-- Status：功能、本機自動 QA 與固定 dev Preview 自動驗收完成，**等待手機人工驗收**；未開始 numeric controls 或下一版本。
+- 手機人工複驗通過：進入遊戲前的完整指南與 Session drawer 繁中呈現均可接受；目前部分事件在不同區塊仍會重複顯示，但列為非阻擋觀察，後續應依真實遊玩案例逐步精簡，不在本版本進一步壓縮或猜測資料。
+- Status：功能、本機自動 QA、固定 dev Preview 與手機人工驗收完成，**v0.2.9.0 驗收通過**；未開始下一版本。
 
 ### v0.2.8.2 – Estimator Observation Contract
 - 每個 Machine Guide estimator metric 新增正式 observation contract：保存 eligibility、canonical numerator、唯一 operational control、denominator、denominator observation、minimum sample 與 blocker reason。
@@ -1086,9 +1087,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
 34. 中文指南是結構化來源的玩家顯示層，不是新的事實來源；任何 OpenAI 產出若引用未知 control／section 或新增來源未支持的數字，必須整份回退 deterministic guide。
 35. 原始日文與表格需要保留可追溯性，但不應占據玩家預設閱讀路徑；預設顯示簡短繁中，原文集中於單一收合區。
+36. 中文指南同一事件目前可能在狀態提示、流程與重點區重複出現；手機驗收認定為非阻擋。後續應以實際遊玩回饋調整資訊層級，不應只為去重而刪除必要的辨認或記錄說明。
 
 ## Current Work
-**v0.2.9.0 Session drawer 中文化 blocker 已完成本機與固定 dev Preview 自動 QA；等待手機複驗**
+**v0.2.9.0 中文機台指南與 Session drawer 已通過手機人工驗收；等待下一階段產品討論**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1101,11 +1103,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.9.0 驗收
+### 待產品討論
 
-Status：**等待驗收；不自行開始下一版本。**
+Status：**v0.2.9.0 已驗收；下一版本尚未開始。**
 
-在固定 dev Preview 重新建立 LB Triple Crown、ULTRAMAN、やじきた與喰霊指南，確認預設繁中摘要、三個重點、原始日文收合、control evidence 不退化，以及全新 Session 使用繁中 Guide snapshot。既有 Session 必須保持原 snapshot。不自行開始 numeric controls 或合併 `dev` → `main`。
+依真實遊玩回饋討論下一個最小版本；中文指南重複內容先列為非阻擋觀察。不自行開始 numeric controls 或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1197,6 +1199,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**驗收 v0.2.9.0 中文機台指南；不自行開始下一版本。**
+**等待下一階段產品討論；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
