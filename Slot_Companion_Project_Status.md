@@ -45,7 +45,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 固定 dev Preview 已部署 commit `0bb74fc`。390 × 844 自動 QA 從 Catalog Detail 重新建立 RE:3 指南成功，顯示 18 張／2.6 MB 圖文素材與「私人雲端資產」，同源圖片 route 可正常開啟；首頁「快速中文攻略」入口與完整 Guide route 正常。此項仍是自動 QA，不等同實體手機人工驗收。
 - Session Guide presentation follow-up：drawer 會從該機台目前有效的 Guide cache 讀取同一份圖文素材，依 Session state 優先顯示對應流程／CZ／AT／ART／Bonus 圖片，並可在不離開 Session route 的情況下延遲展開完整圖文；沒有圖文 cache 時維持精簡文字 fallback。
 - Session 主操作 follow-up：原本大型狀態按鈕縮成單行狀態列與「修正」入口，把畫面留給 G 數與快速記錄。具名 CZ／AT／ART／Bonus 記錄會沿用 capability state effect 自動切換；同一 state 有多個具名事件時顯示通用狀態名稱，避免錯誤暗示某一具名事件正在進行。
-- Follow-up QA：lint、typecheck 通過；完整 tests **303 / 303 passed**；Next.js 16.3.2 webpack production build通過。390 × 844 localhost 自動 QA 確認狀態列精簡、Counter 記錄後狀態更新、手動修正入口與既有 Session reload 紀錄保留；固定 dev Preview 仍待本次 commit 部署後自動複驗。
+- Follow-up QA：lint、typecheck 通過；完整 tests **303 / 303 passed**；Next.js 16.3.2 webpack production build通過。390 × 844 localhost 自動 QA 確認狀態列精簡、Counter 記錄後狀態更新、手動修正入口與既有 Session reload 紀錄保留。固定 dev Preview 已部署 commit `2589ac3`；RE:3 Session drawer 依 AT 狀態先顯示 2 張相關圖片，並可原地展開完整 18 張圖文與流程／CZ／AT／Bonus 分區，未離開 Session route。此項是自動 QA，不等同實體手機人工驗收。
 - 著作權／營運限制：這是使用者要求的個人 Golden Test，來源與擷取時間仍保留；未取得來源的轉載授權，不應在未重新確認權利與容量／流量方案前擴張到完整 Catalog 或 Production。
 
 ### Multi-source Machine Guide Pilot（2026-08-30）
