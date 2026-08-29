@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**v0.2.9.0 – 中文機台指南**（`dev`，等待人工驗收）。
+目前開發版本：**v0.2.9.1 – Session Legibility & Progressive Disclosure**（`dev`，等待人工驗收）。
 
 ## 本機啟動
 
@@ -39,6 +39,7 @@ pnpm dev
 - 快速記錄優先順序固定使用 capability 種類與來源 contract 順序：具名 CZ → AT／ART → Bonus → 其他 operational event／choice，不依機台名稱猜測。
 - 新建立的 Session snapshot 會保存精簡結構化指南與可追溯 evidence，不包含 P-WORLD 圖片；Session drawer 只顯示玩家可用的玩法／辨認／記錄提示，parser、compiler 與內部 section path 集中在底部資料狀態或不進入主要內容。舊 Session 沒有此 snapshot 時使用一致的簡短缺失提示。
 - Session 保存所選模式 snapshot，並在每台機器各自記住上次使用模式；這不是永久的新手／老手分類。舊 Session 沒有 mode 時安全回退為快速模式。
+- Session 主操作使用較大的狀態／記錄按鈕與字級；Estimator 的來源、計算與 Evidence，以及 Session 指南的流程、名詞與來源資料改為按需展開，安全規則仍保留但不占用主要操作空間。
 - P-WORLD `調査中`、未公開、空白或無法確認的值維持缺失，不補猜、不當成 0。
 - 指南整理結構化事實、數值、自行撰寫的中文提示、來源 URL 與擷取時間；不保存完整攻略文章或來源圖片。
 - 設定可能性僅供參考，不是準確設定判定或獲利保證。

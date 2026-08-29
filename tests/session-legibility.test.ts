@@ -1,0 +1,5 @@
+import test from "node:test";import assert from "node:assert/strict";import fs from "node:fs";
+const read=(path:string)=>fs.readFileSync(new URL(`../${path}`,import.meta.url),"utf8");
+test("Session primary controls use legible mobile type and touch targets",()=>{const css=read("src/app/globals.css");assert.match(css,/\.game-state-picker strong\{font-size:16px/);assert.match(css,/\.quick-record-main\{[^}]*min-height:112px/);assert.match(css,/\.quick-record-main strong\{font-size:17px/);assert.match(css,/\.quick-record-main span\{[^}]*font-size:17px/)});
+test("Estimator keeps safety and evidence details available but collapsed",()=>{const source=read("src/components/SettingEstimator.tsx");assert.match(source,/尚未開始推測/);assert.match(source,/資料與計算說明/);assert.match(source,/查看判斷依據/);assert.doesNotMatch(source,/className="test-data-note"/)});
+test("Session guide leads with actionable content and collapses secondary detail",()=>{const source=read("src/components/SessionGuideDrawer.tsx");assert.match(source,/現在看什麼/);assert.match(source,/今天先記住這些/);assert.match(source,/基本玩法與更多說明/);assert.match(source,/資料來源與更新/);assert.doesNotMatch(source,/來源：/)});

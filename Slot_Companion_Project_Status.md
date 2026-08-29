@@ -3,7 +3,7 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.9.0 – 中文機台指南**
+**v0.2.9.1 – Session Legibility & Progressive Disclosure**
 
 Status：**Completed；等待人工驗收**
 
@@ -30,6 +30,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.9.1 – Session Legibility & Progressive Disclosure
+- Session 遊戲狀態改為手機兩欄大按鈕：主名稱 16px、日文對照 10px、最小高度 68px；長名稱可換行，不再為塞進五欄而縮成難讀小字。
+- 快速記錄按鈕最小高度提升至 112px，事件名稱與目前次數均為 17px；類型、修正按鈕、更多記錄與 Choice 選項同步提高字級與觸控尺寸。
+- Estimator 預設只顯示「設定參考」、目前判斷力與下一步；無樣本時不再重複顯示 Evidence 空狀態。來源、風險與計算說明收進「資料與計算說明」，有 Evidence 時另以「查看判斷依據」按需展開。
+- Session Guide 預設只保留「現在看什麼」與「今天先記住這些」；基本流程、更多事件與名詞收進「基本玩法與更多說明」，來源、更新時間、缺失欄位與 evidence 收進「資料來源與更新」。所有可追溯資料仍保留。
+- 不修改 Machine Guide、Control Manifest、Session snapshot、Estimator 數學、來源資料或既有紀錄；本版本只調整 presentation hierarchy。
+- QA：lint 通過；typecheck 通過；完整 tests **264 / 264 passed**；Next.js 16.3.2 webpack production build 通過。
+- Status：功能與本機自動 QA 完成，**等待固定 dev Preview 與手機人工驗收**。
 
 ### v0.2.9.0 – 中文機台指南
 - Machine Guide 新增來源受限的繁體中文玩家指南：預設以「60 秒看懂這台」、最多三個跨類型重點、玩法摘要與明確記錄時機呈現；原始日文段落與表格集中於預設收合的查證區。
@@ -1088,9 +1097,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 34. 中文指南是結構化來源的玩家顯示層，不是新的事實來源；任何 OpenAI 產出若引用未知 control／section 或新增來源未支持的數字，必須整份回退 deterministic guide。
 35. 原始日文與表格需要保留可追溯性，但不應占據玩家預設閱讀路徑；預設顯示簡短繁中，原文集中於單一收合區。
 36. 中文指南同一事件目前可能在狀態提示、流程與重點區重複出現；手機驗收認定為非阻擋。後續應以實際遊玩回饋調整資訊層級，不應只為去重而刪除必要的辨認或記錄說明。
+37. 資料安全規則應由系統持續執行，但不必在玩家主畫面反覆說明；主畫面優先呈現當下操作，來源、限制與 Evidence 以 progressive disclosure 保持可查而不搶占空間。
 
 ## Current Work
-**v0.2.9.0 中文機台指南與 Session drawer 已通過手機人工驗收；等待下一階段產品討論**
+**v0.2.9.1 Session 字級、按鈕與說明層級已完成本機 QA；等待固定 dev Preview 與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1103,11 +1113,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 待產品討論
+### v0.2.9.1 驗收
 
-Status：**v0.2.9.0 已驗收；下一版本尚未開始。**
+Status：**等待驗收；不自行開始下一版本。**
 
-依真實遊玩回饋討論下一個最小版本；中文指南重複內容先列為非阻擋觀察。不自行開始 numeric controls 或合併 `dev` → `main`。
+使用固定 dev Preview 以 390 × 844 驗收狀態按鈕、快速記錄、Choice、Estimator 與 Session Guide 的閱讀性；確認收合說明仍可找到，所有 Session 紀錄及 estimator 結果不變。不自行開始下一版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1199,6 +1209,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待下一階段產品討論；不自行開始下一版本。**
+**驗收 v0.2.9.1 Session Legibility & Progressive Disclosure；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
