@@ -1083,6 +1083,13 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 - GOD：Catalog 內辨識明顯較準 ✅
 - Catalog 外：回 uncertain / unknown，不再過度自信自由建立正式機種名 ✅
 
+### v0.2.9.3 Fixed dev Preview automated QA
+- 固定 dev Preview、390 × 844：Catalog「更新機種資料庫」說明可正常開啟與關閉 ✅
+- 線上說明清楚交代 localhost Importer → Preview → Approve → push dev → Vercel 更新流程 ✅
+- Production／Preview 未輸出不可達的 `/admin/catalog-import` 連結 ✅
+- Modal 無橫向溢出，console 無 error／warning ✅
+- 此項為自動瀏覽器 QA，不等同實體手機人工驗收；Estimator readiness 仍等待使用者手機抽查
+
 ## Important Findings
 1. Current Machine G ≠ Observed Session G
 2. 不同機種不能使用固定 Counter
@@ -1125,7 +1132,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 39. Estimator 沒有輸出可能代表資料根本不可安全計算，也可能只是尚未達最低樣本；UI 必須區分 schema／mapping blocker 與 Session observation progress，不能只顯示泛用「繼續記錄」。
 
 ## Current Work
-**v0.2.9.3 Estimator readiness 診斷與 Catalog 更新說明已完成本機 QA；等待固定 dev Preview 與手機人工驗收**
+**v0.2.9.3 Estimator readiness 診斷與 Catalog 更新說明已完成本機與固定 dev Preview 自動 QA；等待手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1140,7 +1147,7 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 ## Next Step
 ### v0.2.9.3 驗收
 
-Status：**等待固定 dev Preview 與實體手機人工驗收；不自行開始下一版本。**
+Status：**固定 dev Preview 自動 QA 已通過；等待實體手機人工驗收，不自行開始下一版本。**
 
 使用固定 dev Preview 以 390 × 844 驗收：Catalog 更新說明 modal 可開關且沒有不可達 Importer link；無 benchmark、未達 600G、缺 numerator 與已達門檻案例顯示正確 readiness；Estimator 分布、Session 紀錄及既有 Guide 流程不變。不自行開始下一版本或合併 `dev` → `main`。
 
