@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**Catalog Cloud Foundation – Phase 1–5（等待固定 Preview 驗收）**
+**Catalog Cloud Foundation – Phase 1–5（自動 QA 完成）**
 
-Status：**Supabase migration、202 筆 seed、私人線上 Importer、import audit、coverage dashboard 與 dev-only 管理 Secret 已完成；正在部署固定 Preview 進行最終驗收**
+Status：**Supabase migration、202 筆 seed、私人線上 Importer、import audit、coverage dashboard 與 dev-only 管理 Secret 已完成；固定 Preview 自動 QA 通過，等待使用者決定下一步**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -45,6 +45,10 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Importer 新增資料庫狀態摘要，顯示目前 Catalog 數量、雲端／fallback 狀態，以及既有可重現 coverage audit 的 operational、basic record、estimator 與 evidence gate 統計。
 - `.env.example` 新增 `SUPABASE_SECRET_KEY` 並保留 legacy key 說明；沒有提交任何 Secret。
 - Vercel 已新增 sensitive `CATALOG_ADMIN_TOKEN`，範圍限定 `dev` Preview branch；沒有套用 Production，也沒有將值寫入 Git、程式碼或 localStorage。
+- 固定 dev Preview 自動 QA：`/catalog` 從 Supabase 顯示 **202 台**並提供「更新機種資料庫」連結；Importer 顯示「雲端儲存已連線」、202 筆 Catalog 與 coverage 摘要，無 console error。
+- 固定 dev Preview auth QA：錯誤管理密碼正確顯示 401 拒絕；正確密碼可從 P-WORLD 建立 **4 筆** Import Preview。
+- 固定 dev Preview Approve smoke：4 筆全部選為 Skip，結果 **4/4 processed、0 imported、0 merged、4 skipped**，沒有改變 Catalog identity records；Supabase `catalog_import_jobs` 查詢確認留下 `approved / received 4 / processed 4 / skipped 4` audit record。
+- 本輪結果屬自動瀏覽器與資料庫 QA，不冒充實體手機人工驗收；沒有部署或修改 Production。
 - 本輪工程 QA：lint 通過；typecheck 通過；完整 tests **278 / 278 passed**；Next.js 16.3.2 webpack production build 通過；localhost production smoke `/`、`/catalog`、`/identify`、`/records` 均 HTTP 200，未設定管理 Secret 時 `/admin/catalog-import` 正確 404。
 - 尚未完成：`CATALOG_ADMIN_TOKEN` 尚未設定到 Vercel Preview，因此固定 Preview 尚未顯示私人 Importer；dev deployment 與線上 Preview／Approve 實測待完成。Session、Guide cache、自訂記錄與 feedback 仍未雲端同步。
 
@@ -1149,7 +1153,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 39. Estimator 沒有輸出可能代表資料根本不可安全計算，也可能只是尚未達最低樣本；UI 必須區分 schema／mapping blocker 與 Session observation progress，不能只顯示泛用「繼續記錄」。
 
 ## Current Work
-**Catalog Cloud Foundation Phase 1–5 已完成程式、資料庫與 dev-only 管理 Secret；正在完成固定 Vercel Preview 線上 Importer 驗收。**
+**Catalog Cloud Foundation Phase 1–5 已完成程式、資料庫、dev-only 管理 Secret與固定 Preview 自動 QA；等待下一階段產品討論。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1162,11 +1166,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 完成私人線上 Catalog Importer 的固定 Preview 驗收
+### 待產品討論
 
-Status：**Secret 已設定；等待最新 dev Preview Ready 與線上 smoke。**
+Status：**尚未開始下一階段。**
 
-等待本次 dev 文件提交觸發固定 Preview 後，驗證 `/catalog` 可開啟私人 Importer、錯誤密碼回 401、正確密碼可建立 P-WORLD Preview，並以既有 record 做 merge/skip smoke，避免在驗收時無必要新增 Catalog。完成後再決定 Session／Guide／feedback 是否需要跨裝置雲端同步；目前不得標示為已完成。
+下一步可討論 Session／Guide／自訂記錄／feedback 是否需要跨裝置雲端同步，以及是否需要替私人 Importer 加入更友善的管理登入方式。這些功能目前都尚未開始，也不得因 Catalog 已雲端化而誤標為已完成。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
