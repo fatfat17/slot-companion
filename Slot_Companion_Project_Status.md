@@ -48,6 +48,9 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 舊 `control-evidence-gate-3` Guide cache 會失效；既有 Session snapshot、G、Counter、Choice 與自訂資料均不改寫。
 - Hotfix QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **246 / 246 passed**；Next.js 16.3.2 webpack production build 通過；localhost `/`、Yajikita Catalog／Guide 與 Session fallback routes 均 HTTP 200。
 - 固定 dev Preview 自動手機尺寸回歸：舊 Guide cache 正確失效；重新建立 Yajikita 指南並建立全新完整模式 Session 後，終了畫面僅顯示 `街道／茶屋／茜ちゃん`。選擇 `街道` 後 reload 與 Summary 保留正確，新 Session 回到尚未選擇；此結果是自動瀏覽器 QA，不代表實體手機人工驗收。
+- 固定 dev Preview 完整自動回歸（390 × 844 與桌面視窗）：LB Triple Crown 僅有 BIG／REG，無 CZ／AT，並在 600G minimum sample 與有效 numerator 後才啟動 Estimator；Yajikita 保留具名 CZ／AT 且 Choice 僅有 `街道／茶屋／茜ちゃん`；ULTRAMAN 維持基本記錄模式，無推測 CZ／AT，自訂 Counter／Choice 可新增、修改、刪除、reload 與跨新 Session 沿用定義，數值歸零且不進 Estimator；喰霊的具名 CZ／ART／BIG／REG／Choice 保持獨立，8 個 Choice 無重複，Guide／模式入口、reload 與 Summary 均正常。
+- 本輪自動 QA 亦確認 per-machine 自訂項目不會跨機台污染、既有 Session snapshot 未被重新編譯、無小樣本過度推測；固定 Preview 的首頁、辨識、Catalog、Catalog Detail、Guide、Records 均可正常開啟，未見畫面崩潰或可見 4xx／5xx。這是自動瀏覽器 QA，**不等同實體手機人工驗收**。
+- 本輪重跑工程 QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **246 / 246 passed**；Next.js 16.3.2 webpack production build 通過；localhost `/`、`/identify`、`/catalog`、Yajikita Catalog Detail／Guide、`/records` 均 HTTP 200。未發現新 blocker，因此沒有修改產品程式。
 - Status：Choice blocker 修正、完整自動 QA 與固定 dev Preview 回歸完成，**等待實體手機人工驗收**。
 
 ### Machine Catalog 自動分類與操作涵蓋率健檢（文件／調查，不變更產品版本）
