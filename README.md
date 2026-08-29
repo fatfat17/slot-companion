@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**v0.2.9.2 – Home & Catalog Maintenance Entry**（`dev`，等待人工驗收）。
+目前開發版本：**v0.2.9.3 – Estimator Readiness & Catalog Update Guidance**（`dev`，等待人工驗收）。
 
 ## 本機啟動
 
@@ -27,6 +27,8 @@ pnpm dev
 10. 首頁只保留現場玩家入口，不再展示三台舊 Profile；底層 Profile 仍保留供既有 Session 與相容流程使用。
 11. Machine Catalog 頁提供「更新機種資料庫」入口：localhost development 可進入既有 P-WORLD Importer，Vercel Preview／Production 只顯示不可執行狀態，避免導向 404 或假裝能永久保存。
 12. Catalog Detail、完整 Guide 與 Session Guide 均可重新整理單台 P-WORLD 機台指南；Session 內更新只寫入 Guide cache，新記錄項目於下一個 Session 套用。
+13. Setting Estimator 在尚未計算時會區分「沒有可安全計算資料」與「正在累積樣本」，逐 metric 顯示實際 G、事件／trial 次數、最低樣本與下一步；不改變既有公式或安全門檻。
+14. Vercel 上的「更新機種資料庫」可開啟本機 Importer 操作說明，但仍不執行不可永久保存的 server-side JSON 寫入。
 
 ## 資料與限制
 

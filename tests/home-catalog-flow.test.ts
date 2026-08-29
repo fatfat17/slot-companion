@@ -20,7 +20,10 @@ test("Catalog importer entry is reachable only in the local development environm
   assert.deepEqual(getCatalogImporterPresentation("production"),{available:false,label:"更新機種資料庫",notice:"目前僅能在本機管理環境執行"});
   assert.match(catalog,/目前收錄 \{summary\.total\} 台/);
   assert.match(catalog,/importer\.available/);
-  assert.match(catalog,/<button className="secondary-button" disabled>/);
+  assert.match(catalog,/onClick=\{\(\)=>setManagementOpen\(true\)\}/);
+  assert.match(catalog,/線上版目前不能永久寫入專案 Catalog/);
+  assert.match(catalog,/在本機開發環境開啟 Catalog Importer/);
+  assert.doesNotMatch(catalog,/<Link[^>]+href="\/admin\/catalog-import"/);
 });
 
 test("Session guide offers refresh without replacing the current Session snapshot",()=>{

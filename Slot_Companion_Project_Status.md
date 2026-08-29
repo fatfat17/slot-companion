@@ -3,7 +3,7 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.9.2 – Home & Catalog Maintenance Entry**
+**v0.2.9.3 – Estimator Readiness & Catalog Update Guidance**
 
 Status：**Completed；等待人工驗收**
 
@@ -30,6 +30,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.9.3 – Estimator Readiness & Catalog Update Guidance
+- Setting Estimator 不再用單一「再記錄遊玩 G 與有效事件」涵蓋所有未啟動情況。新的 readiness selector 只讀既有 active benchmarks、Session numerator、denominator 與 minimum sample，不修改 posterior-like 數學、benchmark eligibility 或安全門檻。
+- 沒有 active benchmark 時顯示「目前沒有可計算的設定資料」，並說明可能是來源缺完整設定 1～6 數值，或無法安全對應至 Session 按鈕；不再讓使用者誤以為只要繼續輸入 G 就一定會出現推測。
+- 有可用 benchmark 但尚未達條件時，逐項顯示目前 G／最低樣本、事件或 trial 次數，以及下一步，例如先設定 baseline、還需多少 G、或尚未記錄對應事件。最多顯示三項，避免重新堆滿說明文字。
+- 達到完整 observation 條件時仍由原有 estimator 即時顯示設定 1～6 相對分布；自訂 Counter／Choice、blocked metric、缺失值與不完整設定表仍不參與。
+- Vercel Preview／Production 的「更新機種資料庫」由 disabled 改為可點開說明 modal，列出 localhost Catalog Importer → P-WORLD Preview → Approve → commit／push dev → Vercel redeploy 的既有流程。它仍不輸出 `/admin/catalog-import` link、不執行雲端寫入，也不把 repo JSON 誤稱為永久儲存。
+- QA：lint 通過；typecheck 通過；完整 tests **268 / 268 passed**；Next.js 16.3.2 webpack production build 通過；localhost production smoke 首頁、Catalog、LB Catalog Detail／Guide、Records 與 Session fallback route 均 HTTP 200。
+- Status：功能與本機自動 QA 完成，**等待固定 dev Preview 與手機人工驗收**；未開始下一版本。
 
 ### v0.2.9.2 – Home & Catalog Maintenance Entry
 - 首頁移除三台「已建立攻略 Profile」展示與重複風險註記，改以 Active Session、拍照辨識、Machine Catalog、今日紀錄及晚上撿台作為現場玩家入口；沒有 Active Session 時，黃色主操作直接進入拍照辨識，再走 Guide-first Session 流程。
@@ -1113,9 +1122,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 36. 中文指南同一事件目前可能在狀態提示、流程與重點區重複出現；手機驗收認定為非阻擋。後續應以實際遊玩回饋調整資訊層級，不應只為去重而刪除必要的辨認或記錄說明。
 37. 資料安全規則應由系統持續執行，但不必在玩家主畫面反覆說明；主畫面優先呈現當下操作，來源、限制與 Evidence 以 progressive disclosure 保持可查而不搶占空間。
 38. Catalog 更新與單台 Guide 更新是兩件不同工作：前者是 development-only 的 P-WORLD Machine Catalog Importer，後者是 browser-local 單台指南 refresh；UI 必須使用不同入口與文案，且不得在 Vercel 上假裝 repo JSON 可以永久寫入。
+39. Estimator 沒有輸出可能代表資料根本不可安全計算，也可能只是尚未達最低樣本；UI 必須區分 schema／mapping blocker 與 Session observation progress，不能只顯示泛用「繼續記錄」。
 
 ## Current Work
-**v0.2.9.2 首頁 Guide-first 導航、Catalog 維護入口與 Session Guide refresh 已完成本機及固定 dev Preview 自動 QA；等待手機人工驗收**
+**v0.2.9.3 Estimator readiness 診斷與 Catalog 更新說明已完成本機 QA；等待固定 dev Preview 與手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1128,11 +1138,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.9.2 驗收
+### v0.2.9.3 驗收
 
-Status：**固定 dev Preview 自動驗收通過；等待實體手機人工驗收，不自行開始下一版本。**
+Status：**等待固定 dev Preview 與實體手機人工驗收；不自行開始下一版本。**
 
-使用固定 dev Preview 以 390 × 844 驗收：首頁不再顯示三台舊 Profile；Catalog 顯示目前收錄數與 production-safe 的資料庫更新狀態；Session Guide 可重新整理並提示只影響下一個 Session；目前 Session 與既有紀錄保持不變。不自行開始下一版本或合併 `dev` → `main`。
+使用固定 dev Preview 以 390 × 844 驗收：Catalog 更新說明 modal 可開關且沒有不可達 Importer link；無 benchmark、未達 600G、缺 numerator 與已達門檻案例顯示正確 readiness；Estimator 分布、Session 紀錄及既有 Guide 流程不變。不自行開始下一版本或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
