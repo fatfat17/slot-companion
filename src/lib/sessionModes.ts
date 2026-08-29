@@ -1,6 +1,6 @@
 import type { IdentificationContext, Machine, Session, SessionMode } from "@/types";
 import type { SessionUiModel } from "./sessionUi.ts";
-import { eventRecognition, recordInstruction, selectAttentionItems, selectPlaySummary } from "./sessionGuidePresentation.ts";
+import { buildPlayerGuideHighlights, selectPlaySummary } from "./sessionGuidePresentation.ts";
 
 export const SESSION_MODE_PREFERENCE_KEY="slot-companion-session-mode-preferences-v1";
 export const SESSION_MODE_OPTIONS:Array<{value:SessionMode;label:string;description:string}>=[
@@ -8,7 +8,7 @@ export const SESSION_MODE_OPTIONS:Array<{value:SessionMode;label:string;descript
   {value:"quick",label:"快速開始",description:"只顯示最常用的記錄按鈕"},
   {value:"full",label:"完整記錄",description:"顯示全部可用記錄與分析"},
 ];
-export type FirstTimeTutorialData={play:string[];cz:Array<{label:string;detail:string}>;output:Array<{label:string;detail:string}>;attention:Array<{label:string;detail:string}>;records:Array<{label:string;detail:string}>};
+export type FirstTimeTutorialData={play:string[];highlights:ReturnType<typeof buildPlayerGuideHighlights>["primary"];more:ReturnType<typeof buildPlayerGuideHighlights>["more"];glossary:Array<{termJa:string;termZh:string}>};
 
 export function normalizeSessionMode(mode:SessionMode|undefined):SessionMode{return mode??"quick"}
 
@@ -36,12 +36,11 @@ export function createSessionSnapshot(machine:Machine,mode:SessionMode,machineNu
 }
 
 export function buildFirstTimeTutorial(machine:Machine,model:SessionUiModel):FirstTimeTutorialData{
-  const guide=machine.sessionGuide,recognition=guide?.events??[];
+  const guide=machine.sessionGuide,highlights=buildPlayerGuideHighlights(guide,model.recordControls,3);
   return{
     play:selectPlaySummary(guide),
-    cz:recognition.filter(item=>item.category==="cz").map(item=>({label:item.labelZh,detail:eventRecognition(item)})),
-    output:recognition.filter(item=>["at","art","bonus"].includes(item.category)).map(item=>({label:item.labelZh,detail:eventRecognition(item)})),
-    attention:selectAttentionItems(guide).slice(0,3).map(item=>({label:item.labelZh,detail:item.detail})),
-    records:model.recordControls.map(control=>({label:control.counter?.labelZh??control.capability.labelZh,detail:recordInstruction(control,guide)})),
+    highlights:highlights.primary,
+    more:highlights.more,
+    glossary:guide?.glossary??[],
   };
 }

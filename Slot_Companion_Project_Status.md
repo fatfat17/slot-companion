@@ -59,6 +59,15 @@ v0.2.7.1 QA：
 - 固定 dev Preview source commit `0386f8b`：Ready；10530 Guide 顯示三種入口與完整第一次玩教學，無 parser／compiler／capability 內部術語 ✅
 - Preview 直接開啟既有 v0.2.7.0 Session：安全回退快速模式、既有 CZ 計數保持 1 次，模式與指南入口均正常 ✅
 
+v0.2.7.1 第一次玩教學／指南 QA polish（2026-08-29）：
+- 手機人工驗收確認原第一次玩教學把相同事件分別完整列於 CZ、AT／ART／Bonus、注意事項與記錄時機，閱讀過長；本次只調整共用 presentation selector 與 UI，未修改來源資料、compiler、capability、Session snapshot 或 estimator
+- 第一次玩預設改為約 60 秒的「今天先記住這三件事」：最多 3 個 operational 重點，每張卡一次整合事件名稱、代表意義與記錄時機；其他事件及通用名詞收進預設關閉的「更多名詞與事件」
+- 基本流程缺失時只顯示「目前沒有完整流程說明，可先依下方三個重點遊玩。」，不再建立大型空白區塊
+- Session Guide drawer 共用相同重點 selector；目前狀態已顯示的事件不在後續重點／更多事件重複，辨認、注意與記錄三個完整重複區塊已合併
+- 日中事件名稱完全相同時只顯示一次；底部「看完了，開始記錄」與「略過教學」、三模式入口、模式切換、Session 保存及指南入口均保留
+- 新增 2 項 regression tests；lint ✅；typecheck ✅；完整 tests：**230 / 230 passed** ✅；production build ✅
+- localhost 390 × 844 smoke：具名事件機台首屏直接顯示 3 個實際重點，「更多名詞與事件」預設收合，缺失流程只佔一行 ✅
+
 ### v0.2.7.0 – Session Quick Guide & Compact Controls
 Status：**Completed；手機人工驗收通過**
 
@@ -969,11 +978,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 20. Catalog URL coverage（202 / 202）不等於玩法 coverage；目前正式 Catalog 只有 5 筆 Confirmed，177 筆仍需來源分析
 21. `sessionModules` 存在或顯示於 Guide 不等於 Session UI 已可操作；必須分別標示 schema、compiler、Guide UI、Session control 與人工驗收層級
 22. Setting benchmark 除了完整設定值與 denominator，還必須驗證 numerator key 確實綁定可操作的 Session counter／relationship
-23. 非阻擋觀察：同一事件可能同時出現在「怎麼辨認」、「今天最值得注意」與「什麼時候按記錄」，完整 Session 指南仍可能偏長；後續應由第一次玩／快速開始／完整記錄的顯示層級處理，本版本不再繼續改動
+23. v0.2.7.1 手機 QA 已處理同一事件在辨認、注意與記錄區重複的問題：首次教學與 Session drawer 共用單一重點 selector，前三項直接顯示，其餘預設收合；不修改來源或 capability
 24. Session 使用模式只能是 presentation snapshot；切換模式不得複製或重建 capability、counter、Timeline 或 estimator observation，舊 Session 必須以 quick 安全回退
 
 ## Current Work
-**v0.2.7.1 已完成實作、自動 QA 與 localhost smoke；等待固定 dev Preview 與手機人工驗收**
+**v0.2.7.1 QA polish 已完成實作、自動 QA 與 localhost 手機 smoke；等待固定 dev Preview 與手機人工複驗**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -986,11 +995,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### v0.2.7.1 固定 dev Preview 與手機人工驗收
+### v0.2.7.1 固定 dev Preview 與手機人工複驗
 
 Status：**不自行開始下一版本。**
 
-驗證三模式入口、第一次玩教學、同機種「上次使用」、快速／完整 controls、中途切換與 reload 保存、舊 Session fallback，以及三種模式的指南入口。照片保存、雲端持久化與其他下一階段均未開始；不得自行開始新功能或合併 `dev` → `main`。
+驗證 60 秒第一次玩教學首屏三重點、更多事件預設收合、Session drawer 去重，以及三模式入口、同機種「上次使用」、快速／完整 controls、中途切換與 reload 保存、舊 Session fallback。照片保存、雲端持久化與其他下一階段均未開始；不得自行開始新功能或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1082,6 +1091,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**手機驗收 v0.2.6.3 Adaptive Session UI Foundation；不自行開始完整新手／老手模式或其他版本。**
+**手機複驗 v0.2.7.1 第一次玩教學與 Session Guide 去重 polish；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
