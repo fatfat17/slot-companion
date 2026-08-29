@@ -47,7 +47,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Choice Evidence Gate hotfix：內建 Choice 現只接受 `special_events` 可靠表格逐項支持的選項；每個選項保存 source URL、section、table 與 evidence ownership。不同機台／來源不共用選項；自訂 Choice 維持使用者自訂且不進 Estimator。
 - 舊 `control-evidence-gate-3` Guide cache 會失效；既有 Session snapshot、G、Counter、Choice 與自訂資料均不改寫。
 - Hotfix QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **246 / 246 passed**；Next.js 16.3.2 webpack production build 通過；localhost `/`、Yajikita Catalog／Guide 與 Session fallback routes 均 HTTP 200。
-- Status：Choice blocker 修正與自動 QA 完成，**等待固定 dev Preview／手機人工驗收**。
+- 固定 dev Preview 自動手機尺寸回歸：舊 Guide cache 正確失效；重新建立 Yajikita 指南並建立全新完整模式 Session 後，終了畫面僅顯示 `街道／茶屋／茜ちゃん`。選擇 `街道` 後 reload 與 Summary 保留正確，新 Session 回到尚未選擇；此結果是自動瀏覽器 QA，不代表實體手機人工驗收。
+- Status：Choice blocker 修正、完整自動 QA 與固定 dev Preview 回歸完成，**等待實體手機人工驗收**。
 
 ### Machine Catalog 自動分類與操作涵蓋率健檢（文件／調查，不變更產品版本）
 
@@ -1052,7 +1053,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 33. Choice 容器通過 evidence gate 不代表所有候選選項都可信；內建 Choice 必須逐項保存同一機台來源的 section／table ownership，不能跨 section 或跨機台補入常見牌色
 
 ## Current Work
-**v0.2.8.1 Choice Evidence Gate blocker 已修正並通過完整自動 QA；等待固定 dev Preview 手機人工驗收**
+**v0.2.8.1 Choice Evidence Gate blocker 已修正並通過完整自動 QA與固定 dev Preview 回歸；等待實體手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
