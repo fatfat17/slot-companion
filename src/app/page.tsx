@@ -8,6 +8,7 @@ import { getMachine } from "@/data/machines";
 
 const entries = [
   { href: "/identify", icon: "📷", title: "拍機台", sub: "拍照・AI 機種辨識", tone: "pink" },
+  { href: "/catalog", icon: "📖", title: "快速中文攻略", sub: "搜尋機台・看 60 秒重點與完整圖文", tone: "cyan" },
   { href: "/catalog", icon: "📚", title: "機種資料庫", sub: "搜尋已收錄機種與指南", tone: "yellow" },
   { href: "/records", icon: "📊", title: "今日紀錄", sub: "查看今天的實戰", tone: "blue" },
   { href: "/hunter", icon: "🌙", title: "晚上撿台", sub: "快速評估表單", tone: "purple" },

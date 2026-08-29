@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Multi-source Machine Guide Pilot**
+**P-WORLD 圖文中文攻略 Golden Test**
 
-Status：**P-WORLD 主來源＋ちょんぼりすた補充來源的五台試點已完成實作、本機 QA 與固定 dev Preview 自動 QA；等待手機人工驗收**
+Status：**單機 Golden Test 已完成實作與本機 QA；等待固定 dev Preview 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,19 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### P-WORLD 圖文中文攻略 Golden Test（2026-08-30）
+- 本輪只校準 `スマスロ バイオハザードRE:3`（Catalog `machine-1y0erql`／P-WORLD database 10440），未批次處理其餘 201 台，也未改寫 Catalog identity、Session、Control Manifest 或 Setting Estimator。
+- P-WORLD parser 在官方 `#spec` 範圍內依 heading 分類圖片，只接受 P-WORLD 機台素材 host，排除掲示板、玩家投稿、廣告、外站圖片、過小圖片與重複 URL；不保存完整來源頁或攻略文章。
+- 完整 Guide 將圖片依流程、CZ、AT／ART、Bonus 與打法區段配回繁中內容；首頁新增「快速中文攻略」入口，玩家仍先搜尋 Catalog，再進入相同 Guide-first 流程。
+- Golden Test 圖片上限為 18 張、每張 1 MB。真實 P-WORLD runtime 取得 **18 / 18** 張，總量 **2,704,314 bytes（約 2.58 MB）**，最大單張 **784,525 bytes**，無下載 warning。
+- Vercel 有 server-only Supabase 設定時，圖片以 upsert 寫入 private `machine-guide-assets` bucket，瀏覽器透過同源 `/api/machine-guide-assets/[catalogId]` 讀取，不取得 secret；未設定 Supabase 時回退來源即時讀取。Guide JSON 仍保存在 browser localStorage，不宣稱跨裝置同步。
+- Machine Guide cache revision 更新為 `2026-08-30-visual-guide-golden-test-11`，只失效舊 Guide cache；既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史不改寫。
+- 最小整理 **TEST DATA** fixture 覆蓋：官方圖片選取、URL 去重、section ownership、BBS／外站／小圖排除、Golden Catalog 限制、無雲端 fallback 與 Supabase private upload。
+- 本機 QA：lint 通過；typecheck 通過；完整 tests **300 / 300 passed**；Next.js 16.3.2 webpack production build通過。預設 Turbopack build 在受限 host 因 PostCSS worker 無法 bind port，沿用專案既有 webpack production QA 路徑完成。
+- localhost production smoke：`/`、`/catalog`、RE:3 Catalog Detail、RE:3 Guide 均 HTTP 200；Guide API HTTP 200、status `usable`、11 個內容區段、18 張圖、warnings 0；圖片 API 回傳 JPEG 200。
+- 390 × 844 localhost 瀏覽器自動 QA：無水平溢出，18 個圖文 figure 全部成功載入，console 0 errors／warnings。此項是自動 QA，不等同實體手機人工驗收。
+- 著作權／營運限制：這是使用者要求的個人 Golden Test，來源與擷取時間仍保留；未取得來源的轉載授權，不應在未重新確認權利與容量／流量方案前擴張到完整 Catalog 或 Production。
 
 ### Multi-source Machine Guide Pilot（2026-08-30）
 - 架構決策：P-WORLD 繼續負責 Machine Catalog identity、導入資訊與日後店鋪／設置資料；ちょんぼりすた只作可選的指南補充來源。使用者不需重新輸入網址，五台試點由 server-side registry 配對來源。
@@ -1199,9 +1212,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 41. 未取得授權的機台圖片不應因競品視覺效果而直接複製；目前以 Catalog metadata 衍生的視覺卡片提供辨識層級，保留未來接入可授權圖片資產的空間。
 42. 遊玩記帳應直接重用 Session 的 observed game 與 snapshot，避免使用者結算後再手動抄寫；跨裝置同步仍需後續資料模型與隱私決策。
 43. 同一機台存在主要 AT 與上位 AT 時，完整設定表仍可能因 numerator 不唯一而被安全阻擋；只有來源明確證明事件層級時才能把一般初當 metric 綁定主要事件。若同層級仍歧義，必須繼續 blocked，不能為了產生設定分布任意挑選。
+44. 圖文攻略的主要容量成本是圖片而非 Catalog JSON。RE:3 Golden Test 18 張約 2.58 MB；以相同平均值估算 202 台約 521 MB，理論上低於目前 1 GB Free Storage，但尚未計入版本重複、其他資產與流量，因此不能直接推定全量長期方案已足夠。
+45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 
 ## Current Work
-**Estimator primary／upper event mapping hotfix 已完成程式、本機完整測試、真實 P-WORLD runtime smoke 與固定 dev Preview 自動 smoke；等待手機以重新整理後的新指南／新 Session 複驗。**
+**P-WORLD 圖文中文攻略 Golden Test 已完成單機程式與本機完整 QA；等待固定 dev Preview Ready 後進行手機圖文版面校準。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1211,17 +1226,17 @@ v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
 
 v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 
-Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
+Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪只有 RE:3 的受限圖片資產可寫入 private Supabase Storage，未擴張到其他機種。
 
 ## Next Step
-### 固定 dev Preview 與手機驗收
+### RE:3 圖文中文攻略手機校準
 
 Status：**尚未標記人工驗收通過。**
 
-1. 在 `スマスロ バイオハザードRE:3` Catalog Detail 按「重新整理 P-WORLD 機台指南」。
-2. 結束舊 Session 並建立全新 Session；既有 Session 不會被改寫。
-3. 記錄通常 G 與主要 `HAZARD RUSH`，確認達 600G minimum sample 後顯示設定 1～6 參考分布；上位 `HAZARD RUSH INFERNO` 不得混入主 AT 初當。
-4. 完成 Estimator 手機複驗後，再討論下一階段；目前不擴張公式或降低 evidence gate。
+1. 等待固定 dev Preview 指向本次 `dev` commit。
+2. 在首頁按「快速中文攻略」，搜尋並開啟 `スマスロ バイオハザードRE:3`。
+3. 重新整理指南，確認流程、CZ、AT、Bonus、打法共 18 張圖可在手機正常載入，中文與圖片關聯易讀，來源資訊只集中顯示。
+4. 手機校準通過後再決定是否擴張到下一批代表機種；目前不批次下載完整 Catalog，也不部署或 merge `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
