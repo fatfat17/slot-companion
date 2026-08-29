@@ -22,7 +22,7 @@ pnpm dev
 5. Guide 預設顯示「60 秒看懂這台」、三個跨類型重點與繁中分區說明；日文段落和表格集中在預設收合的查證區。
 6. 按下「開始玩」後選擇「第一次玩這台／快速開始／完整記錄」；第一次玩會先顯示既有指南產生的重點教學，三種模式都建立相同資料結構的 Session。
 7. 快速與第一次玩模式以兩欄顯示最多 4 個優先 operational controls，其餘收進「更多記錄」；完整模式直接顯示全部 operational controls。
-8. Session header 可隨時開啟機台指南 drawer 或切換使用模式；切換只改變畫面資訊量，不清除既有紀錄。
+8. Session header 可隨時開啟機台指南 drawer 或切換使用模式；有圖文 Guide 時會先依目前狀態顯示相關圖片，並可在 drawer 內原地展開完整圖文，不離開 Session。切換只改變畫面資訊量，不清除既有紀錄。
 9. Setting Estimator 只採用有完整設定值、唯一 operational numerator、明確 operational denominator 與 minimum sample 的來源資料；每個 metric 保存可追溯 observation contract，無樣本時顯示「尚未開始推測」。
 10. 首頁只保留現場玩家入口，不再展示三台舊 Profile；底層 Profile 仍保留供既有 Session 與相容流程使用。
 11. Machine Catalog 頁提供「更新機種資料庫」入口：localhost development 可直接使用；Vercel Preview 在 Supabase 與 `CATALOG_ADMIN_TOKEN` 設定完成時，會開啟需管理密碼的私人 P-WORLD Importer。
@@ -48,9 +48,9 @@ pnpm dev
 - 指南 cache compiler revision 已更新；重新整理指南後只影響下一個新 Session。既有 Session 若偵測到更新，僅顯示提示，不會改寫按鈕或紀錄。
 - Session UI 與 Summary 已由 capability snapshot 產生；read-only／unavailable 項目只留在指南參考，不顯示空白或無作用控制項。
 - 快速記錄優先順序固定使用 capability 種類與來源 contract 順序：具名 CZ → AT／ART → Bonus → 其他 operational event／choice，不依機台名稱猜測。
-- 新建立的 Session snapshot 會保存精簡結構化指南與可追溯 evidence，不包含 P-WORLD 圖片；Session drawer 只顯示玩家可用的玩法／辨認／記錄提示，parser、compiler 與內部 section path 集中在底部資料狀態或不進入主要內容。舊 Session 沒有此 snapshot 時使用一致的簡短缺失提示。
+- 新建立的 Session snapshot 會保存精簡結構化指南與可追溯 evidence，不複製 P-WORLD 圖片；Session drawer 會從同機台現有 Guide cache 讀取圖文素材，依目前狀態優先顯示相關圖片並可原地展開完整圖文。沒有有效圖文 cache 時安全回退精簡文字；parser、compiler 與內部 section path 不進入玩家主要內容。
 - Session 保存所選模式 snapshot，並在每台機器各自記住上次使用模式；這不是永久的新手／老手分類。舊 Session 沒有 mode 時安全回退為快速模式。
-- Session 主操作使用較大的狀態／記錄按鈕與字級；Estimator 的來源、計算與 Evidence，以及 Session 指南的流程、名詞與來源資料改為按需展開，安全規則仍保留但不占用主要操作空間。
+- Session 主操作將版面優先留給 G 數與快速記錄；目前狀態縮成單行狀態列，記錄具名 CZ／AT／ART／Bonus 時自動切換，只有需要修正或回到通常時才開啟小型狀態選單。同一狀態有多個具名事件時顯示通用 CZ／AT／ART／Bonus，避免任意名稱冒充目前事件。
 - P-WORLD `調査中`、未公開、空白或無法確認的值維持缺失，不補猜、不當成 0。
 - P-WORLD 仍是 Machine Catalog identity、導入資訊與日後店鋪資料的主要來源；ちょんぼりすた目前只補充五台試點機種的玩法、具名事件與設定表，不會取代 Catalog，也不作全站爬取。
 - 多來源採欄位級合併：格式相同的數值會去重並保留來源；不同來源同一設定值衝突時，只停用該 estimator metric，不阻擋其餘指南。補充來源失敗時仍可使用 P-WORLD 指南。

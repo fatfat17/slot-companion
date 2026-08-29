@@ -1,5 +1,5 @@
 import type { GameState } from "@/types";
-import type { MachineGuideEvent, SessionQuickGuide } from "@/types/machineGuide";
+import type { MachineGuideEvent, MachineGuideSectionKey, SessionQuickGuide } from "@/types/machineGuide";
 import type { SessionRecordControl } from "@/lib/sessionUi";
 
 const TECHNICAL_COPY = [
@@ -12,6 +12,14 @@ const TECHNICAL_COPY = [
 
 export const GUIDE_EMPTY_PLAY = "目前尚無玩法說明";
 export const GUIDE_EMPTY_RECOGNITION = "目前尚無辨認說明";
+
+export function guideSectionKeysForState(state:GameState):MachineGuideSectionKey[]{
+  if(state==="cz")return["cz"];
+  if(state==="at"||state==="art")return["at_art"];
+  if(state==="bonus")return["bonus"];
+  if(state==="special")return["special_events"];
+  return["flow","play"];
+}
 
 export type PlayerGuideHighlight={id:string;labelZh:string;labelJa:string;meaning:string;instruction:string};
 
