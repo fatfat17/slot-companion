@@ -36,9 +36,10 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 中文指南輸入只使用既有 P-WORLD 結構化 facts、可靠 operational controls、Machine Family 與來源 section；不得以 family、derived metric 或未通過 gate 的資料生成可操作事件。
 - OpenAI 呼叫維持 server-side，模型集中於 `AI_CONFIG.openAIGuideModel`；支援 `OPENAI_MACHINE_GUIDE_MODEL`，未設定時沿用辨識模型。API key 缺失、請求失敗、結構錯誤、未知 section／control 或未受來源支持的數字均安全回退規則式繁中指南，不阻擋 Guide 建立。
 - 新 Session 的精簡 Guide snapshot 使用相同的繁中 overview 與 highlights；既有 Session snapshot 不重新編譯或改寫。
-- Machine Guide cache compiler revision 更新為 `2026-08-29-chinese-player-guide-6`；舊 Guide cache 需重新建立，僅影響指南快取及之後的新 Session，不清除既有 Session、Catalog 或自訂記錄。
+- Machine Guide cache compiler revision 更新為 `2026-08-29-chinese-player-guide-7`；舊 Guide cache 需重新建立，僅影響指南快取及之後的新 Session，不清除既有 Session、Catalog 或自訂記錄。
 - 代表回歸：A-type 只解釋 BIG／REG、不補 CZ／AT；rate-only／資料不足機台顯示基本記錄模式；具名 CZ／AT／ART／Bonus 保持獨立；derived control 不會冒充玩家記錄重點；原始日文仍可追溯。
-- QA：lint 通過；typecheck 通過；完整 tests **257 / 257 passed**；Next.js 16.3.2 webpack production build 通過。
+- Preview 自動 QA 發現 AI 曾把可操作事件的按鈕說明寫成「按一般打點方式處理」；已改由 control manifest 決定每個 Counter／Choice 的最終操作文案，確保一定指出正確按鈕與「記錄 1 次／選擇對應畫面」，不再讓模型自由改寫操作語意。
+- QA：lint 通過；typecheck 通過；完整 tests **258 / 258 passed**；Next.js 16.3.2 webpack production build 通過。
 - Local production API smoke 使用實際 server route 成功產生 `generator: openai` 的繁中指南；只有 BIG／REG operational control 成為重點，Bonus 合成等 derived metric 未混入。固定 dev Preview 與實體手機人工驗收仍待完成。
 - Status：功能與本機自動 QA 完成，**等待固定 dev Preview 與手機人工驗收**；未開始 numeric controls 或下一版本。
 
