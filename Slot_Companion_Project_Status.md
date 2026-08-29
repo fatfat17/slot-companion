@@ -39,7 +39,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Machine Guide cache compiler revision 更新為 `2026-08-29-chinese-player-guide-8`；舊 Guide cache 需重新建立，僅影響指南快取及之後的新 Session，不清除既有 Session、Catalog 或自訂記錄。
 - 代表回歸：A-type 只解釋 BIG／REG、不補 CZ／AT；rate-only／資料不足機台顯示基本記錄模式；具名 CZ／AT／ART／Bonus 保持獨立；derived control 不會冒充玩家記錄重點；原始日文仍可追溯。
 - Preview 自動 QA 發現 AI 曾把可操作事件的按鈕說明寫成「按一般打點方式處理」，且可能把三個重點全選為同類 Bonus；已改由 control manifest 的共用跨類型優先規則決定 highlights 與 Counter／Choice 最終操作文案，AI 只整理 overview 與 section 摘要。
-- QA：lint 通過；typecheck 通過；完整 tests **259 / 259 passed**；Next.js 16.3.2 webpack production build 通過。
+- 手機人工驗收發現完整 Machine Guide 已中文化，但 Session drawer 的 `flow` 與事件辨認仍優先讀取舊日文 snapshot 欄位。修正後，新 Session snapshot 保存同一份繁中 section 摘要；既有 Session 不改寫資料，但呈現層會優先使用已保存的繁中 overview，並將日文辨認句安全轉為「機台顯示什麼／代表什麼」的繁中提示。
+- QA：lint 通過；typecheck 通過；完整 tests **261 / 261 passed**；Next.js 16.3.2 webpack production build 通過。
 - Local production API smoke 使用實際 server route 成功產生 `generator: openai` 的繁中指南；只有 BIG／REG operational control 成為重點，Bonus 合成等 derived metric 未混入。
 - 固定 dev Preview 390 × 844 自動 QA：LB Triple Crown 顯示繁中 60 秒摘要與 BIG／REG，沒有 CZ／AT control；ULTRAMAN 無可靠 operational event 時維持基本記錄提示；やじきた保留具名 CZ／AT／終了畫面；喰霊三個重點依共用規則跨 CZ／ART／Bonus，且每項明確指出正確記錄按鈕。原始日文與表格均預設收合，代表頁面未見 console error。
 - Preview QA 過程發現的自由操作文案與同類重點集中問題均已完成最小修正、完整工程 QA 與部署後重測；這是自動瀏覽器 QA，**不等同實體手機人工驗收**。
@@ -1086,7 +1087,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 35. 原始日文與表格需要保留可追溯性，但不應占據玩家預設閱讀路徑；預設顯示簡短繁中，原文集中於單一收合區。
 
 ## Current Work
-**v0.2.9.0 中文機台指南已完成程式、本機自動 QA 與固定 dev Preview 自動驗收；等待手機人工驗收**
+**v0.2.9.0 Session drawer 中文化 blocker 已完成本機修正與自動 QA；等待固定 dev Preview 複驗**
 
 核准穩定基準：**v0.2.3.1**
 

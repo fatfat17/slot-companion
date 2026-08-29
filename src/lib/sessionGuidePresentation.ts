@@ -23,9 +23,10 @@ export function isPlayerGuideCopy(value:string|null|undefined){
 function unique(values:string[]){return values.filter((value,index)=>values.indexOf(value)===index)}
 
 export function selectPlaySummary(guide:SessionQuickGuide|undefined){
+  if(isPlayerGuideCopy(guide?.corePlay))return[guide!.corePlay!.trim()];
   const flow=unique((guide?.flow??[]).filter(isPlayerGuideCopy));
   if(flow.length)return flow;
-  return isPlayerGuideCopy(guide?.corePlay)?[guide!.corePlay!.trim()]:[];
+  return[];
 }
 
 export function selectRecognitionEvents(guide:SessionQuickGuide|undefined){
@@ -38,7 +39,10 @@ export function selectCurrentEvents(guide:SessionQuickGuide|undefined,state:Game
 }
 
 export function eventRecognition(item:MachineGuideEvent){
-  return isPlayerGuideCopy(item.whatToSee)?item.whatToSee:GUIDE_EMPTY_RECOGNITION;
+  const hiragana=(item.whatToSee.match(/[\u3040-\u309f]/g)??[]).length;
+  if(isPlayerGuideCopy(item.whatToSee)&&hiragana<3)return item.whatToSee;
+  const meanings:Record<MachineGuideEvent["category"],string>={cz:"CZ（機會區間）",at:"AT 出玉狀態",art:"ART 出玉狀態",bonus:"Bonus 獎勵",role:"小役事件",indication:"設定示唆",special:"特殊事件"};
+  return`機台明確顯示「${item.labelZh}」時，代表${meanings[item.category]}。`;
 }
 
 export function selectAttentionItems(guide:SessionQuickGuide|undefined){
