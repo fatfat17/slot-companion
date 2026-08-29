@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**Player Library & Quick Reference（程式與本機自動 QA 完成）**
+**Player Library & Quick Reference（固定 Preview 自動 QA 完成）**
 
-Status：**玩家導向 Machine Library、收藏／最近瀏覽、共用新手術語、Guide 快速目錄與跨日遊玩記帳已完成；等待固定 dev Preview 驗證與手機人工驗收**
+Status：**玩家導向 Machine Library、收藏／最近瀏覽、共用新手術語、Guide 快速目錄與跨日遊玩記帳已完成；固定 dev Preview 自動 QA 通過，等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -41,6 +41,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - `/records` 升級為 Session 自動記帳：支援今天、近 7 天、全部範圍，彙整實際觀測 G、投入與最終持枚；紀錄摘要依 Session capability snapshot 顯示，不把 unavailable control 補成固定 CZ／AT。
 - 新增 player library／records／glossary／navigation regression tests；完整 automated tests **284 / 284 passed**。
 - 本機 production build 以 Next.js 16.3.2 webpack 完成；390 × 844 與 1280 × 900 browser smoke 均無橫向溢出或 console error。
+- 固定 dev Preview `https://slot-companion-git-dev-ben-liu.vercel.app` 已切換至本次 dev commit；390 × 844 自動瀏覽器 QA 驗證年份篩選、收藏切換、新手術語與今天／近 7 天／全部記帳範圍正常，console 無 error。此項是自動 QA，不等同實體手機人工驗收。
 
 ### Catalog Cloud Foundation – Phase 1–5
 - Estimator observation governance：相同 numerator／denominator／value mode 且理論值一致的重複 benchmark 只計算一次；若同一 Session observation 被映射到不同設定理論值，整組不啟用，避免重複或互相矛盾的 posterior-like 加權。
@@ -1167,7 +1168,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 42. 遊玩記帳應直接重用 Session 的 observed game 與 snapshot，避免使用者結算後再手動抄寫；跨裝置同步仍需後續資料模型與隱私決策。
 
 ## Current Work
-**Player Library & Quick Reference 已完成程式、本機自動測試與 responsive browser smoke；目前等待固定 dev Preview 驗證與手機人工驗收。**
+**Player Library & Quick Reference 已完成程式、本機完整測試、responsive smoke 與固定 dev Preview 自動 QA；目前等待手機人工驗收。**
 
 核准穩定基準：**v0.2.3.1**
 

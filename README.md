@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**Player Library & Quick Reference（自動 QA 中）**（`dev`）。
+目前開發版本：**Player Library & Quick Reference（固定 Preview 自動 QA 完成，等待手機人工驗收）**（`dev`）。
 
 ## 本機啟動
 
