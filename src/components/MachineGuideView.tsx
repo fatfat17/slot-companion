@@ -5,6 +5,7 @@ import type { MachineCatalogRecord } from "@/types/catalog";
 import type { MachineGuide } from "@/types/machineGuide";
 import { getGuideCacheState,loadCachedGuide,type GuideCacheState } from "@/lib/machine-guide/storage";
 import { refreshCachedMachineGuide } from "@/lib/machine-guide/refresh";
+import { GuideFeedback } from "@/components/GuideFeedback";
 import { machineFromGuide } from "@/lib/machine-guide/session";
 import { StartSession } from "./StartSession";
 
@@ -25,7 +26,7 @@ export function MachineGuideView({record}:{record:MachineCatalogRecord}){
     {player?.sections.map(section=><section className="section card guide-section" key={section.key}><header><div><h2>{section.title}</h2><small>中文重點</small></div></header><p className="guide-summary">{section.summary||"目前尚無可靠說明。"}</p>{section.points.length>0&&<ul>{section.points.map((point,index)=><li key={index}>{point}</li>)}</ul>}</section>)}
     <details className="section card guide-section"><summary><strong>查看原始日文與表格</strong><small> 查證用・預設收合</small></summary>{guide.sections.map(section=><section className="mt-5" key={section.key}><header><div><h2>{section.titleZh}</h2><small>{section.titleJa}</small></div><span>{section.tables.length?`${section.tables.length} 表格`:section.paragraphsJa.length?"公開說明":"尚無資料"}</span></header>{section.paragraphsJa.slice(0,4).map((paragraph,index)=><p className="guide-paragraph" key={index}>{paragraph}</p>)}{section.tables.map(table=><article className="guide-table" key={table.id}><strong>{table.title}</strong><div><table><thead><tr>{table.headers.map((header,index)=><th key={index}>{header}</th>)}</tr></thead><tbody>{table.rows.map((row,rowIndex)=><tr key={rowIndex}>{table.headers.map((_,cellIndex)=><td key={cellIndex}>{row[cellIndex]||"尚無資料"}</td>)}</tr>)}</tbody></table></div></article>)}</section>)}</details>
     <section className="section card guide-missing"><h2>尚未取得的資料</h2>{guide.missingSections.length?<p>{guide.missingSections.join("、")}</p>:<p>本指南主要欄位均有可顯示內容。</p>}</section>
-    <section className="section card guide-source"><h2>來源與快取</h2><dl><dt>來源</dt><dd><a href={guide.sourceUrl} target="_blank" rel="noreferrer">P-WORLD ↗</a></dd><dt>擷取時間</dt><dd>{new Date(guide.retrievedAt).toLocaleString("zh-TW")}</dd><dt>保存位置</dt><dd>此瀏覽器 localStorage（不跨裝置同步）</dd></dl><button className="secondary-button mt-3" disabled={busy} onClick={refresh}>{busy?"正在重新整理…":"重新整理 P-WORLD 機台指南"}</button>{error&&<div className="guide-error mt-3" role="alert"><strong>重新整理失敗</strong><p>{error}</p><p>目前這份有效指南及所有既有 Session 均已保留。</p></div>}</section>
+    <section className="section card guide-source"><h2>來源與快取</h2><dl><dt>來源</dt><dd><a href={guide.sourceUrl} target="_blank" rel="noreferrer">P-WORLD ↗</a></dd><dt>擷取時間</dt><dd>{new Date(guide.retrievedAt).toLocaleString("zh-TW")}</dd><dt>保存位置</dt><dd>此瀏覽器 localStorage（不跨裝置同步）</dd></dl><button className="secondary-button mt-3" disabled={busy} onClick={refresh}>{busy?"正在重新整理…":"重新整理 P-WORLD 機台指南"}</button>{error&&<div className="guide-error mt-3" role="alert"><strong>重新整理失敗</strong><p>{error}</p><p>目前這份有效指南及所有既有 Session 均已保留。</p></div>}<GuideFeedback catalogId={record.id}/></section>
     <div className="notice mt-3">{guide.availability.settingEstimator==="unavailable"?"目前沒有可安全參與設定推測的資料。":"設定可能性只使用具完整設定值、明確分母且能由 Session 實際觀測的資料；結果一律為參考推測。"}</div>
     <StartSession machine={machine}/>
   </main>;

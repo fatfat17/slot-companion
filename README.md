@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**v0.2.9.3 – Estimator Readiness & Catalog Update Guidance**（`dev`，等待人工驗收）。
+目前開發版本：**Catalog Cloud Foundation（分階段開發中）**（`dev`；尚未啟用 Supabase）。
 
 ## 本機啟動
 
@@ -51,5 +51,8 @@ pnpm dev
 - 既有三台 placeholder Profile 與其中的 **TEST DATA** 只供既有流程／測試使用，不得視為真實機種資料。
 - API key 只可放在 server-side `.env.local`，不得提交 Git。
 - 繁中摘要可選擇設定 `OPENAI_MACHINE_GUIDE_MODEL`；未設定時沿用辨識模型。沒有 API key、服務失敗或輸出未通過來源驗證時，自動使用規則式繁中指南，不阻擋 P-WORLD Guide。
+- Estimator 對相同 numerator／denominator／value mode 的重複 benchmark 只採用一次；若同一觀測被映射到互相衝突的設定理論值，整組停用，不重複加權。Evidence 標籤優先顯示實際具名 Session control。
+- 完整 Machine Guide 可將「資料有誤／中文不清楚／內容重複／缺少重要資料」保存為 per-machine browser-local 回報；目前尚未雲端同步。
+- Catalog repository 已提供 JSON fallback 與 Supabase REST adapter。只有同時設定 server-side `SUPABASE_URL`、`SUPABASE_SERVICE_ROLE_KEY` 並套用 `supabase/migrations` 後才會切換雲端；service role key 絕不可使用 `NEXT_PUBLIC_`。
 
 完整版本與 QA 狀態請見 `Slot_Companion_Project_Status.md`。
