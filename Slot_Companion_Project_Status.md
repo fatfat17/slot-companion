@@ -31,6 +31,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Machine Catalog 自動分類與操作涵蓋率健檢（文件／調查，不變更產品版本）
+
+- 以 v0.2.8.0 production parser／compiler 對正式 Catalog 全部 **202 / 202** 台做依序、節流 runtime audit；202 台 canonical P-WORLD URL 本次均成功取得，未保存完整 HTML 或來源圖片。
+- Family confidence：High **51**、Medium／Probable **69**、Generic／Low／Unknown **82**；Medium 不冒充 confirmed，generic 有明確 Bonus／Choice 也不等於 family 已知。
+- 180 台有至少一個 compiler operational candidate；其中較保守的 116 台不依賴 generic CZ／AT fallback，64 台仍含 generic `CZ`／`AT 次數`，22 台正確進入基本記錄模式。
+- 全量 candidate controls 共 456（Counter 345、Choice 111、Numeric input 0）；發現 cycle／points／set／zone 的 numeric operational coverage 仍為 0。
+- Setting Estimator：69 台至少一項 compiler-eligible benchmark；133 台不可用，其中 67 台沒有可解析設定 metric、66 台缺唯一 canonical numerator。eligible 仍須實際 numerator、denominator 與 600G minimum sample。
+- 以 21 台跨 family／成功與失敗案例做人工作業檢查；LB、やじきた、ULTRAMAN、喰靈四個既有手機驗收案例在本次 runtime interpretation 中均不退化。
+- 完整口徑、family 統計、代表矩陣、缺口與分階段建議已更新於 `Machine_Catalog_Coverage_Audit.md`；本階段沒有修改產品程式、Catalog、Profile、Session、localStorage 或 estimator。
+
 ### v0.2.8.0 – Machine Control Foundation
 Status：**Completed；手機人工驗收通過**
 
@@ -1016,9 +1026,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 25. Family 只能由來源結構化事實建立，機種名稱僅能作輔助；Control Manifest 才是新 Session control 的共同來源，來源不足時保留總 G 並安全降級
 26. 自訂記錄屬 browser-local 個人 observation，預設且固定不得進 Setting Estimator；Guide refresh 只影響新 Session，舊 snapshot 不重新編譯
 27. CZ／AT 設定別機率表不等於可觀測事件證據；若沒有具名事件、可靠辨認時機或已確認 family 語意，新 Session 必須安全降級，不能沿用 generic CZ／AT template
+28. 全量 audit 顯示 raw operational coverage（180/202）會高估可信度；64 台仍含 family fallback generic CZ／AT，應把「family evidence」與「control evidence／record timing」分開建模
+29. Numeric operational control 在 202 台目前為 0；cycle、points、set、zone 不可只因來源提及就升為可操作，必須先定義單位、更新時機與 reset contract
+30. 69 台 compiler-eligible estimator 中有 40 台的 Manifest 同時含 generic CZ／AT fallback；下一步需逐 metric 驗證 numerator ownership，不能把 family-level control 當成 benchmark 已安全綁定
 
 ## Current Work
-**v0.2.8.0 已完成並通過手機人工驗收；等待下一階段產品討論**
+**Machine Catalog 全 202 台分類／Control／Estimator coverage audit 已完成；等待產品決定是否核准建議的最小後續範圍**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1031,11 +1044,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 待產品討論
+### 待產品討論：建議 v0.2.8.1 – Control Evidence Gate & Audit Tooling
 
 Status：**不自行開始下一版本。**
 
-v0.2.8.0 已完成手機人工驗收。下一版本與範圍等待產品討論；不得自行開始新功能或合併 `dev` → `main`。
+本次只完成調查與文件。建議下一個最小版本先分離 family evidence 與 control evidence、收緊 64 台 generic CZ／AT fallback，並建立可重現且不保存來源全文的 audit tooling；不先擴張 UI、family 或 estimator 公式。是否開始及最終範圍等待產品決定，不自行開發或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
