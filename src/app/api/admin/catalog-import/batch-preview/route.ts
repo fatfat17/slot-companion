@@ -1,11 +1,12 @@
 import { runCatalogBatch, CatalogBatchValidationError } from "@/lib/catalog/batch";
 import { catalogRepository } from "@/lib/catalog/repository.server";
 import { PWorldCatalogProvider } from "@/lib/catalog/providers/pworld";
+import { authorizeCatalogAdmin } from "@/lib/catalog/adminAuth.server";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  if (process.env.NODE_ENV === "production") return Response.json({ error: { message: "Catalog Importer 僅限 development。" } }, { status: 403 });
+  if (!authorizeCatalogAdmin(request)) return Response.json({ error: { message: "管理密碼不正確，無法更新機種資料庫。" } }, { status: 401 });
   try {
     const { startMonth, endMonth } = await request.json() as { startMonth?: string; endMonth?: string };
     if (!startMonth || !endMonth) return Response.json({ error: { message: "請輸入 Start Month 與 End Month。" } }, { status: 400 });

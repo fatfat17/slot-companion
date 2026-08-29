@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**Catalog Cloud Foundation – Phase 1–3（分階段開發中）**
+**Catalog Cloud Foundation – Phase 1–5（等待固定 Preview 驗收）**
 
-Status：**Phase 1–3 foundation completed；等待 Supabase 專案與 Secret 才能開始線上匯入整合**
+Status：**Supabase migration 與 202 筆 seed 已完成；私人線上 Importer、import audit 與 coverage dashboard 已實作，等待管理密碼設定、dev Preview 部署與驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -31,15 +31,21 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
-### Catalog Cloud Foundation – Phase 1–3
+### Catalog Cloud Foundation – Phase 1–5
 - Estimator observation governance：相同 numerator／denominator／value mode 且理論值一致的重複 benchmark 只計算一次；若同一 Session observation 被映射到不同設定理論值，整組不啟用，避免重複或互相矛盾的 posterior-like 加權。
 - Estimator Evidence 與 readiness 標籤優先使用實際 operational control 名稱，例如具名 AT／ART／Bonus，而不是重複顯示泛用「AT 確率」。既有 estimator 公式、minimum sample 與 capability gate 未修改。
 - 完整 Machine Guide 新增 browser-local 品質回報：資料有誤、中文不清楚、內容重複、缺少重要資料；依 Catalog 隔離，不上傳來源文章或圖片。
 - Catalog storage 新增 `MachineCatalogRepository` abstraction、既有 JSON fallback 與 Supabase REST adapter；未設定 Supabase 時仍讀寫既有 repo JSON，不影響目前 Preview。
 - 新增 Supabase migration：`machine_catalog_records` 使用 JSONB 保存完整 Catalog record，另預留 `catalog_import_jobs` audit 表；兩表均啟用 RLS，service role 僅限 Next.js server-side。
-- `.env.example` 新增 `SUPABASE_URL`、`SUPABASE_SERVICE_ROLE_KEY` 與未來私人 Importer 使用的 `CATALOG_ADMIN_TOKEN`；沒有提交任何 Secret。
-- QA：lint 通過；typecheck 通過；完整 tests **272 / 272 passed**；Next.js 16.3.2 webpack production build 通過。
-- 尚未完成：尚未建立／連接真實 Supabase project，線上 Importer、雲端 import job 與 coverage dashboard 尚未啟用或標記完成。
+- Vercel Marketplace Supabase Free Plan 已連接 `slot-companion` Preview；migration 已成功建立 `machine_catalog_records` 與 `catalog_import_jobs`，RLS 保持啟用。
+- 既有 `data/machine-catalog.json` 已安全 seed 至 Supabase；SQL count 驗證為 **202 records**，repo JSON 繼續作為未設定雲端環境的 fallback。
+- Supabase REST adapter 支援 Vercel 提供的 `SUPABASE_SECRET_KEY`，新式 opaque secret 只使用 `apikey` header；legacy `SUPABASE_SERVICE_ROLE_KEY` 仍相容。Secret 不進 browser bundle、localStorage 或 Git。
+- `/admin/catalog-import` 已改為可部署的私人管理入口：Production 必須同時具備 Supabase server-side 設定與 `CATALOG_ADMIN_TOKEN`；Preview、Batch Preview 與 Approve API 都驗證管理密碼，密碼只保存在當前 component memory。
+- 線上 Approve 保留每批 100 筆、循序提交、processed count mismatch 防護與 partial retry safety；成功寫入 Catalog 後嘗試新增 `catalog_import_jobs` audit，不因 audit logging 失敗誤報 Catalog 未寫入。
+- Importer 新增資料庫狀態摘要，顯示目前 Catalog 數量、雲端／fallback 狀態，以及既有可重現 coverage audit 的 operational、basic record、estimator 與 evidence gate 統計。
+- `.env.example` 新增 `SUPABASE_SECRET_KEY` 並保留 legacy key 說明；沒有提交任何 Secret。
+- 本輪工程 QA：lint 通過；typecheck 通過；完整 tests **278 / 278 passed**；Next.js 16.3.2 webpack production build 通過；localhost production smoke `/`、`/catalog`、`/identify`、`/records` 均 HTTP 200，未設定管理 Secret 時 `/admin/catalog-import` 正確 404。
+- 尚未完成：`CATALOG_ADMIN_TOKEN` 尚未設定到 Vercel Preview，因此固定 Preview 尚未顯示私人 Importer；dev deployment 與線上 Preview／Approve 實測待完成。Session、Guide cache、自訂記錄與 feedback 仍未雲端同步。
 
 ### v0.2.9.3 – Estimator Readiness & Catalog Update Guidance
 - Setting Estimator 不再用單一「再記錄遊玩 G 與有效事件」涵蓋所有未啟動情況。新的 readiness selector 只讀既有 active benchmarks、Session numerator、denominator 與 minimum sample，不修改 posterior-like 數學、benchmark eligibility 或安全門檻。
@@ -1142,7 +1148,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 39. Estimator 沒有輸出可能代表資料根本不可安全計算，也可能只是尚未達最低樣本；UI 必須區分 schema／mapping blocker 與 Session observation progress，不能只顯示泛用「繼續記錄」。
 
 ## Current Work
-**Catalog Cloud Foundation Phase 1–3 已完成安全基礎；等待使用者建立 Supabase project、套用 migration 並提供 Vercel Preview server-side Secrets。**
+**Catalog Cloud Foundation Phase 1–5 已完成程式與資料庫基礎；正在等待 Vercel Preview 設定私人管理密碼並完成線上 Importer 驗收。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1155,11 +1161,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### Supabase 連線與私人線上 Catalog Importer
+### 完成私人線上 Catalog Importer 的固定 Preview 驗收
 
-Status：**需要外部設定；尚未開始線上資料寫入。**
+Status：**需要一次性外部 Secret 設定；程式與 Supabase 資料已準備完成。**
 
-建立 Supabase project，執行 `supabase/migrations/202608290001_machine_catalog.sql`，在 Vercel Preview 設定 `SUPABASE_URL`、`SUPABASE_SERVICE_ROLE_KEY` 與 `CATALOG_ADMIN_TOKEN`。完成後才能安全實作並驗證受保護的線上 Preview／Approve、import job audit 與 Catalog coverage dashboard。未設定前固定 Preview 維持 JSON Catalog 與本機 Importer 說明，不假裝已具雲端持久化。
+在 Vercel Preview 新增 sensitive `CATALOG_ADMIN_TOKEN`，重新部署 `dev`，再驗證 `/catalog` 可開啟私人 Importer、錯誤密碼回 401、正確密碼可建立 P-WORLD Preview，並以既有 record 做 merge/skip smoke，避免在驗收時無必要新增 Catalog。完成後再決定 Session／Guide／feedback 是否需要跨裝置雲端同步；目前不得標示為已完成。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

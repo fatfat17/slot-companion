@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**Catalog Cloud Foundation（分階段開發中）**（`dev`；尚未啟用 Supabase）。
+目前開發版本：**Catalog Cloud Foundation（Phase 1–5，等待固定 Preview 驗收）**（`dev`）。
 
 ## 本機啟動
 
@@ -25,10 +25,10 @@ pnpm dev
 8. Session header 可隨時開啟機台指南 drawer 或切換使用模式；切換只改變畫面資訊量，不清除既有紀錄。
 9. Setting Estimator 只採用有完整設定值、唯一 operational numerator、明確 operational denominator 與 minimum sample 的來源資料；每個 metric 保存可追溯 observation contract，無樣本時顯示「尚未開始推測」。
 10. 首頁只保留現場玩家入口，不再展示三台舊 Profile；底層 Profile 仍保留供既有 Session 與相容流程使用。
-11. Machine Catalog 頁提供「更新機種資料庫」入口：localhost development 可進入既有 P-WORLD Importer，Vercel Preview／Production 只顯示不可執行狀態，避免導向 404 或假裝能永久保存。
+11. Machine Catalog 頁提供「更新機種資料庫」入口：localhost development 可直接使用；Vercel Preview 在 Supabase 與 `CATALOG_ADMIN_TOKEN` 設定完成時，會開啟需管理密碼的私人 P-WORLD Importer。
 12. Catalog Detail、完整 Guide 與 Session Guide 均可重新整理單台 P-WORLD 機台指南；Session 內更新只寫入 Guide cache，新記錄項目於下一個 Session 套用。
 13. Setting Estimator 在尚未計算時會區分「沒有可安全計算資料」與「正在累積樣本」，逐 metric 顯示實際 G、事件／trial 次數、最低樣本與下一步；不改變既有公式或安全門檻。
-14. Vercel 上的「更新機種資料庫」可開啟本機 Importer 操作說明，但仍不執行不可永久保存的 server-side JSON 寫入。
+14. 私人線上 Importer 仍維持 Fetch → Preview → 人工勾選 → Approve；每批最多 100 筆、依序提交，資料寫入 Supabase，並留下 import job audit。未設定雲端環境時安全回退 repo JSON／本機管理說明。
 
 ## 資料與限制
 
@@ -53,6 +53,7 @@ pnpm dev
 - 繁中摘要可選擇設定 `OPENAI_MACHINE_GUIDE_MODEL`；未設定時沿用辨識模型。沒有 API key、服務失敗或輸出未通過來源驗證時，自動使用規則式繁中指南，不阻擋 P-WORLD Guide。
 - Estimator 對相同 numerator／denominator／value mode 的重複 benchmark 只採用一次；若同一觀測被映射到互相衝突的設定理論值，整組停用，不重複加權。Evidence 標籤優先顯示實際具名 Session control。
 - 完整 Machine Guide 可將「資料有誤／中文不清楚／內容重複／缺少重要資料」保存為 per-machine browser-local 回報；目前尚未雲端同步。
-- Catalog repository 已提供 JSON fallback 與 Supabase REST adapter。只有同時設定 server-side `SUPABASE_URL`、`SUPABASE_SERVICE_ROLE_KEY` 並套用 `supabase/migrations` 後才會切換雲端；service role key 絕不可使用 `NEXT_PUBLIC_`。
+- Catalog repository 已提供 JSON fallback 與 Supabase REST adapter。Vercel Marketplace 可使用 server-side `SUPABASE_URL` + `SUPABASE_SECRET_KEY`；legacy `SUPABASE_SERVICE_ROLE_KEY` 仍相容。兩種 elevated key 都絕不可使用 `NEXT_PUBLIC_`。
+- Supabase 目前只保存 Machine Catalog identity records 與 import job audit；Session、Guide cache、自訂記錄與回報仍是 browser-local，尚無跨裝置同步。
 
 完整版本與 QA 狀態請見 `Slot_Companion_Project_Status.md`。

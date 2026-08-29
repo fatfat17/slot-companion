@@ -15,9 +15,10 @@ test("home uses the guide-first player flow without rendering legacy Profile car
   assert.match(home,/href=\{active \? `\/session\/\$\{active\.id\}` : "\/identify"\}/);
 });
 
-test("Catalog importer entry is reachable only in the local development environment",()=>{
+test("Catalog importer entry is reachable in development or a configured cloud admin environment",()=>{
   assert.deepEqual(getCatalogImporterPresentation("development"),{available:true,href:"/admin/catalog-import",label:"更新機種資料庫"});
   assert.deepEqual(getCatalogImporterPresentation("production"),{available:false,label:"更新機種資料庫",notice:"目前僅能在本機管理環境執行"});
+  assert.deepEqual(getCatalogImporterPresentation("production",true),{available:true,href:"/admin/catalog-import",label:"更新機種資料庫"});
   assert.match(catalog,/目前收錄 \{summary\.total\} 台/);
   assert.match(catalog,/importer\.available/);
   assert.match(catalog,/onClick=\{\(\)=>setManagementOpen\(true\)\}/);
