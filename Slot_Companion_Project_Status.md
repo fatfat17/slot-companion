@@ -40,7 +40,9 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 全 Catalog Audit 連續兩輪 202/202 成功且輸出一致，SHA-256 `3952488d8912d305c4f583537cad3c0c0833a160e7e64f1f6f421ada74635d09`。60 台／153 metrics eligible；1658 metrics blocked；generic CZ／AT fallback 仍為 0；basic mode 維持 6 台。
 - QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **250 / 250 passed**；Next.js 16.3.2 webpack production build通過。
 - 固定 dev Preview smoke：首頁、辨識、Catalog、LB Triple Crown Catalog Detail／Guide、Records 均正常開啟，未見 Application Error 或 404。
-- Status：功能、自動 QA、全 Catalog Audit 與固定 dev Preview smoke 完成，**等待人工驗收**；未開始 numeric controls 或下一版本。
+- 固定 dev Preview 390 × 844 自動驗收：四台舊 Guide cache 均正確失效並可重建；LB 新指南只有 BIG／REG；ULTRAMAN 新指南只有總 G／通常 G，沒有 CZ／AT control；Yajikita 保留兩個具名 CZ、兩個具名 AT 與終了畫面；喰霊保留具名 CZ／ART、BIG／REG／EPISODE BONUS 與終了畫面。沒有 Application Error 或 404。
+- 為避免改變使用者當時仍 active 的 ULTRAMAN Session，本輪未強制結束它來建立第二個 Preview Session；600G minimum sample、numerator ownership、新 Session snapshot 與 reload 行為由 250/250 automated tests 覆蓋。此結果是自動 QA，**不等同實體手機人工驗收**。
+- Status：功能、自動 QA、全 Catalog Audit 與固定 dev Preview 自動驗收完成，**等待人工驗收**；未開始 numeric controls 或下一版本。
 
 ### v0.2.8.1 – Control Evidence Gate & Audit Tooling
 - 明確分離 `familyEvidence`、逐 control 的 `controlEvidence` 與 `estimatorEvidence`；family／機率表不再直接授權 Session control 或 numerator。
