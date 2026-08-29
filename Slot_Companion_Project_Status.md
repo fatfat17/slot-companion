@@ -67,6 +67,7 @@ v0.2.7.1 第一次玩教學／指南 QA polish（2026-08-29）：
 - 日中事件名稱完全相同時只顯示一次；底部「看完了，開始記錄」與「略過教學」、三模式入口、模式切換、Session 保存及指南入口均保留
 - 新增 2 項 regression tests；lint ✅；typecheck ✅；完整 tests：**230 / 230 passed** ✅；production build ✅
 - localhost 390 × 844 smoke：具名事件機台首屏直接顯示 3 個實際重點，「更多名詞與事件」預設收合，缺失流程只佔一行 ✅
+- 固定 dev Preview source commit `4de8a02`：Ready；10530 線上教學顯示 `60-SECOND GUIDE` 與 3 個整合重點，舊 CZ／AT／注意／記錄重複區塊不再出現，更多內容維持收合 ✅
 
 ### v0.2.7.0 – Session Quick Guide & Compact Controls
 Status：**Completed；手機人工驗收通過**
