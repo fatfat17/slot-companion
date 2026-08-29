@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**P-WORLD 圖文中文攻略 Golden Test**
+**P-WORLD 圖文中文攻略 Five-Machine Pilot**
 
-Status：**單機 Golden Test 已完成實作、本機 QA 與固定 dev Preview 自動 QA；等待手機人工驗收**
+Status：**五台 Pilot 已完成實作、真實來源與本機 QA；等待固定 dev Preview 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -31,6 +31,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### P-WORLD 圖文中文攻略 Five-Machine Pilot（2026-08-30）
+- 使用者確認 RE:3 單機圖文指南與 Session 內圖文 drawer 可用後，將相同 pipeline 擴張到五台代表機種：`スマスロ バイオハザードRE:3`、`スマスロ やじきた道中記参る!`、`Lパチスロ 喰霊‐零‐Re`、`L 東京喰種`、`L ULTRAMAN 最終決戦`。
+- 以明確 Pilot registry 限定範圍；五台共用同一套 P-WORLD official scope、heading ownership、圖片 host／格式／尺寸／大小 gate 與 Supabase materializer，沒有新增逐台 parser、Machine Family 或 Session UI 特例。
+- 內建 Choice、Control Manifest、Estimator observation contract、Session snapshot 與既有遊玩紀錄均未改動；Guide cache revision 更新為 `2026-08-30-visual-guide-five-machine-pilot-12`，只使舊 Machine Guide cache 失效。
+- 真實 P-WORLD runtime 五台全部 HTTP 200，每台 parser 均選出 18 張可靠來源圖片。90 張 materialization 全部通過，總量 **12,609,164 bytes（約 12.03 MB）**，最大單張 **784,525 bytes**，五台皆為 0 warning。
+- 自動 UI QA 發現やじきた的中文摘要未包含其中一個有圖片的來源區段，造成 18 張中只呈現 14 張；已新增共用 visual section selector。中文摘要缺少某 source section 時會顯示簡短「先查看來源圖解」fallback，保留可靠圖片且不猜測內容，完整 Guide 與 Session drawer 共用相同結果。
+- Regression tests 新增五台 registry、試點外隔離、每機 Supabase object path ownership、跨機圖片不污染、逐來源 section 圖片不可被中文摘要漏掉等案例。
+- 工程 QA：lint 通過；typecheck 通過；完整 tests **306 / 306 passed**；Next.js 16.3.2 webpack production build通過。
+- localhost 390 × 844 最終 UI QA：五台 Guide 均顯示「圖文指南」及 18 個 figure，scroll width 均為 390px，console 0 errors／warnings；同源圖片 API 可正常回傳 JPEG。這是自動 QA，不等同實體手機人工驗收。
+- 容量邊界仍維持每台 18 張、單張 1 MB；本輪沒有批次處理其餘 197 台，也沒有宣稱已取得來源轉載授權或已完成完整 Catalog 的長期容量／流量方案。
+
 ### P-WORLD 圖文中文攻略 Golden Test（2026-08-30）
 - 本輪只校準 `スマスロ バイオハザードRE:3`（Catalog `machine-1y0erql`／P-WORLD database 10440），未批次處理其餘 201 台，也未改寫 Catalog identity、Session、Control Manifest 或 Setting Estimator。
 - P-WORLD parser 在官方 `#spec` 範圍內依 heading 分類圖片，只接受 P-WORLD 機台素材 host，排除掲示板、玩家投稿、廣告、外站圖片、過小圖片與重複 URL；不保存完整來源頁或攻略文章。
@@ -47,6 +58,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Session 主操作 follow-up：狀態區改為 capability 驅動的一鍵分段按鈕，只顯示該 Session 支援的通常／CZ／AT／ART／Bonus 等通用狀態；不再顯示具名場景或開啟第二層「修正」視窗。具名事件仍留在快速記錄，按下後沿用 capability state effect 自動切換，回到通常只需一次點擊。
 - Follow-up QA：lint、typecheck 通過；完整 tests **303 / 303 passed**；Next.js 16.3.2 webpack production build通過。390 × 844 localhost 自動 QA 確認分段狀態列單手可點、具名 CZ 記錄後自動切換、直接點通常可返回、reload 後狀態與計數保留；1280 × 800 無水平溢出，console 0 errors／warnings。固定 dev Preview 已部署 commit `b84d794`；RE:3 Session 顯示 `通常／CZ／AT`，無第二層修正入口、無水平溢出且 console 0 errors／warnings。此項是自動 QA，不等同實體手機人工驗收。
 - 著作權／營運限制：這是使用者要求的個人 Golden Test，來源與擷取時間仍保留；未取得來源的轉載授權，不應在未重新確認權利與容量／流量方案前擴張到完整 Catalog 或 Production。
+- 使用者已完成單機版面與 Session drawer 操作確認，並同意以此結果作為五台 Pilot 的擴張基準。
 
 ### Multi-source Machine Guide Pilot（2026-08-30）
 - 架構決策：P-WORLD 繼續負責 Machine Catalog identity、導入資訊與日後店鋪／設置資料；ちょんぼりすた只作可選的指南補充來源。使用者不需重新輸入網址，五台試點由 server-side registry 配對來源。
@@ -1216,11 +1228,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 41. 未取得授權的機台圖片不應因競品視覺效果而直接複製；目前以 Catalog metadata 衍生的視覺卡片提供辨識層級，保留未來接入可授權圖片資產的空間。
 42. 遊玩記帳應直接重用 Session 的 observed game 與 snapshot，避免使用者結算後再手動抄寫；跨裝置同步仍需後續資料模型與隱私決策。
 43. 同一機台存在主要 AT 與上位 AT 時，完整設定表仍可能因 numerator 不唯一而被安全阻擋；只有來源明確證明事件層級時才能把一般初當 metric 綁定主要事件。若同層級仍歧義，必須繼續 blocked，不能為了產生設定分布任意挑選。
-44. 圖文攻略的主要容量成本是圖片而非 Catalog JSON。RE:3 Golden Test 18 張約 2.58 MB；以相同平均值估算 202 台約 521 MB，理論上低於目前 1 GB Free Storage，但尚未計入版本重複、其他資產與流量，因此不能直接推定全量長期方案已足夠。
+44. 圖文攻略的主要容量成本是圖片而非 Catalog JSON。五台 Pilot 共 90 張約 12.03 MB，平均每台約 2.41 MB；若直接線性外推 202 台約 486 MB，但尚未計入版本重複、其他資產與流量，因此不能直接推定全量長期方案已足夠。
 45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 
 ## Current Work
-**P-WORLD 圖文中文攻略 Golden Test 已完成單機程式、本機完整 QA 與固定 dev Preview 自動 QA；等待手機圖文版面校準。**
+**P-WORLD 圖文中文攻略 Five-Machine Pilot 已完成程式、真實來源、完整工程 QA 與 localhost 手機尺寸 QA；等待固定 dev Preview 與手機人工驗收。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1230,16 +1242,16 @@ v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
 
 v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 
-Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪只有 RE:3 的受限圖片資產可寫入 private Supabase Storage，未擴張到其他機種。
+Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪只有五台 Pilot 的受限圖片資產可寫入 private Supabase Storage，未擴張到其餘 197 台。
 
 ## Next Step
-### RE:3 圖文中文攻略手機校準
+### 五台圖文中文攻略手機驗收
 
 Status：**尚未標記人工驗收通過。**
 
-1. 在固定 dev Preview 首頁按「快速中文攻略」，搜尋並開啟 `スマスロ バイオハザードRE:3`。
-2. 確認流程、CZ、AT、Bonus、打法共 18 張圖可在手機正常載入，中文與圖片關聯易讀，來源資訊只集中顯示。
-3. 手機校準通過後再決定是否擴張到下一批代表機種；目前不批次下載完整 Catalog，也不部署或 merge `main`。
+1. 等待 `dev` 固定 Preview 更新後，依序重新建立五台 Pilot 指南，確認每台流程、CZ、AT／ART、Bonus、打法圖可在手機正常載入。
+2. 各選一台 AT 類與 Bonus+ART 類建立新 Session，確認 Session drawer 可在原 route 開啟相同圖文、關閉後紀錄不變。
+3. 手機驗收通過後再討論下一批或容量治理；目前不批次下載完整 Catalog，不部署 Production，也不 merge `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

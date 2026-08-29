@@ -1,12 +1,19 @@
 import { createHash } from "node:crypto";
 import type { MachineGuideImage,MachineGuideSectionKey } from "@/types/machineGuide";
 
-export const VISUAL_GUIDE_GOLDEN_CATALOG_ID="machine-1y0erql";
+export const VISUAL_GUIDE_PILOT_CATALOG_IDS=[
+  "machine-1y0erql",
+  "machine-1bh564g",
+  "machine-u0ht3u",
+  "tokyo-ghoul",
+  "machine-1xl2y3d",
+] as const;
 export const VISUAL_GUIDE_MAX_IMAGES=18;
 export const VISUAL_GUIDE_MAX_IMAGE_BYTES=1_000_000;
 export const VISUAL_GUIDE_BUCKET="machine-guide-assets";
 
-export function isVisualGuideGoldenCatalog(catalogId:string){return catalogId===VISUAL_GUIDE_GOLDEN_CATALOG_ID}
+const visualGuidePilotCatalogIds=new Set<string>(VISUAL_GUIDE_PILOT_CATALOG_IDS);
+export function isVisualGuidePilotCatalog(catalogId:string){return visualGuidePilotCatalogIds.has(catalogId)}
 
 export function canonicalPWorldImageUrl(value:string,baseUrl:string){
   try{

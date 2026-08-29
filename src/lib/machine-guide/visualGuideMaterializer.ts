@@ -1,6 +1,6 @@
 import type { MachineGuide,MachineGuideImage } from "../../types/machineGuide.ts";
 import { supabaseServerHeaders } from "../catalog/supabaseAuth.ts";
-import { isVisualGuideGoldenCatalog,VISUAL_GUIDE_BUCKET,VISUAL_GUIDE_MAX_IMAGE_BYTES,visualGuideAssetId,visualGuideAssetUrl,visualGuideObjectPath } from "./visualGuide.ts";
+import { isVisualGuidePilotCatalog,VISUAL_GUIDE_BUCKET,VISUAL_GUIDE_MAX_IMAGE_BYTES,visualGuideAssetId,visualGuideAssetUrl,visualGuideObjectPath } from "./visualGuide.ts";
 
 type CloudConfig={url:string;key:string};
 type Requester=typeof fetch;
@@ -26,7 +26,7 @@ async function uploadAsset(config:CloudConfig,catalogId:string,image:MachineGuid
 }
 
 async function materializeOne(catalogId:string,image:MachineGuideImage,config:CloudConfig|null,request:Requester):Promise<MachineGuideImage>{
-  const response=await request(image.sourceImageUrl,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Slot Companion visual guide test","Referer":image.sourcePageUrl},cache:"no-store",signal:AbortSignal.timeout(12_000)});
+  const response=await request(image.sourceImageUrl,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Slot Companion visual guide pilot","Referer":image.sourcePageUrl},cache:"no-store",signal:AbortSignal.timeout(12_000)});
   if(!response.ok)throw new Error(`圖片來源回應 ${response.status}`);
   const contentType=(response.headers.get("content-type")??"").split(";")[0].toLowerCase();
   if(!["image/jpeg","image/png","image/webp"].includes(contentType))throw new Error("來源不是可保存的圖片格式");
@@ -37,7 +37,7 @@ async function materializeOne(catalogId:string,image:MachineGuideImage,config:Cl
 }
 
 export async function materializeVisualGuideAssets(guide:MachineGuide,environment:ServerEnvironment=process.env,request:Requester=fetch){
-  if(!isVisualGuideGoldenCatalog(guide.catalogId)||!guide.images?.length)return guide;
+  if(!isVisualGuidePilotCatalog(guide.catalogId)||!guide.images?.length)return guide;
   const config=cloudConfig(environment),warnings:string[]=[];
   if(config)try{await ensureBucket(config,request)}catch(error){warnings.push(error instanceof Error?error.message:"Supabase 圖片儲存初始化失敗");}
   const canStore=config&&!warnings.length?config:null,next:MachineGuideImage[]=[];
