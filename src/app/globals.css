@@ -66,6 +66,9 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 700px) { .app-shell { border-left: 1px solid #1c1f28; border-right: 1px solid #1c1f28; } }
 @media (prefers-reduced-motion: no-preference) { button, a { transition: transform .12s ease, background-color .15s ease, border-color .15s ease; } }
 
+.catalog-management{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}.catalog-management>div:first-child{min-width:0}.catalog-management span,.catalog-management strong,.catalog-management small{display:block}.catalog-management span{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.12em}.catalog-management strong{font-size:18px;margin-top:4px}.catalog-management small{color:var(--muted);font-size:11px;line-height:1.45;margin-top:4px}.catalog-management>.secondary-button,.catalog-management-disabled{width:142px;flex:0 0 142px}.catalog-management-disabled .secondary-button{min-height:48px;font-size:12px}.catalog-management-disabled>small{text-align:center;font-size:9px;margin-top:6px}.catalog-management button:disabled{opacity:.52;cursor:not-allowed}
+.session-guide-content footer>.session-guide-refresh{min-height:48px;margin:10px 0 9px;font-size:13px}.session-guide-refresh-result{padding:10px 11px;border-radius:11px;background:rgba(139,197,255,.08);color:#cbe5ff!important}
+
 .home-page { padding-top: max(28px, env(safe-area-inset-top)); }
 .home-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin: 8px 2px 28px; }
 .brand-kicker { color: var(--accent); font-size: 11px; font-weight: 900; letter-spacing: .18em; }

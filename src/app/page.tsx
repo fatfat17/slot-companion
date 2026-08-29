@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { findActiveSession } from "@/lib/storage";
 import type { Session } from "@/types";
-import { getMachine, machines } from "@/data/machines";
+import { getMachine } from "@/data/machines";
 
 const entries = [
   { href: "/identify", icon: "📷", title: "拍機台", sub: "拍照・AI 機種辨識", tone: "pink" },
@@ -29,12 +29,12 @@ export default function Home() {
         <div className="brand-mark">SC</div>
       </div>
 
-      <Link href={active ? `/session/${active.id}` : "/machines"} className="session-hero">
+      <Link href={active ? `/session/${active.id}` : "/identify"} className="session-hero">
         <span className="session-icon">🎰</span>
         <span className="flex-1">
-          <small>{active ? "進行中的 SESSION" : "準備好了嗎？"}</small>
-          <strong>{active ? `繼續 ${activeMachine?.nameZh ?? "Session"}` : "開始 Session"}</strong>
-          <em>{active ? `${active.trackers[activeMachine?.profile.gameTrackers.find(item=>item.primary)?.key??"dataGame"]??active.actualG} G · 投入 ¥${active.investmentYen.toLocaleString()}` : "選擇機種，立即開始記錄"}</em>
+          <small>{active ? "進行中的 SESSION" : "從辨識開始"}</small>
+          <strong>{active ? `繼續 ${activeMachine?.nameZh ?? "Session"}` : "拍機台，開始記錄"}</strong>
+          <em>{active ? `${active.trackers[activeMachine?.profile.gameTrackers.find(item=>item.primary)?.key??"dataGame"]??active.actualG} G · 投入 ¥${active.investmentYen.toLocaleString()}` : "辨識機種 → 查看指南 → 開始 Session"}</em>
         </span>
         <b>›</b>
       </Link>
@@ -49,19 +49,6 @@ export default function Home() {
         ))}
       </div>
 
-      <section className="section">
-        <div className="section-title"><h2>已建立攻略 Profile</h2><span>3 台</span></div>
-        <div className="machine-strip">
-          {machines.map((machine) => (
-            <Link key={machine.id} href={`/machines/${machine.id}`} className="mini-machine" style={{ "--machine-accent": machine.accent } as React.CSSProperties}>
-              <i />
-              <div><strong>{machine.nameZh}</strong><span>{machine.nameJa}</span></div>
-              <b>›</b>
-            </Link>
-          ))}
-        </div>
-      </section>
-      <p className="home-foot">資料僅供記錄示範，不包含真實天井、Zone 或期待值。</p>
     </main>
   );
 }
