@@ -49,6 +49,8 @@ export default function Home() {
         ))}
       </div>
 
+      <Link href="/glossary" className="home-glossary-link"><span>新手第一次玩？</span><strong>用繁體中文看懂 Pachislot 常用術語</strong><b>›</b></Link>
+
     </main>
   );
 }

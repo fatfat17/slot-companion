@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**Catalog Cloud Foundation（Phase 1–5，等待固定 Preview 驗收）**（`dev`）。
+目前開發版本：**Player Library & Quick Reference（自動 QA 中）**（`dev`）。
 
 ## 本機啟動
 
@@ -29,10 +29,15 @@ pnpm dev
 12. Catalog Detail、完整 Guide 與 Session Guide 均可重新整理單台 P-WORLD 機台指南；Session 內更新只寫入 Guide cache，新記錄項目於下一個 Session 套用。
 13. Setting Estimator 在尚未計算時會區分「沒有可安全計算資料」與「正在累積樣本」，逐 metric 顯示實際 G、事件／trial 次數、最低樣本與下一步；不改變既有公式或安全門檻。
 14. 私人線上 Importer 仍維持 Fetch → Preview → 人工勾選 → Approve；每批最多 100 筆、依序提交，資料寫入 Supabase，並留下 import job audit。未設定雲端環境時安全回退 repo JSON／本機管理說明。
+15. Machine Catalog 改為玩家導向的視覺資料庫：以 Catalog metadata 產生不侵權的識別卡片，支援年份快速篩選、收藏、最近瀏覽／遊玩與本機指南狀態；不下載或轉載來源機台圖片。
+16. 新增共用「新手術語」頁，並在完整指南、Session 指南與首頁提供入口；完整指南上方提供快速目錄，日文原始資料仍保留在查證區。
+17. 「遊玩記帳」可切換今天、近 7 天與全部紀錄，直接彙整 Session 的實際觀測 G、投入與最終持枚；不要求使用者重複抄寫 Session 結果。
 
 ## 資料與限制
 
 - Session、今日紀錄與 Machine Guide 只存在目前瀏覽器 localStorage，不是雲端同步。
+- 收藏、最近瀏覽／遊玩與每台機種的玩家資料庫偏好也只存在目前瀏覽器；清除瀏覽器資料或換裝置不會自動同步。
+- Catalog 視覺卡片使用本機 metadata 衍生的色彩與圖示，不使用 P-WORLD 或第三方機台圖片；日後若要加入正式圖片資產，需另行確認來源與授權。
 - v1 Guide cache 不會冒充 v2；需從 Catalog Detail 重新取得來源並編譯。
 - Session 開始時會保存當下的 capability、狀態與 Machine snapshot；日後指南更新不會靜默改寫既有 Session。
 - Control Manifest 統一定義 control type、玩家操作時機、observation、state effect、estimator dependency、來源 evidence、availability 與快速模式優先序；Session 仍保存相容 capability snapshot，舊 Session 不重新編譯。

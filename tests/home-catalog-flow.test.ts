@@ -19,7 +19,7 @@ test("Catalog importer entry is reachable in development or a configured cloud a
   assert.deepEqual(getCatalogImporterPresentation("development"),{available:true,href:"/admin/catalog-import",label:"更新機種資料庫"});
   assert.deepEqual(getCatalogImporterPresentation("production"),{available:false,label:"更新機種資料庫",notice:"目前僅能在本機管理環境執行"});
   assert.deepEqual(getCatalogImporterPresentation("production",true),{available:true,href:"/admin/catalog-import",label:"更新機種資料庫"});
-  assert.match(catalog,/目前收錄 \{summary\.total\} 台/);
+  assert.match(catalog,/\{summary\.total\} 台機種，隨時可查/);
   assert.match(catalog,/importer\.available/);
   assert.match(catalog,/onClick=\{\(\)=>setManagementOpen\(true\)\}/);
   assert.match(catalog,/線上版目前不能永久寫入專案 Catalog/);

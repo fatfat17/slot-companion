@@ -3,9 +3,9 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**Catalog Cloud Foundation – Phase 1–5（自動 QA 完成）**
+**Player Library & Quick Reference（程式與本機自動 QA 完成）**
 
-Status：**Supabase migration、202 筆 seed、私人線上 Importer、import audit、coverage dashboard 與 dev-only 管理 Secret 已完成；固定 Preview 自動 QA 通過，等待使用者決定下一步**
+Status：**玩家導向 Machine Library、收藏／最近瀏覽、共用新手術語、Guide 快速目錄與跨日遊玩記帳已完成；等待固定 dev Preview 驗證與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Player Library & Quick Reference
+- Machine Catalog Library 改為手機優先的兩欄視覺卡片；卡面色彩與圖示由既有 Catalog metadata 衍生，不下載、代理或轉載 P-WORLD／第三方機台圖片。
+- 新增玩家顯示分頁：全部機種、我的收藏、最近遊玩；收藏、最近瀏覽／遊玩與本機 Guide 狀態均保存於 browser-local storage，並清楚維持「非跨裝置同步」限制。
+- Catalog 搜尋、manufacturer／type／introduced month 進階篩選、年份快捷篩選、排序與 pagination 可共同使用；既有 Cloud Importer 入口與 Catalog Detail 流程保留。
+- Catalog Detail 新增收藏操作並記錄最近瀏覽，不改變 Machine Catalog identity schema。
+- 新增共用 `/glossary` 新手術語頁，以繁體中文解釋通常、前兆、CZ、AT、ART、Bonus、G 數、初當率、小役、機械割、Zone、天井、終了畫面與設定示唆；日文術語保留小字對照。
+- 完整 Machine Guide 新增快速目錄，Session Guide drawer 與首頁新增術語入口；原始日文、sourceUrl、retrievedAt、evidence 與 missingSections 仍保留，不因玩家呈現精簡而刪除。
+- `/records` 升級為 Session 自動記帳：支援今天、近 7 天、全部範圍，彙整實際觀測 G、投入與最終持枚；紀錄摘要依 Session capability snapshot 顯示，不把 unavailable control 補成固定 CZ／AT。
+- 新增 player library／records／glossary／navigation regression tests；完整 automated tests **284 / 284 passed**。
+- 本機 production build 以 Next.js 16.3.2 webpack 完成；390 × 844 與 1280 × 900 browser smoke 均無橫向溢出或 console error。
 
 ### Catalog Cloud Foundation – Phase 1–5
 - Estimator observation governance：相同 numerator／denominator／value mode 且理論值一致的重複 benchmark 只計算一次；若同一 Session observation 被映射到不同設定理論值，整組不啟用，避免重複或互相矛盾的 posterior-like 加權。
@@ -1151,9 +1162,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 37. 資料安全規則應由系統持續執行，但不必在玩家主畫面反覆說明；主畫面優先呈現當下操作，來源、限制與 Evidence 以 progressive disclosure 保持可查而不搶占空間。
 38. Catalog 更新與單台 Guide 更新是兩件不同工作：前者是 development-only 的 P-WORLD Machine Catalog Importer，後者是 browser-local 單台指南 refresh；UI 必須使用不同入口與文案，且不得在 Vercel 上假裝 repo JSON 可以永久寫入。
 39. Estimator 沒有輸出可能代表資料根本不可安全計算，也可能只是尚未達最低樣本；UI 必須區分 schema／mapping blocker 與 Session observation progress，不能只顯示泛用「繼續記錄」。
+40. 玩家資料庫的主要價值是「快速找到、看懂、開始記錄」，不是管理 Catalog schema；收藏、最近遊玩、Guide 狀態與術語應位於玩家路徑，Importer 與 evidence 細節維持次要或管理入口。
+41. 未取得授權的機台圖片不應因競品視覺效果而直接複製；目前以 Catalog metadata 衍生的視覺卡片提供辨識層級，保留未來接入可授權圖片資產的空間。
+42. 遊玩記帳應直接重用 Session 的 observed game 與 snapshot，避免使用者結算後再手動抄寫；跨裝置同步仍需後續資料模型與隱私決策。
 
 ## Current Work
-**Catalog Cloud Foundation Phase 1–5 已完成程式、資料庫、dev-only 管理 Secret與固定 Preview 自動 QA；等待下一階段產品討論。**
+**Player Library & Quick Reference 已完成程式、本機自動測試與 responsive browser smoke；目前等待固定 dev Preview 驗證與手機人工驗收。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1166,11 +1180,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 待產品討論
+### 固定 dev Preview 與手機驗收
 
-Status：**尚未開始下一階段。**
+Status：**尚未標記人工驗收通過。**
 
-下一步可討論 Session／Guide／自訂記錄／feedback 是否需要跨裝置雲端同步，以及是否需要替私人 Importer 加入更友善的管理登入方式。這些功能目前都尚未開始，也不得因 Catalog 已雲端化而誤標為已完成。
+1. 驗證玩家資料庫的兩欄卡片、年份篩選、收藏與最近遊玩。
+2. 驗證新手術語、Guide 快速目錄與 Session Guide 入口。
+3. 驗證遊玩記帳的今天／近 7 天／全部範圍與 Session 結果一致。
+4. 驗收後再討論是否將收藏、Guide cache、Session、記帳與 feedback 做跨裝置同步；目前均不得誤標為雲端資料。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
