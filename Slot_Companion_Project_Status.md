@@ -31,6 +31,14 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Estimator Primary／Upper Event Mapping Hotfix
+- 手機 QA 發現 `スマスロ バイオハザードRE:3` 已記錄 1,100G、具名 CZ／AT 後，Estimator 仍顯示「目前沒有可計算的設定資料」。根因不是缺少 P-WORLD 設定表或樣本不足，而是同機同時存在主要 `HAZARD RUSH` 與上位 `HAZARD RUSH INFERNO`，舊 compiler 因兩個 AT numerator 候選而安全阻擋 `AT初当り`。
+- Compiler 新增來源驅動的主要／上位事件層級判定：只有來源明確把事件標成 `上位／最上位／プレミアム AT・ART・CZ` 時才視為 secondary；一般初當 metric 優先使用唯一非 secondary control。兩個同層級事件仍保持 blocked，不會為了顯示結果任意選一個。
+- Machine Guide cache revision 更新為 `2026-08-29-estimator-primary-event-9`；舊 Guide cache 需重新整理，新 mapping 只套用之後建立的新 Session，既有 Session snapshot、G 數與事件紀錄不改寫。
+- 真實 P-WORLD runtime smoke（Catalog `machine-1y0erql`／database 10440）：`AT初当り` 正確綁定 `event:hazard-rush-ハザード-ラッシュ` 與 `observedNormalGame`；1,100G／主要 AT 1 次時 readiness 為 ready，設定 1～6 參考分布正常產生。上位 AT 未被誤用為 numerator。
+- QA：lint 通過；typecheck 通過；完整 tests **286 / 286 passed**；Next.js 16.3.2 webpack production build通過；localhost `/`、`/catalog` 均 HTTP 200，RE:3 Guide API HTTP 200。
+- Status：修正與本機 QA 完成，等待固定 dev Preview 部署與手機建立新指南／新 Session 複驗；不冒充人工驗收通過。
+
 ### Player Library & Quick Reference
 - Machine Catalog Library 改為手機優先的兩欄視覺卡片；卡面色彩與圖示由既有 Catalog metadata 衍生，不下載、代理或轉載 P-WORLD／第三方機台圖片。
 - 新增玩家顯示分頁：全部機種、我的收藏、最近遊玩；收藏、最近瀏覽／遊玩與本機 Guide 狀態均保存於 browser-local storage，並清楚維持「非跨裝置同步」限制。
@@ -1123,6 +1131,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 - Modal 無橫向溢出，console 無 error／warning ✅
 - 此項為自動瀏覽器 QA，不等同實體手機人工驗收；Estimator readiness 仍等待使用者手機抽查
 
+### Estimator primary／upper event mapping QA
+- `スマスロ バイオハザードRE:3` 的 P-WORLD 設定 1～6 `AT初当り` 表可正確轉為 real benchmark ✅
+- 一般 `AT初当り` 只綁定主要 `HAZARD RUSH`，不使用來源明確標示的上位 `HAZARD RUSH INFERNO` ✅
+- 兩個無主從證據的同層級 AT 仍 blocked，不任意猜測 numerator ✅
+- 1,100 通常 G／主要 AT 1 次可進入 estimator；完整 tests 286 / 286 passed ✅
+
 ## Important Findings
 1. Current Machine G ≠ Observed Session G
 2. 不同機種不能使用固定 Counter
@@ -1166,9 +1180,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 40. 玩家資料庫的主要價值是「快速找到、看懂、開始記錄」，不是管理 Catalog schema；收藏、最近遊玩、Guide 狀態與術語應位於玩家路徑，Importer 與 evidence 細節維持次要或管理入口。
 41. 未取得授權的機台圖片不應因競品視覺效果而直接複製；目前以 Catalog metadata 衍生的視覺卡片提供辨識層級，保留未來接入可授權圖片資產的空間。
 42. 遊玩記帳應直接重用 Session 的 observed game 與 snapshot，避免使用者結算後再手動抄寫；跨裝置同步仍需後續資料模型與隱私決策。
+43. 同一機台存在主要 AT 與上位 AT 時，完整設定表仍可能因 numerator 不唯一而被安全阻擋；只有來源明確證明事件層級時才能把一般初當 metric 綁定主要事件。若同層級仍歧義，必須繼續 blocked，不能為了產生設定分布任意挑選。
 
 ## Current Work
-**Player Library & Quick Reference 已完成程式、本機完整測試、responsive smoke 與固定 dev Preview 自動 QA；目前等待手機人工驗收。**
+**Estimator primary／upper event mapping hotfix 已完成程式、本機完整測試與真實 P-WORLD runtime smoke；等待固定 dev Preview 與手機以重新整理後的新指南／新 Session 複驗。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1185,10 +1200,10 @@ Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 brows
 
 Status：**尚未標記人工驗收通過。**
 
-1. 驗證玩家資料庫的兩欄卡片、年份篩選、收藏與最近遊玩。
-2. 驗證新手術語、Guide 快速目錄與 Session Guide 入口。
-3. 驗證遊玩記帳的今天／近 7 天／全部範圍與 Session 結果一致。
-4. 驗收後再討論是否將收藏、Guide cache、Session、記帳與 feedback 做跨裝置同步；目前均不得誤標為雲端資料。
+1. 在 `スマスロ バイオハザードRE:3` Catalog Detail 按「重新整理 P-WORLD 機台指南」。
+2. 結束舊 Session 並建立全新 Session；既有 Session 不會被改寫。
+3. 記錄通常 G 與主要 `HAZARD RUSH`，確認達 600G minimum sample 後顯示設定 1～6 參考分布；上位 `HAZARD RUSH INFERNO` 不得混入主 AT 初當。
+4. 完成 Estimator 手機複驗後，再討論下一階段；目前不擴張公式或降低 evidence gate。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
