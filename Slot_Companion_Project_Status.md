@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **P-WORLD 圖文中文攻略 Golden Test**
 
-Status：**單機 Golden Test 已完成實作與本機 QA；等待固定 dev Preview 與手機人工驗收**
+Status：**單機 Golden Test 已完成實作、本機 QA 與固定 dev Preview 自動 QA；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -42,6 +42,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 本機 QA：lint 通過；typecheck 通過；完整 tests **300 / 300 passed**；Next.js 16.3.2 webpack production build通過。預設 Turbopack build 在受限 host 因 PostCSS worker 無法 bind port，沿用專案既有 webpack production QA 路徑完成。
 - localhost production smoke：`/`、`/catalog`、RE:3 Catalog Detail、RE:3 Guide 均 HTTP 200；Guide API HTTP 200、status `usable`、11 個內容區段、18 張圖、warnings 0；圖片 API 回傳 JPEG 200。
 - 390 × 844 localhost 瀏覽器自動 QA：無水平溢出，18 個圖文 figure 全部成功載入，console 0 errors／warnings。此項是自動 QA，不等同實體手機人工驗收。
+- 固定 dev Preview 已部署 commit `0bb74fc`。390 × 844 自動 QA 從 Catalog Detail 重新建立 RE:3 指南成功，顯示 18 張／2.6 MB 圖文素材與「私人雲端資產」，同源圖片 route 可正常開啟；首頁「快速中文攻略」入口與完整 Guide route 正常。此項仍是自動 QA，不等同實體手機人工驗收。
 - 著作權／營運限制：這是使用者要求的個人 Golden Test，來源與擷取時間仍保留；未取得來源的轉載授權，不應在未重新確認權利與容量／流量方案前擴張到完整 Catalog 或 Production。
 
 ### Multi-source Machine Guide Pilot（2026-08-30）
@@ -1216,7 +1217,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 
 ## Current Work
-**P-WORLD 圖文中文攻略 Golden Test 已完成單機程式與本機完整 QA；等待固定 dev Preview Ready 後進行手機圖文版面校準。**
+**P-WORLD 圖文中文攻略 Golden Test 已完成單機程式、本機完整 QA 與固定 dev Preview 自動 QA；等待手機圖文版面校準。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1233,10 +1234,9 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 
 Status：**尚未標記人工驗收通過。**
 
-1. 等待固定 dev Preview 指向本次 `dev` commit。
-2. 在首頁按「快速中文攻略」，搜尋並開啟 `スマスロ バイオハザードRE:3`。
-3. 重新整理指南，確認流程、CZ、AT、Bonus、打法共 18 張圖可在手機正常載入，中文與圖片關聯易讀，來源資訊只集中顯示。
-4. 手機校準通過後再決定是否擴張到下一批代表機種；目前不批次下載完整 Catalog，也不部署或 merge `main`。
+1. 在固定 dev Preview 首頁按「快速中文攻略」，搜尋並開啟 `スマスロ バイオハザードRE:3`。
+2. 確認流程、CZ、AT、Bonus、打法共 18 張圖可在手機正常載入，中文與圖片關聯易讀，來源資訊只集中顯示。
+3. 手機校準通過後再決定是否擴張到下一批代表機種；目前不批次下載完整 Catalog，也不部署或 merge `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
