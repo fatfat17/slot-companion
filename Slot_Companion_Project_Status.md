@@ -37,7 +37,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Machine Guide cache revision 更新為 `2026-08-29-estimator-primary-event-9`；舊 Guide cache 需重新整理，新 mapping 只套用之後建立的新 Session，既有 Session snapshot、G 數與事件紀錄不改寫。
 - 真實 P-WORLD runtime smoke（Catalog `machine-1y0erql`／database 10440）：`AT初当り` 正確綁定 `event:hazard-rush-ハザード-ラッシュ` 與 `observedNormalGame`；1,100G／主要 AT 1 次時 readiness 為 ready，設定 1～6 參考分布正常產生。上位 AT 未被誤用為 numerator。
 - QA：lint 通過；typecheck 通過；完整 tests **286 / 286 passed**；Next.js 16.3.2 webpack production build通過；localhost `/`、`/catalog` 均 HTTP 200，RE:3 Guide API HTTP 200。
-- Status：修正與本機 QA 完成，等待固定 dev Preview 部署與手機建立新指南／新 Session 複驗；不冒充人工驗收通過。
+- 固定 dev Preview 已部署 commit `f137eeb27e7c87888e4e0efc7e7d2ec5c3c8632b`；Vercel GitHub status 為 `success / Deployment has completed`。390 × 844 自動 smoke 驗證 RE:3 Catalog Detail HTTP 正常、scroll width 390px、無 console error／warning。
+- Status：修正、本機 QA 與固定 Preview 自動 smoke 完成，等待手機建立新指南／新 Session 複驗；不冒充人工驗收通過。
 
 ### Player Library & Quick Reference
 - Machine Catalog Library 改為手機優先的兩欄視覺卡片；卡面色彩與圖示由既有 Catalog metadata 衍生，不下載、代理或轉載 P-WORLD／第三方機台圖片。
@@ -1136,6 +1137,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 - 一般 `AT初当り` 只綁定主要 `HAZARD RUSH`，不使用來源明確標示的上位 `HAZARD RUSH INFERNO` ✅
 - 兩個無主從證據的同層級 AT 仍 blocked，不任意猜測 numerator ✅
 - 1,100 通常 G／主要 AT 1 次可進入 estimator；完整 tests 286 / 286 passed ✅
+- 固定 dev Preview 已指向本次 commit；RE:3 Catalog Detail 在 390 × 844 無溢出或 console error ✅
 
 ## Important Findings
 1. Current Machine G ≠ Observed Session G
@@ -1183,7 +1185,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 43. 同一機台存在主要 AT 與上位 AT 時，完整設定表仍可能因 numerator 不唯一而被安全阻擋；只有來源明確證明事件層級時才能把一般初當 metric 綁定主要事件。若同層級仍歧義，必須繼續 blocked，不能為了產生設定分布任意挑選。
 
 ## Current Work
-**Estimator primary／upper event mapping hotfix 已完成程式、本機完整測試與真實 P-WORLD runtime smoke；等待固定 dev Preview 與手機以重新整理後的新指南／新 Session 複驗。**
+**Estimator primary／upper event mapping hotfix 已完成程式、本機完整測試、真實 P-WORLD runtime smoke 與固定 dev Preview 自動 smoke；等待手機以重新整理後的新指南／新 Session 複驗。**
 
 核准穩定基準：**v0.2.3.1**
 
