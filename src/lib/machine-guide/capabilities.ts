@@ -1,5 +1,5 @@
 import type { CounterDefinition, GameState, SettingValues } from "@/types";
-import type { DenominatorCapability, GuideDenominator, MachineGuideSessionModule, SessionCapability, SessionModuleKind } from "@/types/machineGuide";
+import type { DenominatorCapability, GuideDenominator, MachineGuideEvent, MachineGuideSessionModule, SessionCapability, SessionModuleKind } from "@/types/machineGuide";
 
 type ContractTemplate={controlType:SessionCapability["controlType"];observationKey:string;writeTarget:SessionCapability["writeTarget"];stateEffect:GameState|null;defaultStatus:SessionCapability["status"];reason:string|null;estimatorUsable:boolean;choicesRequired:boolean};
 
@@ -22,14 +22,16 @@ export const SESSION_MODULE_CONTRACTS = {
 
 export function assertSessionModuleKindMapped(kind:string):asserts kind is SessionModuleKind{if(!(kind in SESSION_MODULE_CONTRACTS))throw new Error(`Unmapped SessionModuleKind: ${kind}`)}
 
-export function buildSessionCapabilities(modules:MachineGuideSessionModule[],counters:CounterDefinition[]):SessionCapability[]{
+export function buildSessionCapabilities(modules:MachineGuideSessionModule[],counters:CounterDefinition[],events:MachineGuideEvent[]=[]):SessionCapability[]{
   const counterByKey=new Map(counters.map(counter=>[counter.key,counter]));
   return modules.map(module=>{assertSessionModuleKindMapped(module.kind);const base=SESSION_MODULE_CONTRACTS[module.kind],eventCounter=module.eventId?counterByKey.get(module.eventId):undefined;
+    const guideEvent=events.find(event=>event.id===module.eventId),controlEvidence=guideEvent?.controlEvidence??[],gatePassed=controlEvidence.some(item=>item.sufficient);
     let status=base.defaultStatus,reason=base.reason,estimatorUsable=base.estimatorUsable;const observationKey=module.eventId??base.observationKey,writeTarget=module.eventId?{type:"counter" as const,key:module.eventId}:base.writeTarget;
-    if(module.eventId&&eventCounter){status="operational";reason=null;estimatorUsable=eventCounter.type!=="photo";}
+    if(module.eventId&&eventCounter&&gatePassed){status="operational";reason=null;estimatorUsable=eventCounter.type!=="photo";}
+    else if(module.eventId&&eventCounter&&!gatePassed){status="read_only";reason="缺少可追溯的事件名稱與記錄時機證據。";estimatorUsable=false;}
     if(module.kind==="end_evidence"){const choice=counters.find(counter=>counter.type==="choice"&&counter.key===module.eventId);const available=Boolean(choice?.choices?.length);status=available?"operational":"unavailable";reason=available?null:"來源沒有可靠且可選擇的示唆表。";estimatorUsable=available;}
     const counter=counterByKey.get(observationKey),quickPriority=module.kind==="named_cz"?10:module.kind==="at"||module.kind==="art"?20:module.kind==="big_reg_bonus"?30:module.kind==="end_evidence"?40:80;
-    return{moduleId:module.id,moduleKind:module.kind,controlType:base.controlType,labelZh:module.labelZh,labelJa:module.labelJa,observationKey,writeTarget,stateEffect:base.stateEffect,status,reason,estimatorUsable,choicesRequired:base.choicesRequired,choicesAvailable:!base.choicesRequired||status==="operational",numeratorDependency:module.eventId??(status==="operational"?observationKey:null),denominatorDependency:null,playerWhen:counter?.recognition??`機台明確顯示「${module.labelZh}」時`,sourceEvidence:[],quickPriority,manifestControlType:base.controlType==="choice"?"choice":base.controlType==="tracker"?"numeric_input":"counter",...(module.eventId?{eventId:module.eventId}:{})};
+    return{moduleId:module.id,moduleKind:module.kind,controlType:base.controlType,labelZh:module.labelZh,labelJa:module.labelJa,observationKey,writeTarget,stateEffect:base.stateEffect,status,reason,estimatorUsable,choicesRequired:base.choicesRequired,choicesAvailable:!base.choicesRequired||status==="operational",numeratorDependency:status==="operational"?(module.eventId??observationKey):null,denominatorDependency:null,playerWhen:counter?.recognition??`機台明確顯示「${module.labelZh}」時`,sourceEvidence:controlEvidence.map(item=>item.id),controlEvidence,evidenceGate:module.kind==="total_games"||module.kind==="normal_games"?"not_applicable":gatePassed?"passed":"blocked",quickPriority,manifestControlType:base.controlType==="choice"?"choice":base.controlType==="tracker"?"numeric_input":"counter",...(module.eventId?{eventId:module.eventId}:{})};
   });
 }
 

@@ -3,12 +3,13 @@ import type { CounterDefinition, Machine, SettingBenchmark, SettingValues } from
 export type MachineGuideStatus = "usable" | "partial" | "no_data";
 export type GuideAvailability = "available" | "partial" | "unavailable";
 export type GuideMachineType = "a_type" | "cz_at" | "bonus_art" | "cycle_point_at" | "bonus_loop" | "multi_zone_at" | "set_based_at" | "generic";
-export type MachineFamilyClassification={family:GuideMachineType;confidence:"high"|"medium"|"low";evidence:string[];unsupportedReasons:string[]};
+export type GuideEvidenceReference={id:string;layer:"family"|"control"|"estimator";sourceUrl:string;sectionKey:MachineGuideSectionKey|null;structure:"heading"|"paragraph"|"table"|"table_header"|"derived";label:string;sufficient:boolean;reason:string};
+export type MachineFamilyClassification={family:GuideMachineType;confidence:"high"|"medium"|"low";evidence:string[];familyEvidence:GuideEvidenceReference[];unsupportedReasons:string[]};
 export type ControlManifestItem={
   id:string;label:string;eventType:"game"|"cz"|"at"|"art"|"bonus"|"special"|"indication"|"state"|"numeric"|"derived"|"custom";
   controlType:"counter"|"state_switch"|"choice"|"numeric_input"|"derived_metric";playerWhen:string;observationKey:string;
   stateEffect:import("@/types").GameState|null;estimatorUsable:boolean;numerator:string|null;denominator:GuideDenominator|null;
-  sourceEvidence:string[];availability:CapabilityStatus;unavailableReason:string|null;quickPriority:number;moduleKind?:SessionModuleKind;eventId?:string;
+  sourceEvidence:string[];controlEvidence:GuideEvidenceReference[];evidenceGate:"passed"|"blocked"|"not_applicable";availability:CapabilityStatus;unavailableReason:string|null;quickPriority:number;moduleKind?:SessionModuleKind;eventId?:string;
   choices?:Array<{value:string;labelZh:string;labelJa:string;sourceDescription?:string;referenceOnly?:boolean}>;
 };
 export type MachineGuideSectionKey = "features" | "play" | "flow" | "cz" | "at_art" | "bonus" | "ceiling" | "setting_rates" | "payout" | "small_roles" | "special_events";
@@ -23,7 +24,7 @@ export type SessionCapability = {
   observationKey:string;writeTarget:SessionObservationTarget;stateEffect:import("@/types").GameState|null;
   status:CapabilityStatus;reason:string|null;estimatorUsable:boolean;choicesRequired:boolean;choicesAvailable:boolean;
   numeratorDependency:string|null;denominatorDependency:GuideDenominator|null;eventId?:string;
-  playerWhen?:string;sourceEvidence?:string[];quickPriority?:number;manifestControlType?:ControlManifestItem["controlType"];
+  playerWhen?:string;sourceEvidence?:string[];controlEvidence?:GuideEvidenceReference[];evidenceGate?:ControlManifestItem["evidenceGate"];quickPriority?:number;manifestControlType?:ControlManifestItem["controlType"];
 };
 export type DenominatorCapability = {key:GuideDenominator;observationKey:string;status:"operational"|"planned"|"unavailable";requiredControl:string;requiredRelationship:string|null;reason:string|null};
 
@@ -32,9 +33,9 @@ export type MachineGuideSection = {key:MachineGuideSectionKey;titleZh:string;tit
 export type MachineGuideEvidence = {sectionKey:MachineGuideSectionKey;rawLabel:string;extractedFrom:"heading"|"paragraph"|"table";sourceUrl:string};
 export type ParsedMachineGuideFacts = {catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;catalogMachineType:string;introducedAt:string|null;sections:MachineGuideSection[];evidence:MachineGuideEvidence[];missingSections:MachineGuideSectionKey[];sourceName:"P-WORLD";sourceUrl:string;retrievedAt:string};
 export type MachineGuideState = {id:string;displayNameZh:string;originalNameJa:string;type:GuideStateType;sourceUrl:string};
-export type MachineGuideEvent = {id:string;labelZh:string;labelJa:string;category:"bonus"|"cz"|"at"|"art"|"role"|"indication"|"special";whatToSee:string;countingRule:string;sessionModuleIds:string[];affectsEstimator:boolean;sourceUrl:string;unavailableReason:string|null};
+export type MachineGuideEvent = {id:string;labelZh:string;labelJa:string;category:"bonus"|"cz"|"at"|"art"|"role"|"indication"|"special";whatToSee:string;countingRule:string;sessionModuleIds:string[];affectsEstimator:boolean;sourceUrl:string;controlEvidence:GuideEvidenceReference[];unavailableReason:string|null};
 export type MachineGuideSessionModule = {id:string;kind:SessionModuleKind;labelZh:string;labelJa:string;eventId?:string;controlled:true};
-export type MachineGuideMetric = {id:string;metricKey:string;labelZh:string;numeratorEventId:string|null;denominator:GuideDenominator|null;applicableStateIds:string[];minimumSample:number|null;settingValues:SettingValues|null;sourceUrl:string;estimatorEligible:boolean;unavailableReason:string|null};
+export type MachineGuideMetric = {id:string;metricKey:string;labelZh:string;numeratorEventId:string|null;denominator:GuideDenominator|null;applicableStateIds:string[];minimumSample:number|null;settingValues:SettingValues|null;sourceUrl:string;estimatorEvidence:GuideEvidenceReference[];estimatorEligible:boolean;unavailableReason:string|null};
 export type BeginnerGuide = {corePlay:string|null;keyThings:Array<{id:string;labelZh:string;labelJa:string;meaning:string;recordWhen:string}>;glossary:Array<{termJa:string;termZh:string}>;missingMessage:"尚無資料"|null};
 export type SessionQuickGuide = {corePlay:string|null;flow:string[];events:MachineGuideEvent[];keyThings:BeginnerGuide["keyThings"];glossary:BeginnerGuide["glossary"];sourceName:string;sourceUrl:string;retrievedAt:string;missingSections?:MachineGuideSectionKey[];evidence?:MachineGuideEvidence[]};
 

@@ -2,9 +2,58 @@
 
 Audit date：2026-08-29
 
-Code baseline：`dev` · v0.2.8.0 Machine Control Foundation
+Code baseline：`dev` · v0.2.8.1 Control Evidence Gate & Audit Tooling
 
 Scope：`data/machine-catalog.json` 全部 202 筆正式 Catalog records
+
+## v0.2.8.1 Evidence Gate 重跑結果
+
+本節是目前有效結果；下方 v0.2.8.0 內容保留為修正前 baseline。Audit 由 `scripts/audit-machine-controls.ts` 依序重跑兩次，兩次皆為 202/202 來源成功，輸出 SHA-256 完全相同：`8f4648c8d01d26fce878a94419dbeab7453dc7e7b7c5cc02494e5343e67b0eaf`。完整逐機 traceability 位於 `reports/machine-catalog-control-audit.json`，未保存來源 HTML 或圖片。
+
+| 指標 | v0.2.8.0 baseline | v0.2.8.1 | 變化／解讀 |
+|---|---:|---:|---|
+| Catalog／有效 P-WORLD URL／成功取得 | 202 / 202 / 202 | 202 / 202 / 202 | 本次 bounded retry 後兩輪均完整 |
+| Family confidence High / Medium / Low | 51 / 69 / 82 | 33 / 151 / 18 | 官方 `articleBox-content` 納入結構化 family evidence；Medium 仍不冒充 confirmed |
+| 有 operational event／choice 的機台 | 180 | 196 | 新增的是具名官方正文證據，不是 generic fallback |
+| Operational controls | 456 | 671 | 560 Counter + 111 Choice；每筆都有自己的 control evidence |
+| Generic CZ／AT fallback 機台 | 64 | **0** | family／機率表不再直接產生按鈕 |
+| 基本記錄模式 | 22 | 6 | 沒有任何具名 event／有效 Choice 時仍安全降級 |
+| Evidence gate 阻擋 | 未獨立計算 | 64 metrics / 28 台 | 有設定 metric，但欠缺自己的 canonical operational control |
+| Estimator eligible | 69 | 60 | 移除 9 台無法安全證明 numerator ownership 的 eligibility |
+| Estimator ineligible | 133 | 142 | 67 無完整 metric；75 缺唯一 numerator；另有 1 個 denominator blocker（原因可重疊） |
+| 只有 Choice、沒有主要 Counter | 21 | 5 | 明確列入 audit，不將 Choice-only 冒充完整遊玩 coverage |
+
+### Evidence 分層與 gate
+
+- `familyEvidence`：只解釋 family 與 confidence，不產生 Counter、Choice 或 state。
+- `controlEvidence`：逐 control 保存來源 URL、section、DOM structure、label、充分性與原因；具名 paragraph／table heading、精確 Bonus header、有效 Choice table 才能通過。
+- `estimatorEvidence`：設定 1～6 table 只證明理論 metric；仍須唯一 canonical numerator、operational denominator 與 minimum sample。
+- 設定表、`CZ`／`AT` 字樣、family classification、generic template 均不能單獨通過 gate。
+- compiler cache revision 更新為 `2026-08-29-control-evidence-gate-3`；舊 Guide cache 失效，但舊 Session snapshot、自訂記錄與歷史觀測不改寫。
+
+### 修正後 family 統計
+
+| Family | 台數 | 有 operational | 基本模式 | Estimator eligible | 被阻擋 metrics |
+|---|---:|---:|---:|---:|---:|
+| `a_type` | 35 | 35 | 0 | 19 | 0 |
+| `bonus_art` | 3 | 3 | 0 | 1 | 0 |
+| `bonus_loop` | 64 | 61 | 3 | 6 | 48 |
+| `cycle_point_at` | 22 | 22 | 0 | 5 | 0 |
+| `multi_zone_at` | 52 | 50 | 2 | 24 | 14 |
+| `set_based_at` | 8 | 8 | 0 | 0 | 0 |
+| `generic` | 18 | 17 | 1 | 5 | 2 |
+| **合計** | **202** | **196** | **6** | **60** | **64** |
+
+Family 分布改變來自先前未進入 facts 的官方 `articleBox-content` 現在由同一個 deterministic official-section parser 解析；這只提高 family／具名 control evidence 可見度，不會把未具名的設定機率表當作按鈕。
+
+### 必要代表案例
+
+- `LBトリプルクラウンX‐300`：BIG／REG operational、無 CZ／AT；Estimator 仍 eligible。
+- `スマスロ やじきた道中記参る!`：由官方基本仕様中的 `CZ「関所チャレンジ」`、`CZ「真剣チャレンジ」`、`AT「やじきた祭」`、`AT「超やじきた祭」` 與有效終了畫面表通過 gate；Zone／まいる仍不冒充操作按鈕。
+- `L ULTRAMAN 最終決戦`：完整 CZ／AT 機率表只形成 family／estimator evidence；沒有具名 control evidence，因此維持基本記錄模式。
+- `Lパチスロ 喰霊‐零‐Re`：BIG、REG、EPISODE BONUS、具名 CZ、具名 ART 與有效 Choice 均保留自己的 evidence，不退化。
+
+## v0.2.8.0 修正前 baseline（歷史）
 
 ## 1. 結論摘要
 

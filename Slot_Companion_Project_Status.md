@@ -3,7 +3,7 @@
 Last Updated: 2026-08-29
 
 ## Current Version
-**v0.2.8.0 – Machine Control Foundation**
+**v0.2.8.1 – Control Evidence Gate & Audit Tooling**
 
 Status：**Completed；手機人工驗收通過**
 
@@ -30,6 +30,20 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### v0.2.8.1 – Control Evidence Gate & Audit Tooling
+- 明確分離 `familyEvidence`、逐 control 的 `controlEvidence` 與 `estimatorEvidence`；family／機率表不再直接授權 Session control 或 numerator。
+- Control Evidence Gate 要求具名事件／選項、明確 control type、可追溯 official section／table、Session write target；Estimator 另驗證唯一 canonical numerator、operational denominator 與 minimum sample。
+- 移除 family-derived generic CZ／AT state／counter fallback；資料不足時保留基本記錄模式與 browser-local 自訂 Counter／Choice，且不修改舊 Session snapshot。
+- deterministic P-WORLD parser 新增官方 `articleBox-content` 支援，使具名官方玩法正文可作 control evidence；仍限制在官方 section scope，不保存全文或圖片。
+- Machine Guide compiler cache revision 更新為 `2026-08-29-control-evidence-gate-3`；舊 Guide cache 需重建，只影響之後的新 Session。
+- 新增可重跑的 `audit:controls` 工具與逐機 JSON report，包含 Catalog ID、機種名、來源 URL、family confidence、operational／blocked controls、basic mode 與 estimator eligibility。
+- 全 Catalog bounded-retry audit 連續兩次 202/202 成功，輸出 SHA-256 完全一致：`8f4648c8d01d26fce878a94419dbeab7453dc7e7b7c5cc02494e5343e67b0eaf`。
+- 修正前後：generic CZ／AT fallback **64 → 0**；basic mode **22 → 6**；operational machines **180 → 196**（新增皆須具名正文／表格證據）；Estimator eligible **69 → 60**；64 個 metrics／28 台被 gate 明確阻擋。
+- 代表回歸：LB Triple Crown BIG／REG、やじきた具名 CZ／AT／Choice、ULTRAMAN basic mode、喰霊具名 CZ／ART／Bonus／Choice 均通過自動測試。
+- QA：lint **0 errors / 0 warnings**；typecheck 通過；完整 tests **243 / 243 passed**；Next.js 16.3.2 webpack production build 通過。預設 Turbopack 在受限 host 無法建立 PostCSS worker port，沿用專案既有 webpack production QA 路徑。
+- Localhost production smoke：`/`、`/identify`、`/catalog`、`/catalog/machine-1xl2y3d`、`/guides/machine-1xl2y3d` 均 HTTP 200。
+- Status：完成工程與自動 QA，**等待手機人工驗收**。
 
 ### Machine Catalog 自動分類與操作涵蓋率健檢（文件／調查，不變更產品版本）
 
@@ -1029,9 +1043,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 28. 全量 audit 顯示 raw operational coverage（180/202）會高估可信度；64 台仍含 family fallback generic CZ／AT，應把「family evidence」與「control evidence／record timing」分開建模
 29. Numeric operational control 在 202 台目前為 0；cycle、points、set、zone 不可只因來源提及就升為可操作，必須先定義單位、更新時機與 reset contract
 30. 69 台 compiler-eligible estimator 中有 40 台的 Manifest 同時含 generic CZ／AT fallback；下一步需逐 metric 驗證 numerator ownership，不能把 family-level control 當成 benchmark 已安全綁定
+31. v0.2.8.1 已將 generic CZ／AT fallback 由 64 台降為 0；官方具名 `articleBox-content` 可提供獨立 control evidence，但設定表／family evidence 仍只作分類或 metric evidence
+32. Evidence gate 後 Estimator eligible 由 69 降為 60；這是移除未能證明 canonical numerator ownership 的安全收斂，不是公式變更
 
 ## Current Work
-**Machine Catalog 全 202 台分類／Control／Estimator coverage audit 已完成；等待產品決定是否核准建議的最小後續範圍**
+**v0.2.8.1 Control Evidence Gate 與可重現全 Catalog audit 已完成；等待固定 dev Preview 手機人工驗收**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1044,11 +1060,11 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；v0.2.6 的機台指南是獨立的 browser-local cache，不把攻略欄位寫入 Catalog JSON。指南只保存結構化事實、數值、自行整理摘要、來源與擷取時間，不保存攻略文章全文或來源圖片。
 
 ## Next Step
-### 待產品討論：建議 v0.2.8.1 – Control Evidence Gate & Audit Tooling
+### v0.2.8.1 手機人工驗收
 
-Status：**不自行開始下一版本。**
+Status：**等待驗收；不自行開始下一版本。**
 
-本次只完成調查與文件。建議下一個最小版本先分離 family evidence 與 control evidence、收緊 64 台 generic CZ／AT fallback，並建立可重現且不保存來源全文的 audit tooling；不先擴張 UI、family 或 estimator 公式。是否開始及最終範圍等待產品決定，不自行開發或合併 `dev` → `main`。
+手機需重新整理代表機台指南並建立全新 Session；確認 LB Triple Crown、やじきた、ULTRAMAN 與喰霊行為。既有 Session 必須保持原 snapshot。下一版本維持待產品討論，不自行開發或合併 `dev` → `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1140,6 +1156,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**手機驗收 v0.2.8.0 Machine Control Foundation；不自行開始下一版本。**
+**手機驗收 v0.2.8.1 Control Evidence Gate；不自行開始下一版本。**
 
 目前不要開始 Verified Machine Data，不要修改 Setting Estimator，也不要將 TEST DATA benchmark 描述為真實機種資料。
