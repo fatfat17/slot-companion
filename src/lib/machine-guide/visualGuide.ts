@@ -30,12 +30,39 @@ export const VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS=[
   "machine-9pj2ap",
   "machine-12i4zri",
 ] as const;
-export const VISUAL_GUIDE_PILOT_CATALOG_IDS=[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS] as const;
+export const VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS=[
+  "machine-xdvn75",
+  "machine-uo8oet",
+  "machine-7znmde",
+  "machine-5ilch3",
+  "machine-103um1n",
+  "machine-b3b80c",
+  "machine-1jq3j5y",
+  "machine-v47drd",
+  "machine-1fu5qjj",
+  "machine-1kf17n",
+  "machine-1jurstr",
+  "machine-lx78sx",
+  "machine-19jc5cm",
+  "machine-1dnl4b",
+  "machine-1ivp4lf",
+  "machine-9bisnd",
+  "machine-pa662a",
+  "machine-nw6oah",
+  "machine-1s9yz9c",
+  "machine-8krzs7",
+  "machine-1kuq0cl",
+  "machine-km65ri",
+  "machine-1m0hi5t",
+  "machine-1ncdvxk",
+  "machine-1jzku46",
+] as const;
+export const VISUAL_GUIDE_PILOT_CATALOG_IDS=[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS,...VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS] as const;
 export const VISUAL_GUIDE_MAX_IMAGES=18;
 export const VISUAL_GUIDE_MAX_IMAGE_BYTES=1_000_000;
 export const VISUAL_GUIDE_WARNING_BYTES=12_000_000;
 export const VISUAL_GUIDE_BUCKET="machine-guide-assets";
-export const VISUAL_GUIDE_ASSET_REVISION="visual-assets-2";
+export const VISUAL_GUIDE_ASSET_REVISION="visual-assets-3";
 
 const visualGuidePilotCatalogIds=new Set<string>(VISUAL_GUIDE_PILOT_CATALOG_IDS);
 export function isVisualGuidePilotCatalog(catalogId:string){return visualGuidePilotCatalogIds.has(catalogId)}

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import { parsePWorldMachineFacts } from "../src/lib/machine-guide/pworld.ts";
 import { compileMachineGuide } from "../src/lib/machine-guide/compiler.ts";
 import { materializeVisualGuideAssets } from "../src/lib/machine-guide/visualGuideMaterializer.ts";
-import { VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,VISUAL_GUIDE_PILOT_CATALOG_IDS,VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS } from "../src/lib/machine-guide/visualGuide.ts";
+import { VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,VISUAL_GUIDE_PILOT_CATALOG_IDS,VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS,VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS } from "../src/lib/machine-guide/visualGuide.ts";
 import { buildVisualGuideAssetManifest,buildVisualGuideAssetReport,visualGuideCapacityLevel } from "../src/lib/machine-guide/visualGuideGovernance.ts";
 import { buildVisualGuideDisplaySections } from "../src/lib/machine-guide/visualPresentation.ts";
 import type { MachineCatalogRecord } from "../src/types/catalog.ts";
@@ -33,11 +33,12 @@ test("all scale pilot catalogs use the same evidence-gated visual parser",()=>{
   }
 });
 
-test("visual pilot registry contains five accepted and twenty second-batch machines",()=>{
+test("visual pilot registry contains five accepted, twenty second-batch and twenty-five third-batch machines",()=>{
   assert.equal(VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS.length,5);
   assert.equal(VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS.length,20);
-  assert.equal(VISUAL_GUIDE_PILOT_CATALOG_IDS.length,25);
-  assert.equal(new Set(VISUAL_GUIDE_PILOT_CATALOG_IDS).size,25);
+  assert.equal(VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS.length,25);
+  assert.equal(VISUAL_GUIDE_PILOT_CATALOG_IDS.length,50);
+  assert.equal(new Set(VISUAL_GUIDE_PILOT_CATALOG_IDS).size,50);
 });
 
 test("catalogs outside the scale pilot do not receive visual assets",()=>{

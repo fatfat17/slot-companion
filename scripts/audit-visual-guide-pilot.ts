@@ -2,14 +2,14 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { PWorldMachineGuideProvider } from "../src/lib/machine-guide/pworld.ts";
 import { materializeVisualGuideAssets } from "../src/lib/machine-guide/visualGuideMaterializer.ts";
-import { VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS } from "../src/lib/machine-guide/visualGuide.ts";
+import { VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS,VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS } from "../src/lib/machine-guide/visualGuide.ts";
 import type { MachineCatalogRecord } from "../src/types/catalog.ts";
 
 type Environment=Record<string,string|undefined>;
-const args=process.argv.slice(2),outputAt=args.indexOf("--output"),pacingAt=args.indexOf("--pacing-ms"),pilotAt=args.indexOf("--pilot"),output=outputAt>=0?args[outputAt+1]:"reports/visual-guide-scale-pilot.json",pacing=Math.max(0,Number(pacingAt>=0?args[pacingAt+1]:350)||0),pilot=pilotAt>=0?args[pilotAt+1]:"second",materialize=args.includes("--materialize");
+const args=process.argv.slice(2),outputAt=args.indexOf("--output"),pacingAt=args.indexOf("--pacing-ms"),pilotAt=args.indexOf("--pilot"),output=outputAt>=0?args[outputAt+1]:"reports/visual-guide-scale-pilot.json",pacing=Math.max(0,Number(pacingAt>=0?args[pacingAt+1]:350)||0),pilot=pilotAt>=0?args[pilotAt+1]:"second",materialize=args.includes("--materialize"),sourceOnly=args.includes("--source-only");
 
 async function localEnvironment():Promise<Environment>{
-  if(!materialize)return{};
+  if(!materialize||sourceOnly)return{};
   try{
     const raw=await fs.readFile(path.join(process.cwd(),".env.local"),"utf8"),environment:Environment={};
     for(const line of raw.split(/\r?\n/)){const match=line.match(/^([A-Z][A-Z0-9_]*)=(.*)$/);if(!match)continue;environment[match[1]]=match[2].trim().replace(/^(["'])(.*)\1$/,"$2")}
@@ -17,7 +17,7 @@ async function localEnvironment():Promise<Environment>{
   }catch{return process.env}
 }
 
-const selectedIds=pilot==="all"?[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS]:pilot==="first"?[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS]:[...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS],catalog=JSON.parse(await fs.readFile(path.join(process.cwd(),"data/machine-catalog.json"),"utf8")) as MachineCatalogRecord[],byId=new Map(catalog.map(record=>[record.id,record])),provider=new PWorldMachineGuideProvider(),environment=await localEnvironment(),results=[];
+const pilotIds={first:[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS],second:[...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS],third:[...VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS]},selectedIds=pilot==="all"?[...pilotIds.first,...pilotIds.second,...pilotIds.third]:pilotIds[pilot as keyof typeof pilotIds]??pilotIds.third,catalog=JSON.parse(await fs.readFile(path.join(process.cwd(),"data/machine-catalog.json"),"utf8")) as MachineCatalogRecord[],byId=new Map(catalog.map(record=>[record.id,record])),provider=new PWorldMachineGuideProvider(),environment=await localEnvironment(),results=[];
 for(const [index,catalogId] of selectedIds.entries()){
   const record=byId.get(catalogId);
   if(!record){results.push({catalogId,status:"failed",error:"Catalog record missing"});continue}
@@ -28,4 +28,4 @@ for(const [index,catalogId] of selectedIds.entries()){
   if(pacing&&index<selectedIds.length-1)await new Promise(resolve=>setTimeout(resolve,pacing));
 }
 const successful=results.filter(result=>result.status==="success"),failed=results.filter(result=>result.status==="failed"),totalBytes=successful.reduce((sum,result)=>sum+(result.visualAssetReport?.totalBytes??0),0),summary={pilot,requested:results.length,successful:successful.length,failed:failed.length,selectedImages:successful.reduce((sum,result)=>sum+(result.selectedImageCount??0),0),materializedImages:successful.reduce((sum,result)=>sum+(result.materializedImageCount??0),0),totalBytes,capacityWarnings:successful.filter(result=>result.visualAssetReport?.capacityLevel!==undefined&&result.visualAssetReport.capacityLevel!=="normal").length,basicRecordMode:successful.filter(result=>result.basicRecordMode===true).length,estimatorEligible:successful.filter(result=>(result.estimatorEligibleCount??0)>0).length};
-const report={schemaVersion:1,generatedAt:new Date().toISOString(),materialize,summary,results};await fs.mkdir(path.dirname(output),{recursive:true});await fs.writeFile(output,`${JSON.stringify(report,null,2)}\n`,"utf8");console.log(JSON.stringify(summary,null,2));
+const report={schemaVersion:1,generatedAt:new Date().toISOString(),materialize,sourceOnly,summary,results};await fs.mkdir(path.dirname(output),{recursive:true});await fs.writeFile(output,`${JSON.stringify(report,null,2)}\n`,"utf8");console.log(JSON.stringify(summary,null,2));

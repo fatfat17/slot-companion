@@ -6,6 +6,17 @@ Code baseline：`dev` · v0.2.8.2 Estimator Observation Contract
 
 Scope：`data/machine-catalog.json` 全部 202 筆正式 Catalog records
 
+## Visual Guide Scale Pilot（第三批 25 台）
+
+第三批使用跨導入月份、機型與廠商的固定代表樣本，不逐機建立 parser 或 UI 特例。可重現報告位於 `reports/visual-guide-scale-pilot-third.json`。
+
+- P-WORLD runtime：**25 / 25 成功**；兩次節流、只讀、source-only materialization audit（排除 `generatedAt`）完全一致。
+- 官方區段圖片：**388 張／49,707,828 bytes（約 47.4 MiB）**；0 張超過單圖上限、0 台達容量 warning。
+- Family 分布包含 A-type、bonus loop、cycle／point AT、multi-zone AT、set-based AT 與 low-confidence generic；選樣不是只保留已知成功案例。
+- 6 / 25 台具至少一個符合既有 observation contract 的 estimator metric；其餘不因圖文資產擴張而放寬 Estimator。
+- Audit 新增 `--source-only`，即使本機具有 Supabase 設定也只下載量測，不寫入 private bucket；通過工程 QA 與部署後才由固定 Preview 逐台 materialize。
+- 第三批加入後圖文 registry 為 **50 / 202 台**；其餘 152 台仍不在圖文資產 registry。
+
 ## Visual Guide Scale Pilot（第二批 20 台）
 
 本節是圖文資產範圍與容量 audit，不改變下方 202 台 Control／Estimator coverage 統計。可重現報告位於 `reports/visual-guide-scale-pilot.json`，由 `scripts/audit-visual-guide-pilot.ts` 從既有 Catalog ID 與 canonical P-WORLD URL 產生，不保存來源 HTML 或圖片內容。
@@ -18,7 +29,8 @@ Scope：`data/machine-catalog.json` 全部 202 筆正式 Catalog records
 - 20 台中 11 台具至少一個符合既有 observation contract 的 estimator metric；這不是額外放寬安全門檻。
 - 本批次共用同一套 official-section parser、Control Evidence Gate、visual selector、Supabase object ownership 與 Session snapshot；沒有建立逐機 UI 或 parser 特例。
 - 雲端資產新增 versioned manifest。只有該機台本次所有圖片皆成功後，才刪除同一 Catalog ID 下不在新 manifest 的舊檔；部分失敗時跳過 cleanup，避免留下半套指南。
-- 本次僅把圖文 Pilot 擴為 25 / 202 台；其餘 177 台仍不在圖文資產 registry，不可把本節解讀為全 Catalog 長期容量或來源權利已核准。
+- 第二批已於固定 Preview 完成 20 / 20 雲端重建，並由使用者完成手機快速抽查；圖片載入、中文區段與 Session 指南入口均確認可用。
+- 第二批完成時圖文 Pilot 為 25 / 202 台；後續第三批另列於上方，不可把任一批解讀為全 Catalog 長期容量或來源權利已核准。
 
 ## v0.2.8.2 Estimator Observation Contract
 

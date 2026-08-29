@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**P-WORLD 圖文中文攻略 Scale Pilot（5 + 20）**
+**P-WORLD 圖文中文攻略 Scale Pilot（5 + 20 + 25）**
 
-Status：**既有五台 Pilot 已通過實體手機驗收；第二批 20 台已完成程式、真實來源、容量 audit 與固定 dev Preview 自動 QA，等待手機人工驗收**
+Status：**既有五台與第二批 20 台已通過手機驗收；第三批 25 台已完成程式、真實來源、可重現容量 audit 與本機工程 QA，等待固定 dev Preview 自動 QA**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -31,6 +31,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### P-WORLD 圖文中文攻略 Scale Pilot — 第三批 25 台（2026-08-30）
+- 第二批手機快速抽查已由使用者確認通過：A-type／Bonus 與複雜 CZ／AT／ART 代表頁的圖片載入、中文區段順序及 Session 內指南入口均可用；第二批正式完成手機驗收。
+- 第三批固定選取 25 台跨導入月份、廠商與機型代表樣本，涵蓋 A-type、Bonus loop、cycle／point AT、multi-zone AT、set-based AT 與 low-confidence generic；沒有逐機新增 parser、UI、Control 或 Estimator 特例。
+- 圖文 registry 擴為 **50 / 202 台**；asset revision 更新為 `visual-assets-3`，Guide compiler revision 更新為 `2026-08-30-visual-guide-scale-pilot-14`。只失效 Guide cache，既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史不改寫。
+- Audit 新增 `--pilot third` 與 `--source-only`；後者即使本機已有 Supabase 設定，也只下載量測來源資產，不寫入雲端。
+- 第三批兩次節流、只讀 runtime audit 結果（排除 `generatedAt`）完全一致：**25 / 25 成功、388 張、49,707,828 bytes（約 47.4 MiB）、0 容量 warning、6 台具至少一個既有安全 estimator metric**。
+- 工程 QA：lint 通過；typecheck 通過；完整 tests **310 / 310 passed**；Next.js 16.3.2 webpack production build通過。
+- localhost production smoke：`/`、`/catalog`、第三批 `machine-xdvn75` Guide 均 HTTP 200；Guide API status `usable`、18 張圖片、2,368,245 bytes、0 warning，雲端未設定時正確使用 source fallback。
+- 第三批尚未 push／部署或寫入 Supabase，固定 Preview 雲端 materialization 與自動 UI QA 尚未完成，因此不得標記為手機人工驗收通過。
+
 ### P-WORLD 圖文中文攻略 Scale Pilot — 資產治理與第二批 20 台（2026-08-30）
 - 既有五台人工驗收基準不變；相同共用 pipeline 新增第二批 20 台 registry，涵蓋 A-type、Bonus、ART、CZ→AT、多 Zone、Set／loop 與不同資料完整度，沒有新增逐機 parser、Machine Family、Session UI 或 Estimator 特例。
 - 新增 `VisualGuideAssetReport`、資產 revision、versioned manifest、per-machine bytes／最大檔案／去重／拒絕／cleanup 統計與容量 warning。Manifest 只保存 object path、來源 URL、bytes、content type 與 compiler revision，不保存來源 HTML。
@@ -44,7 +54,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - localhost production smoke：`/`、`/catalog`、第二批 LB Triple Crown Guide 均 HTTP 200；Guide API 為 `usable`、圖片 9 張、無 warning，Session controls 僅 BIG BONUS／REG BONUS；同源圖片 route 回傳 JPEG 200。
 - 固定 dev Preview 已部署產品 commit `4474dff`，第二批 **20 / 20 台**均透過 Catalog Detail 重新建立最新指南，全部顯示「私人雲端資產」；畫面合計呈現 **283 個 figure**，與本機 materialization audit 的合規保留數量一致，console error 為 0。
 - 固定 Preview 390 × 844 自動 QA 抽查 LB Triple Crown、戰國乙女5、Street Fighter 6、Hyper Rush：四頁均無水平溢出、雲端圖文狀態正常；首屏圖片完成同源載入。1280 × 900 桌面抽查 Street Fighter 6 顯示 16 個 figure、首兩張圖片 natural width 590、無水平溢出與 console error。此為自動 QA，不等同實體手機人工驗收。
-- 本輪範圍目前為 **25 / 202 台**。第二批仍等待使用者至少抽查一台 A-type／Bonus 與一台複雜 CZ／AT 或 ART 機種，因此不得標記為人工驗收通過，也不代表全量 Catalog 的長期容量、流量或來源權利已核准。
+- 手機快速抽查（使用者確認，2026-08-30）：A-type／Bonus 與複雜 CZ／AT／ART 代表機種均通過，圖片載入、中文區段順序及 Session 內指南入口可用；第二批 20 台驗收完成。
+- 第二批完成時範圍為 **25 / 202 台**；後續第三批另列於上方。任何批次均不代表全量 Catalog 的長期容量、流量或來源權利已核准。
 
 ### P-WORLD 圖文中文攻略 Five-Machine Pilot（2026-08-30）
 - 使用者確認 RE:3 單機圖文指南與 Session 內圖文 drawer 可用後，將相同 pipeline 擴張到五台代表機種：`スマスロ バイオハザードRE:3`、`スマスロ やじきた道中記参る!`、`Lパチスロ 喰霊‐零‐Re`、`L 東京喰種`、`L ULTRAMAN 最終決戦`。
@@ -1249,7 +1260,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 
 ## Current Work
-**P-WORLD 圖文中文攻略 Scale Pilot 第二批 20 台已完成共用資產治理、真實來源、可重現容量 audit、工程 QA 與固定 dev Preview 雲端重建／自動回歸；目前等待手機人工驗收。**
+**P-WORLD 圖文中文攻略 Scale Pilot 第二批 20 台已通過手機快速抽查；第三批 25 台已完成共用 registry、兩輪 source-only 容量 audit 與本機工程 QA，正在進行 dev 部署與固定 Preview 雲端重建／自動回歸。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1259,16 +1270,16 @@ v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
 
 v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 
-Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪只有 25 台 Scale Pilot 的受限圖片資產可寫入 private Supabase Storage，未擴張到其餘 177 台。
+Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪圖文 registry 為 50 台；第三批通過 Preview 前仍未寫入 private Supabase Storage，其餘 152 台不在 registry。
 
 ## Next Step
-### 第二批 20 台手機人工驗收
+### 第三批 25 台固定 Preview 與手機驗收
 
-Status：**固定 Preview 自動 QA 通過；尚未人工核准。**
+Status：**本機工程 QA 通過；正在部署，尚未人工核准。**
 
-1. 使用者在固定 dev Preview 抽查至少一台 A-type／Bonus 與一台資料較複雜的 CZ／AT 或 ART 機種。
-2. 確認手機圖片載入、中文區段順序、Session 指南入口與重新整理後快取均符合現場使用需求。
-3. 第二批驗收前不擴張其餘 177 台、不部署 Production，也不 merge `main`；後續批次維持待產品討論。
+1. Push `dev` 並等待固定 Preview Ready；依序從 Catalog Detail 建立第三批 25 台最新指南，確認 private cloud materialization。
+2. 以 390 × 844 與桌面尺寸抽查 A-type、複雜 AT 與 low-confidence generic 代表機種的圖片、版面、console 與同源圖片 route。
+3. 使用者完成手機快速抽查前不擴張其餘 152 台、不部署 Production，也不 merge `main`。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
