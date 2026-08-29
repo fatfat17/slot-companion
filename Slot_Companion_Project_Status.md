@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **Setting Estimator Coverage Expansion（102 / 202）**
 
-Status：**全 202 台資料重跑、Estimator observation contract 擴張與本機工程 QA完成；等待固定 dev Preview 驗證**
+Status：**全 202 台資料重跑、Estimator observation contract 擴張、工程 QA 與固定 dev Preview 自動驗證已完成**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -41,6 +41,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Machine Guide cache revision 更新為 `2026-08-30-estimator-observation-coverage-16`；既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史均不改寫，新結果只套用重新建立 Guide 後的新 Session。
 - 工程 QA：lint 通過；typecheck 通過；完整 automated tests **314 / 314 passed**；Next.js 16.3.2 webpack production build 通過。預設 Turbopack build 在受限 host 因 CSS worker 無法 bind port，沿用專案既有 webpack production QA 路徑完成。
 - localhost production smoke：`/`、`/catalog`、`/guides/machine-1y0erql`、`/identify`、`/records`、legacy Session fallback route 均 HTTP 200。
+- 產品 commit `5d6a620` 已 push 至 `origin/dev`；Vercel deployment 顯示本 commit `Ready`，固定 dev Preview 已指向本次版本。
+- 固定 Preview 390 × 844 自動 QA 抽查本輪新增小役 observation coverage 的 `吉宗RISING`（`machine-1gnkhdb`）：Catalog Detail 與 Guide route 均正常、scroll width 390px、console error／warning 0。尚未建立 Guide 時正確顯示建立入口，沒有偷偷改寫 Session 或生成推測結果。此項是自動 QA，不冒充實體手機人工驗收。
 - 可重現逐機報告：`reports/machine-catalog-control-audit.json`。
 
 ### P-WORLD 圖文中文攻略 Full Catalog Expansion（2026-08-30）
@@ -1295,7 +1297,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 51. Estimator coverage 應同時報告「來源有完整設定值」與「Session 有安全 observation contract」；本輪 102 / 202 可用，另外 67 台缺完整設定值、33 台缺唯一 numerator，不應用猜測追求 100%。
 
 ## Current Work
-**全 202 台機台資料與 Setting Estimator 涵蓋率擴張的本機工程 QA 已完成；目前準備 dev 部署與固定 Preview 自動回歸。安全 coverage 為 102 / 202，未涵蓋機台仍保持停用。**
+**全 202 台機台資料與 Setting Estimator 涵蓋率擴張已完成工程 QA、dev 部署與固定 Preview 自動回歸。安全 coverage 為 102 / 202，未涵蓋機台仍保持停用；等待實際遊玩回饋。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1308,14 +1310,13 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 完成 Estimator Expansion QA 後等待實際遊玩回饋
+### 等待實際遊玩回饋
 
-Status：**程式、202 台可重現 audit、完整 tests、production build 與 localhost smoke 完成；尚待固定 Preview 驗證。**
+Status：**程式、202 台可重現 audit、完整 tests、production build、localhost smoke、dev 部署與固定 Preview 自動 QA 全部完成；沒有開始下一版本。**
 
-1. Commit／push `dev`，等待固定 Preview Ready 並完成自動回歸。
-2. 使用者日後在日本實際遊玩時，針對個別來源缺漏、翻譯不清、圖片失效或 observation mapping 使用既有 Guide 回報／重新整理功能校準。
-3. 圖文資產維持按需建立，不執行沒有使用需求的 202 台一次性雲端預熱。
-4. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
+1. 使用者日後在日本實際遊玩時，針對個別來源缺漏、翻譯不清、圖片失效或 observation mapping 使用既有 Guide 回報／重新整理功能校準。
+2. 圖文資產維持按需建立，不執行沒有使用需求的 202 台一次性雲端預熱。
+3. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1407,6 +1408,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**完成 Setting Estimator Coverage Expansion 的工程與固定 dev Preview QA；通過後等待使用者實際遊玩驗收，不自行開始下一版本。**
+**等待使用者實際遊玩驗收 Setting Estimator Coverage Expansion；不自行開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
