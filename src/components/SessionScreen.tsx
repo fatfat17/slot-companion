@@ -13,7 +13,7 @@ import { SettingEstimator } from "./SettingEstimator";
 import { SessionGuideDrawer } from "./SessionGuideDrawer";
 import { changeSessionMode, controlsForSessionMode, loadLastSessionMode, normalizeSessionMode, saveLastSessionMode } from "@/lib/sessionModes";
 import { SessionModePicker } from "./SessionModePicker";
-import { loadCachedGuide } from "@/lib/machine-guide/storage";
+import { loadCachedGuideAsync } from "@/lib/machine-guide/storage";
 import { loadCustomRecords, replaceCustomRecord, type CustomRecordDefinition } from "@/lib/customRecords";
 import { CustomRecordEditor } from "./CustomRecordEditor";
 
@@ -26,7 +26,7 @@ export function SessionScreen({ id }: { id: string }) {
   const machine=useMemo(()=>session?.profileSnapshot??(session?getMachine(session.machineId):undefined),[session]);
   const machineId=machine?.id;
   useEffect(()=>{if(machineId){setLastMode(loadLastSessionMode(machineId));setCustoms(loadCustomRecords(machineId))}},[machineId]);
-  useEffect(()=>{const catalogId=machine?.catalogId,retrievedAt=machine?.sessionGuide?.retrievedAt;if(!catalogId||!retrievedAt){setGuideUpdated(false);return}const current=loadCachedGuide(catalogId)?.guide;setGuideUpdated(Boolean(current&&current.retrievedAt!==retrievedAt))},[machine]);
+  useEffect(()=>{const catalogId=machine?.catalogId,retrievedAt=machine?.sessionGuide?.retrievedAt;if(!catalogId||!retrievedAt){setGuideUpdated(false);return}let active=true;loadCachedGuideAsync(catalogId).then(cached=>{if(active)setGuideUpdated(Boolean(cached?.guide&&cached.guide.retrievedAt!==retrievedAt))});return()=>{active=false}},[machine]);
   const uiModel=useMemo(()=>machine?buildSessionUiModel(machine):undefined,[machine]);
   const sessionMode=normalizeSessionMode(session?.mode),modeControls=uiModel?controlsForSessionMode(uiModel,sessionMode):undefined;
   function persist(next:Session){setSession(next);if(!saveSession(next)){setToast("儲存失敗，請確認瀏覽器空間");return;} setToast("已儲存");window.setTimeout(()=>setToast(""),900)}

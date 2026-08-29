@@ -6,18 +6,18 @@ import { VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS,VISUAL_GUIDE_SECOND_PILOT_CATALOG_
 import type { MachineCatalogRecord } from "../src/types/catalog.ts";
 
 type Environment=Record<string,string|undefined>;
-const args=process.argv.slice(2),outputAt=args.indexOf("--output"),pacingAt=args.indexOf("--pacing-ms"),pilotAt=args.indexOf("--pilot"),output=outputAt>=0?args[outputAt+1]:"reports/visual-guide-scale-pilot.json",pacing=Math.max(0,Number(pacingAt>=0?args[pacingAt+1]:350)||0),pilot=pilotAt>=0?args[pilotAt+1]:"second",materialize=args.includes("--materialize"),sourceOnly=args.includes("--source-only");
+const args=process.argv.slice(2),outputAt=args.indexOf("--output"),pacingAt=args.indexOf("--pacing-ms"),pilotAt=args.indexOf("--pilot"),environmentAt=args.indexOf("--env-file"),output=outputAt>=0?args[outputAt+1]:"reports/visual-guide-scale-pilot.json",pacing=Math.max(0,Number(pacingAt>=0?args[pacingAt+1]:350)||0),pilot=pilotAt>=0?args[pilotAt+1]:"second",environmentFile=environmentAt>=0?args[environmentAt+1]:".env.local",materialize=args.includes("--materialize"),sourceOnly=args.includes("--source-only");
 
 async function localEnvironment():Promise<Environment>{
   if(!materialize||sourceOnly)return{};
   try{
-    const raw=await fs.readFile(path.join(process.cwd(),".env.local"),"utf8"),environment:Environment={};
+    const raw=await fs.readFile(path.resolve(process.cwd(),environmentFile),"utf8"),environment:Environment={};
     for(const line of raw.split(/\r?\n/)){const match=line.match(/^([A-Z][A-Z0-9_]*)=(.*)$/);if(!match)continue;environment[match[1]]=match[2].trim().replace(/^(["'])(.*)\1$/,"$2")}
     return environment;
   }catch{return process.env}
 }
 
-const pilotIds={first:[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS],second:[...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS],third:[...VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS]},selectedIds=pilot==="all"?[...pilotIds.first,...pilotIds.second,...pilotIds.third]:pilotIds[pilot as keyof typeof pilotIds]??pilotIds.third,catalog=JSON.parse(await fs.readFile(path.join(process.cwd(),"data/machine-catalog.json"),"utf8")) as MachineCatalogRecord[],byId=new Map(catalog.map(record=>[record.id,record])),provider=new PWorldMachineGuideProvider(),environment=await localEnvironment(),results=[];
+const catalog=JSON.parse(await fs.readFile(path.join(process.cwd(),"data/machine-catalog.json"),"utf8")) as MachineCatalogRecord[],pilotIds={first:[...VISUAL_GUIDE_FIRST_PILOT_CATALOG_IDS],second:[...VISUAL_GUIDE_SECOND_PILOT_CATALOG_IDS],third:[...VISUAL_GUIDE_THIRD_PILOT_CATALOG_IDS]},selectedIds=pilot==="catalog"?catalog.map(record=>record.id):pilot==="all"?[...pilotIds.first,...pilotIds.second,...pilotIds.third]:pilotIds[pilot as keyof typeof pilotIds]??pilotIds.third,byId=new Map(catalog.map(record=>[record.id,record])),provider=new PWorldMachineGuideProvider(),environment=await localEnvironment(),results=[];
 for(const [index,catalogId] of selectedIds.entries()){
   const record=byId.get(catalogId);
   if(!record){results.push({catalogId,status:"failed",error:"Catalog record missing"});continue}

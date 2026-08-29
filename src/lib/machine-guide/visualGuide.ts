@@ -62,7 +62,7 @@ export const VISUAL_GUIDE_MAX_IMAGES=18;
 export const VISUAL_GUIDE_MAX_IMAGE_BYTES=1_000_000;
 export const VISUAL_GUIDE_WARNING_BYTES=12_000_000;
 export const VISUAL_GUIDE_BUCKET="machine-guide-assets";
-export const VISUAL_GUIDE_ASSET_REVISION="visual-assets-3";
+export const VISUAL_GUIDE_ASSET_REVISION="visual-assets-4";
 
 const visualGuidePilotCatalogIds=new Set<string>(VISUAL_GUIDE_PILOT_CATALOG_IDS);
 export function isVisualGuidePilotCatalog(catalogId:string){return visualGuidePilotCatalogIds.has(catalogId)}

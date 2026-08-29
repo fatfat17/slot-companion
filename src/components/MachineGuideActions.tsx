@@ -4,12 +4,12 @@ import { useEffect,useState } from "react";
 import { useRouter } from "next/navigation";
 import type { MachineCatalogRecord } from "@/types/catalog";
 import type { MachineGuide } from "@/types/machineGuide";
-import { getGuideCacheState,loadCachedGuide,type GuideCacheState } from "@/lib/machine-guide/storage";
+import { getGuideCacheState,loadCachedGuideAsync,type GuideCacheState } from "@/lib/machine-guide/storage";
 import { refreshCachedMachineGuide } from "@/lib/machine-guide/refresh";
 
 export function MachineGuideActions({record}:{record:MachineCatalogRecord}){
   const[cached,setCached]=useState<MachineGuide|null>(null),[cacheState,setCacheState]=useState<GuideCacheState>("missing"),[busy,setBusy]=useState(false),[error,setError]=useState(""),[checked,setChecked]=useState(false),router=useRouter();
-  useEffect(()=>{setCached(loadCachedGuide(record.id)?.guide??null);setCacheState(getGuideCacheState(record.id));setChecked(true)},[record.id]);
+  useEffect(()=>{let active=true;loadCachedGuideAsync(record.id).then(cachedGuide=>{if(active){setCached(cachedGuide?.guide??null);setCacheState(cachedGuide?"current":getGuideCacheState(record.id));setChecked(true)}});return()=>{active=false}},[record.id]);
   async function rebuild(navigate:boolean){setBusy(true);setError("");try{const guide=await refreshCachedMachineGuide(record.id);setCached(guide);setCacheState("current");if(navigate)router.push(`/guides/${encodeURIComponent(record.id)}`)}catch(reason){setError(reason instanceof Error?reason.message:"機台指南建立失敗。")}finally{setBusy(false)}}
   const pworld=/^https:\/\/(www\.)?p-world\.co\.jp\/machine\/database\/\d+\/?$/.test(record.sourceUrl);
   if(!checked)return<div className="notice mt-3">正在檢查此裝置的機台指南快取…</div>;

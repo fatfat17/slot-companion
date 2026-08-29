@@ -12,6 +12,7 @@ import type { MachineCatalogRecord } from "../src/types/catalog.ts";
 const record:MachineCatalogRecord={id:"machine-1y0erql",officialNameJa:"スマスロ バイオハザードRE:3",displayNameZh:"惡靈古堡 RE:3",manufacturer:"エンターライズ",brand:"",seriesName:"",aliases:[],machineType:"スマスロ",introducedAt:"2026-05-11",sourceName:"P-WORLD",sourceUrl:"https://www.p-world.co.jp/machine/database/10440",retrievedAt:"2026-08-30",verified:true,catalogStatus:"verified",sources:[]};
 const fixture=fs.readFileSync(new URL("./fixtures/pworld-visual-guide-minimal.html",import.meta.url),"utf8");
 const pilotRecords:MachineCatalogRecord[]=VISUAL_GUIDE_PILOT_CATALOG_IDS.map(id=>({...record,id}));
+const catalogRecords=JSON.parse(fs.readFileSync(new URL("../data/machine-catalog.json",import.meta.url),"utf8")) as MachineCatalogRecord[];
 
 test("P-WORLD visual guide extracts only official-scope useful images and keeps stable order",()=>{
   const facts=parsePWorldMachineFacts(fixture,record,"2026-08-30T00:00:00Z"),images=facts.images??[];
@@ -41,9 +42,19 @@ test("visual pilot registry contains five accepted, twenty second-batch and twen
   assert.equal(new Set(VISUAL_GUIDE_PILOT_CATALOG_IDS).size,50);
 });
 
-test("catalogs outside the scale pilot do not receive visual assets",()=>{
+test("catalog records outside earlier pilots receive the same evidence-gated visual assets",()=>{
   const other=parsePWorldMachineFacts(fixture,{...record,id:"machine-other"},"2026-08-30T00:00:00Z");
-  assert.deepEqual(other.images,[]);
+  assert.equal(other.images?.length,3);
+  assert.ok(other.images?.every(image=>image.sourcePageUrl===record.sourceUrl));
+});
+
+test("all Catalog records use the same evidence-gated visual guide pipeline",()=>{
+  assert.equal(catalogRecords.length,202);
+  for(const catalogRecord of catalogRecords){
+    const facts=parsePWorldMachineFacts(fixture,catalogRecord,"2026-08-30T00:00:00Z");
+    assert.equal(facts.images?.length,3,catalogRecord.id);
+    assert.ok(facts.images?.every(image=>image.sourcePageUrl===catalogRecord.sourceUrl),catalogRecord.id);
+  }
 });
 
 test("visual guide assets are measured and routed through the app without cloud config",async()=>{

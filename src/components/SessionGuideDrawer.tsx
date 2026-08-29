@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import type { GameState, Machine } from "@/types";
 import type { MachineGuide, SessionQuickGuide } from "@/types/machineGuide";
 import type { SessionRecordControl } from "@/lib/sessionUi";
 import { GUIDE_EMPTY_PLAY, GUIDE_EMPTY_RECOGNITION, buildPlayerGuideHighlights, eventRecognition, guideSectionKeysForState, selectCurrentEvents, selectPlaySummary } from "@/lib/sessionGuidePresentation";
 import { refreshCachedMachineGuide } from "@/lib/machine-guide/refresh";
-import { loadCachedGuide } from "@/lib/machine-guide/storage";
+import { loadCachedGuide,loadCachedGuideAsync } from "@/lib/machine-guide/storage";
 import { buildVisualGuideDisplaySections } from "@/lib/machine-guide/visualPresentation";
 
 type Props={guide:SessionQuickGuide|undefined;machine:Machine;state:GameState;recordControls:SessionRecordControl[];onClose:()=>void};
@@ -17,6 +17,7 @@ const formatTime=(value:string)=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"med
 export function SessionGuideDrawer({guide,machine,state,recordControls,onClose}:Props){
   const catalogId=machine.catalogId;
   const[busy,setBusy]=useState(false),[refreshMessage,setRefreshMessage]=useState(""),[visualOpen,setVisualOpen]=useState(false),[fullGuide,setFullGuide]=useState<MachineGuide|null>(()=>catalogId?loadCachedGuide(catalogId)?.guide??null:null),currentEvents=selectCurrentEvents(guide,state),play=selectPlaySummary(guide),highlights=buildPlayerGuideHighlights(guide,recordControls,3),currentIds=new Set(currentEvents.map(item=>item.id)),mainHighlights=highlights.primary.filter(item=>!currentIds.has(item.id)),moreHighlights=highlights.more.filter(item=>!currentIds.has(item.id)),sourceUrl=guide?.sourceUrl??machine.guideSourceUrl,stateSectionKeys=guideSectionKeysForState(state),stateImages=(fullGuide?.images??[]).filter(image=>stateSectionKeys.includes(image.sectionKey)).slice(0,2),visualSections=fullGuide?buildVisualGuideDisplaySections(fullGuide).filter(section=>section.summary||section.points.length||section.images.length):[];
+  useEffect(()=>{if(!catalogId)return;let active=true;loadCachedGuideAsync(catalogId).then(cached=>{if(active)setFullGuide(cached?.guide??null)});return()=>{active=false}},[catalogId]);
   async function refreshGuide(){if(!catalogId)return;setBusy(true);setRefreshMessage("");try{const next=await refreshCachedMachineGuide(catalogId);setFullGuide(next);setRefreshMessage("指南已更新；圖文內容已更新，新的記錄項目會在下一個 Session 套用。")}catch(reason){setRefreshMessage(`更新失敗：${reason instanceof Error?reason.message:"目前無法取得來源"}。目前 Session 與上一份指南仍保留。`)}finally{setBusy(false)}}
   return <div className="drawer-backdrop" onClick={onClose}><aside className="drawer session-guide-drawer" onClick={event=>event.stopPropagation()}><div className="drawer-handle"/><div className="drawer-head"><div><span>MACHINE GUIDE</span><h2>機台指南</h2></div><button onClick={onClose}>×</button></div><div className="session-guide-content">
     <section className="guide-now"><h3>現在看什麼</h3>{currentEvents.length?currentEvents.map(item=><article key={item.id}><strong>{item.labelZh}<small>{item.labelJa}</small></strong><p>{eventRecognition(item)}</p></article>):<p>{state==="normal"?(play[0]??GUIDE_EMPTY_PLAY):GUIDE_EMPTY_RECOGNITION}</p>}{stateImages.length?<div className="session-guide-image-grid">{stateImages.map(image=><figure key={image.id}><Image src={image.displayUrl} alt={image.captionZh} width={image.width??590} height={image.height??331} sizes="(max-width: 520px) calc(100vw - 76px), 420px" unoptimized loading="lazy"/><figcaption>{image.captionZh}</figcaption></figure>)}</div>:null}</section>

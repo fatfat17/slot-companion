@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**P-WORLD 圖文中文攻略 Scale Pilot（既有 5 台與第二批 20 台已通過；第三批 25 台工程 QA 完成）**（`dev`）。
+目前開發版本：**P-WORLD 圖文中文攻略 Full Catalog Expansion（202 / 202 台工程 QA 完成）**（`dev`）。
 
 ## 本機啟動
 
@@ -32,11 +32,11 @@ pnpm dev
 15. Machine Catalog 改為玩家導向的視覺資料庫：以 Catalog metadata 產生不侵權的識別卡片，支援年份快速篩選、收藏、最近瀏覽／遊玩與本機指南狀態；不下載或轉載來源機台圖片。
 16. 新增共用「新手術語」頁，並在完整指南、Session 指南與首頁提供入口；完整指南上方提供快速目錄，日文原始資料仍保留在查證區。
 17. 「遊玩記帳」可切換今天、近 7 天與全部紀錄，直接彙整 Session 的實際觀測 G、投入與最終持枚；不要求使用者重複抄寫 Session 結果。
-18. 首頁新增「快速中文攻略」入口。50 台 Scale Pilot 機種可將 P-WORLD 官方資料區的流程、CZ、AT／ART、Bonus 與打法圖片配進完整繁中指南；掲示板、留言、廣告、外站圖片與過小／過大圖片不會收錄。
+18. 首頁新增「快速中文攻略」入口。全 202 台 Catalog 均可按需將 P-WORLD 官方資料區的流程、CZ、AT／ART、Bonus 與打法圖片配進完整繁中指南；掲示板、留言、廣告、外站圖片與過小／過大圖片不會收錄。
 
 ## 資料與限制
 
-- Session、今日紀錄與 Machine Guide 只存在目前瀏覽器 localStorage，不是雲端同步。
+- Session 與今日紀錄保存在目前瀏覽器 localStorage；完整 Machine Guide JSON 改存 IndexedDB，並保留 localStorage 安全 fallback。兩者都不是跨裝置雲端同步。
 - 收藏、最近瀏覽／遊玩與每台機種的玩家資料庫偏好也只存在目前瀏覽器；清除瀏覽器資料或換裝置不會自動同步。
 - Catalog 視覺卡片使用本機 metadata 衍生的色彩與圖示，不使用 P-WORLD 或第三方機台圖片；日後若要加入正式圖片資產，需另行確認來源與授權。
 - v1 Guide cache 不會冒充 v2；需從 Catalog Detail 重新取得來源並編譯。
@@ -54,8 +54,8 @@ pnpm dev
 - P-WORLD `調査中`、未公開、空白或無法確認的值維持缺失，不補猜、不當成 0。
 - P-WORLD 仍是 Machine Catalog identity、導入資訊與日後店鋪資料的主要來源；ちょんぼりすた目前只補充五台試點機種的玩法、具名事件與設定表，不會取代 Catalog，也不作全站爬取。
 - 多來源採欄位級合併：格式相同的數值會去重並保留來源；不同來源同一設定值衝突時，只停用該 estimator metric，不阻擋其餘指南。補充來源失敗時仍可使用 P-WORLD 指南。
-- 指南整理結構化事實、數值、自行撰寫的中文提示、來源 URL 與擷取時間；不保存完整攻略文章、留言、導覽或推薦內容。圖片保存目前僅限 50 台 Scale Pilot，每台最多 18 張、單張上限 1 MB；不代表已取得轉載授權，也未擴張到全部 Catalog。
-- Scale Pilot 圖片在 Vercel 有 `SUPABASE_URL` 與 server-only Supabase secret 時寫入 private `machine-guide-assets` bucket，並依 Catalog ID 隔離；瀏覽器只透過同源圖片 route 讀取。每次完整成功重建會寫入 versioned manifest 並只清理同機台的過期圖片；若重建有任何圖片失敗，保留上一版資產且不做破壞性清理。沒有雲端設定時暫時回退來源即時讀取。Guide 本體仍是 browser-local cache，尚未跨裝置同步。
+- 指南整理結構化事實、數值、自行撰寫的中文提示、來源 URL 與擷取時間；不保存完整攻略文章、留言、導覽或推薦內容。全 Catalog audit 在 3,140 張候選中保留 3,133 張合規圖片、約 385.3 MiB；每台仍受 18 張、單張 1 MB 的上限約束，7 張失敗／不合格圖片被排除，不補猜。此技術支援不代表已取得轉載授權。
+- 圖片在 Vercel 有 `SUPABASE_URL` 與 server-only Supabase secret 時按需寫入 private `machine-guide-assets` bucket，並依 Catalog ID 隔離；瀏覽器只透過同源圖片 route 讀取。每次完整成功重建會寫入 versioned manifest 並只清理同機台的過期圖片；若重建有任何圖片失敗，保留上一版資產且不做破壞性清理。沒有雲端設定時暫時回退來源即時讀取。Guide 本體仍是 browser-local IndexedDB cache，尚未跨裝置同步。
 - 目前多來源試點：`スマスロ バイオハザードRE:3`、`スマスロ やじきた道中記参る!`、`Lパチスロ 喰霊‐零‐Re`、`L 東京喰種`、`L ULTRAMAN 最終決戦`。其他 Catalog 機種仍沿用 P-WORLD 單一來源。
 - 設定可能性僅供參考，不是準確設定判定或獲利保證。
 - 既有三台 placeholder Profile 與其中的 **TEST DATA** 只供既有流程／測試使用，不得視為真實機種資料。
@@ -64,7 +64,7 @@ pnpm dev
 - Estimator 對相同 numerator／denominator／value mode 的重複 benchmark 只採用一次；若同一觀測被映射到互相衝突的設定理論值，整組停用，不重複加權。Evidence 標籤優先顯示實際具名 Session control。
 - 完整 Machine Guide 可將「資料有誤／中文不清楚／內容重複／缺少重要資料」保存為 per-machine browser-local 回報；目前尚未雲端同步。
 - Catalog repository 已提供 JSON fallback 與 Supabase REST adapter。Vercel Marketplace 可使用 server-side `SUPABASE_URL` + `SUPABASE_SECRET_KEY`；legacy `SUPABASE_SERVICE_ROLE_KEY` 仍相容。兩種 elevated key 都絕不可使用 `NEXT_PUBLIC_`。
-- Supabase 目前保存 Machine Catalog identity records、import job audit，以及 Scale Pilot 的 private guide image assets；Session、Guide JSON cache、自訂記錄與回報仍是 browser-local，尚無跨裝置同步。
-- `pnpm audit:visual-guides -- --pilot third --materialize --source-only --output reports/visual-guide-scale-pilot-third.json` 可重跑第三批圖文容量健檢；`--source-only` 保證不寫入 Supabase。報告只保留 Catalog traceability、衍生 controls、圖片數量／bytes 與 warning，不保存來源 HTML 或圖片內容。
+- Supabase 目前保存 Machine Catalog identity records、import job audit，以及按需建立的 private guide image assets；Session、Guide JSON cache、自訂記錄與回報仍是 browser-local，尚無跨裝置同步。
+- `pnpm audit:visual-guides -- --pilot catalog --materialize --source-only --output reports/visual-guide-catalog-materialization-audit.json` 可重跑全 Catalog 圖文容量健檢；`--source-only` 保證不寫入 Supabase。報告只保留 Catalog traceability、衍生 controls、圖片數量／bytes 與 warning，不保存來源 HTML 或圖片內容。
 
 完整版本與 QA 狀態請見 `Slot_Companion_Project_Status.md`。

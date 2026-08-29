@@ -5,7 +5,7 @@ import { useEffect,useMemo,useState } from "react";
 import type { MachineCatalogRecord } from "@/types/catalog";
 import type { CatalogImporterPresentation } from "@/lib/catalog/importerPresentation";
 import { catalogLibraryOptions,catalogSummary,defaultCatalogLibraryFilters,profileForCatalog,queryCatalogLibrary,type CatalogLibraryFilters,type CatalogProfileLink } from "@/lib/catalog/library";
-import { getGuideCacheState } from "@/lib/machine-guide/storage";
+import { getGuideCacheStatesAsync } from "@/lib/machine-guide/storage";
 import { loadSessions } from "@/lib/storage";
 import { loadPlayerLibrary,recentPlayedCatalogIds,setCatalogFavorite } from "@/lib/playerLibrary";
 
@@ -17,7 +17,7 @@ function shortType(record:MachineCatalogRecord){if(/スマスロ|L/.test(record.
 export function CatalogLibraryClient({records,profiles,importer}:{records:MachineCatalogRecord[];profiles:CatalogProfileLink[];importer:CatalogImporterPresentation}){
   const[filters,setFilters]=useState<CatalogLibraryFilters>({...defaultCatalogLibraryFilters,pageSize:24}),[mode,setMode]=useState<LibraryMode>("browse"),[favorites,setFavorites]=useState<string[]>([]),[recentIds,setRecentIds]=useState<string[]>([]),[guideStates,setGuideStates]=useState<Record<string,"current"|"stale"|"missing">>({}),[managementOpen,setManagementOpen]=useState(false);
   const summary=useMemo(()=>catalogSummary(records,profiles),[records,profiles]),options=useMemo(()=>catalogLibraryOptions(records),[records]);
-  useEffect(()=>{const player=loadPlayerLibrary(),played=recentPlayedCatalogIds(loadSessions()),viewed=player.recentViews.map(item=>item.catalogId);setFavorites(player.favoriteCatalogIds);setRecentIds([...new Set([...played,...viewed])]);setGuideStates(Object.fromEntries(records.map(record=>[record.id,getGuideCacheState(record.id)])))},[records]);
+  useEffect(()=>{let active=true;const player=loadPlayerLibrary(),played=recentPlayedCatalogIds(loadSessions()),viewed=player.recentViews.map(item=>item.catalogId);setFavorites(player.favoriteCatalogIds);setRecentIds([...new Set([...played,...viewed])]);getGuideCacheStatesAsync(records.map(record=>record.id)).then(states=>{if(active)setGuideStates(states)});return()=>{active=false}},[records]);
   const visibleRecords=useMemo(()=>mode==="favorites"?records.filter(record=>favorites.includes(record.id)):mode==="recent"?records.filter(record=>recentIds.includes(record.id)):records,[records,mode,favorites,recentIds]);
   const result=useMemo(()=>queryCatalogLibrary(visibleRecords,profiles,filters),[visibleRecords,profiles,filters]);
   const displayItems=useMemo(()=>mode==="recent"?[...result.items].sort((a,b)=>recentIds.indexOf(a.id)-recentIds.indexOf(b.id)):result.items,[mode,result.items,recentIds]);

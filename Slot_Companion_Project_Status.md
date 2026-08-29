@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**P-WORLD 圖文中文攻略 Scale Pilot（5 + 20 + 25）**
+**P-WORLD 圖文中文攻略 Full Catalog Expansion（202 / 202）**
 
-Status：**既有五台與第二批 20 台已通過手機驗收；第三批 25 台已完成程式、真實來源、可重現容量 audit、工程 QA 與固定 dev Preview 自動 QA，等待手機快速抽查**
+Status：**全 202 台共用圖文 pipeline、IndexedDB Guide cache、真實來源與容量 audit、工程 QA 已完成；等待固定 dev Preview 最終自動驗證**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### P-WORLD 圖文中文攻略 Full Catalog Expansion（2026-08-30）
+- 取消歷史 50 台 registry 的功能 gate；Catalog 目前 **202 / 202 台**均使用相同的 official-section、evidence-gated 圖文 parser／compiler／materializer，沒有逐台新增 UI 或 parser 特例。
+- Machine Guide compiler revision 更新為 `2026-08-30-visual-guide-all-catalog-15`，visual asset revision 更新為 `visual-assets-4`。只使舊 Guide cache 失效；既有 Session snapshot、G 數、事件、Choice、自訂記錄與歷史均不改寫。
+- 完整 Machine Guide JSON 由 localStorage 遷移到 browser IndexedDB `slot-companion-machine-guides`；成功遷移後只移除該 Guide 的舊大型 cache，保留小型狀態 marker。Session、今日紀錄、Catalog 與其他 localStorage key 不受影響；無 IndexedDB 時保留安全 localStorage fallback。
+- 全量節流真實來源 audit：**202 / 202 成功、0 來源失敗、3,140 張合規候選、2 台基本記錄模式、79 台具至少一個既有安全 estimator metric**。
+- 全量 source-only materialization audit：**202 / 202 Guide 成功、3,133 張可用圖片、7 張來源／格式失敗而安全排除、403,968,676 bytes（約 385.3 MiB）、0 capacity warning**。未保存來源 HTML 或圖片；本輪 audit 不寫入雲端。
+- 所有機台在 Vercel 以使用者建立／重新整理 Guide 時按需 materialize 到既有 private Supabase bucket；沒有假裝 3,133 張已全部預先上傳。來源失敗時維持既有 fallback 與安全排除。
+- 新增全 202 台共用 visual pipeline regression、IndexedDB 遷移與 Session key 不受影響測試；完整 automated tests **312 / 312 passed**。
+- 最終工程 QA：lint 通過；typecheck 通過；Next.js 16.3.2 webpack production build 通過。localhost production smoke 的 `/`、`/catalog`、`/guides/machine-1y0erql`、`/records` 均 HTTP 200。
+- 可重現報告：`reports/visual-guide-catalog-source-audit.json`、`reports/visual-guide-catalog-materialization-audit.json`。
 
 ### P-WORLD 圖文中文攻略 Scale Pilot — 第三批 25 台（2026-08-30）
 - 第二批手機快速抽查已由使用者確認通過：A-type／Bonus 與複雜 CZ／AT／ART 代表頁的圖片載入、中文區段順序及 Session 內指南入口均可用；第二批正式完成手機驗收。
@@ -1264,9 +1275,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 45. 圖片來源容器本身不等於可保存內容；visual parser 必須沿用官方 section boundary，排除 BBS／玩家投稿／廣告，並保存 source page、source image URL、caption、section ownership 與擷取時間。
 46. 第三批 Scale Pilot 使圖文 registry 達 50 / 202 台；第三批 source-only audit 為 388 張約 47.4 MiB，固定 Preview runtime 實際保留 387 張。來源圖片可用性可能隨時間變動，runtime 應以安全取得結果為準，不為追求 audit 數量補猜內容。
 47. 同一瀏覽器累積大量完整 Machine Guide JSON 會觸及 localStorage quota；圖片使用 private Supabase Storage 並不能解決 Guide JSON 本身的 browser-local 容量。後續擴張應優先採 IndexedDB 或雲端 Guide persistence，且不得清除既有 Session／Guide 資料作為日常解法。
+48. 全 Catalog source-only audit 顯示 202 台合計約 385.3 MiB 圖片；適合採「使用者建立／重新整理時按需 materialize」，不應把全部圖片預先下載到 browser，也不能把 source-only audit 誤稱為雲端預熱完成。
+49. Machine Guide JSON 已移至 IndexedDB；這解決同瀏覽器大量 Guide 的 localStorage quota blocker，但仍不是跨裝置同步或雲端 Guide persistence。
 
 ## Current Work
-**P-WORLD 圖文中文攻略 Scale Pilot 第二批 20 台已通過手機快速抽查；第三批 25 台已完成 registry、兩輪 source-only audit、工程 QA、dev 部署與固定 Preview 自動回歸，等待手機快速抽查。**
+**P-WORLD 圖文中文攻略已擴張到全 202 台；真實來源／圖片容量 audit 與 IndexedDB persistence 已完成，正在完成最終工程 QA、dev 部署與固定 Preview 自動回歸。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1276,16 +1289,16 @@ v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
 
 v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 
-Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local cache，不把攻略欄位寫入 Catalog JSON。本輪圖文 registry 為 50 台，圖片資產使用 private Supabase Storage；其餘 152 台不在 registry。第三批已揭露 Guide JSON localStorage 容量邊界，尚未實作 IndexedDB／雲端 Guide persistence。
+Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 第三批 25 台固定 Preview 與手機驗收
+### 全 Catalog 固定 Preview 最終驗證
 
-Status：**工程與固定 Preview 自動 QA 通過；等待手機快速抽查，尚未人工核准。**
+Status：**全量 source／materialization audit 通過；等待最終部署與固定 Preview 自動 QA。**
 
-1. 使用者以固定 Preview 快速抽查第三批的 A-type `machine-1jurstr` 與複雜 AT `machine-5ilch3`（或 `machine-1m0hi5t`），確認圖片載入、中文區段順序與 Session 內指南入口。
-2. 第三批人工通過後，再討論 Guide JSON 改採 IndexedDB 或雲端 persistence 的最小版本；在容量方案確定前不擴張其餘 152 台。
-3. 不部署 Production，也不 merge `main`；不得以清除既有 localStorage／Session／Guide cache 作為容量解法。
+1. 完成 lint、typecheck、完整 tests、production build 與 localhost smoke。
+2. Push `dev` 後等待固定 Preview Ready，抽查既有 Pilot、歷史 registry 外機種、IndexedDB cache 與 Session drawer。
+3. 不部署 Production，也不 merge `main`；不以清除既有 Session 或 localStorage 作為容量解法。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

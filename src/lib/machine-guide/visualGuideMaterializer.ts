@@ -1,6 +1,6 @@
 import type { MachineGuide,MachineGuideImage } from "../../types/machineGuide.ts";
 import { supabaseServerHeaders } from "../catalog/supabaseAuth.ts";
-import { isVisualGuidePilotCatalog,VISUAL_GUIDE_BUCKET,VISUAL_GUIDE_MAX_IMAGE_BYTES,visualGuideAssetId,visualGuideAssetUrl,visualGuideObjectPath } from "./visualGuide.ts";
+import { VISUAL_GUIDE_BUCKET,VISUAL_GUIDE_MAX_IMAGE_BYTES,visualGuideAssetId,visualGuideAssetUrl,visualGuideObjectPath } from "./visualGuide.ts";
 import { buildVisualGuideAssetManifest,buildVisualGuideAssetReport,uniqueVisualGuideImages } from "./visualGuideGovernance.ts";
 
 type CloudConfig={url:string;key:string};
@@ -68,7 +68,7 @@ async function materializeOne(catalogId:string,image:MachineGuideImage,config:Cl
 }
 
 export async function materializeVisualGuideAssets(guide:MachineGuide,environment:ServerEnvironment=process.env,request:Requester=fetch){
-  if(!isVisualGuidePilotCatalog(guide.catalogId)||!guide.images?.length)return guide;
+  if(!guide.catalogId||!guide.images?.length)return guide;
   const originalImageCount=guide.images.length,images=uniqueVisualGuideImages(guide.images),config=cloudConfig(environment),warnings:string[]=[];
   if(config)try{await ensureBucket(config,request)}catch(error){warnings.push(error instanceof Error?error.message:"Supabase 圖片儲存初始化失敗");}
   const canStore=config&&!warnings.length?config:null,next:MachineGuideImage[]=[];
