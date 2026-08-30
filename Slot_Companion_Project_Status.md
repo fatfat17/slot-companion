@@ -33,6 +33,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Production Estimator G Denominator Hotfix（2026-08-30，dev 等待 Preview 驗收）
+- 正式站實戰回報：Machine Guide Session 先切換至 CZ／AT 後再把主 G 更新到 2,000G，畫面總觀測已是 2,000G，但 Estimator 的 `observedNormalGame` 分母仍停在較早的 60G，因而持續顯示「還需要 540G」。
+- 根因確認：狀態按鈕只保存當下狀態，沒有保存每段 CZ／AT 的起訖 G；舊邏輯卻把使用者在非通常狀態下輸入的整段主 G 增量排除於 Estimator 分母，造成分母凍結。這不是 Catalog／P-WORLD 設定表缺失，也不是 localStorage 畫面快取。
+- 修正後，Machine Guide 建立的單一主 G tracker 作為共同可觀測遊玩分母；CZ／AT 狀態切換不再凍結主 G 的 Estimator 進度。既有 active Session 不需刪除或重建，畫面會以已保存的 `observedTotalGame` 即時恢復正確進度；後續主 G 更新也會維持同步。
+- Verified／legacy Profile 若具有既有獨立測量語意，仍保留原本的狀態分母行為；Setting Estimator 公式、minimum sample、benchmark、Control Evidence Gate 與事件 numerator 均未修改。
+- 新增回歸：舊資料為 `observedTotalGame=2,000`、`observedNormalGame=60`、目前狀態 AT、主要 AT 4 次時，readiness 必須使用 2,000G、達到 ready 並產生參考分布；下一次 +10G 後共同分母為 2,010G。
+- QA：lint 通過、typecheck 通過、完整 automated tests **350 / 350 passed**、Next.js 16.3.2 webpack production build 通過。預設 Turbopack 仍因受限 host 的 CSS worker 無法 bind port，沿用既有 webpack production QA 路徑。
+- 尚未完成：commit／push、固定 dev Preview smoke 與使用者手機複驗；此項不得標記為 Production 已修正。
+
 ### Production Launch（2026-08-30）
 - 使用者明確核准正式上線；當前 `dev` working release 以 non-fast-forward release commit `d2b9a97` 合併並 push 至 GitHub `main`。
 - Vercel Production 已由 `main` 自動部署完成，deployment 狀態為 **Ready**；固定正式網址為 `https://slot-companion.vercel.app`，不是隨機 deployment URL。
@@ -1416,7 +1425,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 66. 正式網站可公開免登入使用；GitHub／Vercel 帳號只負責管理與部署。正式 Production 仍需持續監控外部 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的來源或服務變動。
 
 ## Current Work
-**正式 Production 已上線並完成自動 smoke；目前進入上線後監測與實戰回饋階段，不自行開始新版本。**
+**正式 Production 已上線；目前處理實戰發現的 Estimator 主 G 分母凍結 hotfix，修正只進 `dev`，等待 Preview 驗收後才可考慮再次發佈 Production。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1429,14 +1438,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Production 上線後監測與實戰回饋
+### Estimator 主 G hotfix Preview 驗收
 
-Status：**正式網站已上線；下一個產品版本待使用者討論與核准。**
+Status：**本機修正與完整工程 QA 通過；待 push 固定 dev Preview 並驗證 2,000G／4 次事件案例。**
 
-1. 使用正式網址進行實體手機與日本現場使用，回報辨識、指南、Session、Estimator、附近店家與離線包的實際問題。
-2. 監看 Vercel Function、Supabase Storage／Database、OpenAI request 與外部資料來源錯誤；不因上線而放寬 identity、evidence 或 estimator safety gate。
-3. 若需自訂網域，可另行設定；目前 `slot-companion.vercel.app` 已可長期作為固定公開入口。
-4. 下一版仍由 `dev` 開發、Preview 驗收，使用者明確核准後才可 merge／deploy 至 `main` Production。
+1. Push `dev`，等待固定 Preview `https://slot-companion-git-dev-ben-liu.vercel.app` Ready。
+2. 自動驗證 Session 主 G、CZ／AT 狀態與 Estimator readiness 不再分離；再由使用者以手機既有案例快速複驗。
+3. 未經使用者明確核准，不 merge／deploy 至 `main` Production；正式網址目前仍是修正前版本。
+4. Hotfix 驗收完成後回到 Production 上線後監測與實戰回饋，不自行開始其他版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1528,6 +1537,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**完成固定 dev Preview 自動 QA 後，等待使用者驗收附近店家與 Session 場景拍照；不自行開始下一版本。**
+**將 Estimator 主 G 分母 hotfix push 至固定 dev Preview，完成自動 smoke 後等待使用者手機複驗；不自行修改 `main` 或開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
