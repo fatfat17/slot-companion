@@ -1295,6 +1295,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 - localhost production smoke：`/`、`/halls`、`/catalog`、`/identify`、`/records` 均 HTTP 200；空白 Scene API request 正確回 HTTP 400。
 - localhost 390 × 844：`豐州` 可正規化為 `豊洲`，常用地區捷徑與 Google Maps 直接搜尋連結正常；頁面寬度 390 / 390，無水平溢出，console error／warning 0。
 - AI 回答排版、場景候選白名單、未知 control rejection、人工確認後才記錄等 regression tests 均通過。場景照片的真實相機／手機 AI 辨識仍待固定 Preview 人工抽查，本項不冒充實體手機驗收。
+- 固定 dev Preview 已更新至產品 commit `e0ba649`；390 × 844 的 `/halls` 可正規化 `豐州` → `豊洲`、直接開啟 Google Maps，無水平溢出且 console error／warning 0。新 Scene API 與 Session UI 已隨同一 build 部署；未使用使用者照片做自動辨識。
 
 ## Important Findings
 1. Current Machine G ≠ Observed Session G
@@ -1359,7 +1360,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 60. iPhone Safari 可能阻擋由 GPS callback 非同步開啟的新分頁；附近店家應以正常使用者點擊連結把位置處理交給 Google Maps，不需要 App 自行取得座標。
 
 ## Current Work
-**附近店家搜尋修正、AI 回答排版與 Session 場景拍照辨識已完成實作與本機 QA；正在進行 dev push、固定 Preview 自動驗證，完成後等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
+**附近店家搜尋修正、AI 回答排版與 Session 場景拍照辨識已完成實作、完整 QA、dev push 與固定 Preview 自動驗證；目前等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1374,7 +1375,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 等待 Nearby Halls Search Polish & Session Scene AI Preview／手機驗收
 
-Status：**程式、完整 tests 與 production build 已完成；待 dev push、固定 Preview 自動 QA 與使用者手機抽查。**
+Status：**程式、完整 tests、production build、dev push 與固定 Preview 自動 QA 已完成；待使用者手機抽查。**
 
 1. 從首頁進入附近店家，以「豐州」或快捷地區確認日文轉換，並確認 Google Maps 按鈕可直接開啟附近搜尋。
 2. 在有 operational controls 的 Session 拍一張清楚正式場景；確認 AI 只提出該 Session 既有按鈕，且必須人工確認後才記錄。
