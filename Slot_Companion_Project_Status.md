@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **Catalog Covers, Navigation & Offline Pack Management**
 
-Status：**功能與本機工程 QA 已完成；等待固定 dev Preview 自動 QA 與手機人工驗收**
+Status：**功能、本機工程 QA 與固定 dev Preview 自動 QA 已完成；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -40,7 +40,10 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - YouTube 遊玩影片依產品決定本輪不做；沒有加入搜尋、嵌入或第三方影片資料。
 - 本輪新增封面 path／ownership gate、lazy same-origin UI、返回階層、旅行包封面／更新／刪除安全 regression。lint 與 typecheck 通過；完整 automated tests **349 / 349 passed**；Next.js 16.3.2 webpack production build通過。預設 Turbopack 在目前受限 host 仍因 CSS worker 無法 bind port，沿用既有 webpack production QA 路徑。
 - localhost production smoke：`/`、`/catalog`、`/catalog/machine-1ar2ivp`、`/guides/machine-1ar2ivp` 均 HTTP 200；正確 Catalog-owned P-WORLD 封面回傳 JPEG 200、長效 cache header 與 `nosniff`，錯誤機台／圖片配對回 400。
-- 尚待：固定 dev Preview 的 390 × 844／desktop 自動瀏覽器 QA，以及使用者手機抽查返回流程、卡片封面與旅行包更新／刪除。以上本機 QA 不冒充實體手機人工驗收。
+- 產品 commit `f3cae0b` 已 push 至 `origin/dev`，固定 dev Preview 已載入本次版本。390 × 844 自動 QA：首屏 Catalog 封面均可由同源 route 載入、沒有圖片失敗或水平溢出；Catalog Detail 返回 `/catalog`，完整 Guide 返回所屬 `/catalog/[id]`，無障礙標籤分別為「返回機種資料庫」與「返回機種詳細」。
+- 固定 Preview 的旅行包管理可展開顯示 **5 台／125 個離線項目／37.8 MB 網站資料**、更新時間與保存結果；更新與刪除入口均存在。本輪沒有替使用者按下刪除，以免破壞既有手機離線資料。
+- 1280 × 900 桌面 QA 顯示實際機台縮圖正常載入、卡片尺寸穩定且沒有水平溢出；本輪 Preview console error／warning 為 0。以上為自動瀏覽器 QA，不冒充實體手機人工驗收。
+- 尚待：使用者手機抽查 Catalog 封面、詳情／指南返回流程、旅行離線包更新，以及在願意清除該裝置旅行包時人工驗證刪除。YouTube 仍未開始。
 
 ### Nearby Halls Area Search & Inventory（2026-08-30）
 - 手機 QA 發現完整英文地址會被整串交給 P-WORLD，導致「地址越完整反而越難找到」。本輪新增日本郵便官方 `KEN_ALL_ROME` 郵遞資料索引：**124,788 筆**，以約 **1.3 MiB Brotli** 檔案只供 server route 使用，不把完整地址庫送進 browser。
