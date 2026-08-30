@@ -9,7 +9,7 @@ Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Pr
 
 目前核准穩定基準：**v0.2.3.1**
 
-正式 Production 基準：**release commit `d2b9a97`（由當前 `dev` working release 合併至 `main`）**
+正式 Production 基準：**release commit `ee855e8`（Estimator 主 G 分母修正與 Session G 輸入流程由 `dev` 合併至 `main`）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -33,15 +33,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
-### Session G Input Flow Polish（2026-08-30，dev 自動 QA 通過，等待手機複驗）
+### Session G Input Flow Polish（2026-08-30，已核准 Production 發佈）
 - Session 尚未設定起點時，不再先顯示容易誤解的大型 `0 G`；第一個主要操作改為「現在機台幾 G？」並提示先輸入坐下時的機台數字。
 - 設定起點後，畫面依序顯示「更新目前 G」、大型「機台目前 G」、單手可按的 `+10`，以及獨立的「本 Session 已玩 X G」，清楚區分機台絕對 G 與本次實際增量。
 - 玩家介面移除 `baseline` 等工程術語，改用「坐下時」「設定起點」「本 Session 已玩」；其他 Machine Profile tracker 仍保留相容呈現。
 - 本次只調整 G 數輸入順序與呈現，不修改 Session 儲存、Estimator 公式、minimum sample、Counter、Capability Contract 或既有紀錄。
 - QA：lint、typecheck 通過；完整 automated tests **351 / 351 passed**；Next.js 16.3.2 webpack production build通過。localhost 390×844 自動瀏覽器流程以 200G 設定起點、按 `+10` 後正確顯示機台目前 210G／本 Session 已玩 10G，reload 後資料保持。此為自動 QA，不冒充實體手機人工驗收。
-- Git／Preview：產品 commit `f6fedb5` 已 push 至 `origin/dev`，固定 dev Preview 已切換至新版。部署後自動 smoke 確認未設定起點的 Session 顯示「現在機台幾 G？」與正確設定起點 modal；既有 1,100G Session 則顯示「機台目前 G 1,100／坐下時 0 G／本 Session 已玩 1,100 G」及 `+10`，未修改該 Session 資料。此項等待使用者實體手機複驗。
+- Git／Preview：產品 commit `f6fedb5` 已 push 至 `origin/dev`，固定 dev Preview 已切換至新版。部署後自動 smoke 確認未設定起點的 Session 顯示「現在機台幾 G？」與正確設定起點 modal；既有 1,100G Session 則顯示「機台目前 G 1,100／坐下時 0 G／本 Session 已玩 1,100 G」及 `+10`，未修改該 Session 資料。使用者已明確要求更新正式站，release merge commit 為 `ee855e8`。
 
-### Production Estimator G Denominator Hotfix（2026-08-30，dev 自動 QA 通過，等待手機複驗）
+### Production Estimator G Denominator Hotfix（2026-08-30，已核准 Production 發佈）
 - 正式站實戰回報：Machine Guide Session 先切換至 CZ／AT 後再把主 G 更新到 2,000G，畫面總觀測已是 2,000G，但 Estimator 的 `observedNormalGame` 分母仍停在較早的 60G，因而持續顯示「還需要 540G」。
 - 根因確認：狀態按鈕只保存當下狀態，沒有保存每段 CZ／AT 的起訖 G；舊邏輯卻把使用者在非通常狀態下輸入的整段主 G 增量排除於 Estimator 分母，造成分母凍結。這不是 Catalog／P-WORLD 設定表缺失，也不是 localStorage 畫面快取。
 - 修正後，Machine Guide 建立的單一主 G tracker 作為共同可觀測遊玩分母；CZ／AT 狀態切換不再凍結主 G 的 Estimator 進度。既有 active Session 不需刪除或重建，畫面會以已保存的 `observedTotalGame` 即時恢復正確進度；後續主 G 更新也會維持同步。
@@ -50,7 +50,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - QA：lint 通過、typecheck 通過、完整 automated tests **350 / 350 passed**、Next.js 16.3.2 webpack production build 通過。預設 Turbopack 仍因受限 host 的 CSS worker 無法 bind port，沿用既有 webpack production QA 路徑。
 - Git／Preview：修正 commit `468ab8c` 已 push 至 `origin/dev`；固定 dev Preview 已載入並完成 390×844 自動瀏覽器重現。
 - Preview 實測：先保存 600G baseline、切換 AT，再更新目前 G 至 2,600G，畫面與 Estimator 均使用 2,000G；記錄主要 AT 4 次後即顯示設定 1～6 參考分布（判斷力中 44%），不再停在舊 600G。此項是自動 QA，不冒充實體手機人工驗收。
-- 尚未完成：使用者手機複驗與 Production 發佈；正式站目前仍是修正前版本，不得標記為 Production 已修正。
+- 使用者已明確要求將本 hotfix 與 Session G 輸入流程一併更新到正式站；release merge commit 為 `ee855e8`，正式部署完成狀態需於 Production smoke 後記錄。
 
 ### Production Launch（2026-08-30）
 - 使用者明確核准正式上線；當前 `dev` working release 以 non-fast-forward release commit `d2b9a97` 合併並 push 至 GitHub `main`。
@@ -1547,6 +1547,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**將 Session G 輸入流程與 Estimator 主 G 分母 hotfix push 至固定 dev Preview，完成自動 smoke 後等待使用者手機複驗；不自行修改 `main` 或開始下一版本。**
+**等待本次 `main` release 的 Vercel Production deployment Ready，完成正式網址 smoke；不開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
