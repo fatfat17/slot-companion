@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**Nearby Halls & Session AI Companion MVP（等待手機人工驗收）**（`dev`）。
+目前開發版本：**Nearby Halls Search Polish & Session Scene AI（等待 Preview／手機驗收）**（`dev`）。
 
 ## 本機啟動
 
@@ -38,6 +38,8 @@ pnpm dev
 21. 「旅行離線包」會把選定機台的 Guide JSON、Catalog／Guide 頁面、共用頁面資產與指南圖片保存到目前裝置，供旅途中重新開啟；舊版 Profile 玩家入口已從主要流程移至相容區。
 22. 首頁以「附近店家」取代舊晚上撿台入口。App 使用 P-WORLD 的都道府縣、店名／地址與機種條件找候選店家；Catalog Detail 可直接帶入正式機種名稱反查設置店家，導航使用 Google Maps 地址搜尋。
 23. Session 的「問 AI」已接上 server-side OpenAI Responses API。回答只使用目前 Session snapshot 與已整理 Machine Guide，不能修改紀錄，也不可補猜來源沒有的機率、天井、Zone 或設定差。
+24. AI drawer 可拍攝／選擇目前遊戲畫面；圖片先在 client 壓縮，AI 只可比對該 Session 已有的 operational controls。候選必須由使用者確認後才記錄或切換狀態，圖片不保存。
+25. 附近店家支援常用地區與有限中文／英文地名轉日文查詢；Google Maps 按鈕直接由使用者點擊開啟，位置處理由 Maps 負責，App 不保存座標。
 
 ## 資料與限制
 
@@ -71,6 +73,7 @@ pnpm dev
 - 既有三台 placeholder Profile 與其中的 **TEST DATA** 只供既有流程／測試使用，不得視為真實機種資料。
 - API key 只可放在 server-side `.env.local`，不得提交 Git。
 - AI 陪玩模型可用 server-side `OPENAI_SESSION_COMPANION_MODEL` 集中設定；未設定時沿用 Machine Guide／Identification model。AI 問答不保存在 localStorage，重新開啟 drawer 會重新開始。
+- Session 場景辨識模型可用 server-side `OPENAI_SESSION_SCENE_MODEL` 集中設定；未設定時沿用 Companion／Guide／Identification model。辨識照片只作暫時 preview，不進 Session 或長期儲存。
 - 附近店家 MVP 不維護自己的店家座標資料庫，也不宣稱 App 內的精確距離排序。P-WORLD 負責公開店家／設置機種候選，Google Maps 負責使用裝置位置與導航；營業與設置狀況仍以現場為準。
 - 繁中摘要可選擇設定 `OPENAI_MACHINE_GUIDE_MODEL`；未設定時沿用辨識模型。沒有 API key、服務失敗或輸出未通過來源驗證時，自動使用規則式繁中指南，不阻擋 P-WORLD Guide。
 - Estimator 對相同 numerator／denominator／value mode 的重複 benchmark 只採用一次；若同一觀測被映射到互相衝突的設定理論值，整組停用，不重複加權。Evidence 標籤優先顯示實際具名 Session control。

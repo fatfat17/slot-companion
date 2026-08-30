@@ -18,6 +18,7 @@ import { loadCustomRecords, replaceCustomRecord, type CustomRecordDefinition } f
 import { CustomRecordEditor } from "./CustomRecordEditor";
 import { AICompanionDrawer } from "./AICompanionDrawer";
 import type { SessionCompanionContext } from "@/lib/ai/companion";
+import type { SessionSceneContext } from "@/lib/ai/scene";
 
 type EditTarget = { kind: "tracker"; key: string } | { kind: "medals" } | null;
 const time = (iso:string) => new Intl.DateTimeFormat("zh-TW",{hour:"2-digit",minute:"2-digit"}).format(new Date(iso));
@@ -68,6 +69,8 @@ export function SessionScreen({ id }: { id: string }) {
   const observedTotal=metricValue("observedTotalGame");
   const guide=machine.sessionGuide;
   const companionContext:SessionCompanionContext={machineName:machine.nameZh,currentState:uiModel.gameStates.find(state=>state.value===session.gameState)?.label??session.gameState,observedGame:observedTotal,investmentYen:session.investmentYen,medals:session.medals,records:uiModel.recordControls.map(control=>({label:control.counter?.labelZh??control.capability.labelZh,value:controlValue(control)})),guide:guide?{corePlay:guide.corePlay,keyThings:guide.keyThings.map(item=>`${item.labelZh}：${item.meaning}；${item.recordWhen}`),events:guide.events.map(item=>({name:item.labelZh,whatToSee:item.whatToSee,countingRule:item.countingRule})),sourceName:guide.sourceName,retrievedAt:guide.retrievedAt}:null};
+  const sceneContext:SessionSceneContext|undefined=uiModel.recordControls.length?{machineName:machine.nameZh,currentState:companionContext.currentState,controls:uiModel.recordControls.map(control=>({id:control.id,labelZh:control.counter?.labelZh??control.capability.labelZh,labelJa:control.counter?.labelJa??control.capability.labelJa,controlType:control.counter?.type==="choice"?"choice":control.counter?.type==="count"?"count":"event",recognition:control.counter?.recognition??control.capability.playerWhen??"",stateEffect:control.capability.stateEffect??control.counter?.eventState??null,availability:"operational"}))}:undefined;
+  function confirmScene(controlId:string,action:"record"|"state"){const control=uiModel?.recordControls.find(item=>item.id===controlId);if(!control)return;if(action==="state"){const state=control.capability.stateEffect??control.counter?.eventState;if(state)setGameState(state);return}recordControl(control)}
   const showStateBar=uiModel.legacy||uiModel.gameStates.length>1;
   const renderQuickControl=(control:SessionRecordControl)=><article className={`quick-record-card ${control.counter?.type==="choice"?"is-choice":""}`} key={control.id}><button className="quick-record-main" onClick={()=>recordControl(control)}><small>{controlType(control)}</small><strong>{control.counter?.labelZh??control.capability.labelZh}</strong><span>{controlValue(control)}</span></button>{control.counter?.type!=="choice"&&<button className="quick-record-correct" onClick={()=>correctControl(control)} disabled={controlValue(control)==="0 次"}>−1 修正</button>}</article>;
   return <>
@@ -97,7 +100,7 @@ export function SessionScreen({ id }: { id: string }) {
     {modeOpen&&<div className="modal-backdrop" onClick={()=>setModeOpen(false)}><div className="modal" onClick={event=>event.stopPropagation()}><p className="eyebrow">DISPLAY MODE</p><h2>切換使用模式</h2><p className="conflict-copy">只改變畫面資訊量；G 數、投入、持枚與所有事件紀錄都會保留。</p><SessionModePicker lastMode={lastMode} currentMode={sessionMode} onSelect={switchMode}/><button className="secondary-button mt-3" onClick={()=>setModeOpen(false)}>取消</button></div></div>}
     {customOpen&&<div className="modal-backdrop" onClick={()=>setCustomOpen(false)}><div className="modal" onClick={event=>event.stopPropagation()}><CustomRecordEditor machineId={machine.id} definitions={customs} onChange={updateCustomRecords} onClose={()=>setCustomOpen(false)}/></div></div>}
     {guideOpen&&<SessionGuideDrawer guide={guide} machine={machine} state={session.gameState} recordControls={uiModel.recordControls} onClose={()=>setGuideOpen(false)}/>}
-    {drawer&&<AICompanionDrawer context={companionContext} onClose={()=>setDrawer(false)}/>}
+    {drawer&&<AICompanionDrawer context={companionContext} sceneContext={sceneContext} onConfirmScene={confirmScene} onClose={()=>setDrawer(false)}/>}
     {toast&&<div className="toast">{toast}</div>}
   </>;
 }

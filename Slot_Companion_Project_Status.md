@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Nearby Halls & Session AI Companion MVP**
+**Nearby Halls Search Polish & Session Scene AI**
 
-Status：**功能、本機工程 QA、dev push 與固定 Preview 自動 QA 已完成；等待手機人工驗收**
+Status：**功能與本機工程 QA 已完成；等待 dev Preview 自動 QA 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Nearby Halls Search Polish & Session Scene AI（2026-08-30）
+- iPhone Safari 的「附近店家」不再於非同步 GPS callback 開新視窗，改以正常連結直接交給 Google Maps 處理目前位置；App 不取得、保存或上傳座標。
+- P-WORLD 店家搜尋新增常用日本地區快捷項目，以及繁體中文／英文地名至日文查詢詞的有限別名轉換，例如 `豐州／Toyosu → 豊洲`、`澀谷／Shibuya → 渋谷`。轉換後會明確顯示實際搜尋詞，0 結果時提供可操作的替代方向。
+- AI Companion 回答新增安全文字格式化：支援短段落、條列與強調，不再把 `**` Markdown 符號原樣顯示；server prompt 同時要求不輸出 Markdown 表格或符號。
+- Session AI Companion 新增「拍現在畫面」與「從相簿選擇」。沿用既有 client-side 圖片壓縮、Vercel 相容上限與 server-only `OPENAI_API_KEY`；模型可由 `OPENAI_SESSION_SCENE_MODEL` 集中設定。
+- 場景辨識只能在該 Session snapshot 的 `operational` controls 內提出候選；AI 自創、read-only、unavailable 或其他機台 control ID 會被 server sanitizer 移除。低資訊／模糊／不唯一畫面維持 uncertain／unknown。
+- 辨識結果不會自動改狀態或計數。使用者必須按「確認並記錄」或「只切換狀態」才會寫入既有 Session；Choice 只會開啟既有選項。原始與壓縮圖片只作暫時 preview，不進 localStorage、Session、Catalog 或雲端圖片庫。
+- 回歸 QA 覆蓋地名轉換、Google Maps direct handoff、AI answer formatting、operational-only context、invented control rejection、人工確認與圖片不保存。lint **0 errors／0 warnings**、typecheck 通過、完整 automated tests **337 / 337 passed**；Next.js 16.3.2 webpack production build通過。預設 Turbopack build 在受限 host 因 CSS worker 無法 bind port，沿用專案既有 webpack production QA 路徑完成。
+- 尚未完成：固定 dev Preview deployment／自動瀏覽器 QA、實體手機 GPS／店家搜尋與真實場景照片辨識。不得把本機 automated QA 標成實體手機驗收。
 
 ### Nearby Halls & Session AI Companion MVP（2026-08-30）
 - 首頁移除「晚上撿台」主要入口，以「附近店家」取代；舊 `/hunter` route 暫時保留相容，不刪除歷史功能。
@@ -1280,6 +1290,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 - 1,100 通常 G／主要 AT 1 次可進入 estimator；完整 tests 286 / 286 passed ✅
 - 固定 dev Preview 已指向本次 commit；RE:3 Catalog Detail 在 390 × 844 無溢出或 console error ✅
 
+### Nearby Halls Search Polish & Session Scene AI（2026-08-30，自動 QA）
+- 工程檢查：lint **0 errors / 0 warnings**、typecheck 通過、完整 tests **337 / 337 passed**、Next.js 16.3.2 webpack production build 通過。
+- localhost production smoke：`/`、`/halls`、`/catalog`、`/identify`、`/records` 均 HTTP 200；空白 Scene API request 正確回 HTTP 400。
+- localhost 390 × 844：`豐州` 可正規化為 `豊洲`，常用地區捷徑與 Google Maps 直接搜尋連結正常；頁面寬度 390 / 390，無水平溢出，console error／warning 0。
+- AI 回答排版、場景候選白名單、未知 control rejection、人工確認後才記錄等 regression tests 均通過。場景照片的真實相機／手機 AI 辨識仍待固定 Preview 人工抽查，本項不冒充實體手機驗收。
+
 ## Important Findings
 1. Current Machine G ≠ Observed Session G
 2. 不同機種不能使用固定 Counter
@@ -1339,9 +1355,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 56. P-WORLD 可可靠提供公開店家候選、地址與設置機種搜尋，但目前沒有在 App 內使用可驗證的公開 GPS 距離 API；因此 MVP 不假算距離，由 Google Maps 接手裝置定位與導航。
 57. 店家設置資料具有時效性，Catalog → 店家反查只代表本次 P-WORLD 搜尋結果；不可保存成長期事實或取代現場確認。
 58. Session AI 陪玩是現有結構化指南的問答顯示層，不是新攻略來源；送出的 context 有長度與筆數上限，且 AI 無權改寫 Session 或 Estimator。
+59. Session 場景照片辨識只可比對當前 snapshot 已存在的 operational controls；AI 候選不是操作指令，必須由使用者確認才可記錄或切換狀態，圖片不得長期保存。
+60. iPhone Safari 可能阻擋由 GPS callback 非同步開啟的新分頁；附近店家應以正常使用者點擊連結把位置處理交給 Google Maps，不需要 App 自行取得座標。
 
 ## Current Work
-**Nearby Halls & Session AI Companion MVP 已完成實作、本機 QA、dev push 與固定 Preview 自動驗證；正在等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
+**附近店家搜尋修正、AI 回答排版與 Session 場景拍照辨識已完成實作與本機 QA；正在進行 dev push、固定 Preview 自動驗證，完成後等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1354,14 +1372,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 等待 Nearby Halls & Session AI Companion MVP 人工驗收
+### 等待 Nearby Halls Search Polish & Session Scene AI Preview／手機驗收
 
-Status：**程式、完整 tests、production build、localhost／P-WORLD 實頁 smoke、dev push 與固定 Preview 自動 QA 均已完成；等待使用者手機抽查。**
+Status：**程式、完整 tests 與 production build 已完成；待 dev push、固定 Preview 自動 QA 與使用者手機抽查。**
 
-1. 從首頁進入附近店家，以東京都與一台 Catalog 機種抽查 P-WORLD 候選、店家頁與 Google Maps 導航。
-2. 在實體手機允許一次定位，確認只在使用者點擊後開啟 Google Maps，拒絕權限時仍可手動搜尋。
-3. 在有 Machine Guide 的 Session 詢問「現在最該注意什麼」，確認回答使用該機種與目前紀錄；來源沒有資料的問題不可補猜。
-4. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
+1. 從首頁進入附近店家，以「豐州」或快捷地區確認日文轉換，並確認 Google Maps 按鈕可直接開啟附近搜尋。
+2. 在有 operational controls 的 Session 拍一張清楚正式場景；確認 AI 只提出該 Session 既有按鈕，且必須人工確認後才記錄。
+3. 以模糊或非場景照片抽查 uncertain／unknown，不得自動改寫 Session；關閉 drawer 後既有 G 數與計數不變。
+4. 實體店內拍攝仍應遵守店家規則；不部署 Production，也不 merge `main`，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1453,6 +1471,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待使用者驗收 Player Readiness & Travel Pack；不自行開始下一版本。**
+**完成固定 dev Preview 自動 QA 後，等待使用者驗收附近店家與 Session 場景拍照；不自行開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
