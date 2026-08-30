@@ -6,6 +6,7 @@ import type { MachineCatalogRecord } from "@/types/catalog";
 import type { MachineGuide } from "@/types/machineGuide";
 import { getGuideCacheState,loadCachedGuideAsync,type GuideCacheState } from "@/lib/machine-guide/storage";
 import { refreshCachedMachineGuide } from "@/lib/machine-guide/refresh";
+import { getGuideEstimatorSupport } from "@/lib/machine-guide/estimatorSupport";
 
 export function MachineGuideActions({record}:{record:MachineCatalogRecord}){
   const[cached,setCached]=useState<MachineGuide|null>(null),[cacheState,setCacheState]=useState<GuideCacheState>("missing"),[busy,setBusy]=useState(false),[error,setError]=useState(""),[checked,setChecked]=useState(false),router=useRouter();
@@ -13,10 +14,12 @@ export function MachineGuideActions({record}:{record:MachineCatalogRecord}){
   async function rebuild(navigate:boolean){setBusy(true);setError("");try{const guide=await refreshCachedMachineGuide(record.id);setCached(guide);setCacheState("current");if(navigate)router.push(`/guides/${encodeURIComponent(record.id)}`)}catch(reason){setError(reason instanceof Error?reason.message:"機台指南建立失敗。")}finally{setBusy(false)}}
   const pworld=/^https:\/\/(www\.)?p-world\.co\.jp\/machine\/database\/\d+\/?$/.test(record.sourceUrl);
   if(!checked)return<div className="notice mt-3">正在檢查此裝置的機台指南快取…</div>;
+  const estimatorSupport=cached?getGuideEstimatorSupport(cached):null;
   return <section className="guide-actions section">
     <div className="section-title"><h2>機台指南</h2><span>{cached?cached.status==="usable"?"可使用":"部分資料":"尚無資料"}</span></div>
     {cacheState==="stale"&&<div className="notice mb-3">此裝置的指南由舊版整理器建立，已停止載入。請重新建立指南；既有 Session 與遊玩紀錄不受影響。</div>}
     {cached?<>
+      <div className={`guide-estimator-support ${estimatorSupport!.status}`}><strong>{estimatorSupport!.status==="supported"?"✓ 支援設定參考":"遊玩紀錄模式"}</strong><p>{estimatorSupport!.summary}</p>{estimatorSupport!.labels.length?<small>{estimatorSupport!.labels.join("、")}</small>:null}</div>
       <Link className="primary-button" href={`/guides/${encodeURIComponent(record.id)}`}>查看機台指南</Link>
       {pworld&&<button className="secondary-button mt-3" disabled={busy} onClick={()=>rebuild(false)}>{busy?"正在重新整理…":"重新整理機台指南"}</button>}
       <p className="guide-cache-note">已保存在此瀏覽器 · 最後擷取 {new Date(cached.retrievedAt).toLocaleString("zh-TW")}</p>

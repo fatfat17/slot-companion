@@ -36,6 +36,11 @@ async function migrateLocalGuideCaches(db:IDBDatabase){
 export function getGuideCacheState(catalogId:string):GuideCacheState{if(typeof window==="undefined")return"missing";const raw=window.localStorage.getItem(guideCacheKey(catalogId));if(raw)return parseCurrentGuide(raw,catalogId)?"current":"stale";const indexed=markerState(catalogId);if(indexed!=="missing")return indexed;return window.localStorage.getItem(legacyGuideCacheKey(catalogId))!==null?"stale":"missing"}
 export function loadCachedGuide(catalogId:string):CachedMachineGuide|null{if(typeof window==="undefined")return null;const raw=window.localStorage.getItem(guideCacheKey(catalogId));return raw?parseCurrentGuide(raw,catalogId):null}
 export async function loadCachedGuideAsync(catalogId:string):Promise<CachedMachineGuide|null>{const local=loadCachedGuide(catalogId);if(local)return local;const db=await openGuideDatabase();if(!db)return null;try{await migrateLocalGuideCaches(db);const raw=await getRaw(db,catalogId);return raw?parseCurrentGuide(raw,catalogId):null}finally{db.close()}}
+export async function loadCachedGuidesAsync(catalogIds:string[]):Promise<Record<string,CachedMachineGuide>>{
+  if(typeof window==="undefined")return{};
+  const unique=[...new Set(catalogIds)],db=await openGuideDatabase(),entries:ReadonlyArray<readonly[string,CachedMachineGuide|null]>=db?await(async()=>{try{await migrateLocalGuideCaches(db);return Promise.all(unique.map(async id=>{const local=loadCachedGuide(id);if(local)return[id,local] as const;const raw=await getRaw(db,id);return[id,raw?parseCurrentGuide(raw,id):null] as const}))}finally{db.close()}})():unique.map(id=>[id,loadCachedGuide(id)] as const);
+  return Object.fromEntries(entries.filter((entry):entry is readonly[string,CachedMachineGuide]=>Boolean(entry[1])));
+}
 export async function getGuideCacheStateAsync(catalogId:string):Promise<GuideCacheState>{
   const localState=getGuideCacheState(catalogId);if(localState!=="missing")return localState;
   const db=await openGuideDatabase();if(!db)return"missing";

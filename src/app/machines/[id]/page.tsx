@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StartSession } from "@/components/StartSession";
 import { profileDraftRepository } from "@/lib/profile-builder/repository.server";
 import { buildMachineCardMetrics,isPublishedDraftMatch,verifiedOverviewSections } from "@/lib/machine-card/presentation";
+import Link from "next/link";
 
 export function generateStaticParams() { return machines.map((machine) => ({ id: machine.id })); }
 
@@ -15,6 +16,7 @@ export default async function MachinePage({ params, searchParams }: { params: Pr
     ["爽點", machine.funPoints], ["易誤會處", machine.pitfalls],
   ] as const;
   return <><PageHeader title={machine.nameZh} eyebrow="Machine Card" /><main className="page pt-5!">
+    <div className="notice legacy-profile-notice"><strong>舊版相容 Machine Card</strong><p>目前玩家流程已改用機台指南；此頁保留既有 Profile 與歷史相容性。</p>{machine.catalogId?<Link className="primary-button mt-3" href={`/catalog/${encodeURIComponent(machine.catalogId)}`}>前往機台指南</Link>:null}</div>
     <section className="machine-hero card" style={{"--machine-accent":machine.accent} as React.CSSProperties}>
       <span className="machine-orb">🎰</span><div><span className="badge">{machine.profileStatus.toUpperCase()}</span><h1>{machine.nameZh}</h1><p>{machine.nameJa}</p><small>{machine.manufacturer} · {machine.category}</small></div>
     </section>

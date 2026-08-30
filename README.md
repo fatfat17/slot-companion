@@ -2,7 +2,7 @@
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 
-目前開發版本：**Setting Estimator Coverage Expansion（102 / 202 台具安全 observation contract）**（`dev`）。
+目前開發版本：**Player Readiness & Travel Pack（等待 Preview 人工驗收）**（`dev`）。
 
 ## 本機啟動
 
@@ -33,11 +33,16 @@ pnpm dev
 16. 新增共用「新手術語」頁，並在完整指南、Session 指南與首頁提供入口；完整指南上方提供快速目錄，日文原始資料仍保留在查證區。
 17. 「遊玩記帳」可切換今天、近 7 天與全部紀錄，直接彙整 Session 的實際觀測 G、投入與最終持枚；不要求使用者重複抄寫 Session 結果。
 18. 首頁新增「快速中文攻略」入口。全 202 台 Catalog 均可按需將 P-WORLD 官方資料區的流程、CZ、AT／ART、Bonus 與打法圖片配進完整繁中指南；掲示板、留言、廣告、外站圖片與過小／過大圖片不會收錄。
+19. Catalog Detail 與完整 Guide 在開始 Session 前會先顯示「支援設定參考」或「遊玩紀錄模式」；只反映既有安全 observation contract，不改變 Estimator 公式或判斷門檻。
+20. Machine Catalog 可依「收藏」或「最近」循序更新多台指南；中斷或單台來源失敗時保留已完成進度，可從上次未完成項目繼續。
+21. 「旅行離線包」會把選定機台的 Guide JSON、Catalog／Guide 頁面、共用頁面資產與指南圖片保存到目前裝置，供旅途中重新開啟；舊版 Profile 玩家入口已從主要流程移至相容區。
 
 ## 資料與限制
 
 - Session 與今日紀錄保存在目前瀏覽器 localStorage；完整 Machine Guide JSON 改存 IndexedDB，並保留 localStorage 安全 fallback。兩者都不是跨裝置雲端同步。
 - 收藏、最近瀏覽／遊玩與每台機種的玩家資料庫偏好也只存在目前瀏覽器；清除瀏覽器資料或換裝置不會自動同步。
+- 旅行離線包使用目前瀏覽器的 IndexedDB 與 Cache Storage，不是帳號雲端同步；需先在線上完成準備。來源更新失敗時會保留上一份仍有效的 Guide，並列出未能離線保存的素材。
+- 多台指南更新採循序請求，不同時大量抓取來源；失敗項目可安全重試，已成功機台不會在同一批續傳時重做。
 - Catalog 視覺卡片使用本機 metadata 衍生的色彩與圖示，不使用 P-WORLD 或第三方機台圖片；日後若要加入正式圖片資產，需另行確認來源與授權。
 - v1 Guide cache 不會冒充 v2；需從 Catalog Detail 重新取得來源並編譯。
 - Session 開始時會保存當下的 capability、狀態與 Machine snapshot；日後指南更新不會靜默改寫既有 Session。
@@ -59,6 +64,8 @@ pnpm dev
 - 圖片在 Vercel 有 `SUPABASE_URL` 與 server-only Supabase secret 時按需寫入 private `machine-guide-assets` bucket，並依 Catalog ID 隔離；瀏覽器只透過同源圖片 route 讀取。每次完整成功重建會寫入 versioned manifest 並只清理同機台的過期圖片；若重建有任何圖片失敗，保留上一版資產且不做破壞性清理。沒有雲端設定時暫時回退來源即時讀取。Guide 本體仍是 browser-local IndexedDB cache，尚未跨裝置同步。
 - 目前多來源試點：`スマスロ バイオハザードRE:3`、`スマスロ やじきた道中記参る!`、`Lパチスロ 喰霊‐零‐Re`、`L 東京喰種`、`L ULTRAMAN 最終決戦`。其他 Catalog 機種仍沿用 P-WORLD 單一來源。
 - 設定可能性僅供參考，不是準確設定判定或獲利保證。
+- Session 前的 Estimator 支援提示只說明「目前是否有安全可用資料」；不表示樣本充足，也不改變 Session 內既有可信度曲線。
+- `/machines` 會導向玩家使用的 `/catalog`；舊 Machine Card 只保留直接網址、既有 Session 與歷史資料相容性。
 - 既有三台 placeholder Profile 與其中的 **TEST DATA** 只供既有流程／測試使用，不得視為真實機種資料。
 - API key 只可放在 server-side `.env.local`，不得提交 Git。
 - 繁中摘要可選擇設定 `OPENAI_MACHINE_GUIDE_MODEL`；未設定時沿用辨識模型。沒有 API key、服務失敗或輸出未通過來源驗證時，自動使用規則式繁中指南，不阻擋 P-WORLD Guide。

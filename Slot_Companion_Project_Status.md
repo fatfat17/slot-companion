@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Setting Estimator Coverage Expansion（102 / 202）**
+**Player Readiness & Travel Pack**
 
-Status：**全 202 台資料重跑、Estimator observation contract 擴張、工程 QA 與固定 dev Preview 自動驗證已完成**
+Status：**功能與本機工程 QA 已完成；等待固定 dev Preview 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Player Readiness & Travel Pack（2026-08-30）
+- 依使用者決策，本輪不修改 Setting Estimator 的可信度曲線、公式、minimum sample 或安全閘門；現有結果仍明確定位為參考推測。
+- Catalog Detail 與完整 Machine Guide 在建立 Session 前新增 Estimator 支援提示：只有既有 eligible metric 與 observation contract 完整時顯示「支援設定參考」，其餘顯示「遊玩紀錄模式」與實際缺口，不用進 Session 才發現無法計算。
+- Machine Catalog 新增收藏／最近機台的批次 Guide 更新。來源請求依序執行、不並發；進度保存於 browser localStorage，單台失敗不清除舊 Guide，且可從未完成項目續傳。
+- 新增旅行離線包：先更新選定 Guide，再將 Guide JSON 保存在既有 IndexedDB／localStorage fallback，並把 Catalog／Guide 頁面、核心 routes、Next.js 靜態資產及同源指南圖片保存於 Cache Storage。離線包只屬目前瀏覽器，不是跨裝置雲端同步。
+- Service Worker shell cache 更新為 `slot-companion-shell-v2026-08-30`，核心玩家 routes 納入版本化預快取；升級時保留 `slot-companion-trip-pack-*` 離線包，不清除 Session、Guide JSON、自訂記錄或其他使用者資料。
+- `/machines` 玩家入口改導向 `/catalog`；Catalog Detail 的舊 Machine Card 入口移入「舊版相容資料」，直接舊網址仍保留相容提示與回到機台指南的主要操作，既有 Session 不受影響。
+- 新增 estimator preflight、批次循序／續傳／partial failure、離線 URL／圖片 route、Service Worker cache preservation 與 legacy route regression tests；完整 automated tests **320 / 320 passed**，lint、typecheck 與 Next.js 16.3.2 webpack production build通過。
+- localhost production smoke 已確認 `/catalog` 顯示批次更新與旅行離線包，收藏狀態可切換且不影響既有 Guide／Session；`/machines` 相容入口導向玩家 Catalog。固定 dev Preview 與實體手機離線切換仍待本次 commit push 後驗收，不冒充人工驗收通過。
+- 資料保存位置：Guide JSON 為 browser IndexedDB（localStorage fallback）；批次進度與離線包 manifest 為 localStorage；頁面、共用資產與圖片為 Cache Storage。來源更新失敗時保留上一份有效 Guide，離線包會列出失敗素材。
 
 ### Setting Estimator Coverage Expansion（2026-08-30）
 - 在全 202 台 Machine Guide 資料完成後，新增共用 `small_role` observation module：只有完整設定 1～6 表格且角色名稱可由玩家直接觀察時，才建立來源可追溯的 Counter 與 `observedTotalGame` denominator。
@@ -1197,6 +1208,16 @@ Regression QA：
 
 ## Verified QA
 
+### Full Product Regression（2026-08-30，自動 QA）
+- `dev` 與 `origin/dev` 同步於 `b67fec9149d2033b4924afbc8583b232f3147a9d`；`main`／`origin/main` 維持 `3e6c5f4e1de6fa3448b3a0e046854ad37e8dc400`，未修改、未 merge。未追蹤的 `src/components/StartSession 2.tsx` 未碰觸。
+- 工程檢查：lint 通過、typecheck 通過、完整 tests **314 / 314 passed**、Next.js 16.3.2 webpack production build 通過。
+- localhost 390 × 844：首頁、Catalog、Catalog Detail、Guide empty state、AI 圖片入口、術語、今日紀錄、晚上撿台均正常且無水平溢出；Production build 的 development admin route 正確維持 404。
+- Catalog search regression：`BIG DREAM`、`big-dream` 均召回 `スマスロ ビッグドリーム THE GOLDEN PUSHER`；`Tokyo Ghoul` 召回 `L 東京喰種`。
+- 隔離 localhost Session 實測：模式選擇、baseline 100、`+10` 累積至 100 observed G、CZ／AT 各 1 次、終了畫面 Choice、Guide drawer、reload persistence、Summary 與 Records 全部一致；沒有清除或改寫使用者 Preview 資料。
+- 固定 dev Preview 390 × 844 與 1280 × 900：`/`、`/catalog`、`/identify`、`/glossary`、`/records`、`/guides/machine-1ar2ivp` 均可開啟、無水平溢出、console error／warning 0；manifest 可正常取得。本項為自動瀏覽器 QA，不冒充實體手機、相機或日本現場驗收。
+- QA 發現：東京喰種相容 Session 在最低 100G 門檻、CZ 1 次與 AT 1 次時即顯示「判斷力高 89%」。計算符合目前 `minimumSample` 與 confidence weight 實作，但產品呈現對小樣本過度樂觀，應在下一輪優先重新校準樣本可信度，不應把本次結果視為設定判定。
+- QA 發現：`public/sw.js` 的 cache namespace 仍為 `slot-companion-v0.2.2.1`，預快取路由仍是早期首頁／machines／identify／records／hunter，尚未覆蓋目前 Catalog／Guide 主流程與旅行前離線指南需求。
+
 ### Session / Measurement
 - Baseline 100 → Current 200 = observed 100G ✅
 - 坐下 280 → Current 430 = observed 150G ✅
@@ -1295,9 +1316,13 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 49. Machine Guide JSON 已移至 IndexedDB；這解決同瀏覽器大量 Guide 的 localStorage quota blocker，但仍不是跨裝置同步或雲端 Guide persistence。
 50. 完整設定 1～6 表格仍不等於一定可計算；只有具體可觀察小役或能唯一對應 operational event 的 metric 才能建立 canonical numerator。合成值、條件式機率與狀態內率必須繼續 blocked。
 51. Estimator coverage 應同時報告「來源有完整設定值」與「Session 有安全 observation contract」；本輪 102 / 202 可用，另外 67 台缺完整設定值、33 台缺唯一 numerator，不應用猜測追求 100%。
+52. Estimator 的 `minimumSample` 只代表 metric 可開始計算，不應直接等同「判斷力高」；多個剛達最低門檻的 observation 目前會快速累加 confidence weight，實測 100G／CZ 1／AT 1 即達 89%，需要另設總樣本可信度曲線與更保守的玩家文案。
+53. PWA manifest 可用不等於核心旅途流程可離線；現有 service worker 仍使用 v0.2.2.1 cache namespace，且未預快取 Catalog／Guide。赴日實測前應建立可驗證的離線指南包與版本化快取策略。
+54. 上述離線缺口已由 Player Readiness & Travel Pack 補上：service worker 使用新版 shell namespace，旅行包依收藏／最近機台保存頁面與指南圖片；仍必須先在線上準備，且不等於跨裝置同步。
+55. Profile 資料仍保留供舊 Session 與歷史相容，但玩家主要入口統一為 Machine Catalog → Machine Guide → Session；不應再把三台 legacy Profile 當成新的內容建立流程。
 
 ## Current Work
-**全 202 台機台資料與 Setting Estimator 涵蓋率擴張已完成工程 QA、dev 部署與固定 Preview 自動回歸。安全 coverage 為 102 / 202，未涵蓋機台仍保持停用；等待實際遊玩回饋。**
+**Player Readiness & Travel Pack 已完成實作與本機 QA；正在等待固定 dev Preview 與手機人工驗收。Estimator 安全 coverage 維持 102 / 202，公式與可信度曲線未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1310,13 +1335,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 等待實際遊玩回饋
+### 等待 Player Readiness & Travel Pack 人工驗收
 
-Status：**程式、202 台可重現 audit、完整 tests、production build、localhost smoke、dev 部署與固定 Preview 自動 QA 全部完成；沒有開始下一版本。**
+Status：**程式、完整 tests、production build 與 localhost smoke 已完成；待 commit／push 後確認固定 Preview，再由使用者進行手機與離線抽查。**
 
-1. 使用者日後在日本實際遊玩時，針對個別來源缺漏、翻譯不清、圖片失效或 observation mapping 使用既有 Guide 回報／重新整理功能校準。
-2. 圖文資產維持按需建立，不執行沒有使用需求的 202 台一次性雲端預熱。
-3. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
+1. 收藏 2～3 台機種後執行「準備旅行離線包」，再以飛航模式抽查 Catalog、完整 Guide 與指南圖片可重新開啟。
+2. 抽查支援與不支援 Estimator 的機台，在開始 Session 前分別顯示「支援設定參考」與「遊玩紀錄模式」。
+3. 確認批次更新中斷／來源失敗後可續傳，且既有 Session 與上一份有效 Guide 不受影響。
+4. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1408,6 +1434,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待使用者實際遊玩驗收 Setting Estimator Coverage Expansion；不自行開始下一版本。**
+**等待使用者驗收 Player Readiness & Travel Pack；不自行開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
