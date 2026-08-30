@@ -39,6 +39,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 玩家介面移除 `baseline` 等工程術語，改用「坐下時」「設定起點」「本 Session 已玩」；其他 Machine Profile tracker 仍保留相容呈現。
 - 本次只調整 G 數輸入順序與呈現，不修改 Session 儲存、Estimator 公式、minimum sample、Counter、Capability Contract 或既有紀錄。
 - QA：lint、typecheck 通過；完整 automated tests **351 / 351 passed**；Next.js 16.3.2 webpack production build通過。localhost 390×844 自動瀏覽器流程以 200G 設定起點、按 `+10` 後正確顯示機台目前 210G／本 Session 已玩 10G，reload 後資料保持。此為自動 QA，不冒充實體手機人工驗收。
+- Git／Preview：產品 commit `f6fedb5` 已 push 至 `origin/dev`，固定 dev Preview 已切換至新版。部署後自動 smoke 確認未設定起點的 Session 顯示「現在機台幾 G？」與正確設定起點 modal；既有 1,100G Session 則顯示「機台目前 G 1,100／坐下時 0 G／本 Session 已玩 1,100 G」及 `+10`，未修改該 Session 資料。此項等待使用者實體手機複驗。
 
 ### Production Estimator G Denominator Hotfix（2026-08-30，dev 自動 QA 通過，等待手機複驗）
 - 正式站實戰回報：Machine Guide Session 先切換至 CZ／AT 後再把主 G 更新到 2,000G，畫面總觀測已是 2,000G，但 Estimator 的 `observedNormalGame` 分母仍停在較早的 60G，因而持續顯示「還需要 540G」。
