@@ -33,7 +33,7 @@ pnpm dev
 16. 新增共用「新手術語」頁，並在完整指南、Session 指南與首頁提供入口；完整指南上方提供快速目錄，日文原始資料仍保留在查證區。
 17. 「遊玩記帳」可切換今天、近 7 天與全部紀錄，直接彙整 Session 的實際觀測 G、投入與最終持枚；不要求使用者重複抄寫 Session 結果。
 18. 首頁新增「快速中文攻略」入口。全 202 台 Catalog 均可按需將 P-WORLD 官方資料區的流程、CZ、AT／ART、Bonus 與打法圖片配進完整繁中指南；掲示板、留言、廣告、外站圖片與過小／過大圖片不會收錄。
-19. Catalog Detail 與完整 Guide 在開始 Session 前會先顯示「支援設定參考」或「遊玩紀錄模式」；只反映既有安全 observation contract，不改變 Estimator 公式或判斷門檻。
+19. Machine Catalog 卡片會依可重現 Control Audit 標示「支援設定參考」或「僅遊玩紀錄」，並可直接篩選目前 102 台支援／100 台不支援機種；Catalog Detail 與完整 Guide 在開始 Session 前仍會顯示對應提示。這只反映既有安全 observation contract，不改變 Estimator 公式或判斷門檻。
 20. Machine Catalog 可依「收藏」或「最近」循序更新多台指南；中斷或單台來源失敗時保留已完成進度，可從上次未完成項目繼續。
 21. 「旅行離線包」會把選定機台的 Guide JSON、Catalog／Guide 頁面、共用頁面資產與指南圖片保存到目前裝置，供旅途中重新開啟；舊版 Profile 玩家入口已從主要流程移至相容區。
 
