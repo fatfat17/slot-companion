@@ -33,6 +33,13 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Session G Input Flow Polish（2026-08-30，dev 自動 QA 通過，等待手機複驗）
+- Session 尚未設定起點時，不再先顯示容易誤解的大型 `0 G`；第一個主要操作改為「現在機台幾 G？」並提示先輸入坐下時的機台數字。
+- 設定起點後，畫面依序顯示「更新目前 G」、大型「機台目前 G」、單手可按的 `+10`，以及獨立的「本 Session 已玩 X G」，清楚區分機台絕對 G 與本次實際增量。
+- 玩家介面移除 `baseline` 等工程術語，改用「坐下時」「設定起點」「本 Session 已玩」；其他 Machine Profile tracker 仍保留相容呈現。
+- 本次只調整 G 數輸入順序與呈現，不修改 Session 儲存、Estimator 公式、minimum sample、Counter、Capability Contract 或既有紀錄。
+- QA：lint、typecheck 通過；完整 automated tests **351 / 351 passed**；Next.js 16.3.2 webpack production build通過。localhost 390×844 自動瀏覽器流程以 200G 設定起點、按 `+10` 後正確顯示機台目前 210G／本 Session 已玩 10G，reload 後資料保持。此為自動 QA，不冒充實體手機人工驗收。
+
 ### Production Estimator G Denominator Hotfix（2026-08-30，dev 自動 QA 通過，等待手機複驗）
 - 正式站實戰回報：Machine Guide Session 先切換至 CZ／AT 後再把主 G 更新到 2,000G，畫面總觀測已是 2,000G，但 Estimator 的 `observedNormalGame` 分母仍停在較早的 60G，因而持續顯示「還需要 540G」。
 - 根因確認：狀態按鈕只保存當下狀態，沒有保存每段 CZ／AT 的起訖 G；舊邏輯卻把使用者在非通常狀態下輸入的整段主 G 增量排除於 Estimator 分母，造成分母凍結。這不是 Catalog／P-WORLD 設定表缺失，也不是 localStorage 畫面快取。
@@ -1539,6 +1546,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**將 Estimator 主 G 分母 hotfix push 至固定 dev Preview，完成自動 smoke 後等待使用者手機複驗；不自行修改 `main` 或開始下一版本。**
+**將 Session G 輸入流程與 Estimator 主 G 分母 hotfix push 至固定 dev Preview，完成自動 smoke 後等待使用者手機複驗；不自行修改 `main` 或開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
