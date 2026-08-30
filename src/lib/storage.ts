@@ -17,6 +17,7 @@ export function loadSessions(): Session[] {
       trackerBaselines: session.trackerBaselines ?? {...trackers},
       metrics: session.metrics ?? { observedTotalGame: 0, observedNormalGame: 0 },
       trials: session.trials ?? {},
+      mode: session.mode ?? "quick",
     } as Session)});
   } catch {
     return [];

@@ -1,0 +1,12 @@
+import { buildPWorldHallSearchUrl,parsePWorldHallList } from "@/lib/halls/pworld";
+import { normalizeHallLocationInput } from "@/lib/halls/search";
+import { japanPostalSource,resolveJapanPostalLocation } from "@/lib/halls/postal";
+export const runtime="nodejs";
+const AREAS=new Set(["hokkaido","aomori","iwate","miyagi","akita","yamagata","fukushima","ibaraki","tochigi","gunma","saitama","chiba","tokyo","kanagawa","niigata","toyama","ishikawa","fukui","yamanashi","nagano","gifu","shizuoka","aichi","mie","shiga","kyoto","osaka","hyogo","nara","wakayama","tottori","shimane","okayama","hiroshima","yamaguchi","tokushima","kagawa","ehime","kochi","fukuoka","saga","nagasaki","kumamoto","oita","miyazaki","kagoshima","okinawa"]);
+export async function GET(request:Request){
+  const input=new URL(request.url),requestedArea=input.searchParams.get("area")??"all",rawQuery=(input.searchParams.get("q")??"").slice(0,240),machine=(input.searchParams.get("machine")??"").slice(0,100),normalized=resolveJapanPostalLocation(rawQuery)??normalizeHallLocationInput(rawQuery),area=requestedArea==="all"?normalized.area:requestedArea;
+  if(area!=="all"&&!AREAS.has(area))return Response.json({error:"請選擇有效的都道府縣。"},{status:400});
+  const attempts=[normalized.query,...normalized.alternatives].filter(Boolean).slice(0,4);if(attempts.length===0&&!machine.trim())return Response.json({error:"請輸入地區、車站、地址、店名或機種。"},{status:400});
+  let lastSource=buildPWorldHallSearchUrl(area,attempts[0]??"",machine);
+  try{for(const query of attempts.length?attempts:[""]){const sourceUrl=buildPWorldHallSearchUrl(area,query,machine);lastSource=sourceUrl;const response=await fetch(sourceUrl,{headers:{"User-Agent":"SlotCompanion/0.2 (personal hall lookup; source-linked)"},signal:AbortSignal.timeout(15000),cache:"no-store"});if(!response.ok)continue;const results=parsePWorldHallList(await response.text(),sourceUrl.toString()).slice(0,40);if(results.length)return Response.json({results,sourceUrl:sourceUrl.toString(),retrievedAt:new Date().toISOString(),matchedQuery:query,resolvedQuery:normalized.query,attemptedQueries:attempts,normalizedReason:normalized.reason,postalSource:japanPostalSource()})}return Response.json({results:[],sourceUrl:lastSource.toString(),retrievedAt:new Date().toISOString(),matchedQuery:attempts.at(-1)??"",resolvedQuery:normalized.query,attemptedQueries:attempts,normalizedReason:normalized.reason,postalSource:japanPostalSource()})}catch{return Response.json({error:"目前無法連線至 P-WORLD，請稍後再試。",sourceUrl:lastSource.toString()},{status:502})}
+}

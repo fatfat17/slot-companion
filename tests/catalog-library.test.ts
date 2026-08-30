@@ -15,6 +15,7 @@ test("officialNameJa 名稱搜尋",()=>assert.ok(query({query:"ビッグドリ�
 test("alias 搜尋",()=>assert.equal(query({query:"Tokyo Ghoul"}).items[0]?.id,"tokyo-ghoul"));
 test("manufacturer 搜尋",()=>assert.ok(query({query:"サミー"}).items.every(item=>item.manufacturer.includes("サミー"))));
 test("introducedAt 月份篩選",()=>assert.ok(query({introducedMonth:"2026-06"}).items.every(item=>item.introducedAt?.startsWith("2026-06"))));
+test("introducedAt 年份快選可與其他篩選共用",()=>{const result=query({introducedMonth:"2026",sort:"date-desc"});assert.ok(result.total>0);assert.ok(result.items.every(item=>item.introducedAt?.startsWith("2026")))});
 test("machineType 篩選使用現存值",()=>{const type=catalogLibraryOptions(records).machineTypes[0],result=query({machineType:type});assert.ok(result.items.length>0);assert.ok(result.items.every(item=>item.machineType===type))});
 test("catalogStatus 篩選",()=>assert.ok(query({catalogStatus:"reviewed"}).items.every(item=>item.catalogStatus==="reviewed")));
 test("Profile ready 篩選",()=>assert.equal(query({profileStatus:"ready"}).total,3));

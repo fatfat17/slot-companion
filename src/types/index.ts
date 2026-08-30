@@ -9,7 +9,7 @@ export type CounterDefinition = {
   recognition: string;
   reason: string;
   type: "count" | "event" | "choice" | "photo";
-  choices?: Array<{ value: string; labelZh: string; labelJa: string }>;
+  choices?: Array<{ value: string; labelZh: string; labelJa: string; sourceDescription?: string; referenceOnly?: boolean; sourceUrl?: string; sourceSectionKey?: string; sourceTableId?: string; sourceEvidenceId?: string }>;
   eventState?: GameState;
   denominatorMetricKey?: string;
   parentCounterKey?: string;
@@ -95,7 +95,7 @@ export type SettingBenchmark = {
 
 export type MachineProfileStatus = "placeholder" | "draft" | "reviewed" | "verified";
 
-export type GameState = "normal" | "prelude" | "cz" | "at" | "special";
+export type GameState = "normal" | "prelude" | "cz" | "at" | "art" | "bonus" | "special" | "other";
 
 export type MachineProfile = {
   smartCounters: CounterDefinition[];
@@ -105,6 +105,11 @@ export type MachineProfile = {
   measurementMetrics: MetricDefinition[];
   trialRelationships: TrialRelationship[];
   benchmarks: SettingBenchmark[];
+  sessionCapabilities?: import("./machineGuide").SessionCapability[];
+  denominatorCapabilities?: import("./machineGuide").DenominatorCapability[];
+  guideStates?: import("./machineGuide").MachineGuideState[];
+  controlManifest?: import("./machineGuide").ControlManifestItem[];
+  familyClassification?: import("./machineGuide").MachineFamilyClassification;
   verifiedMetrics?: Array<{metricKey:string;value:string|string[];sourceNames:string[];verificationStatus:string}>;
 };
 
@@ -131,9 +136,13 @@ export type Machine = {
   previousProfileVersion?: number;
   publishedAt?: string;
   sourceDraftId?: string;
+  guideStatus?: "usable" | "partial";
+  guideSourceUrl?: string;
+  sessionGuide?: import("./machineGuide").SessionQuickGuide;
 };
 
 export type SessionCounter = { sessionId: string; counterKey: string; count: number };
+export type SessionMode = "first_time" | "quick" | "full";
 
 export type CounterValue = number | string | { fileName: string; capturedAt: string };
 
@@ -169,6 +178,7 @@ export type Session = {
   status: "active" | "completed";
   counters: Record<string, CounterValue>;
   events: SessionEvent[];
+  mode?: SessionMode;
   identifiedByAI?: boolean;
   identificationConfidence?: number;
   identificationTimestamp?: string;

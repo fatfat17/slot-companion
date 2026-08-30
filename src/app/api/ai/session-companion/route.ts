@@ -1,0 +1,5 @@
+import { askSessionCompanion } from "@/lib/ai/companion.server";
+import { sanitizeCompanionContext,sanitizeCompanionQuestion } from "@/lib/ai/companion";
+import { AIProviderError } from "@/lib/ai/types";
+export const runtime="nodejs";
+export async function POST(request:Request){try{let payload:unknown;try{payload=await request.json()}catch{return Response.json({error:{code:"invalid_request",message:"請輸入想問的問題。"}},{status:400})}const input=payload as {question?:unknown;context?:unknown},question=sanitizeCompanionQuestion(input.question),context=sanitizeCompanionContext(input.context);if(!question)return Response.json({error:{code:"invalid_question",message:"請輸入想問的問題。"}},{status:400});if(!context)return Response.json({error:{code:"invalid_context",message:"目前 Session 資料不完整，請重新開啟後再試。"}},{status:400});return Response.json({answer:await askSessionCompanion(question,context)})}catch(error){if(error instanceof AIProviderError)return Response.json({error:{code:error.code,message:error.message}},{status:error.status});return Response.json({error:{code:"request_failed",message:"AI 陪玩發生錯誤，請稍後再試。"}},{status:500})}}

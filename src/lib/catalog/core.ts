@@ -1,6 +1,7 @@
 import type { CatalogImportDecision,MachineCatalogCandidate,MachineCatalogRecord } from "@/types/catalog";
 
 export function normalizeCatalogName(value:string){return value.normalize("NFKC").toLocaleLowerCase().replace(/^(?:(?:l|スマスロ|パチスロ|スロット)\s*)+/g,"").replace(/[\s\-‐‑‒–—―ー・･·_~～!！'’"“”/／]/g,"")}
+export function normalizeIdentityTitle(value:string){return value.normalize("NFKC").toLocaleLowerCase().trim().replace(/^(?:(?:スマスロ|パチスロ|スロット)\s*|l(?=\s|[ぁ-んァ-ヶ一-龯])\s*)+/g,"").replace(/[\s\-‐‑‒–—―ー・･·_~～!！'’"“”/／]/g,"")}
 export function findDuplicate(candidate:Pick<MachineCatalogCandidate,"officialNameJa"|"aliases">,records:MachineCatalogRecord[]){const names=[candidate.officialNameJa,...candidate.aliases].map(normalizeCatalogName);return records.find(record=>[record.officialNameJa,...record.aliases].map(normalizeCatalogName).some(name=>names.includes(name)))}
 export function slugForCatalog(value:string){const normalized=normalizeCatalogName(value);let hash=2166136261;for(const char of normalized){hash^=char.codePointAt(0)??0;hash=Math.imul(hash,16777619)}return `machine-${(hash>>>0).toString(36)}`}
 export function mergeCatalogRecord(existing:MachineCatalogRecord,candidate:MachineCatalogCandidate):MachineCatalogRecord{const source={sourceName:candidate.sourceName,sourceUrl:candidate.sourceUrl,sourceImageUrl:candidate.sourceImageUrl,retrievedAt:candidate.retrievedAt};const sources=existing.sources.some(item=>item.sourceUrl===source.sourceUrl)?existing.sources.map(item=>item.sourceUrl===source.sourceUrl?source:item):[...existing.sources,source];return{...existing,manufacturer:existing.manufacturer==="不明"&&candidate.manufacturer?candidate.manufacturer:existing.manufacturer,brand:existing.brand||candidate.brand,seriesName:existing.seriesName||candidate.seriesName,machineType:existing.machineType||candidate.machineType,introducedAt:existing.introducedAt||candidate.introducedAt,aliases:[...new Set([...existing.aliases,...candidate.aliases])],sourceName:candidate.sourceName,sourceUrl:candidate.sourceUrl,sourceImageUrl:candidate.sourceImageUrl||existing.sourceImageUrl,retrievedAt:candidate.retrievedAt,sources}}
@@ -28,10 +29,12 @@ export function searchCatalogRecords(records:MachineCatalogRecord[],terms:string
   const makers=manufacturerTerms.map(compactSearchText).filter(Boolean);
   if(queries.length===0)return[];
   return records.map(record=>{
-    const official=compactSearchText(record.officialNameJa),persistentAliases=[record.displayNameZh,...record.aliases].filter(Boolean).map(compactSearchText),runtimeAliases=derivedAliases(record).map(compactSearchText),officialTokens=searchTokens(record.officialNameJa).filter(token=>token.length>=2&&!genericSearchTokens.has(token)),reasons=new Set<CatalogSearchMatchReason>();
+    const official=compactSearchText(record.officialNameJa),persistentAliasValues=[record.displayNameZh,...record.aliases].filter(Boolean),persistentAliases=persistentAliasValues.map(compactSearchText),runtimeAliases=derivedAliases(record).map(compactSearchText),identityOfficial=normalizeIdentityTitle(record.officialNameJa),identityAliases=persistentAliasValues.map(normalizeIdentityTitle),officialTokens=searchTokens(record.officialNameJa).filter(token=>token.length>=2&&!genericSearchTokens.has(token)),reasons=new Set<CatalogSearchMatchReason>();
     let score=0;
     for(const query of queries){
-      if(query.compact===official){score+=180;reasons.add("exact official title")}
+      const identityQuery=normalizeIdentityTitle(query.raw);
+      if(query.compact===official||(context==="identity"&&identityQuery.length>=4&&identityQuery===identityOfficial)){score+=180;reasons.add("exact official title")}
+      else if(context==="identity"&&identityQuery.length>=4&&identityAliases.includes(identityQuery)){score+=160;reasons.add("exact alias")}
       else if(persistentAliases.includes(query.compact)){score+=160;reasons.add("exact alias")}
       else if(official.includes(query.compact)||query.compact.includes(official)){score+=90;reasons.add("partial official title")}
       else if(runtimeAliases.includes(query.compact)){score+=150;reasons.add("romanized alias")}
