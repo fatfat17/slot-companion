@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **Player Readiness & Travel Pack**
 
-Status：**功能與本機工程 QA 已完成；等待固定 dev Preview 與手機人工驗收**
+Status：**功能、本機工程 QA 與固定 dev Preview 部署已完成；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -39,7 +39,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - Service Worker shell cache 更新為 `slot-companion-shell-v2026-08-30`，核心玩家 routes 納入版本化預快取；升級時保留 `slot-companion-trip-pack-*` 離線包，不清除 Session、Guide JSON、自訂記錄或其他使用者資料。
 - `/machines` 玩家入口改導向 `/catalog`；Catalog Detail 的舊 Machine Card 入口移入「舊版相容資料」，直接舊網址仍保留相容提示與回到機台指南的主要操作，既有 Session 不受影響。
 - 新增 estimator preflight、批次循序／續傳／partial failure、離線 URL／圖片 route、Service Worker cache preservation 與 legacy route regression tests；完整 automated tests **320 / 320 passed**，lint、typecheck 與 Next.js 16.3.2 webpack production build通過。
-- localhost production smoke 已確認 `/catalog` 顯示批次更新與旅行離線包，收藏狀態可切換且不影響既有 Guide／Session；`/machines` 相容入口導向玩家 Catalog。固定 dev Preview 與實體手機離線切換仍待本次 commit push 後驗收，不冒充人工驗收通過。
+- localhost production smoke 已確認 `/catalog` 顯示批次更新與旅行離線包，收藏狀態可切換且不影響既有 Guide／Session；`/machines` 相容入口導向玩家 Catalog。產品 commit `5bd631f` 已 push 至 `origin/dev`，GitHub／Vercel status 顯示本 commit `success / Deployment has completed`，固定 dev Preview 已更新；實體手機離線切換仍待使用者驗收，不冒充人工驗收通過。
 - 資料保存位置：Guide JSON 為 browser IndexedDB（localStorage fallback）；批次進度與離線包 manifest 為 localStorage；頁面、共用資產與圖片為 Cache Storage。來源更新失敗時保留上一份有效 Guide，離線包會列出失敗素材。
 
 ### Setting Estimator Coverage Expansion（2026-08-30）
@@ -1322,7 +1322,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 55. Profile 資料仍保留供舊 Session 與歷史相容，但玩家主要入口統一為 Machine Catalog → Machine Guide → Session；不應再把三台 legacy Profile 當成新的內容建立流程。
 
 ## Current Work
-**Player Readiness & Travel Pack 已完成實作與本機 QA；正在等待固定 dev Preview 與手機人工驗收。Estimator 安全 coverage 維持 102 / 202，公式與可信度曲線未修改。**
+**Player Readiness & Travel Pack 已完成實作、本機 QA、dev push 與固定 Preview 部署；正在等待手機人工驗收。Estimator 安全 coverage 維持 102 / 202，公式與可信度曲線未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1337,7 +1337,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 等待 Player Readiness & Travel Pack 人工驗收
 
-Status：**程式、完整 tests、production build 與 localhost smoke 已完成；待 commit／push 後確認固定 Preview，再由使用者進行手機與離線抽查。**
+Status：**程式、完整 tests、production build、localhost smoke、dev push 與固定 Preview Ready 均已完成；等待使用者進行手機與離線抽查。**
 
 1. 收藏 2～3 台機種後執行「準備旅行離線包」，再以飛航模式抽查 Catalog、完整 Guide 與指南圖片可重新開啟。
 2. 抽查支援與不支援 Estimator 的機台，在開始 Session 前分別顯示「支援設定參考」與「遊玩紀錄模式」。
