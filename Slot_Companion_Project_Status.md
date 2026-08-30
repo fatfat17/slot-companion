@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **Nearby Halls & Session AI Companion MVP**
 
-Status：**功能與本機工程 QA 已完成；等待 dev Preview 自動 QA 與手機人工驗收**
+Status：**功能、本機工程 QA、dev push 與固定 Preview 自動 QA 已完成；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -42,6 +42,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - AI 陪玩不可修改 Session，禁止編造機率、天井、Zone、設定差與獲利保證；對來源缺失項目必須說明目前指南沒有資料。
 - 新增 P-WORLD hall parser／reverse lookup 與 AI input bounding／grounding regression tests；既有 Catalog、Guide、Session、Control Manifest、Estimator 與圖片辨識程式未改動。
 - 本機工程 QA：lint、typecheck、完整 tests **330 / 330 passed**、Next.js 16.3.2 webpack production build均通過。production server smoke 的 `/`、`/halls`、`/catalog`、Catalog Detail 均為 HTTP 200；AI 空問題正確回 400，店家 API 實頁查詢回 200 與 19 筆八王子候選。
+- 產品 commit `9ea1a54` 已 push 至 `origin/dev`。固定 dev Preview 390 × 844 自動 QA：首頁顯示「附近店家」且不再顯示「晚上撿台」；八王子查詢取得 19 間店家；RE:3 Catalog Detail 可把 `officialNameJa` 帶入機種反查；既有 Session 的 AI Companion drawer 可正常開啟並顯示該 Session 摘要與提問入口。上述頁面 scroll width 390px，console error／warning 0。此項是自動 QA，不冒充實體手機人工驗收；為避免未經確認傳送使用者真實 Session，本輪未自動送出真實 AI 問題。
 
 ### Player Readiness & Travel Pack（2026-08-30）
 - 依使用者決策，本輪不修改 Setting Estimator 的可信度曲線、公式、minimum sample 或安全閘門；現有結果仍明確定位為參考推測。
@@ -1340,7 +1341,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 58. Session AI 陪玩是現有結構化指南的問答顯示層，不是新攻略來源；送出的 context 有長度與筆數上限，且 AI 無權改寫 Session 或 Estimator。
 
 ## Current Work
-**Nearby Halls & Session AI Companion MVP 已完成實作與本機 QA；正在進行 dev push、固定 Preview 自動驗證，之後等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
+**Nearby Halls & Session AI Companion MVP 已完成實作、本機 QA、dev push 與固定 Preview 自動驗證；正在等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1355,7 +1356,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 等待 Nearby Halls & Session AI Companion MVP 人工驗收
 
-Status：**程式、完整 tests、production build、localhost 與 P-WORLD 實頁 smoke 均已完成；完成 dev push 與固定 Preview 後等待使用者抽查。**
+Status：**程式、完整 tests、production build、localhost／P-WORLD 實頁 smoke、dev push 與固定 Preview 自動 QA 均已完成；等待使用者手機抽查。**
 
 1. 從首頁進入附近店家，以東京都與一台 Catalog 機種抽查 P-WORLD 候選、店家頁與 Google Maps 導航。
 2. 在實體手機允許一次定位，確認只在使用者點擊後開啟 Google Maps，拒絕權限時仍可手動搜尋。
