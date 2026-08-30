@@ -36,7 +36,7 @@ pnpm dev
 19. Machine Catalog 卡片會依可重現 Control Audit 標示「支援設定參考」或「僅遊玩紀錄」，並可直接篩選目前 102 台支援／100 台不支援機種；Catalog Detail 與完整 Guide 在開始 Session 前仍會顯示對應提示。這只反映既有安全 observation contract，不改變 Estimator 公式或判斷門檻。
 20. Machine Catalog 可依「收藏」或「最近」循序更新多台指南；中斷或單台來源失敗時保留已完成進度，可從上次未完成項目繼續。
 21. 「旅行離線包」會把選定機台的 Guide JSON、Catalog／Guide 頁面、共用頁面資產與指南圖片保存到目前裝置，供旅途中重新開啟；舊版 Profile 玩家入口已從主要流程移至相容區。
-22. 首頁以「附近店家」取代舊晚上撿台入口。App 以單一欄位接受日文地區／車站／地址、部分繁中或英文地址與已知地標名稱，透過 P-WORLD 找同區候選店家；選定店家後可直接查看 P-WORLD 登錄的 Slot 機種，已存在 Catalog 的項目可進中文指南。Google Maps 只作使用者點擊後的外部導航。
+22. 首頁以「附近店家」取代舊晚上撿台入口。App 以單一欄位接受日文地區／車站／地址、繁中或英文日本地址與已知地標名稱；完整英文地址會先依日本郵便官方郵遞區號／羅馬拼音資料解析成行政區，再透過 P-WORLD 逐步放寬搜尋同區候選店家。選定店家後可直接查看 P-WORLD 登錄的 Slot 機種，已存在 Catalog 的項目可進中文指南。Google Maps 只作使用者點擊後的外部導航。
 23. Session 的「問 AI」已接上 server-side OpenAI Responses API。回答只使用目前 Session snapshot 與已整理 Machine Guide，不能修改紀錄，也不可補猜來源沒有的機率、天井、Zone 或設定差。
 24. AI drawer 可拍攝／選擇目前遊戲畫面；圖片先在 client 壓縮，AI 只可比對該 Session 已有的 operational controls。候選必須由使用者確認後才記錄或切換狀態，圖片不保存。
 25. 附近店家預設不限定都道府縣；查詢會先抽出可安全辨識的日本車站、市區、町名或已知地標區域，找不到時逐步放寬。結果不使用付費地圖 API、不取得座標，也不冒充精確距離排序。
@@ -75,7 +75,8 @@ pnpm dev
 - AI 陪玩模型可用 server-side `OPENAI_SESSION_COMPANION_MODEL` 集中設定；未設定時沿用 Machine Guide／Identification model。AI 問答不保存在 localStorage，重新開啟 drawer 會重新開始。
 - Session 場景辨識模型可用 server-side `OPENAI_SESSION_SCENE_MODEL` 集中設定；未設定時沿用 Companion／Guide／Identification model。辨識照片只作暫時 preview，不進 Session 或長期儲存。
 - 附近店家 MVP 不維護自己的店家座標資料庫，也不宣稱 App 內的精確距離排序。P-WORLD 負責公開店家與店內 Slot 機種候選，Google Maps 只負責使用者選定店家後的外部導航；營業與設置狀況仍以現場為準。
-- 任意飯店／餐廳英文名稱不是通用地理編碼服務；目前可辨識常用地名、英文日本地址與有限已知地標。無法安全判斷時會請使用者改貼地址、市區或最近車站，不會硬猜位置。
+- 全國英文地址解析使用日本郵便公開的 `KEN_ALL_ROME` 資料，索引只在 server route 載入，瀏覽器不下載約 12 萬筆原始地址。郵遞區號可精確對應行政區／町名；門牌不參與距離排序，來源資料更新時可用 `scripts/build-japan-postal-index.ts` 重建精簡索引。
+- 任意飯店／餐廳英文名稱仍不是通用地理編碼服務；目前可辨識常用地名、完整英文日本地址與有限已知地標。沒有郵遞區號或地址且無法安全判斷時，會請使用者改貼地址、市區或最近車站，不會硬猜位置。
 - 繁中摘要可選擇設定 `OPENAI_MACHINE_GUIDE_MODEL`；未設定時沿用辨識模型。沒有 API key、服務失敗或輸出未通過來源驗證時，自動使用規則式繁中指南，不阻擋 P-WORLD Guide。
 - Estimator 對相同 numerator／denominator／value mode 的重複 benchmark 只採用一次；若同一觀測被映射到互相衝突的設定理論值，整組停用，不重複加權。Evidence 標籤優先顯示實際具名 Session control。
 - 完整 Machine Guide 可將「資料有誤／中文不清楚／內容重複／缺少重要資料」保存為 per-machine browser-local 回報；目前尚未雲端同步。

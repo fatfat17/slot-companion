@@ -8,8 +8,9 @@ export const HALL_QUICK_SEARCHES:HallQuickSearch[]=[{label:"名古屋站",query:
 function aliasKey(value:string){return value.normalize("NFKC").trim().toLowerCase().replace(/[\s\-ー]+/g,"")}
 function unique(values:string[]){return values.map(value=>value.replace(/\s+/g," ").trim()).filter((value,index,array)=>value.length>=2&&array.indexOf(value)===index)}
 function cleanInput(value:string){return value.normalize("NFKC").replace(/^\s*#{1,6}\s*/gm,"").replace(/日本\s*$/i,"").replace(/["'“”]/g," ").replace(/\s+/g," ").trim()}
-function japaneseLine(value:string){return value.split(/\r?\n/).map(line=>line.replace(/^\s*#{1,6}\s*/,"").trim()).filter(Boolean).find(line=>/[ぁ-んァ-ヶ一-龠]/.test(line))??""}
+function japaneseLine(value:string){return value.split(/\r?\n/).map(line=>line.replace(/^\s*#{1,6}\s*/,"").trim()).filter(Boolean).find(line=>{const japanese=(line.match(/[ぁ-んァ-ヶ一-龠]/g)??[]).join("").replace(/日本$/g,"");return japanese.length>=2})??""}
 function inferArea(value:string){return AREA_HINTS.find(([pattern])=>pattern.test(value))?.[1]??"all"}
+export function extractJapanesePostalCode(value:string){const match=value.normalize("NFKC").match(/(?:〒\s*)?(\d{3})[\s-]?(\d{4})/);return match?`${match[1]}-${match[2]}`:null}
 export function normalizeHallLocationInput(value:string):HallLocationQuery{
   const original=value.normalize("NFKC").trim();if(!original)return{query:"",alternatives:[],area:"all",changed:false,reason:null};
   const cleaned=cleanInput(original),simple=SIMPLE_ALIASES[aliasKey(cleaned)];if(simple)return{query:simple,alternatives:[],area:inferArea(simple),changed:simple!==cleaned,reason:simple!==cleaned?"已轉成可供 P-WORLD 搜尋的日本地名":null};

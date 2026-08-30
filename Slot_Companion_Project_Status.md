@@ -32,6 +32,12 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 ## Completed
 
 ### Nearby Halls Area Search & Inventory（2026-08-30）
+- 手機 QA 發現完整英文地址會被整串交給 P-WORLD，導致「地址越完整反而越難找到」。本輪新增日本郵便官方 `KEN_ALL_ROME` 郵遞資料索引：**124,788 筆**，以約 **1.3 MiB Brotli** 檔案只供 server route 使用，不把完整地址庫送進 browser。
+- 地址搜尋現在會先解析 `〒`／7 碼郵遞區號或官方羅馬拼音行政區，移除門牌後產生「都道府縣＋市區町 → 市區町 → 市區 → 區」的循序 P-WORLD 查詢；不並發大量 request、不使用付費 Google Maps API，也不宣稱精確距離。
+- 實際範例 `1 Chome-6-5 Nanbanaka, Naniwa Ward, Osaka, 556-0011日本` 可辨識為 `大阪府大阪市浪速区難波中`；runtime 依序放寬後以 `大阪市浪速区` 取得 **6 間** P-WORLD 店家。`Nanbanaka / Nambanaka` 的羅馬拼音差異亦已正規化。
+- 日本郵便索引可由 `scripts/build-japan-postal-index.ts` 重建，來源網址、擷取日期與解析原因會隨 API response 保留；Next.js output trace 已確認包含索引檔。
+- 本輪工程 QA：lint 通過、typecheck 通過、完整 automated tests **345 / 345 passed**、Next.js 16.3.2 webpack production build通過；localhost production `/halls` HTTP 200、完整大阪英文地址 API 實頁 smoke 通過。預設 Turbopack build 仍受目前 sandbox port binding 限制，沿用專案既有 webpack production QA 路徑。
+- 尚有限制：只有飯店／餐廳羅馬拼音名稱而沒有地址、行政區或郵遞區號時，仍無法普遍可靠定位；系統不會為了產生結果硬猜位置。
 - 附近店家移除預設東京與都道府縣必填，改為單一地點輸入，可接受日文地區／車站／地址、有限繁中／英文日本地址與已知地標名稱；找不到時會依安全的市區／車站候選逐步放寬，不使用付費 Google Maps API，也不宣稱距離排序。
 - 新增 P-WORLD 店家詳細頁 Slot 設置 parser 與 `/api/halls/detail`：使用者選定店家後可在 App 內查看目前登錄的 Slot 清單，並依 P-WORLD machine database ID 對應 Machine Catalog；已對應項目可直接進中文指南，未對應項目保留 P-WORLD 來源連結。
 - Google Maps 從搜尋資料來源降為選定店家後的外部導航；App 不要求 GPS、不保存座標。來源失敗時保留 P-WORLD 店家資料，不影響 Catalog、Guide、Session、Estimator 或 AI。
@@ -1371,9 +1377,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 60. iPhone Safari 可能阻擋由 GPS callback 非同步開啟的新分頁；附近店家應以正常使用者點擊連結把位置處理交給 Google Maps，不需要 App 自行取得座標。
 61. Google Maps 外部搜尋本身無法形成 App 內的店家／設置機種流程；附近店家應先由 P-WORLD 地區查詢與店家詳細頁建立可追溯候選，地圖只負責選定後導航。
 62. 任意英文飯店／餐廳名稱不能在沒有地理資料服務時可靠定位；目前只支援可安全解析的日本地址、常用地名與有限已知地標，無法辨識時必須請使用者改貼地址／區／車站，不得硬猜。
+63. 完整英文地址不應原樣當成 P-WORLD 店名關鍵字；日本郵便官方郵遞／羅馬拼音地址資料可先把門牌降解為行政區，再用循序放寬查詢提高召回。純 POI 名稱仍不是地址資料，兩者不可混為同等可信。
 
 ## Current Work
-**附近店家已改為不限定地區的 P-WORLD 區域搜尋，並新增選定店家後的 Slot 設置機種清單與 Catalog／中文指南連結；三組指定輸入、實頁 smoke、完整 tests、production build、dev push 與固定 Preview 自動 QA 均已通過，目前等待手機人工驗收。既有 Session、Estimator、AI 與 Guide 流程未修改。**
+**附近店家已完成日本郵便官方郵遞／羅馬拼音地址解析 hotfix；完整英文地址會先轉成行政區並循序放寬 P-WORLD 查詢。本機實頁 smoke、345 tests 與 production build 已通過；等待 dev Preview 部署與手機人工複驗。既有 Session、Estimator、AI、Guide 與自訂記錄未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1388,12 +1395,13 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 完成 Nearby Halls Area Search & Inventory QA，等待手機驗收
 
-Status：**三組指定輸入、localhost／固定 Preview 手機尺寸自動 QA、完整工程 QA、production build 與 dev push 已通過；等待使用者手機抽查。**
+Status：**日本郵便地址解析、本機 runtime、完整工程 QA 與 production build 已通過；等待 dev push／固定 Preview 更新後由使用者手機抽查。**
 
-1. 固定 Preview 以飯店名稱、餐廳名稱與完整英文地址抽查同區候選；確認預設不再鎖定東京。
+1. 固定 Preview 以完整英文地址（含／不含郵遞區號）抽查同區候選；確認顯示辨識後行政區且預設不鎖定東京。
 2. 選定店家後展開店內 Slot 清單，抽查已收錄 Catalog 的機種可前往中文指南，Google Maps 僅在點擊「地圖導航」後開啟。
 3. 實體手機確認輸入、展開清單與長機種名稱的單手操作；設置資料與營業狀況仍以現場為準。
 4. 不部署 Production、不 merge `main`，不自行開始下一版本。
+5. 純羅馬拼音飯店／餐廳名稱若沒有地址線索仍需貼上地址、郵遞區號或最近車站；是否接入通用 POI geocoder 留待後續產品／成本討論。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
