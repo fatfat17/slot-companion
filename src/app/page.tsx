@@ -7,9 +7,8 @@ import type { Session } from "@/types";
 import { getMachine } from "@/data/machines";
 
 const entries = [
-  { href: "/identify", icon: "📷", title: "拍機台", sub: "拍照・AI 機種辨識", tone: "pink" },
-  { href: "/catalog", icon: "📖", title: "快速中文攻略", sub: "搜尋機台・看 60 秒重點與完整圖文", tone: "cyan" },
-  { href: "/catalog", icon: "📚", title: "機種資料庫", sub: "搜尋已收錄機種與指南", tone: "yellow" },
+  { href: "/identify", icon: "📷", title: "拍機台", sub: "拍照・AI 機種辨識", tone: "pink", wide: true },
+  { href: "/catalog", icon: "📖", title: "機台攻略", sub: "搜尋機種・查看中文圖文指南・開始 Session", tone: "cyan", wide: true },
   { href: "/records", icon: "📊", title: "今日紀錄", sub: "查看今天的實戰", tone: "blue" },
   { href: "/halls", icon: "📍", title: "附近店家", sub: "P-WORLD 店家搜尋・Google Maps 導航", tone: "purple" },
 ];
@@ -42,7 +41,7 @@ export default function Home() {
 
       <div className="entry-grid">
         {entries.map((entry) => (
-          <Link key={entry.href} href={entry.href} className={`entry-card ${entry.tone}`}>
+          <Link key={entry.href} href={entry.href} className={`entry-card ${entry.tone}${entry.wide ? " wide" : ""}`}>
             <span>{entry.icon}</span>
             <strong>{entry.title}</strong>
             <small>{entry.sub}</small>

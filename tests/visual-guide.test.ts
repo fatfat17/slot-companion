@@ -124,10 +124,12 @@ test("image sections remain visible when the Chinese summary omits a source sect
   assert.ok(sections.some(section=>section.key==="cz"&&section.summary.includes("來源圖解")));
 });
 
-test("home exposes the quick Chinese guide entry and full guide renders grounded images",()=>{
+test("home exposes one unified machine guide entry and full guide renders grounded images",()=>{
   const home=fs.readFileSync(new URL("../src/app/page.tsx",import.meta.url),"utf8"),view=fs.readFileSync(new URL("../src/components/MachineGuideView.tsx",import.meta.url),"utf8");
-  assert.match(home,/快速中文攻略/);
-  assert.match(home,/60 秒重點與完整圖文/);
+  assert.match(home,/title: "機台攻略"/);
+  assert.match(home,/搜尋機種・查看中文圖文指南・開始 Session/);
+  assert.equal(home.match(/href: "\/catalog"/g)?.length,1);
+  assert.doesNotMatch(home,/快速中文攻略|title: "機種資料庫"/);
   assert.match(view,/visual-guide-gallery/);
   assert.match(view,/圖文指南/);
   assert.match(view,/image\.captionZh/);

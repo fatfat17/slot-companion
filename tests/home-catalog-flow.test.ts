@@ -11,7 +11,9 @@ test("home uses the guide-first player flow without rendering legacy Profile car
   assert.doesNotMatch(home,/已建立攻略 Profile/);
   assert.doesNotMatch(home,/machines\.map/);
   assert.match(home,/辨識機種 → 查看指南 → 開始 Session/);
-  assert.match(home,/搜尋已收錄機種與指南/);
+  assert.match(home,/搜尋機種・查看中文圖文指南・開始 Session/);
+  assert.match(home,/title: "機台攻略"/);
+  assert.doesNotMatch(home,/快速中文攻略|title: "機種資料庫"/);
   assert.match(home,/href=\{active \? `\/session\/\$\{active\.id\}` : "\/identify"\}/);
 });
 
