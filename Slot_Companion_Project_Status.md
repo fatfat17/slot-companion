@@ -37,6 +37,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 實際範例 `1 Chome-6-5 Nanbanaka, Naniwa Ward, Osaka, 556-0011日本` 可辨識為 `大阪府大阪市浪速区難波中`；runtime 依序放寬後以 `大阪市浪速区` 取得 **6 間** P-WORLD 店家。`Nanbanaka / Nambanaka` 的羅馬拼音差異亦已正規化。
 - 日本郵便索引可由 `scripts/build-japan-postal-index.ts` 重建，來源網址、擷取日期與解析原因會隨 API response 保留；Next.js output trace 已確認包含索引檔。
 - 本輪工程 QA：lint 通過、typecheck 通過、完整 automated tests **345 / 345 passed**、Next.js 16.3.2 webpack production build通過；localhost production `/halls` HTTP 200、完整大阪英文地址 API 實頁 smoke 通過。預設 Turbopack build 仍受目前 sandbox port binding 限制，沿用專案既有 webpack production QA 路徑。
+- 產品 commit `b222a46` 已 push 至 `origin/dev`。固定 dev Preview 390 × 844 自動 QA：同一完整大阪英文地址顯示日本郵便解析提示與 `大阪府大阪市浪速区難波中`，再以 `大阪市浪速区` 取得 **6 間**候選；scroll width 390 / 390、console error／warning 0。此為自動 QA，不冒充實體手機人工驗收。
 - 尚有限制：只有飯店／餐廳羅馬拼音名稱而沒有地址、行政區或郵遞區號時，仍無法普遍可靠定位；系統不會為了產生結果硬猜位置。
 - 附近店家移除預設東京與都道府縣必填，改為單一地點輸入，可接受日文地區／車站／地址、有限繁中／英文日本地址與已知地標名稱；找不到時會依安全的市區／車站候選逐步放寬，不使用付費 Google Maps API，也不宣稱距離排序。
 - 新增 P-WORLD 店家詳細頁 Slot 設置 parser 與 `/api/halls/detail`：使用者選定店家後可在 App 內查看目前登錄的 Slot 清單，並依 P-WORLD machine database ID 對應 Machine Catalog；已對應項目可直接進中文指南，未對應項目保留 P-WORLD 來源連結。
@@ -1380,7 +1381,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 63. 完整英文地址不應原樣當成 P-WORLD 店名關鍵字；日本郵便官方郵遞／羅馬拼音地址資料可先把門牌降解為行政區，再用循序放寬查詢提高召回。純 POI 名稱仍不是地址資料，兩者不可混為同等可信。
 
 ## Current Work
-**附近店家已完成日本郵便官方郵遞／羅馬拼音地址解析 hotfix；完整英文地址會先轉成行政區並循序放寬 P-WORLD 查詢。本機實頁 smoke、345 tests 與 production build 已通過；等待 dev Preview 部署與手機人工複驗。既有 Session、Estimator、AI、Guide 與自訂記錄未修改。**
+**附近店家已完成日本郵便官方郵遞／羅馬拼音地址解析 hotfix；完整英文地址會先轉成行政區並循序放寬 P-WORLD 查詢。本機實頁 smoke、345 tests、production build、dev push 與固定 Preview 手機尺寸自動 QA 均已通過；等待手機人工複驗。既有 Session、Estimator、AI、Guide 與自訂記錄未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1395,7 +1396,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 完成 Nearby Halls Area Search & Inventory QA，等待手機驗收
 
-Status：**日本郵便地址解析、本機 runtime、完整工程 QA 與 production build 已通過；等待 dev push／固定 Preview 更新後由使用者手機抽查。**
+Status：**日本郵便地址解析、本機 runtime、完整工程 QA、production build、dev push 與固定 Preview 自動 QA 已通過；等待使用者手機抽查。**
 
 1. 固定 Preview 以完整英文地址（含／不含郵遞區號）抽查同區候選；確認顯示辨識後行政區且預設不鎖定東京。
 2. 選定店家後展開店內 Slot 清單，抽查已收錄 Catalog 的機種可前往中文指南，Google Maps 僅在點擊「地圖導航」後開啟。
