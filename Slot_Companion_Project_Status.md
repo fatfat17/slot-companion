@@ -33,6 +33,12 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Production Update — Estimator Denominator & Session G Flow（2026-08-30）
+- 使用者明確核准將本輪 Estimator 主 G 分母 hotfix 與 Session G 輸入流程更新至正式站。
+- `dev` 以 release merge commit `ee855e8` 合併至 `main`；Production 狀態紀錄 commit `3e6fedb` 已 push，Vercel dashboard 顯示該 Production deployment 為 **Ready**。
+- 固定正式網址 `https://slot-companion.vercel.app` 已完成部署後 smoke，首頁可正常載入；部署所含功能已先通過 lint、typecheck、**351 / 351 tests**、webpack production build、localhost 手機流程與固定 dev Preview 自動 QA。
+- 本項是正式發佈與自動 smoke 紀錄，不冒充使用者在正式站的實體手機實戰驗收。
+
 ### Session G Input Flow Polish（2026-08-30，已核准 Production 發佈）
 - Session 尚未設定起點時，不再先顯示容易誤解的大型 `0 G`；第一個主要操作改為「現在機台幾 G？」並提示先輸入坐下時的機台數字。
 - 設定起點後，畫面依序顯示「更新目前 G」、大型「機台目前 G」、單手可按的 `+10`，以及獨立的「本 Session 已玩 X G」，清楚區分機台絕對 G 與本次實際增量。
@@ -1547,6 +1553,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待本次 `main` release 的 Vercel Production deployment Ready，完成正式網址 smoke；不開始下一版本。**
+**等待使用者在正式站做最短實戰確認；不自行開始下一版本。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
