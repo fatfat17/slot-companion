@@ -3,13 +3,15 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Catalog Covers, Navigation & Offline Pack Management**
+**Slot Companion Production Launch — current approved working release**
 
-Status：**功能、本機工程 QA 與固定 dev Preview 自動 QA 已完成；等待手機人工驗收**
+Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
 目前核准穩定基準：**v0.2.3.1**
 
-Git repository 初始 `main` 基準：**v0.2.5.1 current working snapshot（等待人工驗收，不代表 fully approved stable）**
+正式 Production 基準：**release commit `d2b9a97`（由當前 `dev` working release 合併至 `main`）**
+
+正式網址：**https://slot-companion.vercel.app**
 
 ## Product Goal
 手機優先的日本 Pachislot / Smart Slot 輔助工具。
@@ -30,6 +32,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Production Launch（2026-08-30）
+- 使用者明確核准正式上線；當前 `dev` working release 以 non-fast-forward release commit `d2b9a97` 合併並 push 至 GitHub `main`。
+- Vercel Production 已由 `main` 自動部署完成，deployment 狀態為 **Ready**；固定正式網址為 `https://slot-companion.vercel.app`，不是隨機 deployment URL。
+- 既有 Vercel Supabase integration 已由 Preview 擴充為 **Production + Preview**；server-side secrets 仍由 Vercel 管理，沒有寫入 browser、localStorage、Git 或狀態文件。`CATALOG_ADMIN_TOKEN` 未擴張至 Production，正式站不開放 Catalog 管理操作。
+- 正式發佈前 QA：lint 通過、typecheck 通過、完整 automated tests **349 / 349 passed**、Next.js 16.3.2 webpack production build 通過。
+- Production browser smoke：`/`、`/catalog`、`/identify`、`/halls`、`/records`、`/glossary` 均正常開啟且無 404；未登入 HTTP smoke 另確認上述 routes 與 `/guides/machine-1ar2ivp` 全部回應 **200**。
+- App 本身仍不要求登入。一般使用者可直接用正式網址或安裝 PWA；GitHub／Vercel 登入只用於原始碼、環境與部署管理。
+- 本次 release 沒有加入新產品功能；未追蹤的 `StartSession 2.tsx` 與其他名稱帶 ` 2` 的副本均未提交、未刪除、未納入 Production。
 
 ### Catalog Covers, Navigation & Offline Pack Management（2026-08-30）
 - Catalog Detail 的返回入口固定回 `/catalog`；完整 Machine Guide 固定回該機台的 `/catalog/[id]`，不再因直接 route 或瀏覽歷史跳回首頁。共用 `PageHeader` 保留可設定的返回目的地與無障礙標籤。
@@ -1266,6 +1277,13 @@ Regression QA：
 
 ## Verified QA
 
+### Production Release QA（2026-08-30，自動 QA）
+- Vercel Production commit：`d2b9a97f862858d73722a4f5022aece949cb141e`，狀態 **Ready**。
+- 固定正式網址：`https://slot-companion.vercel.app`，Vercel Domains 顯示 Valid Configuration／Production。
+- 未登入 HTTP smoke：首頁、Catalog、AI 辨識、附近店家、今日紀錄、新手術語與代表 Machine Guide 均為 HTTP 200。
+- 正式網站 browser smoke：首頁顯示繁中玩家流程；Catalog 載入 202 台、Estimator 支援篩選 102／100；主要 routes 無 404。
+- 此項為 Production 自動 QA，不冒充日本現場、相機或實體手機人工驗收。
+
 ### Full Product Regression（2026-08-30，自動 QA）
 - `dev` 與 `origin/dev` 同步於 `b67fec9149d2033b4924afbc8583b232f3147a9d`；`main`／`origin/main` 維持 `3e6c5f4e1de6fa3448b3a0e046854ad37e8dc400`，未修改、未 merge。未追蹤的 `src/components/StartSession 2.tsx` 未碰觸。
 - 工程檢查：lint 通過、typecheck 通過、完整 tests **314 / 314 passed**、Next.js 16.3.2 webpack production build 通過。
@@ -1395,13 +1413,14 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 63. 完整英文地址不應原樣當成 P-WORLD 店名關鍵字；日本郵便官方郵遞／羅馬拼音地址資料可先把門牌降解為行政區，再用循序放寬查詢提高召回。純 POI 名稱仍不是地址資料，兩者不可混為同等可信。
 64. Machine Catalog 的 202 筆 identity record 目前都有可追溯的 P-WORLD `sourceImageUrl`；卡片可以按需顯示來源識別縮圖，但必須使用 Catalog ownership gate、同源 route、格式／大小限制與失敗 fallback，不能退化為任意圖片代理。
 65. 旅行離線包應有明確生命週期：準備、原地更新、查看內容、刪除。刪除必須只清除旅行包自己的 Cache Storage 與 manifest，不得用 `localStorage.clear()` 或影響 Session／Guide／收藏。
+66. 正式網站可公開免登入使用；GitHub／Vercel 帳號只負責管理與部署。正式 Production 仍需持續監控外部 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的來源或服務變動。
 
 ## Current Work
-**Catalog 返回階層、202 台實機識別封面與旅行離線包管理已完成程式、本機 smoke、349 tests 與 production build；等待 dev push、固定 Preview 自動 QA 與手機抽查。YouTube 本輪明確不做；既有 Session、Estimator、AI、Guide compiler、附近店家與自訂記錄未修改。**
+**正式 Production 已上線並完成自動 smoke；目前進入上線後監測與實戰回饋階段，不自行開始新版本。**
 
 核准穩定基準：**v0.2.3.1**
 
-Repository workflow：目前 `main` 僅為 v0.2.5.1 的 **current working snapshot** 初始基準，不代表已通過完整人工驗收；後續日常開發使用 `dev`，未經明確驗收不得 merge 回 `main`。
+Repository workflow：`main` 現為使用者核准的 Production release；後續日常開發仍使用 `dev`，任何新變更未經使用者明確驗收不得再次 merge 回 `main`。
 
 v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
 
@@ -1410,15 +1429,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 完成 Catalog Covers, Navigation & Offline Pack Management QA，等待手機驗收
+### Production 上線後監測與實戰回饋
 
-Status：**本機 runtime、完整工程 QA 與 production build已通過；等待 dev Preview 自動 QA 與使用者手機抽查。**
+Status：**正式網站已上線；下一個產品版本待使用者討論與核准。**
 
-1. 固定 Preview 抽查 Catalog 卡片實機縮圖、圖片失敗 fallback、收藏／篩選／pagination 與 390 × 844 無水平溢出。
-2. 從 `/catalog` 進 Detail，再進完整 Guide；確認返回依序為 Guide → Detail → Catalog，不跳首頁。
-3. 以收藏或最近機台準備旅行包，確認機台封面加入離線內容、可查看保存狀態、原地更新，並只刪除旅行包且 Session／收藏／Guide 不受影響。
-4. 實體手機抽查 Safari 的 lazy image、離線包 storage estimate 與 Cache Storage 可用性；瀏覽器可能依儲存政策自行回收離線內容，不能宣稱永久保存。
-5. 不部署 Production、不 merge `main`，YouTube 維持未開始。
+1. 使用正式網址進行實體手機與日本現場使用，回報辨識、指南、Session、Estimator、附近店家與離線包的實際問題。
+2. 監看 Vercel Function、Supabase Storage／Database、OpenAI request 與外部資料來源錯誤；不因上線而放寬 identity、evidence 或 estimator safety gate。
+3. 若需自訂網域，可另行設定；目前 `slot-companion.vercel.app` 已可長期作為固定公開入口。
+4. 下一版仍由 `dev` 開發、Preview 驗收，使用者明確核准後才可 merge／deploy 至 `main` Production。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
