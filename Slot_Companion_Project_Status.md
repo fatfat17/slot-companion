@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Player Readiness & Travel Pack**
+**Nearby Halls & Session AI Companion MVP**
 
-Status：**功能、本機工程 QA 與固定 dev Preview 部署已完成；等待手機人工驗收**
+Status：**功能與本機工程 QA 已完成；等待 dev Preview 自動 QA 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,18 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Nearby Halls & Session AI Companion MVP（2026-08-30）
+- 首頁移除「晚上撿台」主要入口，以「附近店家」取代；舊 `/hunter` route 暫時保留相容，不刪除歷史功能。
+- 新增 `/halls` 玩家頁與 `/api/halls/search` server route。可依日本都道府縣、店名／車站／地址及機種名稱查詢 P-WORLD 公開店家列表，顯示店名、地址、Slot 費率、P-WORLD 店家資料與 Google Maps 導航。
+- Catalog Detail 新增「附近哪裡有這台」，會把 Catalog 的 `officialNameJa` 帶入 P-WORLD `machine_name` 查詢；不另建或猜測設置店家資料。
+- 裝置定位只在使用者點擊「使用目前位置」時由瀏覽器要求，定位結果交給 Google Maps 搜尋，不寫入 localStorage／Session／Catalog，也不宣稱 App 內精確距離排序。
+- P-WORLD 實頁 smoke 已確認目前東京搜尋頁可解析候選店家：八王子關鍵字取得 **19 筆**，先前機種搜尋取得 **50 筆**；店名、地址、Slot 費率、更新時間、來源頁與周邊連結均可解析。已處理實頁未加引號 href 與巢狀周邊連結；來源失敗時回傳明確錯誤並保留原始搜尋入口，不繞過來源限制。
+- Session「問 AI」由 mock drawer 升級為 server-side OpenAI Responses API。只送出 bounded Session snapshot、可操作紀錄與 Machine Guide 結構化資料；`store:false`，Key 不進 browser bundle／localStorage。
+- AI 陪玩使用集中設定 `OPENAI_SESSION_COMPANION_MODEL`，未設定時沿用 Guide／Identification model；缺少 Key、請求失敗或無答案時顯示明確錯誤，不 fallback 假回答。
+- AI 陪玩不可修改 Session，禁止編造機率、天井、Zone、設定差與獲利保證；對來源缺失項目必須說明目前指南沒有資料。
+- 新增 P-WORLD hall parser／reverse lookup 與 AI input bounding／grounding regression tests；既有 Catalog、Guide、Session、Control Manifest、Estimator 與圖片辨識程式未改動。
+- 本機工程 QA：lint、typecheck、完整 tests **330 / 330 passed**、Next.js 16.3.2 webpack production build均通過。production server smoke 的 `/`、`/halls`、`/catalog`、Catalog Detail 均為 HTTP 200；AI 空問題正確回 400，店家 API 實頁查詢回 200 與 19 筆八王子候選。
 
 ### Player Readiness & Travel Pack（2026-08-30）
 - 依使用者決策，本輪不修改 Setting Estimator 的可信度曲線、公式、minimum sample 或安全閘門；現有結果仍明確定位為參考推測。
@@ -1323,9 +1335,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 53. PWA manifest 可用不等於核心旅途流程可離線；現有 service worker 仍使用 v0.2.2.1 cache namespace，且未預快取 Catalog／Guide。赴日實測前應建立可驗證的離線指南包與版本化快取策略。
 54. 上述離線缺口已由 Player Readiness & Travel Pack 補上：service worker 使用新版 shell namespace，旅行包依收藏／最近機台保存頁面與指南圖片；仍必須先在線上準備，且不等於跨裝置同步。
 55. Profile 資料仍保留供舊 Session 與歷史相容，但玩家主要入口統一為 Machine Catalog → Machine Guide → Session；不應再把三台 legacy Profile 當成新的內容建立流程。
+56. P-WORLD 可可靠提供公開店家候選、地址與設置機種搜尋，但目前沒有在 App 內使用可驗證的公開 GPS 距離 API；因此 MVP 不假算距離，由 Google Maps 接手裝置定位與導航。
+57. 店家設置資料具有時效性，Catalog → 店家反查只代表本次 P-WORLD 搜尋結果；不可保存成長期事實或取代現場確認。
+58. Session AI 陪玩是現有結構化指南的問答顯示層，不是新攻略來源；送出的 context 有長度與筆數上限，且 AI 無權改寫 Session 或 Estimator。
 
 ## Current Work
-**Player Readiness & Travel Pack 與 Estimator 機種可見性修正已完成實作、本機 QA、dev push 與固定 Preview 自動驗證；正在等待手機人工驗收。Estimator 安全 coverage 維持 102 / 202，公式與可信度曲線未修改。**
+**Nearby Halls & Session AI Companion MVP 已完成實作與本機 QA；正在進行 dev push、固定 Preview 自動驗證，之後等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1338,13 +1353,13 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 等待 Player Readiness & Travel Pack 人工驗收
+### 等待 Nearby Halls & Session AI Companion MVP 人工驗收
 
-Status：**程式、完整 tests、production build、localhost smoke、dev push 與固定 Preview Ready 均已完成；等待使用者進行手機與離線抽查。**
+Status：**程式、完整 tests、production build、localhost 與 P-WORLD 實頁 smoke 均已完成；完成 dev push 與固定 Preview 後等待使用者抽查。**
 
-1. 收藏 2～3 台機種後執行「準備旅行離線包」，再以飛航模式抽查 Catalog、完整 Guide 與指南圖片可重新開啟。
-2. 在 Machine Catalog 使用「支援設定參考」與「僅遊玩紀錄」篩選，各選一台建立 Guide；確認開始 Session 前分別顯示對應提示。
-3. 確認批次更新中斷／來源失敗後可續傳，且既有 Session 與上一份有效 Guide 不受影響。
+1. 從首頁進入附近店家，以東京都與一台 Catalog 機種抽查 P-WORLD 候選、店家頁與 Google Maps 導航。
+2. 在實體手機允許一次定位，確認只在使用者點擊後開啟 Google Maps，拒絕權限時仍可手動搜尋。
+3. 在有 Machine Guide 的 Session 詢問「現在最該注意什麼」，確認回答使用該機種與目前紀錄；來源沒有資料的問題不可補猜。
 4. 不部署 Production，也不 merge `main`；完成後停止，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction

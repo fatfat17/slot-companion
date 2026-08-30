@@ -16,6 +16,8 @@ import { SessionModePicker } from "./SessionModePicker";
 import { loadCachedGuideAsync } from "@/lib/machine-guide/storage";
 import { loadCustomRecords, replaceCustomRecord, type CustomRecordDefinition } from "@/lib/customRecords";
 import { CustomRecordEditor } from "./CustomRecordEditor";
+import { AICompanionDrawer } from "./AICompanionDrawer";
+import type { SessionCompanionContext } from "@/lib/ai/companion";
 
 type EditTarget = { kind: "tracker"; key: string } | { kind: "medals" } | null;
 const time = (iso:string) => new Intl.DateTimeFormat("zh-TW",{hour:"2-digit",minute:"2-digit"}).format(new Date(iso));
@@ -65,6 +67,7 @@ export function SessionScreen({ id }: { id: string }) {
   const atLiveStat=initialHitStat("at",session.atCount);
   const observedTotal=metricValue("observedTotalGame");
   const guide=machine.sessionGuide;
+  const companionContext:SessionCompanionContext={machineName:machine.nameZh,currentState:uiModel.gameStates.find(state=>state.value===session.gameState)?.label??session.gameState,observedGame:observedTotal,investmentYen:session.investmentYen,medals:session.medals,records:uiModel.recordControls.map(control=>({label:control.counter?.labelZh??control.capability.labelZh,value:controlValue(control)})),guide:guide?{corePlay:guide.corePlay,keyThings:guide.keyThings.map(item=>`${item.labelZh}：${item.meaning}；${item.recordWhen}`),events:guide.events.map(item=>({name:item.labelZh,whatToSee:item.whatToSee,countingRule:item.countingRule})),sourceName:guide.sourceName,retrievedAt:guide.retrievedAt}:null};
   const showStateBar=uiModel.legacy||uiModel.gameStates.length>1;
   const renderQuickControl=(control:SessionRecordControl)=><article className={`quick-record-card ${control.counter?.type==="choice"?"is-choice":""}`} key={control.id}><button className="quick-record-main" onClick={()=>recordControl(control)}><small>{controlType(control)}</small><strong>{control.counter?.labelZh??control.capability.labelZh}</strong><span>{controlValue(control)}</span></button>{control.counter?.type!=="choice"&&<button className="quick-record-correct" onClick={()=>correctControl(control)} disabled={controlValue(control)==="0 次"}>−1 修正</button>}</article>;
   return <>
@@ -94,7 +97,7 @@ export function SessionScreen({ id }: { id: string }) {
     {modeOpen&&<div className="modal-backdrop" onClick={()=>setModeOpen(false)}><div className="modal" onClick={event=>event.stopPropagation()}><p className="eyebrow">DISPLAY MODE</p><h2>切換使用模式</h2><p className="conflict-copy">只改變畫面資訊量；G 數、投入、持枚與所有事件紀錄都會保留。</p><SessionModePicker lastMode={lastMode} currentMode={sessionMode} onSelect={switchMode}/><button className="secondary-button mt-3" onClick={()=>setModeOpen(false)}>取消</button></div></div>}
     {customOpen&&<div className="modal-backdrop" onClick={()=>setCustomOpen(false)}><div className="modal" onClick={event=>event.stopPropagation()}><CustomRecordEditor machineId={machine.id} definitions={customs} onChange={updateCustomRecords} onClose={()=>setCustomOpen(false)}/></div></div>}
     {guideOpen&&<SessionGuideDrawer guide={guide} machine={machine} state={session.gameState} recordControls={uiModel.recordControls} onClose={()=>setGuideOpen(false)}/>}
-    {drawer&&<div className="drawer-backdrop" onClick={()=>setDrawer(false)}><aside className="drawer" onClick={e=>e.stopPropagation()}><div className="drawer-handle"/><div className="drawer-head"><div><span>AI COMPANION</span><h2>陪你看懂現在這局</h2></div><button onClick={()=>setDrawer(false)}>×</button></div><div className="ai-summary"><span>{machine.nameZh}</span>{trackerDefinitions.map(def=><b key={def.key}>{def.labelZh} {trackerValue(def.key)}</b>)}<span>狀態 {uiModel.gameStates.find(state=>state.value===session.gameState)?.label??session.gameState}</span><span>投入 ¥{session.investmentYen.toLocaleString()}</span><span>持枚 {session.medals}</span><span>CZ {session.czCount} · AT {session.atCount}</span></div><div className="mock-reply">AI 功能將於下一階段接入。</div><div className="suggestions"><button>這個畫面是什麼？</button><button>現在在玩什麼？</button><button>這台怎麼玩？</button></div><div className="ai-input"><input placeholder="輸入想問的問題…"/><button>送出</button></div></aside></div>}
+    {drawer&&<AICompanionDrawer context={companionContext} onClose={()=>setDrawer(false)}/>}
     {toast&&<div className="toast">{toast}</div>}
   </>;
 }
