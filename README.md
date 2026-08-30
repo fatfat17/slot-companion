@@ -29,13 +29,13 @@ pnpm dev
 12. Catalog Detail、完整 Guide 與 Session Guide 均可重新整理單台 P-WORLD 機台指南；Session 內更新只寫入 Guide cache，新記錄項目於下一個 Session 套用。
 13. Setting Estimator 在尚未計算時會區分「沒有可安全計算資料」與「正在累積樣本」，逐 metric 顯示實際 G、事件／trial 次數、最低樣本與下一步；不改變既有公式或安全門檻。
 14. 私人線上 Importer 仍維持 Fetch → Preview → 人工勾選 → Approve；每批最多 100 筆、依序提交，資料寫入 Supabase，並留下 import job audit。未設定雲端環境時安全回退 repo JSON／本機管理說明。
-15. Machine Catalog 改為玩家導向的視覺資料庫：以 Catalog metadata 產生不侵權的識別卡片，支援年份快速篩選、收藏、最近瀏覽／遊玩與本機指南狀態；不下載或轉載來源機台圖片。
+15. Machine Catalog 改為玩家導向的視覺資料庫：202 台卡片使用 Catalog 已保存的 P-WORLD 機台識別縮圖，透過同源封面 route 延遲載入；來源或雲端暫時失敗時回退既有 metadata 識別卡。搜尋、年份篩選、收藏、最近瀏覽／遊玩與指南狀態仍可一起使用。
 16. 新增共用「新手術語」頁，並在完整指南、Session 指南與首頁提供入口；完整指南上方提供快速目錄，日文原始資料仍保留在查證區。
 17. 「遊玩記帳」可切換今天、近 7 天與全部紀錄，直接彙整 Session 的實際觀測 G、投入與最終持枚；不要求使用者重複抄寫 Session 結果。
 18. 首頁新增「快速中文攻略」入口。全 202 台 Catalog 均可按需將 P-WORLD 官方資料區的流程、CZ、AT／ART、Bonus 與打法圖片配進完整繁中指南；掲示板、留言、廣告、外站圖片與過小／過大圖片不會收錄。
 19. Machine Catalog 卡片會依可重現 Control Audit 標示「支援設定參考」或「僅遊玩紀錄」，並可直接篩選目前 102 台支援／100 台不支援機種；Catalog Detail 與完整 Guide 在開始 Session 前仍會顯示對應提示。這只反映既有安全 observation contract，不改變 Estimator 公式或判斷門檻。
 20. Machine Catalog 可依「收藏」或「最近」循序更新多台指南；中斷或單台來源失敗時保留已完成進度，可從上次未完成項目繼續。
-21. 「旅行離線包」會把選定機台的 Guide JSON、Catalog／Guide 頁面、共用頁面資產與指南圖片保存到目前裝置，供旅途中重新開啟；舊版 Profile 玩家入口已從主要流程移至相容區。
+21. 「旅行離線包」會把選定機台的 Guide JSON、Catalog／Guide 頁面、機台封面、共用頁面資產與指南圖片保存到目前裝置，供旅途中重新開啟；可查看保存機台、更新時間、離線項目與網站儲存估算，也可只刪除旅行包而保留 Session、收藏與指南。
 22. 首頁以「附近店家」取代舊晚上撿台入口。App 以單一欄位接受日文地區／車站／地址、繁中或英文日本地址與已知地標名稱；完整英文地址會先依日本郵便官方郵遞區號／羅馬拼音資料解析成行政區，再透過 P-WORLD 逐步放寬搜尋同區候選店家。選定店家後可直接查看 P-WORLD 登錄的 Slot 機種，已存在 Catalog 的項目可進中文指南。Google Maps 只作使用者點擊後的外部導航。
 23. Session 的「問 AI」已接上 server-side OpenAI Responses API。回答只使用目前 Session snapshot 與已整理 Machine Guide，不能修改紀錄，也不可補猜來源沒有的機率、天井、Zone 或設定差。
 24. AI drawer 可拍攝／選擇目前遊戲畫面；圖片先在 client 壓縮，AI 只可比對該 Session 已有的 operational controls。候選必須由使用者確認後才記錄或切換狀態，圖片不保存。
@@ -45,9 +45,9 @@ pnpm dev
 
 - Session 與今日紀錄保存在目前瀏覽器 localStorage；完整 Machine Guide JSON 改存 IndexedDB，並保留 localStorage 安全 fallback。兩者都不是跨裝置雲端同步。
 - 收藏、最近瀏覽／遊玩與每台機種的玩家資料庫偏好也只存在目前瀏覽器；清除瀏覽器資料或換裝置不會自動同步。
-- 旅行離線包使用目前瀏覽器的 IndexedDB 與 Cache Storage，不是帳號雲端同步；需先在線上完成準備。來源更新失敗時會保留上一份仍有效的 Guide，並列出未能離線保存的素材。
+- 旅行離線包使用目前瀏覽器的 IndexedDB、localStorage manifest 與 Cache Storage，不是帳號雲端同步；會一直保留到使用者刪除、清除網站資料或瀏覽器回收儲存。再次準備會原地更新，來源更新失敗時保留上一份仍有效的內容並列出失敗素材。
 - 多台指南更新採循序請求，不同時大量抓取來源；失敗項目可安全重試，已成功機台不會在同一批續傳時重做。
-- Catalog 視覺卡片使用本機 metadata 衍生的色彩與圖示，不使用 P-WORLD 或第三方機台圖片；日後若要加入正式圖片資產，需另行確認來源與授權。
+- Catalog 卡片只使用每筆 Catalog 已保存且可追溯的 P-WORLD `sourceImageUrl`，不接受任意外部 URL；server route 會限制來源、格式與 1 MB 大小，並在已設定 Supabase 時按需保存至既有 private bucket 的獨立 `catalog-covers/` 路徑。這是來源識別縮圖的技術呈現，不代表取得額外轉載授權。
 - v1 Guide cache 不會冒充 v2；需從 Catalog Detail 重新取得來源並編譯。
 - Session 開始時會保存當下的 capability、狀態與 Machine snapshot；日後指南更新不會靜默改寫既有 Session。
 - Control Manifest 統一定義 control type、玩家操作時機、observation、state effect、estimator dependency、來源 evidence、availability 與快速模式優先序；Session 仍保存相容 capability snapshot，舊 Session 不重新編譯。

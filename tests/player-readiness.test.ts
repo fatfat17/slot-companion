@@ -27,8 +27,8 @@ test("batch records a failed machine without discarding successful work",async()
 });
 
 test("trip pack includes guide pages, same guide images and core player routes",()=>{
-  const guide=parsePWorldMachineGuide(fixture("pworld-10530-bonus-art.html"),{...base,id:"10530"},"2026-08-30T00:00:00Z"),urls=offlinePackUrls([guide]);
-  assert.ok(guideOfflineUrls(guide).includes("/guides/10530"));assert.ok(urls.includes("/catalog"));assert.ok(urls.includes("/records"));assert.equal(OFFLINE_PACK_CACHE.startsWith("slot-companion-trip-pack-"),true);
+  const guide=parsePWorldMachineGuide(fixture("pworld-10530-bonus-art.html"),{...base,id:"10530"},"2026-08-30T00:00:00Z"),urls=offlinePackUrls([guide],[{catalogId:"10530",name:"TEST DATA machine",sourceImageUrl:"https://idn.p-world.co.jp/TEST.jpg"}]);
+  assert.ok(guideOfflineUrls(guide).includes("/guides/10530"));assert.ok(urls.includes("/catalog"));assert.ok(urls.includes("/records"));assert.ok(urls.includes("/halls"));assert.ok(urls.includes("/api/catalog-covers/10530?source=https%3A%2F%2Fidn.p-world.co.jp%2FTEST.jpg"));assert.equal(OFFLINE_PACK_CACHE.startsWith("slot-companion-trip-pack-"),true);
 });
 
 test("service worker preserves trip packs while replacing old shell caches",()=>{const source=fs.readFileSync(new URL("../public/sw.js",import.meta.url),"utf8");assert.match(source,/TRIP_PREFIX/);assert.match(source,/!key\.startsWith\(TRIP_PREFIX\)/);assert.doesNotMatch(source,/slot-companion-v0\.2\.2\.1/)});

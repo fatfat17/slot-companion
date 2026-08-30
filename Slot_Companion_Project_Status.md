@@ -3,9 +3,9 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Nearby Halls Area Search & Inventory**
+**Catalog Covers, Navigation & Offline Pack Management**
 
-Status：**功能、本機工程 QA 與固定 dev Preview 自動 QA 已完成；等待手機人工驗收**
+Status：**功能與本機工程 QA 已完成；等待固定 dev Preview 自動 QA 與手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -30,6 +30,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Catalog Covers, Navigation & Offline Pack Management（2026-08-30）
+- Catalog Detail 的返回入口固定回 `/catalog`；完整 Machine Guide 固定回該機台的 `/catalog/[id]`，不再因直接 route 或瀏覽歷史跳回首頁。共用 `PageHeader` 保留可設定的返回目的地與無障礙標籤。
+- 正式 Catalog **202 / 202 台**都有唯一 P-WORLD `sourceImageUrl`，目前全部通過既有 P-WORLD image host／path gate。Catalog 兩欄卡片改用同源 `/api/catalog-covers/[catalogId]` 延遲載入實際機台識別縮圖；載入失敗會回退既有 metadata 識別卡，不造成空卡或版面跳動。
+- 新增 Catalog cover server pipeline：只接受該 Catalog record 自己保存的圖片 URL、JPEG／PNG／WebP 與 1 MB 上限；有 Supabase server secret 時按需寫入既有 private `machine-guide-assets` bucket 的 `catalog-covers/{catalogId}/` 隔離路徑，未設定或寫入失敗時安全回退來源即時回應。Browser 不取得 Supabase secret，也不能把 route 當任意圖片 proxy。
+- 旅行離線包新增可查看的管理區：顯示保存機台、離線項目、更新時間、失敗素材與目前網站 storage estimate；再次準備會原地更新內容並加入選定機台封面，單一素材更新失敗時盡量保留舊快取。
+- 使用者可只刪除 `slot-companion-trip-pack-v1` Cache Storage 與其 manifest。這個操作不會刪除或改寫 Session、收藏、Guide JSON、自訂記錄、Catalog 或其他 localStorage；離線包會保留到使用者刪除、清除網站資料或瀏覽器自行回收。
+- YouTube 遊玩影片依產品決定本輪不做；沒有加入搜尋、嵌入或第三方影片資料。
+- 本輪新增封面 path／ownership gate、lazy same-origin UI、返回階層、旅行包封面／更新／刪除安全 regression。lint 與 typecheck 通過；完整 automated tests **349 / 349 passed**；Next.js 16.3.2 webpack production build通過。預設 Turbopack 在目前受限 host 仍因 CSS worker 無法 bind port，沿用既有 webpack production QA 路徑。
+- localhost production smoke：`/`、`/catalog`、`/catalog/machine-1ar2ivp`、`/guides/machine-1ar2ivp` 均 HTTP 200；正確 Catalog-owned P-WORLD 封面回傳 JPEG 200、長效 cache header 與 `nosniff`，錯誤機台／圖片配對回 400。
+- 尚待：固定 dev Preview 的 390 × 844／desktop 自動瀏覽器 QA，以及使用者手機抽查返回流程、卡片封面與旅行包更新／刪除。以上本機 QA 不冒充實體手機人工驗收。
 
 ### Nearby Halls Area Search & Inventory（2026-08-30）
 - 手機 QA 發現完整英文地址會被整串交給 P-WORLD，導致「地址越完整反而越難找到」。本輪新增日本郵便官方 `KEN_ALL_ROME` 郵遞資料索引：**124,788 筆**，以約 **1.3 MiB Brotli** 檔案只供 server route 使用，不把完整地址庫送進 browser。
@@ -1379,9 +1390,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 61. Google Maps 外部搜尋本身無法形成 App 內的店家／設置機種流程；附近店家應先由 P-WORLD 地區查詢與店家詳細頁建立可追溯候選，地圖只負責選定後導航。
 62. 任意英文飯店／餐廳名稱不能在沒有地理資料服務時可靠定位；目前只支援可安全解析的日本地址、常用地名與有限已知地標，無法辨識時必須請使用者改貼地址／區／車站，不得硬猜。
 63. 完整英文地址不應原樣當成 P-WORLD 店名關鍵字；日本郵便官方郵遞／羅馬拼音地址資料可先把門牌降解為行政區，再用循序放寬查詢提高召回。純 POI 名稱仍不是地址資料，兩者不可混為同等可信。
+64. Machine Catalog 的 202 筆 identity record 目前都有可追溯的 P-WORLD `sourceImageUrl`；卡片可以按需顯示來源識別縮圖，但必須使用 Catalog ownership gate、同源 route、格式／大小限制與失敗 fallback，不能退化為任意圖片代理。
+65. 旅行離線包應有明確生命週期：準備、原地更新、查看內容、刪除。刪除必須只清除旅行包自己的 Cache Storage 與 manifest，不得用 `localStorage.clear()` 或影響 Session／Guide／收藏。
 
 ## Current Work
-**附近店家已完成日本郵便官方郵遞／羅馬拼音地址解析 hotfix；完整英文地址會先轉成行政區並循序放寬 P-WORLD 查詢。本機實頁 smoke、345 tests、production build、dev push 與固定 Preview 手機尺寸自動 QA 均已通過；等待手機人工複驗。既有 Session、Estimator、AI、Guide 與自訂記錄未修改。**
+**Catalog 返回階層、202 台實機識別封面與旅行離線包管理已完成程式、本機 smoke、349 tests 與 production build；等待 dev push、固定 Preview 自動 QA 與手機抽查。YouTube 本輪明確不做；既有 Session、Estimator、AI、Guide compiler、附近店家與自訂記錄未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1394,15 +1407,15 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 完成 Nearby Halls Area Search & Inventory QA，等待手機驗收
+### 完成 Catalog Covers, Navigation & Offline Pack Management QA，等待手機驗收
 
-Status：**日本郵便地址解析、本機 runtime、完整工程 QA、production build、dev push 與固定 Preview 自動 QA 已通過；等待使用者手機抽查。**
+Status：**本機 runtime、完整工程 QA 與 production build已通過；等待 dev Preview 自動 QA 與使用者手機抽查。**
 
-1. 固定 Preview 以完整英文地址（含／不含郵遞區號）抽查同區候選；確認顯示辨識後行政區且預設不鎖定東京。
-2. 選定店家後展開店內 Slot 清單，抽查已收錄 Catalog 的機種可前往中文指南，Google Maps 僅在點擊「地圖導航」後開啟。
-3. 實體手機確認輸入、展開清單與長機種名稱的單手操作；設置資料與營業狀況仍以現場為準。
-4. 不部署 Production、不 merge `main`，不自行開始下一版本。
-5. 純羅馬拼音飯店／餐廳名稱若沒有地址線索仍需貼上地址、郵遞區號或最近車站；是否接入通用 POI geocoder 留待後續產品／成本討論。
+1. 固定 Preview 抽查 Catalog 卡片實機縮圖、圖片失敗 fallback、收藏／篩選／pagination 與 390 × 844 無水平溢出。
+2. 從 `/catalog` 進 Detail，再進完整 Guide；確認返回依序為 Guide → Detail → Catalog，不跳首頁。
+3. 以收藏或最近機台準備旅行包，確認機台封面加入離線內容、可查看保存狀態、原地更新，並只刪除旅行包且 Session／收藏／Guide 不受影響。
+4. 實體手機抽查 Safari 的 lazy image、離線包 storage estimate 與 Cache Storage 可用性；瀏覽器可能依儲存政策自行回收離線內容，不能宣稱永久保存。
+5. 不部署 Production、不 merge `main`，YouTube 維持未開始。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
