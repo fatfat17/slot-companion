@@ -5,7 +5,7 @@ Last Updated: 2026-08-30
 ## Current Version
 **Nearby Halls Area Search & Inventory**
 
-Status：**功能與本機工程 QA 已完成；等待 dev Preview 自動 QA 與手機人工驗收**
+Status：**功能、本機工程 QA 與固定 dev Preview 自動 QA 已完成；等待手機人工驗收**
 
 目前核准穩定基準：**v0.2.3.1**
 
@@ -39,7 +39,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - P-WORLD 實頁店內機種 smoke：柳橋店讀取 **91 台 Slot**；Catalog ID 對應可產生中文指南連結。此處是來源當下結果，不保存為長期設置事實。
 - 390 × 844 localhost 自動瀏覽器 QA：三組指定輸入、店家結果、店內機種展開與 Catalog 連結正常，console error 0。此為自動 QA，不冒充實體手機人工驗收。
 - 工程 QA：lint **0 errors／0 warnings**、typecheck 通過、完整 automated tests **342 / 342 passed**、Next.js 16.3.2 webpack production build 通過。production server 的 `/`、`/halls`、`/catalog`、`/identify`、`/records` 均為 HTTP 200；餐廳名稱搜尋與店內機種 API smoke 通過。
-- 尚待完成：dev push、固定 Preview 自動 QA 與使用者手機抽查。
+- 產品 commit `4f9379d` 已 push 至 `origin/dev`。固定 dev Preview 已切換至本次版本；390 × 844 自動 QA 再次通過三組指定輸入、91 台店內 Slot 清單與 Catalog 中文指南連結，頁面寬度 390 / 390、console error 0。
+- 尚待完成：使用者實體手機抽查。以上自動 QA 不冒充手機人工驗收。
 
 ### Nearby Halls Search Polish & Session Scene AI（2026-08-30）
 - iPhone Safari 的「附近店家」不再於非同步 GPS callback 開新視窗，改以正常連結直接交給 Google Maps 處理目前位置；App 不取得、保存或上傳座標。
@@ -1372,7 +1373,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 62. 任意英文飯店／餐廳名稱不能在沒有地理資料服務時可靠定位；目前只支援可安全解析的日本地址、常用地名與有限已知地標，無法辨識時必須請使用者改貼地址／區／車站，不得硬猜。
 
 ## Current Work
-**附近店家已改為不限定地區的 P-WORLD 區域搜尋，並新增選定店家後的 Slot 設置機種清單與 Catalog／中文指南連結；三組指定輸入、實頁 smoke、完整 tests 與 production build 已通過，正在完成 dev push 與固定 Preview 驗證。既有 Session、Estimator、AI 與 Guide 流程未修改。**
+**附近店家已改為不限定地區的 P-WORLD 區域搜尋，並新增選定店家後的 Slot 設置機種清單與 Catalog／中文指南連結；三組指定輸入、實頁 smoke、完整 tests、production build、dev push 與固定 Preview 自動 QA 均已通過，目前等待手機人工驗收。既有 Session、Estimator、AI 與 Guide 流程未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1387,7 +1388,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 完成 Nearby Halls Area Search & Inventory QA，等待手機驗收
 
-Status：**三組指定輸入、localhost 手機尺寸自動 QA、完整工程 QA 與 production build 已通過；dev push 與固定 Preview 驗證進行中。**
+Status：**三組指定輸入、localhost／固定 Preview 手機尺寸自動 QA、完整工程 QA、production build 與 dev push 已通過；等待使用者手機抽查。**
 
 1. 固定 Preview 以飯店名稱、餐廳名稱與完整英文地址抽查同區候選；確認預設不再鎖定東京。
 2. 選定店家後展開店內 Slot 清單，抽查已收錄 Catalog 的機種可前往中文指南，Google Maps 僅在點擊「地圖導航」後開啟。
