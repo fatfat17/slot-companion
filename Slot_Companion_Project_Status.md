@@ -3,7 +3,7 @@
 Last Updated: 2026-08-30
 
 ## Current Version
-**Nearby Halls Search Polish & Session Scene AI**
+**Nearby Halls Area Search & Inventory**
 
 Status：**功能與本機工程 QA 已完成；等待 dev Preview 自動 QA 與手機人工驗收**
 
@@ -30,6 +30,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Nearby Halls Area Search & Inventory（2026-08-30）
+- 附近店家移除預設東京與都道府縣必填，改為單一地點輸入，可接受日文地區／車站／地址、有限繁中／英文日本地址與已知地標名稱；找不到時會依安全的市區／車站候選逐步放寬，不使用付費 Google Maps API，也不宣稱距離排序。
+- 新增 P-WORLD 店家詳細頁 Slot 設置 parser 與 `/api/halls/detail`：使用者選定店家後可在 App 內查看目前登錄的 Slot 清單，並依 P-WORLD machine database ID 對應 Machine Catalog；已對應項目可直接進中文指南，未對應項目保留 P-WORLD 來源連結。
+- Google Maps 從搜尋資料來源降為選定店家後的外部導航；App 不要求 GPS、不保存座標。來源失敗時保留 P-WORLD 店家資料，不影響 Catalog、Guide、Session、Estimator 或 AI。
+- 指定輸入 runtime smoke：`VIA INN 名古屋新幹線口 / ヴィアイン名古屋新幹線口` 與 `Yamamotoya Honten Esukaten` 均安全轉為 `名古屋駅`，取得 `キング観光サウザンド名古屋駅柳橋店`；`7-4 Tsubakicho, Nakamura Ward, Nagoya, Aichi 453-0015日本` 轉為 `愛知県名古屋市中村区椿町`，取得 `ウイングレット`、`太陽`。
+- P-WORLD 實頁店內機種 smoke：柳橋店讀取 **91 台 Slot**；Catalog ID 對應可產生中文指南連結。此處是來源當下結果，不保存為長期設置事實。
+- 390 × 844 localhost 自動瀏覽器 QA：三組指定輸入、店家結果、店內機種展開與 Catalog 連結正常，console error 0。此為自動 QA，不冒充實體手機人工驗收。
+- 工程 QA：lint **0 errors／0 warnings**、typecheck 通過、完整 automated tests **342 / 342 passed**、Next.js 16.3.2 webpack production build 通過。production server 的 `/`、`/halls`、`/catalog`、`/identify`、`/records` 均為 HTTP 200；餐廳名稱搜尋與店內機種 API smoke 通過。
+- 尚待完成：dev push、固定 Preview 自動 QA 與使用者手機抽查。
 
 ### Nearby Halls Search Polish & Session Scene AI（2026-08-30）
 - iPhone Safari 的「附近店家」不再於非同步 GPS callback 開新視窗，改以正常連結直接交給 Google Maps 處理目前位置；App 不取得、保存或上傳座標。
@@ -1358,9 +1368,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 58. Session AI 陪玩是現有結構化指南的問答顯示層，不是新攻略來源；送出的 context 有長度與筆數上限，且 AI 無權改寫 Session 或 Estimator。
 59. Session 場景照片辨識只可比對當前 snapshot 已存在的 operational controls；AI 候選不是操作指令，必須由使用者確認才可記錄或切換狀態，圖片不得長期保存。
 60. iPhone Safari 可能阻擋由 GPS callback 非同步開啟的新分頁；附近店家應以正常使用者點擊連結把位置處理交給 Google Maps，不需要 App 自行取得座標。
+61. Google Maps 外部搜尋本身無法形成 App 內的店家／設置機種流程；附近店家應先由 P-WORLD 地區查詢與店家詳細頁建立可追溯候選，地圖只負責選定後導航。
+62. 任意英文飯店／餐廳名稱不能在沒有地理資料服務時可靠定位；目前只支援可安全解析的日本地址、常用地名與有限已知地標，無法辨識時必須請使用者改貼地址／區／車站，不得硬猜。
 
 ## Current Work
-**附近店家搜尋修正、AI 回答排版與 Session 場景拍照辨識已完成實作、完整 QA、dev push 與固定 Preview 自動驗證；目前等待手機人工驗收。既有 Estimator 安全 coverage、公式與可信度曲線未修改。**
+**附近店家已改為不限定地區的 P-WORLD 區域搜尋，並新增選定店家後的 Slot 設置機種清單與 Catalog／中文指南連結；三組指定輸入、實頁 smoke、完整 tests 與 production build 已通過，正在完成 dev push 與固定 Preview 驗證。既有 Session、Estimator、AI 與 Guide 流程未修改。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1373,14 +1385,14 @@ v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### 等待 Nearby Halls Search Polish & Session Scene AI Preview／手機驗收
+### 完成 Nearby Halls Area Search & Inventory QA，等待手機驗收
 
-Status：**程式、完整 tests、production build、dev push 與固定 Preview 自動 QA 已完成；待使用者手機抽查。**
+Status：**三組指定輸入、localhost 手機尺寸自動 QA、完整工程 QA 與 production build 已通過；dev push 與固定 Preview 驗證進行中。**
 
-1. 從首頁進入附近店家，以「豐州」或快捷地區確認日文轉換，並確認 Google Maps 按鈕可直接開啟附近搜尋。
-2. 在有 operational controls 的 Session 拍一張清楚正式場景；確認 AI 只提出該 Session 既有按鈕，且必須人工確認後才記錄。
-3. 以模糊或非場景照片抽查 uncertain／unknown，不得自動改寫 Session；關閉 drawer 後既有 G 數與計數不變。
-4. 實體店內拍攝仍應遵守店家規則；不部署 Production，也不 merge `main`，不自行開始下一版本。
+1. 固定 Preview 以飯店名稱、餐廳名稱與完整英文地址抽查同區候選；確認預設不再鎖定東京。
+2. 選定店家後展開店內 Slot 清單，抽查已收錄 Catalog 的機種可前往中文指南，Google Maps 僅在點擊「地圖導航」後開啟。
+3. 實體手機確認輸入、展開清單與長機種名稱的單手操作；設置資料與營業狀況仍以現場為準。
+4. 不部署 Production、不 merge `main`，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
