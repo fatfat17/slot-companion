@@ -33,14 +33,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
-### Production Estimator G Denominator Hotfix（2026-08-30，dev 等待 Preview 驗收）
+### Production Estimator G Denominator Hotfix（2026-08-30，dev 自動 QA 通過，等待手機複驗）
 - 正式站實戰回報：Machine Guide Session 先切換至 CZ／AT 後再把主 G 更新到 2,000G，畫面總觀測已是 2,000G，但 Estimator 的 `observedNormalGame` 分母仍停在較早的 60G，因而持續顯示「還需要 540G」。
 - 根因確認：狀態按鈕只保存當下狀態，沒有保存每段 CZ／AT 的起訖 G；舊邏輯卻把使用者在非通常狀態下輸入的整段主 G 增量排除於 Estimator 分母，造成分母凍結。這不是 Catalog／P-WORLD 設定表缺失，也不是 localStorage 畫面快取。
 - 修正後，Machine Guide 建立的單一主 G tracker 作為共同可觀測遊玩分母；CZ／AT 狀態切換不再凍結主 G 的 Estimator 進度。既有 active Session 不需刪除或重建，畫面會以已保存的 `observedTotalGame` 即時恢復正確進度；後續主 G 更新也會維持同步。
 - Verified／legacy Profile 若具有既有獨立測量語意，仍保留原本的狀態分母行為；Setting Estimator 公式、minimum sample、benchmark、Control Evidence Gate 與事件 numerator 均未修改。
 - 新增回歸：舊資料為 `observedTotalGame=2,000`、`observedNormalGame=60`、目前狀態 AT、主要 AT 4 次時，readiness 必須使用 2,000G、達到 ready 並產生參考分布；下一次 +10G 後共同分母為 2,010G。
 - QA：lint 通過、typecheck 通過、完整 automated tests **350 / 350 passed**、Next.js 16.3.2 webpack production build 通過。預設 Turbopack 仍因受限 host 的 CSS worker 無法 bind port，沿用既有 webpack production QA 路徑。
-- 尚未完成：commit／push、固定 dev Preview smoke 與使用者手機複驗；此項不得標記為 Production 已修正。
+- Git／Preview：修正 commit `468ab8c` 已 push 至 `origin/dev`；固定 dev Preview 已載入並完成 390×844 自動瀏覽器重現。
+- Preview 實測：先保存 600G baseline、切換 AT，再更新目前 G 至 2,600G，畫面與 Estimator 均使用 2,000G；記錄主要 AT 4 次後即顯示設定 1～6 參考分布（判斷力中 44%），不再停在舊 600G。此項是自動 QA，不冒充實體手機人工驗收。
+- 尚未完成：使用者手機複驗與 Production 發佈；正式站目前仍是修正前版本，不得標記為 Production 已修正。
 
 ### Production Launch（2026-08-30）
 - 使用者明確核准正式上線；當前 `dev` working release 以 non-fast-forward release commit `d2b9a97` 合併並 push 至 GitHub `main`。
@@ -1425,7 +1427,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 66. 正式網站可公開免登入使用；GitHub／Vercel 帳號只負責管理與部署。正式 Production 仍需持續監控外部 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的來源或服務變動。
 
 ## Current Work
-**正式 Production 已上線；目前處理實戰發現的 Estimator 主 G 分母凍結 hotfix，修正只進 `dev`，等待 Preview 驗收後才可考慮再次發佈 Production。**
+**正式 Production 已上線；Estimator 主 G 分母凍結 hotfix 已在 `dev` 完成並通過固定 Preview 自動 QA，等待使用者手機複驗後才可考慮再次發佈 Production。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1440,10 +1442,10 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### Estimator 主 G hotfix Preview 驗收
 
-Status：**本機修正與完整工程 QA 通過；待 push 固定 dev Preview 並驗證 2,000G／4 次事件案例。**
+Status：**完整工程 QA 與固定 dev Preview 2,000G／4 次事件案例均通過；等待使用者手機複驗。**
 
-1. Push `dev`，等待固定 Preview `https://slot-companion-git-dev-ben-liu.vercel.app` Ready。
-2. 自動驗證 Session 主 G、CZ／AT 狀態與 Estimator readiness 不再分離；再由使用者以手機既有案例快速複驗。
+1. 使用者在固定 Preview `https://slot-companion-git-dev-ben-liu.vercel.app` 以手機重現既有案例：切換 CZ／AT 後更新目前 G，Estimator 分母應跟隨總觀測 G。
+2. 確認有效事件樣本達門檻後，設定 1～6 參考分布能正常出現。
 3. 未經使用者明確核准，不 merge／deploy 至 `main` Production；正式網址目前仍是修正前版本。
 4. Hotfix 驗收完成後回到 Production 上線後監測與實戰回饋，不自行開始其他版本。
 
