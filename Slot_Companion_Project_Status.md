@@ -1,6 +1,6 @@
 # Slot Companion Project Status
 
-Last Updated: 2026-08-30
+Last Updated: 2026-08-31
 
 ## Current Version
 **Slot Companion Production Launch — current approved working release**
@@ -33,6 +33,14 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
+### Unified Start Flow Architecture（2026-08-31，使用者已核准正式發佈）
+- 首頁在沒有 active Session 時，黃色主操作改為唯一的「開始一局」入口；原本與主操作同樣連到 `/identify` 的第二張「拍機台」卡已移除。有 active Session 時仍維持直接繼續既有 Session。
+- 新增 `/start` 共用開始頁，先詢問玩家是否知道機種：不知道時前往 AI 拍照辨識；知道時前往 Machine Catalog 搜尋。兩條路徑選定 Catalog identity 後仍沿用既有 Machine Guide → Session Mode → Session 流程，不複製 Session 建立邏輯。
+- 熟手可由開始頁直接進入「最近遊玩」或「我的收藏」；Catalog 支援 `?view=recent`／`?view=favorites` 初始分頁，不改變 browser-local 收藏與最近紀錄資料模型。
+- AI 機種辨識頁的返回層級改為「開始一局」。開始頁另明確區分 Session 內的「拍現在畫面」只用於辨認目前 CZ／AT 等既有 operational controls，不會重新判斷機種。
+- PWA shell 與旅行離線包核心頁面加入 `/start`，並更新 service worker cache namespace；不清除或改寫既有 Session、Guide、收藏、最近紀錄或旅行包資料。
+- 產品 commit `16cbc9f` 已 push 至 `origin/dev`；使用者已明確要求直接發佈正式版本，release merge／Production deployment 進行中。本項自動 QA 不冒充實體手機人工驗收。
+
 ### Production Update — Estimator Denominator & Session G Flow（2026-08-30）
 - 使用者明確核准將本輪 Estimator 主 G 分母 hotfix 與 Session G 輸入流程更新至正式站。
 - `dev` 以 release merge commit `ee855e8` 合併至 `main`；Production 狀態紀錄 commit `3e6fedb` 已 push，Vercel dashboard 顯示該 Production deployment 為 **Ready**。
@@ -56,7 +64,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - QA：lint 通過、typecheck 通過、完整 automated tests **350 / 350 passed**、Next.js 16.3.2 webpack production build 通過。預設 Turbopack 仍因受限 host 的 CSS worker 無法 bind port，沿用既有 webpack production QA 路徑。
 - Git／Preview：修正 commit `468ab8c` 已 push 至 `origin/dev`；固定 dev Preview 已載入並完成 390×844 自動瀏覽器重現。
 - Preview 實測：先保存 600G baseline、切換 AT，再更新目前 G 至 2,600G，畫面與 Estimator 均使用 2,000G；記錄主要 AT 4 次後即顯示設定 1～6 參考分布（判斷力中 44%），不再停在舊 600G。此項是自動 QA，不冒充實體手機人工驗收。
-- 使用者已明確要求將本 hotfix 與 Session G 輸入流程一併更新到正式站；release merge commit 為 `ee855e8`，正式部署完成狀態需於 Production smoke 後記錄。
+- 使用者已明確要求將本 hotfix 與 Session G 輸入流程一併更新到正式站；release merge commit 為 `ee855e8`，Vercel Production 已完成部署後 smoke。
 
 ### Production Launch（2026-08-30）
 - 使用者明確核准正式上線；當前 `dev` working release 以 non-fast-forward release commit `d2b9a97` 合併並 push 至 GitHub `main`。
@@ -1302,6 +1310,12 @@ Regression QA：
 
 ## Verified QA
 
+### Unified Start Flow QA（2026-08-31，自動 QA）
+- lint 通過、typecheck 通過、完整 automated tests **352 / 352 passed**、Next.js 16.3.3 webpack production build通過；預設 Turbopack 在受限環境仍因 CSS worker 無法 bind port 中止，沿用既有 webpack production QA 路徑。
+- localhost production 390 × 844：首頁寬度／scroll width 均為 390px；首頁沒有第二個「拍機台」連結，只保留 `/start` 的「開始一局」主操作。
+- `/start` 的拍照辨識、搜尋機種、最近遊玩與我的收藏連結均可見；兩張主要分流卡寬度 354px，頁面無水平溢出，console error／warning 0。
+- 「最近遊玩」快捷入口實際前往 `/catalog?view=recent`，Catalog 的 active tab 與結果標題皆為「最近遊玩」。本項是自動瀏覽器 QA，不等同實體手機人工驗收。
+
 ### Production Release QA（2026-08-30，自動 QA）
 - Vercel Production commit：`d2b9a97f862858d73722a4f5022aece949cb141e`，狀態 **Ready**。
 - 固定正式網址：`https://slot-companion.vercel.app`，Vercel Domains 顯示 Valid Configuration／Production。
@@ -1439,29 +1453,28 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 64. Machine Catalog 的 202 筆 identity record 目前都有可追溯的 P-WORLD `sourceImageUrl`；卡片可以按需顯示來源識別縮圖，但必須使用 Catalog ownership gate、同源 route、格式／大小限制與失敗 fallback，不能退化為任意圖片代理。
 65. 旅行離線包應有明確生命週期：準備、原地更新、查看內容、刪除。刪除必須只清除旅行包自己的 Cache Storage 與 manifest，不得用 `localStorage.clear()` 或影響 Session／Guide／收藏。
 66. 正式網站可公開免登入使用；GitHub／Vercel 帳號只負責管理與部署。正式 Production 仍需持續監控外部 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的來源或服務變動。
+67. 「開始一局」才是首頁的主要玩家任務；AI 拍照只是未知機種的 identity 選擇方式，不能與主操作重複占用兩個入口。已知機種應可由搜尋、收藏或最近遊玩進入，兩種選擇方式最後共同收斂至 Catalog identity → Guide → Session。
 
 ## Current Work
-**正式 Production 已上線；Estimator 主 G 分母凍結 hotfix 已在 `dev` 完成並通過固定 Preview 自動 QA，等待使用者手機複驗後才可考慮再次發佈 Production。**
+**使用者已核准 Unified Start Flow 正式發佈；`dev` 產品 commit 已 push，正在建立 `main` release 並等待 Production deployment。**
 
 核准穩定基準：**v0.2.3.1**
 
 Repository workflow：`main` 現為使用者核准的 Production release；後續日常開發仍使用 `dev`，任何新變更未經使用者明確驗收不得再次 merge 回 `main`。
 
-v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
-
-v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
+Unified Start Flow：**Completed；使用者已核准 Production 發佈**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Estimator 主 G hotfix Preview 驗收
+### Unified Start Flow Production 發佈
 
-Status：**完整工程 QA 與固定 dev Preview 2,000G／4 次事件案例均通過；等待使用者手機複驗。**
+Status：**本機工程 QA 與 390 × 844 自動流程通過；使用者已要求直接發佈正式版本。**
 
-1. 使用者在固定 Preview `https://slot-companion-git-dev-ben-liu.vercel.app` 以手機重現既有案例：切換 CZ／AT 後更新目前 G，Estimator 分母應跟隨總觀測 G。
-2. 確認有效事件樣本達門檻後，設定 1～6 參考分布能正常出現。
-3. 未經使用者明確核准，不 merge／deploy 至 `main` Production；正式網址目前仍是修正前版本。
-4. Hotfix 驗收完成後回到 Production 上線後監測與實戰回饋，不自行開始其他版本。
+1. 完成 `main` release merge 並 push，觸發 Vercel Production deployment。
+2. 確認正式網址首頁沒有重複拍照入口，黃色主卡正確進入「開始一局」。
+3. 確認 `/start`、拍照辨識、Catalog 搜尋／最近／收藏與既有 active Session 路徑可正常開啟。
+4. 部署 Ready 與 Production smoke 完成後，補記正式 release commit 與驗證結果。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：

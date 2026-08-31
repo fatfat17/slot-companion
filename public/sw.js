@@ -1,4 +1,4 @@
-const CACHE="slot-companion-shell-v2026-08-30";const TRIP_PREFIX="slot-companion-trip-pack-";const CORE=["/","/catalog","/identify","/records","/hunter","/glossary"];
+const CACHE="slot-companion-shell-v2026-08-31-start-flow";const TRIP_PREFIX="slot-companion-trip-pack-";const CORE=["/","/start","/catalog","/identify","/records","/hunter","/glossary"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));self.skipWaiting()});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE&&!key.startsWith(TRIP_PREFIX)).map(key=>caches.delete(key)))));self.clients.claim()});
 self.addEventListener("fetch",event=>{if(event.request.method!=="GET")return;event.respondWith(fetch(event.request).then(response=>{if(response.ok){const clone=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(event.request,clone)))}return response}).catch(async()=>{const cached=await caches.match(event.request);if(cached)return cached;if(event.request.mode==="navigate")return caches.match("/");return Response.error()}))});

@@ -9,7 +9,7 @@ export type OfflinePackStatus={manifest:OfflinePackManifest|null;cachedUrlCount:
 function offlineImageUrl(catalogId:string,displayUrl:string,sourceImageUrl:string){return displayUrl.startsWith("/")?displayUrl:`/api/machine-guide-assets/${encodeURIComponent(catalogId)}?source=${encodeURIComponent(sourceImageUrl)}`}
 function coverOfflineUrl(cover:OfflinePackCover){return`/api/catalog-covers/${encodeURIComponent(cover.catalogId)}?source=${encodeURIComponent(cover.sourceImageUrl)}`}
 export function guideOfflineUrls(guide:MachineGuide){return[...new Set([`/catalog/${encodeURIComponent(guide.catalogId)}`,`/guides/${encodeURIComponent(guide.catalogId)}`,...(guide.images??[]).map(image=>offlineImageUrl(guide.catalogId,image.displayUrl,image.sourceImageUrl)).filter(Boolean)])]}
-export function offlinePackUrls(guides:MachineGuide[],covers:OfflinePackCover[]=[]){return[...new Set(["/","/catalog","/records","/identify","/halls","/glossary",...guides.flatMap(guideOfflineUrls),...covers.map(coverOfflineUrl)])]}
+export function offlinePackUrls(guides:MachineGuide[],covers:OfflinePackCover[]=[]){return[...new Set(["/","/start","/catalog","/records","/identify","/halls","/glossary",...guides.flatMap(guideOfflineUrls),...covers.map(coverOfflineUrl)])]}
 
 async function cacheResponseWithAssets(cache:Cache,url:string){
   const response=await fetch(url,{credentials:"same-origin"});if(!response.ok)throw new Error(`${response.status}`);await cache.put(url,response.clone());
