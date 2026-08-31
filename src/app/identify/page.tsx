@@ -21,7 +21,7 @@ export default function IdentifyPage(){
   async function submit(){if(!file)return;controller.current=new AbortController();setLoading(true);setError("");try{const next=await identifyMachine(file,controller.current.signal);setResult(next);setSelected(0)}catch(reason){if(reason instanceof DOMException&&reason.name==="AbortError")setError("已取消辨識。");else setError(reason instanceof IdentificationRequestError?reason.message:"辨識服務發生錯誤，請稍後再試。")}finally{setLoading(false)}}
   function cancel(){controller.current?.abort()}
   const candidate=result?.candidates[selected];
-  return <><PageHeader title="拍機台" eyebrow="AI Machine Identification"/><main className="page pt-5!">
+  return <><PageHeader title="拍機台" eyebrow="AI Machine Identification" backHref="/start" backLabel="返回開始一局"/><main className="page pt-5!">
     <div className="notice mb-4">照片只在本次辨識期間使用，不會存入 localStorage 或建立圖片庫。AI 結果必須由你確認。</div>
     <div className={`photo-picker ${preview?"has-photo":""}`}>{preview?<div className="photo-preview" style={{backgroundImage:`url(${preview})`}}/>:compressing?<><span>◌</span><strong>正在壓縮照片…</strong><small>完成後才會送出辨識</small></>:<><span>📷</span><strong>拍攝或選擇機台照片</strong><small>建議包含整台、機種名稱與筐體上方</small></>}</div>
     <div className="photo-source-grid"><label>📷 直接拍照<input type="file" accept="image/*,.heic,.heif" capture="environment" onChange={pickImage}/></label><label>▣ 選擇舊照片<input type="file" accept="image/*,.heic,.heif" onChange={pickImage}/></label></div>

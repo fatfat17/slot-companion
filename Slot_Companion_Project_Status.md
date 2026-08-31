@@ -1,6 +1,6 @@
 # Slot Companion Project Status
 
-Last Updated: 2026-08-30
+Last Updated: 2026-08-31
 
 ## Current Version
 **Slot Companion Production Launch — current approved working release**
@@ -32,6 +32,14 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Unified Start Flow Architecture（2026-08-31，`dev` 本機完成）
+- 首頁在沒有 active Session 時，黃色主操作改為唯一的「開始一局」入口；原本與主操作同樣連到 `/identify` 的第二張「拍機台」卡已移除。有 active Session 時仍維持直接繼續既有 Session。
+- 新增 `/start` 共用開始頁，先詢問玩家是否知道機種：不知道時前往 AI 拍照辨識；知道時前往 Machine Catalog 搜尋。兩條路徑選定 Catalog identity 後仍沿用既有 Machine Guide → Session Mode → Session 流程，不複製 Session 建立邏輯。
+- 熟手可由開始頁直接進入「最近遊玩」或「我的收藏」；Catalog 支援 `?view=recent`／`?view=favorites` 初始分頁，不改變 browser-local 收藏與最近紀錄資料模型。
+- AI 機種辨識頁的返回層級改為「開始一局」。開始頁另明確區分 Session 內的「拍現在畫面」只用於辨認目前 CZ／AT 等既有 operational controls，不會重新判斷機種。
+- PWA shell 與旅行離線包核心頁面加入 `/start`，並更新 service worker cache namespace；不清除或改寫既有 Session、Guide、收藏、最近紀錄或旅行包資料。
+- 本項尚未 push、部署固定 Preview 或合併至 Production；不冒充使用者手機人工驗收。
 
 ### Production Update — Estimator Denominator & Session G Flow（2026-08-30）
 - 使用者明確核准將本輪 Estimator 主 G 分母 hotfix 與 Session G 輸入流程更新至正式站。
@@ -1302,6 +1310,12 @@ Regression QA：
 
 ## Verified QA
 
+### Unified Start Flow QA（2026-08-31，自動 QA）
+- lint 通過、typecheck 通過、完整 automated tests **352 / 352 passed**、Next.js 16.3.3 webpack production build通過；預設 Turbopack 在受限環境仍因 CSS worker 無法 bind port 中止，沿用既有 webpack production QA 路徑。
+- localhost production 390 × 844：首頁寬度／scroll width 均為 390px；首頁沒有第二個「拍機台」連結，只保留 `/start` 的「開始一局」主操作。
+- `/start` 的拍照辨識、搜尋機種、最近遊玩與我的收藏連結均可見；兩張主要分流卡寬度 354px，頁面無水平溢出，console error／warning 0。
+- 「最近遊玩」快捷入口實際前往 `/catalog?view=recent`，Catalog 的 active tab 與結果標題皆為「最近遊玩」。本項是自動瀏覽器 QA，不等同實體手機人工驗收。
+
 ### Production Release QA（2026-08-30，自動 QA）
 - Vercel Production commit：`d2b9a97f862858d73722a4f5022aece949cb141e`，狀態 **Ready**。
 - 固定正式網址：`https://slot-companion.vercel.app`，Vercel Domains 顯示 Valid Configuration／Production。
@@ -1439,29 +1453,28 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 64. Machine Catalog 的 202 筆 identity record 目前都有可追溯的 P-WORLD `sourceImageUrl`；卡片可以按需顯示來源識別縮圖，但必須使用 Catalog ownership gate、同源 route、格式／大小限制與失敗 fallback，不能退化為任意圖片代理。
 65. 旅行離線包應有明確生命週期：準備、原地更新、查看內容、刪除。刪除必須只清除旅行包自己的 Cache Storage 與 manifest，不得用 `localStorage.clear()` 或影響 Session／Guide／收藏。
 66. 正式網站可公開免登入使用；GitHub／Vercel 帳號只負責管理與部署。正式 Production 仍需持續監控外部 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的來源或服務變動。
+67. 「開始一局」才是首頁的主要玩家任務；AI 拍照只是未知機種的 identity 選擇方式，不能與主操作重複占用兩個入口。已知機種應可由搜尋、收藏或最近遊玩進入，兩種選擇方式最後共同收斂至 Catalog identity → Guide → Session。
 
 ## Current Work
-**正式 Production 已上線；Estimator 主 G 分母凍結 hotfix 已在 `dev` 完成並通過固定 Preview 自動 QA，等待使用者手機複驗後才可考慮再次發佈 Production。**
+**正式 Production 已上線；Unified Start Flow 已在 `dev` 本機完成工程與 390 × 844 自動 QA，等待固定 Preview 與使用者手機驗收。**
 
 核准穩定基準：**v0.2.3.1**
 
 Repository workflow：`main` 現為使用者核准的 Production release；後續日常開發仍使用 `dev`，任何新變更未經使用者明確驗收不得再次 merge 回 `main`。
 
-v0.2.2.2：**Completed；等待使用者驗收，尚未核准**
-
-v0.2.2.3：**Completed；等待使用者驗收，尚未核准**
+Unified Start Flow：**本機 Completed；尚未 push／部署 Preview／核准 Production**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Estimator 主 G hotfix Preview 驗收
+### Unified Start Flow Preview 與手機驗收
 
-Status：**完整工程 QA 與固定 dev Preview 2,000G／4 次事件案例均通過；等待使用者手機複驗。**
+Status：**本機工程 QA 與 390 × 844 自動流程通過；等待固定 dev Preview 與使用者手機驗收。**
 
-1. 使用者在固定 Preview `https://slot-companion-git-dev-ben-liu.vercel.app` 以手機重現既有案例：切換 CZ／AT 後更新目前 G，Estimator 分母應跟隨總觀測 G。
-2. 確認有效事件樣本達門檻後，設定 1～6 參考分布能正常出現。
-3. 未經使用者明確核准，不 merge／deploy 至 `main` Production；正式網址目前仍是修正前版本。
-4. Hotfix 驗收完成後回到 Production 上線後監測與實戰回饋，不自行開始其他版本。
+1. 提交並 push `dev`，部署固定 Preview；先驗證首頁沒有重複拍照入口，黃色主卡正確進入「開始一局」。
+2. 使用者以手機確認未知機種可走拍照辨識，已知機種可走搜尋／最近／收藏，返回與觸控層級符合現場操作。
+3. 從兩種入口各選定一台機種，確認共同收斂至既有 Guide → Session Mode → Session，既有 active Session 仍由首頁直接繼續。
+4. 未經使用者明確核准，不 merge／deploy 至 `main` Production。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
