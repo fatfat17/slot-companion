@@ -9,7 +9,7 @@ Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Pr
 
 目前核准穩定基準：**v0.2.3.1**
 
-正式 Production 基準：**release commit `ee855e8`（Estimator 主 G 分母修正與 Session G 輸入流程由 `dev` 合併至 `main`）**
+正式 Production 基準：**release commit `2667925`（Unified Start Flow 由 `dev` 合併至 `main`）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -39,7 +39,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 熟手可由開始頁直接進入「最近遊玩」或「我的收藏」；Catalog 支援 `?view=recent`／`?view=favorites` 初始分頁，不改變 browser-local 收藏與最近紀錄資料模型。
 - AI 機種辨識頁的返回層級改為「開始一局」。開始頁另明確區分 Session 內的「拍現在畫面」只用於辨認目前 CZ／AT 等既有 operational controls，不會重新判斷機種。
 - PWA shell 與旅行離線包核心頁面加入 `/start`，並更新 service worker cache namespace；不清除或改寫既有 Session、Guide、收藏、最近紀錄或旅行包資料。
-- 產品 commit `16cbc9f` 已 push 至 `origin/dev`；使用者已明確要求直接發佈正式版本，release merge／Production deployment 進行中。本項自動 QA 不冒充實體手機人工驗收。
+- 產品 commit `16cbc9f` 已 push 至 `origin/dev`；使用者明確要求直接發佈正式版本，release merge commit `2667925` 已 push 至 `main`，Vercel Production deployment 為 **success / Deployment has completed**。
+- 固定正式網址 `https://slot-companion.vercel.app` 已完成 390 × 844 部署後 smoke：首頁只有 `/start` 的「開始一局」、重複拍機台入口為 0；正式 `/start` 的拍照辨識、Catalog 搜尋、最近遊玩與我的收藏路徑皆正確，頁面 width／scroll width 390／390，console error／warning 0。本項自動 QA 不冒充實體手機人工驗收。
 
 ### Production Update — Estimator Denominator & Session G Flow（2026-08-30）
 - 使用者明確核准將本輪 Estimator 主 G 分母 hotfix 與 Session G 輸入流程更新至正式站。
@@ -1315,6 +1316,7 @@ Regression QA：
 - localhost production 390 × 844：首頁寬度／scroll width 均為 390px；首頁沒有第二個「拍機台」連結，只保留 `/start` 的「開始一局」主操作。
 - `/start` 的拍照辨識、搜尋機種、最近遊玩與我的收藏連結均可見；兩張主要分流卡寬度 354px，頁面無水平溢出，console error／warning 0。
 - 「最近遊玩」快捷入口實際前往 `/catalog?view=recent`，Catalog 的 active tab 與結果標題皆為「最近遊玩」。本項是自動瀏覽器 QA，不等同實體手機人工驗收。
+- Production release `2667925` 的 GitHub Vercel status 為 **success**；正式首頁與 `/start` 的 390 × 844 browser smoke 通過，無水平溢出、console error／warning 0。
 
 ### Production Release QA（2026-08-30，自動 QA）
 - Vercel Production commit：`d2b9a97f862858d73722a4f5022aece949cb141e`，狀態 **Ready**。
@@ -1456,25 +1458,25 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 67. 「開始一局」才是首頁的主要玩家任務；AI 拍照只是未知機種的 identity 選擇方式，不能與主操作重複占用兩個入口。已知機種應可由搜尋、收藏或最近遊玩進入，兩種選擇方式最後共同收斂至 Catalog identity → Guide → Session。
 
 ## Current Work
-**使用者已核准 Unified Start Flow 正式發佈；`dev` 產品 commit 已 push，正在建立 `main` release 並等待 Production deployment。**
+**Unified Start Flow 已由使用者核准並正式發佈；目前進入 Production 上線後監測與實戰回饋。**
 
 核准穩定基準：**v0.2.3.1**
 
 Repository workflow：`main` 現為使用者核准的 Production release；後續日常開發仍使用 `dev`，任何新變更未經使用者明確驗收不得再次 merge 回 `main`。
 
-Unified Start Flow：**Completed；使用者已核准 Production 發佈**
+Unified Start Flow：**Completed；Production release `2667925` 已部署並通過自動 smoke**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Unified Start Flow Production 發佈
+### Production 上線後監測
 
-Status：**本機工程 QA 與 390 × 844 自動流程通過；使用者已要求直接發佈正式版本。**
+Status：**Unified Start Flow 正式部署與自動 smoke 完成。**
 
-1. 完成 `main` release merge 並 push，觸發 Vercel Production deployment。
-2. 確認正式網址首頁沒有重複拍照入口，黃色主卡正確進入「開始一局」。
-3. 確認 `/start`、拍照辨識、Catalog 搜尋／最近／收藏與既有 active Session 路徑可正常開啟。
-4. 部署 Ready 與 Production smoke 完成後，補記正式 release commit 與驗證結果。
+1. 使用者以實體手機確認「開始一局」的未知機種／已知機種分流與觸控層級符合現場操作。
+2. 實戰觀察 active Session 返回首頁後是否能直接繼續，以及 Session 結束後最近遊玩是否正確出現。
+3. 持續監控 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的外部服務變動。
+4. 未收到新的實戰問題前，不自行開始下一版本。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
