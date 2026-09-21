@@ -7,7 +7,7 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.5.3**
+目前核准穩定基準：**v0.2.5.4**
 
 正式 Production 基準：**release commit `726551b`（APP 圖文使用指南）**
 
@@ -32,6 +32,13 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### 打台夥伴 Brand + iPhone Home Screen Icon（2026-09-21，本機完成）
+- 使用者核准 App 品牌由 `Slot Companion` 更新為「打台夥伴｜日本 SLOT・柏青哥」，iPhone／PWA 短名稱為「打台夥伴」，首頁英文品牌改為 `PACHI COMPANION`，不再只指向 SLOT。
+- 新圖示以深色底、金色 C 圓弧、紅色柏青哥球與三格 SLOT 暗示組成，不使用小字；共用程式化 artwork 產生 512 × 512 一般／maskable 圖示與 180 × 180 `apple-icon`，不保存或引用外部圖片。
+- Metadata、`appleWebApp` 與 Manifest 已同步新名稱、描述、standalone 顯示、主題色及圖示。既有已安裝的舊 SC 捷徑可能需刪除後由 Safari 重新加入，但不影響網站資料。
+- APP 使用指南新增「加入 iPhone 主畫面」章節，說明 Safari 分享 → 加入主畫面與舊圖示更新方式；`/help` 同時加入 Service Worker shell 與旅行離線包核心路由。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **385 / 385 passed**；Next.js 16.3.3 webpack production build通過。
 
 ### Opt-in APP Visual Guide（2026-09-21，Production 已發佈）
 - 首頁新增一條 55px 高的精簡「APP 使用指南」入口，不自動彈出、不保存已讀狀態，也不因清除快取或更換裝置重複干擾使用者。
@@ -1407,6 +1414,11 @@ Regression QA：
 
 ## Verified QA
 
+### 打台夥伴 Brand + iPhone Icon QA（2026-09-21，自動 QA）
+- 本機實際渲染 `/icon` 為 512 × 512 RGBA PNG、`/apple-icon` 為 180 × 180 RGBA PNG；人工視覺檢查確認兩種尺寸的金色 C、紅球與三格符號均清楚，安全區未貼邊。
+- localhost 390 × 844 首頁 title 為「打台夥伴｜日本 SLOT・柏青哥」、品牌為 `PACHI COMPANION`／「伴」，head 有自動產生的 `apple-touch-icon` 與 Manifest link，width／scroll width 為 390／390。
+- Manifest runtime 回傳 `id: /`、短名稱「打台夥伴」、standalone 與 512px any／maskable 圖示；`/help#install` 可定位至 header 下方，目錄共 7 項，console error／warning 為 0。
+
 ### Opt-in APP Visual Guide QA（2026-09-21，自動 QA）
 - localhost 390 × 844 首頁入口實測高度 55px，首頁 width／scroll width 為 390／390，不占用主要操作卡片空間且沒有水平溢出。
 - `/help` 顯示 6 個目錄入口、4 組介面示意與 4 個主要 CTA；完整頁面 width／scroll width 為 390／390，目錄點擊可把 `#identify` 正確定位至 header 下方。
@@ -1627,11 +1639,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 84. 多張資料機照片必須先在 client 壓縮並限制總量；最多五台不等於五張原尺寸照片可直接送入同一 Vercel Function request。
 85. 新手術語應先按遊戲類型分流；`/glossary` 維持 SLOT 預設可保留舊連結相容，而柏青哥術語必須使用回轉、玉、大當／RUSH 與盤面操作語意，不套用 SLOT 的天井、CZ／AT 或設定示唆。
 86. APP 使用指南應由使用者主動開啟，不以 browser-local「第一次進入」狀態強制彈出；視覺教學以可維護的介面示意呈現操作位置，避免保存玩家實戰畫面，也避免 UI 小幅調整後大量固定截圖失效。
+87. 品牌名稱必須涵蓋 SLOT 與柏青哥，因此玩家顯示名稱使用「打台夥伴／PACHI COMPANION」；repository 與既有 browser storage key 暫不更名，避免品牌更新造成 Session、Guide、收藏或離線包資料遺失。
 
 ## Current Work
-**APP 圖文使用指南第一版已完成並發佈 Production；等待使用者檢視內容與閱讀體感。**
+**「打台夥伴」品牌、跨平台圖示與 iPhone 加入主畫面教學已完成本機 QA；待本輪 Production 發佈。**
 
-核准穩定基準：**v0.2.5.3**
+核准穩定基準：**v0.2.5.4**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1658,6 +1671,8 @@ SLOT Catalog AI Selector：**Completed；Production release `b7741ff` 已部署�
 首頁新手入口與雙機種術語：**Completed；Production release `e7991b3` 已部署，SLOT／柏青哥按鈕、22 個柏青哥術語與正式手機版 QA 已通過**
 
 APP 圖文使用指南：**Completed；Production release `726551b` 已部署，首頁精簡入口、`/help` 雙流程、6 個章節與 4 組介面示意均已通過正式手機版 QA**
+
+打台夥伴 Brand + iPhone Icon：**本機完成；名稱、首頁品牌、Manifest、512px 圖示、180px Apple 圖示與安裝教學已通過工程及手機版 QA，待本輪 Production 發佈**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
