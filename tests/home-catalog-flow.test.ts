@@ -23,9 +23,13 @@ test("home uses the guide-first player flow without rendering legacy Profile car
   assert.match(home,/新手快速入門|新手第一次玩/);
   assert.match(home,/\/glossary\?kind=slot/);
   assert.match(home,/\/glossary\?kind=pachinko/);
+  assert.match(home,/href="\/help"/);
+  assert.match(home,/APP 使用指南/);
 });
 
 test("beginner glossary separates SLOT and Pachinko terms",()=>{const glossary=fs.readFileSync(new URL("../src/app/glossary/page.tsx",import.meta.url),"utf8");assert.match(glossary,/glossary-kind-tabs/);assert.match(glossary,/Pachislot Basics/);assert.match(glossary,/Pachinko Basics/);for(const term of ["千圓回轉","初當","RUSH","確變","ST","LT","ヘソ","電チュー","保留","右打ち","交換率"])assert.match(glossary,new RegExp(term));assert.match(glossary,/下一轉比較容易中/);assert.match(glossary,/不是中獎保證/)});
+
+test("app help is opt-in, visual and separates Slot from Pachinko",()=>{const help=fs.readFileSync(new URL("../src/app/help/page.tsx",import.meta.url),"utf8");for(const copy of ["不用全部看完","指南不會自動彈出","SLOT 快速流程","柏青哥快速流程","拍照找機台","中文機台指南","遊玩中的紀錄","AI 陪打助手","SLOT 選台助手","結束與今日紀錄"])assert.match(help,new RegExp(copy));assert.match(help,/help-visual/);assert.match(help,/href="\/identify"/);assert.match(help,/href="\/identify\/pachinko"/);assert.match(help,/href="\/catalog\/assistant"/);assert.doesNotMatch(help,/localStorage|sessionStorage|首次.*自動/)});
 
 test("legacy start route returns to the new home split while both catalogs own their player views",()=>{
   assert.match(start,/redirect\("\/"\)/);

@@ -58,6 +58,8 @@ export default function Home() {
         <nav aria-label="新手常用術語"><Link href="/glossary?kind=slot" className="slot"><b>🎰</b><span>SLOT 術語<small>CZ・AT・天井・設定示唆</small></span></Link><Link href="/glossary?kind=pachinko" className="pachinko"><b>🔴</b><span>柏青哥術語<small>大當・RUSH・ST・右打ち</small></span></Link></nav>
       </section>
 
+      <Link href="/help" className="home-help-link"><span>📘</span><span><strong>APP 使用指南</strong><small>找機台、建立指南、遊玩紀錄與 AI 功能</small></span><b>›</b></Link>
+
     </main>
   );
 }
