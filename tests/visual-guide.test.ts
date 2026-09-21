@@ -126,9 +126,9 @@ test("image sections remain visible when the Chinese summary omits a source sect
 
 test("home exposes separate Slot and Pachinko catalogs while Slot guides keep grounded images",()=>{
   const home=fs.readFileSync(new URL("../src/app/page.tsx",import.meta.url),"utf8"),view=fs.readFileSync(new URL("../src/components/MachineGuideView.tsx",import.meta.url),"utf8");
-  assert.match(home,/title: "柏青嫂資料庫"/);
-  assert.match(home,/title: "柏青哥資料庫"/);
-  assert.match(home,/搜尋 Slot・查看中文圖文指南・開始 Session/);
+  assert.match(home,/title: "打柏青嫂（SLOT）"/);
+  assert.match(home,/title: "打柏青哥（Pachinko）"/);
+  assert.match(home,/找機台・拍照辨識・最近打過/);
   assert.equal(home.match(/href: "\/catalog"/g)?.length,1);
   assert.doesNotMatch(home,/快速中文攻略|title: "機種資料庫"/);
   assert.match(view,/visual-guide-gallery/);
