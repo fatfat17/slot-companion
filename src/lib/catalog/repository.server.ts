@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { CatalogImportDecision,MachineCatalogRecord } from "@/types/catalog";
 import { applyCatalogDecisions,searchCatalogRecords } from "./core";
+import { readWithFallback } from "./readFallback";
 import { supabaseServerHeaders } from "./supabaseAuth";
 
 export type CatalogImportJob={sourceName:string;rangeStart:string|null;rangeEnd:string|null;status:"approved"|"partial"|"failed";received:number;processed:number;imported:number;merged:number;skipped:number;error?:unknown};
@@ -22,5 +23,13 @@ export class SupabaseMachineCatalogRepository implements MachineCatalogRepositor
   async approve(decisions:CatalogImportDecision[]){const result=applyCatalogDecisions(await this.list(),decisions),rows=result.records.map(record=>({id:record.id,record,updated_at:new Date().toISOString()}));const response=await this.request(`${this.url.replace(/\/$/,"")}/rest/v1/machine_catalog_records?on_conflict=id`,{method:"POST",headers:this.headers({"Content-Type":"application/json",Prefer:"resolution=merge-duplicates,return=minimal"}),body:JSON.stringify(rows)});if(!response.ok)throw new Error(`Supabase Catalog 寫入失敗（${response.status}）`);return{processed:decisions.length,imported:result.imported,merged:result.merged,skipped:result.skipped,total:result.total}}
   async recordImportJob(job:CatalogImportJob){const response=await this.request(`${this.url.replace(/\/$/,"")}/rest/v1/catalog_import_jobs`,{method:"POST",headers:this.headers({"Content-Type":"application/json",Prefer:"return=minimal"}),body:JSON.stringify({source_name:job.sourceName,range_start:job.rangeStart,range_end:job.rangeEnd,status:job.status,received_count:job.received,processed_count:job.processed,imported_count:job.imported,merged_count:job.merged,skipped_count:job.skipped,error:job.error??null,completed_at:new Date().toISOString()})});if(!response.ok)throw new Error(`Supabase import audit 寫入失敗（${response.status}）`)}
 }
-export function createCatalogRepository(environment:NodeJS.ProcessEnv=process.env):MachineCatalogRepository{const url=environment.SUPABASE_URL,key=environment.SUPABASE_SECRET_KEY??environment.SUPABASE_SERVICE_ROLE_KEY;return url&&key?new SupabaseMachineCatalogRepository(url,key):new JsonMachineCatalogRepository()}
+export class ReadFallbackMachineCatalogRepository implements MachineCatalogRepository{
+  constructor(private primary:MachineCatalogRepository,private fallback:MachineCatalogRepository){}
+  private warn(error:unknown){console.error("Supabase Catalog 讀取失敗，已使用 repo JSON fallback。",error instanceof Error?error.message:"unknown error")}
+  async list(){return readWithFallback(()=>this.primary.list(),()=>this.fallback.list(),error=>this.warn(error))}
+  async search(terms:string[],manufacturers:string[]=[],limit=20){return searchCatalogRecords(await this.list(),terms,manufacturers,limit)}
+  async approve(decisions:CatalogImportDecision[]){return this.primary.approve(decisions)}
+  async recordImportJob(job:CatalogImportJob){return this.primary.recordImportJob(job)}
+}
+export function createCatalogRepository(environment:NodeJS.ProcessEnv=process.env):MachineCatalogRepository{const url=environment.SUPABASE_URL,key=environment.SUPABASE_SECRET_KEY??environment.SUPABASE_SERVICE_ROLE_KEY,fallback=new JsonMachineCatalogRepository();return url&&key?new ReadFallbackMachineCatalogRepository(new SupabaseMachineCatalogRepository(url,key),fallback):fallback}
 export const catalogRepository=createCatalogRepository();
