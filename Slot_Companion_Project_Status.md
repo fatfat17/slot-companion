@@ -7,7 +7,7 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.5.0**
+目前核准穩定基準：**v0.2.5.1**
 
 正式 Production 基準：**release commit `0d33f53`（SLOT AI Companion Phase 1）**
 
@@ -32,6 +32,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### SLOT Catalog AI Selector（2026-09-21，本機完成，待 Production 發佈）
+- SLOT Catalog 新增獨立 `/catalog/assistant` 選台助手，不與 Session 內陪打 drawer 或柏青哥流程混用。Catalog 首頁以「朝一選台・晚間撿台」卡片進入。
+- 依日本時間自動選擇模式：15:00 前預設朝一、15:00 後預設晚間；玩家可隨時手動切換。朝一限制單一機種，晚間最多比較 5 台候選。
+- 每台候選可輸入目前資料機／液晶 G、履歷與現場條件，並附一張履歷照片；晚間 5 張照片採獨立較小壓縮上限，總量保持在既有 Vercel request ceiling 內。
+- Assistant 只接收 server 重新解析的 SLOT Catalog identity、玩家輸入、暫時照片與這台瀏覽器已有的 Machine Guide 摘要。沒有本機 Guide 時清楚顯示建立入口；沒有 ceiling／Reset 來源時，prompt 強制回覆目前沒有可靠資料，不用模型記憶補猜。
+- 晚間模式要求首選／次選／不建議或資料不足排序；資料不足時允許並列或拒絕硬選。沉沒成本、熱鬧演出與怕被別人撿不得作為續打理由。
+- OpenAI Responses API 使用獨立 `OPENAI_SLOT_SELECTION_MODEL` 可選設定、server-only Key、`store:false` 與最多 5 張圖；照片不進 Session、Catalog、Guide cache 或其他長期儲存。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **382 / 382 passed**；Next.js 16.3.3 webpack production build 通過。localhost 390 × 844 實際驗證自動晚間、手動朝一、機種搜尋、1／5 台限制、指南缺失提示與五台候選排版，width／scroll width 390／390。
 
 ### SLOT AI Companion Phase 1（2026-09-21，Production 已發佈）
 - Session 內 AI 陪打改為三個明確模式：「陪玩」「冷靜判斷」「小回顧」。三者共用同一份有界 Session context，但使用不同提示與回答目的；不再把即時陪伴、停損判斷與結算整理混成同一種回答。
@@ -1381,6 +1390,12 @@ Regression QA：
 
 ## Verified QA
 
+### SLOT Catalog AI Selector QA（2026-09-21，自動 QA）
+- lint、typecheck、完整 automated tests **382 / 382 passed**；Next.js 16.3.3 webpack production build通過，新增 `/catalog/assistant` 與 `/api/ai/slot-selection` routes。
+- Regression 覆蓋日本時間模式、朝一單台、晚間最多五台且去重、Guide 摘要 section／長度邊界、無來源不得補猜 Reset／天井，以及五張圖片總量低於 request ceiling。
+- localhost 390 × 844 由 SLOT Catalog 實際進入選台助手；日本時間 18:59 自動選晚間，手動朝一後搜尋並加入東京喰種，再切晚間加入五台候選。按鈕狀態、指南缺失入口與排版均正確，無水平溢出。
+- 本項未送出真實 OpenAI 分析、未上傳使用者照片，也不冒充日本現場選台結果或實體手機人工驗收。
+
 ### SLOT AI Companion Phase 1 QA（2026-09-21，自動 QA）
 - lint、typecheck、完整 automated tests **376 / 376 passed**；Next.js 16.3.3 webpack production build 通過。
 - Regression 覆蓋三種 mode prompt 分流、有界對話歷史、deterministic 預算／Profit Lock 計算、browser-local 個人設定，以及照片問答與人工確認記錄的分離。
@@ -1579,11 +1594,14 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 79. AI 陪打的「照片說明」與「紀錄寫入」必須維持不同操作；模型可以解釋目前畫面，但只有符合 Session operational control 白名單且經玩家確認後才能改變狀態或計數。
 80. 預算點、停止線與 Profit Lock 屬可重現的產品規則，應由程式確定性計算；AI 只負責把結果轉成簡短可理解的陪打建議，不得自行改算或承諾獲利。
 81. Session AI 的對話歷史目前只存在開啟中的 drawer，個人偏好只存在目前瀏覽器；這是刻意的第一階段隱私與成本邊界，不代表跨裝置或跨局記憶已完成。
+82. Catalog AI 選台與 Session AI 陪打是不同工作：前者比較尚未開局的候選，後者解釋已建立 Session 的進度；兩者不應共用會自動改寫紀錄的操作。
+83. 朝一 Reset／天井與晚間狙い目只能在當次提供的 Machine Guide 或玩家可見資料有證據時回答；Catalog identity 與作品名稱本身不構成玩法證據。
+84. 多張資料機照片必須先在 client 壓縮並限制總量；最多五台不等於五張原尺寸照片可直接送入同一 Vercel Function request。
 
 ## Current Work
-**SLOT AI Companion Phase 1 已完成並發佈 Production；等待使用者以真實 Session／照片驗證陪打體感。**
+**SLOT Catalog AI Selector 已完成本機實作與 QA，正在發佈 Production。**
 
-核准穩定基準：**v0.2.5.0**
+核准穩定基準：**v0.2.5.1**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1605,17 +1623,18 @@ Direct Home Play Split：**Completed；Production release `57f69d9` 已部署，
 
 SLOT AI Companion Phase 1：**Completed；Production release `0d33f53` 已部署，三模式、deterministic 預算／Profit Lock、照片問答與確認記錄分流及個人設定均已上線**
 
+SLOT Catalog AI Selector：**本機 Completed；朝一單台、晚間最多五台、Guide grounding、履歷照片壓縮與完整 QA 已完成，待本次 Production release**
+
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### SLOT Catalog AI 選台助手
+### SLOT AI 實戰驗證與柏青哥 AI 範圍
 
-Status：**Session 內 AI Companion Phase 1 完成後的下一個 SLOT 階段；柏青哥 AI 助手延後。**
+Status：**SLOT Session Companion 與 Catalog Selector 均完成工程版本；先由使用者驗證真實體感，再開始柏青哥 AI。**
 
-1. 在 SLOT Catalog 建立朝一／晚間撿台入口，不與 Session 內陪打 drawer 混用。
-2. 朝一模式以單台機種、Reset 優惠與已驗證 Guide 資料回答；晚間模式可比較最多約五台候選與履歷照片。
-3. 先完成候選資料結構、圖片輸入、來源界線與費用控制；不得把未驗證天井／Reset 資料包裝成確定結論。
-4. SLOT Catalog 選台助手完成後，再依柏青哥沒有天井／Reset 優惠的產品差異，另行設計柏青哥 AI 助手。
+1. 使用者在正式站以真實 Session、機台畫面與資料機履歷測試 SLOT 兩個 AI 入口，確認回答節奏、照片辨識與現場操作負擔。
+2. 依實測確認是否需要保存選台分析、候選草稿或跨局記憶；目前全部保持短期、browser-local／request-only 邊界。
+3. SLOT 體感確認後，再設計柏青哥 AI：以規格解釋、回轉／投入紀錄與照片問答為主，不複製 SLOT 的 Reset、天井或晚間撿台模式。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1707,6 +1726,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**由使用者在正式站驗證 SLOT AI Companion Phase 1 的真實陪打體感；下一輪討論並實作 SLOT Catalog 的朝一／晚間選台助手，完成後才進入柏青哥 AI。**
+**發佈並驗證 SLOT Catalog AI Selector；之後由使用者測試 SLOT AI 真實體感，再確認柏青哥 AI 的獨立產品範圍。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
