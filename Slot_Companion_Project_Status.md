@@ -38,7 +38,8 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 根因是 Production 設定 Supabase 後，Catalog repository 只使用雲端讀取；Supabase request 失敗會直接拋出，既有 repo JSON fallback 只在「未設定 Supabase」時啟用，無法承接暫時性雲端故障。
 - 新增 read-only resilience wrapper：Supabase Catalog `list`／`search` 失敗時記錄不含 Secret 的 server warning，並回退已提交的 `data/machine-catalog.json`。Supabase 正常時仍以雲端資料為準。
 - Catalog `approve` 與 import audit 寫入仍只走 primary Supabase；hotfix 不會把線上管理寫入靜默改成本機 JSON，也不修改 Catalog identity、Guide、Session 或玩家資料。
-- 本項本機修正與 QA 已完成；使用者已明確核准直接發佈正式版本，release 進行中。
+- 本項本機修正與 QA 已完成；使用者已明確核准直接發佈正式版本。首次 release merge `2ad5191` 已 push 至 `main`，但 Vercel deployment 回報失敗，故尚未將該次部署記為 Production 完成。
+- 為讓 Vercel 使用已驗證的建置路徑，正式 `build` script 固定為 Next.js webpack；`pnpm build` 已確認完整成功，等待重新部署與 Production smoke。
 
 ### Unified Start Flow Architecture（2026-08-31，使用者已核准正式發佈）
 - 首頁在沒有 active Session 時，黃色主操作改為唯一的「開始一局」入口；原本與主操作同樣連到 `/identify` 的第二張「拍機台」卡已移除。有 active Session 時仍維持直接繼續既有 Session。
@@ -1322,6 +1323,7 @@ Regression QA：
 - lint、typecheck 通過；完整 automated tests **356 / 356 passed**；Next.js 16.3.3 webpack production build通過。
 - 新增 regression：cloud 正常時不呼叫 fallback；cloud throw 時回 repo JSON；兩個來源皆失敗時仍明確拋錯；Catalog 寫入與 audit 保持 primary-only。
 - 以 `SUPABASE_URL=http://127.0.0.1:9` 刻意模擬雲端不可達的本機 production server，`/catalog`、`/catalog/tokyo-ghoul`、`/catalog/machine-frx2z3` 全部回 HTTP 200；server log 明確顯示已使用 repo JSON fallback。
+- Vercel 首次 release deployment 失敗後，已將專案正式建置指令固定為 `next build --webpack`；相同的 `pnpm build` 指令於本機完整成功。這項紀錄只代表建置 QA，正式站恢復仍待重新部署後驗證。
 
 ### Unified Start Flow QA（2026-08-31，自動 QA）
 - lint 通過、typecheck 通過、完整 automated tests **352 / 352 passed**、Next.js 16.3.3 webpack production build通過；預設 Turbopack 在受限環境仍因 CSS worker 無法 bind port 中止，沿用既有 webpack production QA 路徑。
@@ -1479,7 +1481,7 @@ Repository workflow：`main` 現為使用者核准的 Production release；後�
 
 Unified Start Flow：**Completed；Production release `2667925` 已部署並通過自動 smoke**
 
-Catalog Cloud Read Fallback：**Completed；Production release 進行中**
+Catalog Cloud Read Fallback：**Completed；首次 Vercel deployment 失敗，已完成建置設定修正並準備重新發佈**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
@@ -1488,7 +1490,7 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 
 Status：**正式故障已重現，根因與 hotfix 已驗證；使用者已要求直接發佈正式版本。**
 
-1. 將 hotfix commit／push 至 `dev`，再經 release merge 發佈 `main` Production。
+1. 將已驗證的 webpack build 設定 push 至 `dev`，再經 release merge 重新發佈 `main` Production。
 2. 部署後確認 `/catalog` 與多筆 `/catalog/[id]` 由 500 恢復 200，Catalog 顯示 202 台且可進入機台指南。
 3. 確認 Vercel runtime 只記錄 fallback warning，不輸出 Supabase Secret；Importer 寫入在 Supabase 故障時仍明確失敗。
 4. Production smoke 完成後補記 release commit，回到上線後監測。
