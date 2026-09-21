@@ -12,27 +12,33 @@ const drawer=fs.readFileSync(new URL("../src/components/SessionGuideDrawer.tsx",
 test("home uses the guide-first player flow without rendering legacy Profile cards",()=>{
   assert.doesNotMatch(home,/已建立攻略 Profile/);
   assert.doesNotMatch(home,/machines\.map/);
-  assert.match(home,/拍照辨識，或從熟悉的機種開始/);
-  assert.match(home,/開始一局/);
-  assert.match(home,/搜尋 Slot・查看中文圖文指南・開始 Session/);
-  assert.match(home,/title: "柏青嫂資料庫"/);
-  assert.match(home,/title: "柏青哥資料庫"/);
+  assert.doesNotMatch(home,/開始一局/);
+  assert.match(home,/title: "打柏青嫂（SLOT）"/);
+  assert.match(home,/title: "打柏青哥（Pachinko）"/);
+  assert.match(home,/找機台・拍照辨識・最近打過/);
   assert.doesNotMatch(home,/title: "拍機台"/);
   assert.doesNotMatch(home,/快速中文攻略|title: "機種資料庫"/);
-  assert.match(home,/activeHref=active\?`\/session\/\$\{active\.id\}`:activePachinko\?`\/pachinko\/session\/\$\{activePachinko\.id\}`:"\/start"/);
+  assert.match(home,/activeHref=active\?`\/session\/\$\{active\.id\}`:activePachinko\?`\/pachinko\/session\/\$\{activePachinko\.id\}`:null/);
+  assert.match(home,/\{activeHref&&<Link href=\{activeHref\}/);
 });
 
-test("start flow separates unknown-machine identification from known-machine selection",()=>{
-  assert.match(start,/不知道 SLOT 機種/);
-  assert.match(start,/href="\/identify"/);
-  assert.match(start,/知道機種/);
-  assert.match(start,/href="\/catalog"/);
-  assert.match(start,/href="\/pachinko"/);
-  assert.match(start,/href="\/catalog\?view=recent"/);
-  assert.match(start,/href="\/catalog\?view=favorites"/);
-  assert.match(start,/拍現在畫面/);
+test("legacy start route returns to the new home split while both catalogs own their player views",()=>{
+  assert.match(start,/redirect\("\/"\)/);
+  assert.doesNotMatch(start,/開始一局|拍照辨識 SLOT|最近遊玩/);
   assert.match(catalogPage,/view==="favorites"\|\|view==="recent"/);
   assert.match(catalogPage,/initialMode=\{initialMode\}/);
+  const pachinkoPage=fs.readFileSync(new URL("../src/app/pachinko/page.tsx",import.meta.url),"utf8");
+  assert.match(pachinkoPage,/view==="favorites"\|\|view==="recent"/);
+  assert.match(pachinkoPage,/initialMode=\{initialMode\}/);
+});
+
+test("completed play keeps its machine kind context and still offers home",()=>{
+  const slotSummary=fs.readFileSync(new URL("../src/app/summary/[id]/page.tsx",import.meta.url),"utf8");
+  const pachinkoSession=fs.readFileSync(new URL("../src/components/PachinkoSessionScreen.tsx",import.meta.url),"utf8");
+  assert.match(slotSummary,/href="\/catalog\?view=recent"[^>]*>回 SLOT 最近打過/);
+  assert.match(pachinkoSession,/href="\/pachinko\?view=recent"[^>]*>回柏青哥最近打過/);
+  assert.match(slotSummary,/href="\/"[^>]*>回首頁/);
+  assert.match(pachinkoSession,/href="\/"[^>]*>回首頁/);
 });
 
 test("Catalog importer entry is reachable in development or a configured cloud admin environment",()=>{

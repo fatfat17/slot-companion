@@ -9,8 +9,8 @@ import { findActivePachinkoSession } from "@/lib/pachinko/storage";
 import type { PachinkoSession } from "@/types/pachinko";
 
 const entries = [
-  { href: "/catalog", icon: "🎰", title: "柏青嫂資料庫", sub: "搜尋 Slot・查看中文圖文指南・開始 Session", tone: "cyan", wide: true },
-  { href: "/pachinko", icon: "🔴", title: "柏青哥資料庫", sub: "搜尋 Pachinko・查看機台說明・簡易紀錄", tone: "purple", wide: true },
+  { href: "/catalog", icon: "🎰", title: "打柏青嫂（SLOT）", sub: "找機台・拍照辨識・最近打過", tone: "cyan", wide: true },
+  { href: "/pachinko", icon: "🔴", title: "打柏青哥（Pachinko）", sub: "找機台・拍照辨識・最近打過", tone: "purple", wide: true },
   { href: "/records", icon: "📊", title: "今日紀錄", sub: "查看今天的實戰", tone: "blue" },
   { href: "/halls", icon: "📍", title: "附近店家", sub: "P-WORLD 店家搜尋・Google Maps 導航", tone: "purple" },
 ];
@@ -20,7 +20,7 @@ export default function Home() {
   const [activePachinko,setActivePachinko]=useState<PachinkoSession>();
   useEffect(() => {setActive(findActiveSession());setActivePachinko(findActivePachinkoSession())}, []);
   const activeMachine = active ? getMachine(active.machineId) : undefined;
-  const activeHref=active?`/session/${active.id}`:activePachinko?`/pachinko/session/${activePachinko.id}`:"/start";
+  const activeHref=active?`/session/${active.id}`:activePachinko?`/pachinko/session/${activePachinko.id}`:null;
 
   return (
     <main className="page home-page">
@@ -33,15 +33,15 @@ export default function Home() {
         <div className="brand-mark">SC</div>
       </div>
 
-      <Link href={activeHref} className="session-hero">
+      {activeHref&&<Link href={activeHref} className="session-hero">
         <span className="session-icon">{activePachinko&&!active?"🔴":"🎰"}</span>
         <span className="flex-1">
-          <small>{active||activePachinko ? "進行中的 SESSION" : "準備開始"}</small>
-          <strong>{active ? `繼續 ${activeMachine?.nameZh ?? "Session"}`:activePachinko?`繼續 ${activePachinko.machineName}`:"開始一局"}</strong>
-          <em>{active ? `${active.trackers[activeMachine?.profile.gameTrackers.find(item=>item.primary)?.key??"dataGame"]??active.actualG} G · 投入 ¥${active.investmentYen.toLocaleString()}`:activePachinko?`${Math.max(0,activePachinko.currentSpins-activePachinko.startSpins)} 回 · 投入 ¥${activePachinko.investmentYen.toLocaleString()}`:"拍照辨識，或從熟悉的機種開始"}</em>
+          <small>進行中的 SESSION</small>
+          <strong>{active ? `繼續 ${activeMachine?.nameZh ?? "Session"}`:`繼續 ${activePachinko?.machineName}`}</strong>
+          <em>{active ? `${active.trackers[activeMachine?.profile.gameTrackers.find(item=>item.primary)?.key??"dataGame"]??active.actualG} G · 投入 ¥${active.investmentYen.toLocaleString()}`:`${Math.max(0,(activePachinko?.currentSpins??0)-(activePachinko?.startSpins??0))} 回 · 投入 ¥${(activePachinko?.investmentYen??0).toLocaleString()}`}</em>
         </span>
         <b>›</b>
-      </Link>
+      </Link>}
 
       <div className="entry-grid">
         {entries.map((entry) => (
