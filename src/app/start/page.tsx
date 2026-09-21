@@ -20,6 +20,11 @@ export default function StartPage(){
         <span className="start-path-copy"><small>知道機種</small><strong>搜尋機種開始</strong><em>直接搜尋名稱，查看指南後建立 Session</em></span>
         <b>›</b>
       </Link>
+      <Link href="/pachinko" className="start-path-card pachinko-path">
+        <span className="start-path-icon">🔴</span>
+        <span className="start-path-copy"><small>玩柏青哥</small><strong>搜尋柏青哥機種</strong><em>查看機台說明，或開始簡易遊玩紀錄</em></span>
+        <b>›</b>
+      </Link>
     </div>
 
     <section className="start-shortcuts card">
@@ -30,6 +35,6 @@ export default function StartPage(){
       </nav>
     </section>
 
-    <p className="start-flow-note">進入 Session 後的「拍現在畫面」只用來辨認 CZ／AT 等場景，不會重新判斷機種。</p>
+    <p className="start-flow-note">柏青嫂與柏青哥使用獨立資料庫及紀錄方式；進入 Slot Session 後的「拍現在畫面」只辨認 CZ／AT 等場景。</p>
   </main></>;
 }
