@@ -208,6 +208,7 @@ export type MachineIdentificationResult = {
   status: MachineIdentificationStatus;
   candidates: MachineIdentificationCandidate[];
   provider: "openai" | "mock";
+  detectedKind?: "slot" | "pachinko";
   researchStatus?: "pending_new_machine";
   debug?: {
     phase1Evidence: import("./catalog").CatalogVisibleEvidence;

@@ -5,4 +5,4 @@ export type MachineCatalogCandidate=Omit<MachineCatalogRecord,"id"|"verified"|"c
 export type CatalogImportAction="import"|"skip"|"merge";
 export type CatalogImportDecision={candidate:MachineCatalogCandidate;action:CatalogImportAction;existingId?:string};
 export type VisibleOfficialTitleCandidate={text:string;confidence:number};
-export type CatalogVisibleEvidence={status:"slot"|"uncertain"|"unknown";visibleText:string[];manufacturerText:string[];visualEvidence:string[];searchTerms:string[];visibleOfficialTitleCandidates:VisibleOfficialTitleCandidate[];visibleFranchiseTerms:string[];visibleModeOrStageTerms:string[];visibleManufacturerMarks:string[]};
+export type CatalogVisibleEvidence={status:"slot"|"pachinko"|"uncertain"|"unknown";visibleText:string[];manufacturerText:string[];visualEvidence:string[];searchTerms:string[];visibleOfficialTitleCandidates:VisibleOfficialTitleCandidate[];visibleFranchiseTerms:string[];visibleModeOrStageTerms:string[];visibleManufacturerMarks:string[]};

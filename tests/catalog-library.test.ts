@@ -10,6 +10,7 @@ const profiles:CatalogProfileLink[]=[{catalogId:"tokyo-ghoul",machineId:"tokyo-g
 const query=(patch:Partial<typeof defaultCatalogLibraryFilters>)=>queryCatalogLibrary(records,profiles,{...defaultCatalogLibraryFilters,...patch});
 
 test("Catalog 總數由 runtime records 計算",()=>assert.equal(catalogSummary(records,profiles).total,records.length));
+test("Catalog 已收錄 2026 年 9 月 SLOT 新台",()=>{const september=records.filter(item=>item.introducedAt?.startsWith("2026-09"));assert.equal(september.length,6);assert.ok(september.every(item=>item.sourceUrl.startsWith("https://www.p-world.co.jp/machine/database/")&&item.sourceImageUrl))});
 test("Profile ready / Catalog only 分類正確",()=>{const summary=catalogSummary(records,profiles);assert.equal(summary.profileReady,3);assert.equal(summary.catalogOnly,records.length-3)});
 test("officialNameJa 名稱搜尋",()=>assert.ok(query({query:"ビッグドリーム"}).items.some(item=>item.id==="machine-1ryjocr")));
 test("alias 搜尋",()=>assert.equal(query({query:"Tokyo Ghoul"}).items[0]?.id,"tokyo-ghoul"));
