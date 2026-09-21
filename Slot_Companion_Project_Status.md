@@ -7,9 +7,9 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.4.5**
+目前核准穩定基準：**v0.2.4.6**
 
-正式 Production 基準：**release commit `e06c3a2`（SLOT September Catalog + Scoped Photo Identification）**
+正式 Production 基準：**release commit `57f69d9`（Direct Home Play Split + Per-catalog Recent Play）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -32,6 +32,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Direct Home Play Split + Per-catalog Recent Play（2026-09-21，Production 已發佈）
+- 首頁沒有 active play 時移除「開始一局」中繼操作，改為兩個直接玩家入口：「打柏青嫂（SLOT）」與「打柏青哥（Pachinko）」。兩張卡直接進入各自 Catalog，文案明確包含找機台、拍照辨識與最近打過。
+- 有 active SLOT／柏青哥紀錄時，首頁仍優先顯示原本的「繼續這一局」，不破壞單一 active play 規則。
+- 舊 `/start` route 保留並以 server redirect 回首頁，舊書籤、PWA shell 與歷史連結不會 404；新流程不再把使用者帶入重複分流頁。
+- SLOT Catalog 的玩家分頁文案改為「全部機種／我的收藏／最近打過」。柏青哥 Catalog 新增同樣三個分頁、卡片收藏與 detail view tracking；柏青哥收藏／最近資料使用獨立 `slot-companion-pachinko-player-library-v1`，不與 SLOT 共用。
+- SLOT 結算頁主要操作改為回 `/catalog?view=recent`；柏青哥結算後主要操作改為回 `/pachinko?view=recent`。兩邊仍保留「查看今日紀錄」與「回首頁」。
+- 本機 390 × 844 自動 QA：首頁只顯示兩個遊玩入口、沒有「開始一局」或水平溢出；`/start` 導回首頁；兩個 recent Catalog 均正確選中「最近打過」，width／scroll width 皆為 390／390。
+- 產品 commit `32f8efa` 已 push `dev`；release commit `57f69d9` 已 push `main`，Vercel Production 顯示 **Ready / Current**。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **372 / 372 passed**；Next.js 16.3.3 webpack production build 通過。
 
 ### SLOT September Catalog + Scoped Photo Identification（2026-09-21，Production 已發佈）
 - SLOT Catalog 由 202 台更新至 **208 台**；新增 6 台 P-WORLD 2026-09 公開新台，皆具唯一 Catalog ID、官方來源、廠商、導入日與封面。新增可重現的 `scripts/update-slot-catalog-month.ts`，後續可按月份更新而不重建整庫。
@@ -1361,6 +1371,12 @@ Regression QA：
 
 ## Verified QA
 
+### Direct Home Play Split Production QA（2026-09-21，自動 QA）
+- lint、typecheck、完整 automated tests **372 / 372 passed**；Next.js 16.3.3 webpack production build 通過。
+- 固定 Production `/`、`/catalog?view=recent`、`/pachinko?view=recent` 均為 HTTP 200；舊 `/start` 回 HTTP 307 並導向 `/`。
+- Production server output 確認首頁含「打柏青嫂（SLOT）」「打柏青哥（Pachinko）」且不含「開始一局」；兩個 Catalog 均包含「最近打過」、各自拍照入口與收藏分頁。
+- 本項為本機手機尺寸與固定 Production HTTP／server-rendered 內容驗證，不冒充使用者實體手機人工操作驗收。
+
 ### SLOT September Catalog + Scoped Identification Production QA（2026-09-21，自動 QA）
 - Catalog artifact 為 208 筆；2026-09 新增 6 筆、0 merge、0 skip，並以 regression 固定新增 ID 與正式來源。
 - SLOT／柏青哥 prompt scope、錯誤機種類型提前停止、雙 Catalog 拍照入口與路由均有 regression；完整 automated tests **370 / 370 passed**，lint、typecheck 與 production build 通過。
@@ -1542,11 +1558,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 75. AI 結構 schema 不能將全部可能段落都當成當前機種可用段落；必須以 parser 實際取得的 section keys 建立當次白名單，否則模型可能自行補出來源缺少的「基本打法」而被 grounded validator 拒絕。
 76. 同一作品 IP 可能同時存在 SLOT 與柏青哥，不能把 IP 相似度當成跨類型 identity 證據。拍照辨識必須先固定使用者所在 Catalog，再由 machine-kind gate 阻止另一類型進入 shortlist；需要切換時由使用者明確操作。
 77. repo JSON 更新不會自動覆蓋正常可讀的 Supabase primary Catalog；正式資料更新必須同步 primary 或明確確認 fallback 生效，並以固定 Production 實際筆數驗證，不能只看 build artifact。
+78. 首頁只負責選擇「打柏青嫂或打柏青哥」與繼續 active play；搜尋、拍照、收藏與最近打過應由各自 Catalog 負責。結束一局後先保留結算脈絡，再以同類型 recent Catalog 作主要下一步，首頁只作次要返回。
 
 ## Current Work
-**SLOT 9 月資料更新與雙 Catalog 拍照辨識已發佈 Production；下一輪進入 AI 陪打助手產品討論。**
+**首頁直接遊玩分流、雙 Catalog 最近／收藏與結束後返回流程已發佈 Production；下一輪進入 AI 陪打助手產品討論。**
 
-核准穩定基準：**v0.2.4.5**
+核准穩定基準：**v0.2.4.6**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1563,6 +1580,8 @@ Pachinko Catalog Phase 1：**Completed；252 台已發佈，Production release `
 SLOT September Catalog：**Completed；208 台已同步 repo JSON 與 Supabase，Production release `e06c3a2` 已通過正式筆數與代表機種 smoke**
 
 Scoped Photo Identification：**Completed；SLOT 與柏青哥入口、候選庫、機種類型 gate 與結果連結已分流，兩個正式 route 均為 HTTP 200**
+
+Direct Home Play Split：**Completed；Production release `57f69d9` 已部署，舊 `/start` 相容導回首頁，SLOT／柏青哥 recent 與結算後返回均已分流**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
