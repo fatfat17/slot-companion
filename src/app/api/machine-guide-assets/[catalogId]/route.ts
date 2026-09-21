@@ -1,4 +1,5 @@
 import { catalogRepository } from "@/lib/catalog/repository.server";
+import { pachinkoCatalogRepository } from "@/lib/pachinko/repository.server";
 import { canonicalPWorldImageUrl } from "@/lib/machine-guide/visualGuide";
 import { readStoredVisualGuideAsset } from "@/lib/machine-guide/visualGuideStorage.server";
 
@@ -10,7 +11,8 @@ let catalogIdCache:{expiresAt:number;ids:Set<string>}|undefined;
 async function catalogContains(catalogId:string){
   const now=Date.now();
   if(!catalogIdCache||catalogIdCache.expiresAt<=now){
-    catalogIdCache={expiresAt:now+CATALOG_ID_CACHE_TTL_MS,ids:new Set((await catalogRepository.list()).map(record=>record.id))};
+    const[slot,pachinko]=await Promise.all([catalogRepository.list(),pachinkoCatalogRepository.list()]);
+    catalogIdCache={expiresAt:now+CATALOG_ID_CACHE_TTL_MS,ids:new Set([...slot,...pachinko].map(record=>record.id))};
   }
   return catalogIdCache.ids.has(catalogId);
 }

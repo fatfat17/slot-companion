@@ -7,7 +7,7 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.4.0**
+目前核准穩定基準：**v0.2.4.1**
 
 正式 Production 基準：**release commit `2927233`（Pachinko Pilot）**
 
@@ -32,6 +32,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Pachinko On-demand Chinese Visual Guide（2026-09-21，待 Production 發佈）
+- 柏青哥詳細頁新增與 SLOT 相同概念的按需建立入口：只有使用者按「建立中文圖文指南」或「重新整理」時，server 才抓取該台 P-WORLD 公開頁、整理繁中內容與來源圖解；平常開頁不呼叫 AI 或重爬完整內容。
+- 新增獨立 `PachinkoFullGuide` schema、P-WORLD 柏青哥 parser、grounded 繁中產生器、`/api/pachinko-guides/[catalogId]` 與 `/pachinko/guides/[catalogId]`。不共用 SLOT 的天井、CZ／AT、Machine Profile 或 Setting Estimator。
+- 指南章節依柏青哥語意整理為基本規格、遊戲流程、大當分配、RUSH／ST／LT、基本打法、演出參考與交換率／回轉參考；原始日文與表格集中於預設收合的查證區。
+- 圖片只接受 P-WORLD 核准 host、可靠內容區段與既有限制，單台最多 18 張；掲示板、玩家投稿、店家圖片與外站圖片不進指南。圖片沿用 private Supabase Storage／來源 fallback，但以獨立 Pachinko catalog ownership 驗證。
+- 指南使用獨立 IndexedDB `slot-companion-pachinko-guides`，不與 SLOT Guide 或遊玩 Session 混用、不跨裝置同步；更新失敗會保留上一份有效快取。
+- 真實 P-WORLD `pachi-10504` source smoke：解析出 6 個可用內容區、18 張來源圖解，指南狀態 `usable`；未取得獨立打法區時保持 missing，不補猜內容。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **364 / 364 passed**；Next.js 16.3.3 webpack production build 通過。
 
 ### Pachinko Pilot — 獨立 Catalog、機台說明與簡易紀錄（2026-09-21，Production 已發佈）
 - 新增與 Pachislot 完全分離的 `PachinkoCatalogRecord`、repo JSON、Supabase table migration、搜尋／分類與 P-WORLD 月曆 parser；本機 seed 目前包含 10 台 2026-09 可追溯 P-WORLD 機台。`pachinko_catalog_records` migration 已建立於版本庫，但**尚未套用遠端 Supabase**。
@@ -1488,11 +1497,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 71. 柏青哥每 ¥1,000 回轉只代表使用者本次輸入的觀測摘要，不是釘況判定、中獎率或未來期待值。初當與 RUSH 也只能作實績記錄。
 72. 使用者已明確決定目前不升級 Vercel／Supabase；Supabase Free 低活動暫停是已接受的營運風險，後續應靠 fallback、部署前恢復檢查與清楚告警管理，不把新增柏青哥資料筆數誤認為付費容量壓力。
 73. 使用者已變更發布流程：完成本機工程檢查後直接 push `main` 並在固定 Production 網址驗證，不再建立或使用 Preview／測試網址。這不代表可略過 lint、typecheck、automated tests 或 production build，也不代表失敗時可隱瞞；只是把互動驗收環境改為正式站。
+74. Pachinko 圖文指南與 SLOT 一樣採按需建立，不預先批次生成整庫。AI 只能翻譯與整理 parser 已取得的結構化內容，所有新增數字必須被來源數字集合驗證；演出期待度不得改寫成即將中獎或獲利預測。
 
 ## Current Work
-**Pachinko Pilot 已正式發佈，固定 Production 網址主要路徑 smoke 通過。**
+**Pachinko 按需繁中圖文指南已完成本機工程 QA，正在依 direct-to-production 流程發佈。**
 
-核准穩定基準：**v0.2.4.0**
+核准穩定基準：**v0.2.4.1**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1502,16 +1512,18 @@ Catalog Cloud Read Fallback：**Completed；Production release `b38c28d` 已部�
 
 Pachinko Pilot：**Completed；Production release `2927233` 已部署並通過固定網址 smoke**
 
+Pachinko On-demand Guide：**本機完成；等待 Production push 與固定網址驗證**
+
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Pachinko Pilot 正式站驗證與資料庫後續
+### Pachinko On-demand Guide 正式站驗證
 
-Status：**Production 已部署；等待使用者直接在正式站實際操作。**
+Status：**本機功能、真實來源 parser smoke、364 tests 與 production build 通過。**
 
-1. 由使用者在固定正式網址檢視柏青哥入口、詳細頁與簡易紀錄操作；目前尚未宣稱實體手機人工驗收。
-2. 視實際需要將 `202609210001_pachinko_catalog.sql` 套用至既有 Supabase project；未套用期間繼續由 repo JSON seed fallback 承接，不能宣稱雲端 Pachinko Catalog 已啟用。
-3. 維持 Supabase Free；每次正式發布前檢查 project 與 Vercel integration 狀態，若因低活動暫停，先恢復或明確採用已驗證 fallback。
+1. 直接 push Production，確認代表機台詳細頁可建立指南、繁中區段與來源圖解可載入、重新整理保留有效快取。
+2. 由使用者在固定正式網址進行手機操作驗證；目前不宣稱實體手機人工驗收。
+3. 視實際需要將 `202609210001_pachinko_catalog.sql` 套用至既有 Supabase project；未套用期間繼續由 repo JSON seed fallback 承接。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1603,6 +1615,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待使用者直接在正式站驗證 Pachinko Pilot；收到實際操作問題後依新的 direct-to-production 流程修正。**
+**完成 Pachinko On-demand Guide Production 發佈，然後等待使用者直接在正式站建立第一份指南並回報。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
