@@ -9,7 +9,7 @@ Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Pr
 
 目前核准穩定基準：**v0.2.5.3**
 
-正式 Production 基準：**release commit `e7991b3`（首頁新手按鈕與雙機種術語）**
+正式 Production 基準：**release commit `726551b`（APP 圖文使用指南）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -33,12 +33,13 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
-### Opt-in APP Visual Guide（2026-09-21，本機完成）
+### Opt-in APP Visual Guide（2026-09-21，Production 已發佈）
 - 首頁新增一條 55px 高的精簡「APP 使用指南」入口，不自動彈出、不保存已讀狀態，也不因清除快取或更換裝置重複干擾使用者。
 - 新增靜態 `/help`：先以 SLOT／柏青哥兩條 5 步驟快速流程分流，再提供拍照找機台、中文機台指南、遊玩紀錄、AI 陪打、SLOT 選台與結束紀錄共 6 個可直接跳轉的章節。
 - 找機台、指南、Session 與 AI 使用接近正式 UI 的 HTML／CSS 畫面示意與編號標示，不嵌入玩家 Session 截圖或個人資料；示意區沒有可誤按的互動按鈕。
 - 各章節提供正確功能深連結；SLOT 與柏青哥的紀錄概念保持分離，柏青哥不套用天井、CZ／AT 或設定模式。
 - 工程 QA：lint、typecheck 通過；完整 automated tests **384 / 384 passed**；Next.js 16.3.3 webpack production build 通過。
+- 產品 commit `428ced2` 已 push `dev`；release commit `726551b` 已 push `main`，Vercel 顯示 **Deployment has completed**。固定正式首頁與 `/help` 已通過 390 × 844 自動 QA。
 
 ### Home Beginner Buttons + Dual Glossary（2026-09-21，Production 已發佈）
 - 首頁原本接近一般文字連結的「新手第一次玩？」改為獨立卡片與兩個 67px 高按鈕，直接分流至「SLOT 術語」與「柏青哥術語」，不再要求新手先進頁面後才判斷機種類型。
@@ -1628,7 +1629,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 86. APP 使用指南應由使用者主動開啟，不以 browser-local「第一次進入」狀態強制彈出；視覺教學以可維護的介面示意呈現操作位置，避免保存玩家實戰畫面，也避免 UI 小幅調整後大量固定截圖失效。
 
 ## Current Work
-**APP 圖文使用指南第一版已完成本機 QA；待本輪發佈 Production 後由使用者檢視內容與閱讀體感。**
+**APP 圖文使用指南第一版已完成並發佈 Production；等待使用者檢視內容與閱讀體感。**
 
 核准穩定基準：**v0.2.5.3**
 
@@ -1656,7 +1657,7 @@ SLOT Catalog AI Selector：**Completed；Production release `b7741ff` 已部署�
 
 首頁新手入口與雙機種術語：**Completed；Production release `e7991b3` 已部署，SLOT／柏青哥按鈕、22 個柏青哥術語與正式手機版 QA 已通過**
 
-APP 圖文使用指南：**本機完成；首頁精簡入口、`/help` 雙流程、6 個章節與 4 組介面示意已通過工程及手機版 QA，待本輪 Production 發佈**
+APP 圖文使用指南：**Completed；Production release `726551b` 已部署，首頁精簡入口、`/help` 雙流程、6 個章節與 4 組介面示意均已通過正式手機版 QA**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
