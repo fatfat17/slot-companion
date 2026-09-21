@@ -7,7 +7,7 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.5.2**
+目前核准穩定基準：**v0.2.5.3**
 
 正式 Production 基準：**release commit `e7991b3`（首頁新手按鈕與雙機種術語）**
 
@@ -32,6 +32,13 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Opt-in APP Visual Guide（2026-09-21，本機完成）
+- 首頁新增一條 55px 高的精簡「APP 使用指南」入口，不自動彈出、不保存已讀狀態，也不因清除快取或更換裝置重複干擾使用者。
+- 新增靜態 `/help`：先以 SLOT／柏青哥兩條 5 步驟快速流程分流，再提供拍照找機台、中文機台指南、遊玩紀錄、AI 陪打、SLOT 選台與結束紀錄共 6 個可直接跳轉的章節。
+- 找機台、指南、Session 與 AI 使用接近正式 UI 的 HTML／CSS 畫面示意與編號標示，不嵌入玩家 Session 截圖或個人資料；示意區沒有可誤按的互動按鈕。
+- 各章節提供正確功能深連結；SLOT 與柏青哥的紀錄概念保持分離，柏青哥不套用天井、CZ／AT 或設定模式。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **384 / 384 passed**；Next.js 16.3.3 webpack production build 通過。
 
 ### Home Beginner Buttons + Dual Glossary（2026-09-21，Production 已發佈）
 - 首頁原本接近一般文字連結的「新手第一次玩？」改為獨立卡片與兩個 67px 高按鈕，直接分流至「SLOT 術語」與「柏青哥術語」，不再要求新手先進頁面後才判斷機種類型。
@@ -1399,6 +1406,11 @@ Regression QA：
 
 ## Verified QA
 
+### Opt-in APP Visual Guide QA（2026-09-21，自動 QA）
+- localhost 390 × 844 首頁入口實測高度 55px，首頁 width／scroll width 為 390／390，不占用主要操作卡片空間且沒有水平溢出。
+- `/help` 顯示 6 個目錄入口、4 組介面示意與 4 個主要 CTA；完整頁面 width／scroll width 為 390／390，目錄點擊可把 `#identify` 正確定位至 header 下方。
+- 示意區互動按鈕數量為 0，console error／warning 為 0。本項是自動瀏覽器 QA，不冒充使用者日本現場的實體手機人工驗收。
+
 ### Home Beginner Buttons + Dual Glossary QA（2026-09-21，自動 QA）
 - localhost 390 × 844 首頁實測顯示 SLOT／柏青哥兩個新手按鈕，按鈕高 67px；文件 width／scroll width 為 390／390，沒有水平溢出。
 - 從首頁點入柏青哥術語後，正確顯示 `Pachinko Basics`、3 組共 22 個詞，並能由頁面分頁切回既有 SLOT 術語；SLOT 頁共 18 個既有詞。
@@ -1613,11 +1625,12 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 83. 朝一 Reset／天井與晚間狙い目只能在當次提供的 Machine Guide 或玩家可見資料有證據時回答；Catalog identity 與作品名稱本身不構成玩法證據。
 84. 多張資料機照片必須先在 client 壓縮並限制總量；最多五台不等於五張原尺寸照片可直接送入同一 Vercel Function request。
 85. 新手術語應先按遊戲類型分流；`/glossary` 維持 SLOT 預設可保留舊連結相容，而柏青哥術語必須使用回轉、玉、大當／RUSH 與盤面操作語意，不套用 SLOT 的天井、CZ／AT 或設定示唆。
+86. APP 使用指南應由使用者主動開啟，不以 browser-local「第一次進入」狀態強制彈出；視覺教學以可維護的介面示意呈現操作位置，避免保存玩家實戰畫面，也避免 UI 小幅調整後大量固定截圖失效。
 
 ## Current Work
-**首頁新手按鈕與雙機種術語已完成並發佈 Production；等待使用者在日本現場驗證閱讀體感。**
+**APP 圖文使用指南第一版已完成本機 QA；待本輪發佈 Production 後由使用者檢視內容與閱讀體感。**
 
-核准穩定基準：**v0.2.5.2**
+核准穩定基準：**v0.2.5.3**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1642,6 +1655,8 @@ SLOT AI Companion Phase 1：**Completed；Production release `0d33f53` 已部署
 SLOT Catalog AI Selector：**Completed；Production release `b7741ff` 已部署，朝一單台、晚間最多五台、Guide grounding 與履歷照片流程均已上線**
 
 首頁新手入口與雙機種術語：**Completed；Production release `e7991b3` 已部署，SLOT／柏青哥按鈕、22 個柏青哥術語與正式手機版 QA 已通過**
+
+APP 圖文使用指南：**本機完成；首頁精簡入口、`/help` 雙流程、6 個章節與 4 組介面示意已通過工程及手機版 QA，待本輪 Production 發佈**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
