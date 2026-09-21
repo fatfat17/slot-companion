@@ -7,6 +7,15 @@ export const IMAGE_COMPRESSION = {
   maxRequestBytes: Math.floor(4.2 * 1024 * 1024),
 } as const;
 
+export const SELECTION_IMAGE_COMPRESSION = {
+  maxImages: 5,
+  maxLongEdge: 1280,
+  initialJpegQuality: 0.8,
+  minimumJpegQuality: 0.68,
+  targetBytes: Math.floor(640 * 1024),
+  hardMaxBytes: Math.floor(760 * 1024),
+} as const;
+
 export function isSupportedImageFile(file:Pick<File,"name"|"type">){
   return file.type.startsWith("image/") || /\.(heic|heif)$/i.test(file.name);
 }

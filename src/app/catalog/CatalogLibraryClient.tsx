@@ -35,6 +35,7 @@ export function CatalogLibraryClient({records,profiles,importer,estimatorEligibl
   return<main className="page catalog-library">
     <section className="catalog-management card"><div><span>MACHINE LIBRARY</span><strong>{summary.total} 台機種，隨時可查</strong><small>收藏常玩的機台，從指南直接開始記錄。</small></div>{importer.available?<Link className="secondary-button" href={importer.href}>{importer.label}</Link>:<div className="catalog-management-disabled"><button className="secondary-button" onClick={()=>setManagementOpen(true)}>{importer.label}</button><small>查看更新方式</small></div>}</section>
     <Link className="primary-button catalog-identify-entry" href="/identify">📷 拍照找 SLOT</Link>
+    <Link className="catalog-ai-selector card" href="/catalog/assistant"><span>✨ SLOT AI SELECTOR</span><strong>朝一選台・晚間撿台</strong><small>機種指南＋履歷照片，一起整理候選</small></Link>
     <section className="catalog-player-overview"><div><b>{favorites.length}</b><span>已收藏</span></div><div><b>{recentIds.length}</b><span>最近看過／玩過</span></div><div><b>{cachedCount}</b><span>本機已有指南</span></div></section>
     <CatalogGuideTools records={records} favoriteIds={favorites} recentIds={recentIds} onGuidesChanged={reloadGuideStates}/>
     <nav className="catalog-view-tabs" aria-label="機種資料庫顯示方式">{modeLabels.map(item=><button key={item.value} className={mode===item.value?"active":""} onClick={()=>chooseMode(item.value)}>{item.label}{item.value==="favorites"&&favorites.length>0?<small>{favorites.length}</small>:null}</button>)}</nav>
