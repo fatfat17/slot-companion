@@ -7,9 +7,9 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.4.4**
+目前核准穩定基準：**v0.2.4.5**
 
-正式 Production 基準：**release commit `a411a5c`（Pachinko Catalog Phase 1 Expansion）**
+正式 Production 基準：**release commit `e06c3a2`（SLOT September Catalog + Scoped Photo Identification）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -32,6 +32,15 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### SLOT September Catalog + Scoped Photo Identification（2026-09-21，Production 已發佈）
+- SLOT Catalog 由 202 台更新至 **208 台**；新增 6 台 P-WORLD 2026-09 公開新台，皆具唯一 Catalog ID、官方來源、廠商、導入日與封面。新增可重現的 `scripts/update-slot-catalog-month.ts`，後續可按月份更新而不重建整庫。
+- 新增機種為 `パチスロ見える子ちゃん`、`スマスロ リコリス・リコイル`、`スマスロ タコスロ`、`モグモグ風林火山 大海戦の巻`、`L青春ブタ野郎はバニーガール先輩の夢を見ない`、`Lパチスロ 彼女、お借りします`。
+- 拍照辨識功能沒有取消，改為放在兩個獨立 Catalog 內：SLOT `/catalog` → `/identify`，柏青哥 `/pachinko` → `/identify/pachinko`。兩者共用辨識 UI 與 pipeline，但候選資料庫、提示文案、回傳連結與機種類型 gate 分離。
+- AI 先判斷照片較像 SLOT 或柏青哥；若與使用者所在資料庫不符，立即停止該次 shortlist／第二階段比對，提示切換資料庫，不把同一 IP 的另一種機台誤配進目前 Catalog。
+- 產品 commit `680d461` 已 push `dev`；release commit `e06c3a2` 已 push `main`。Vercel Production 顯示 **Deployment has completed / Current Production**。
+- Supabase `machine_catalog_records` 已只增補／upsert 本次 6 筆，查詢結果為 208；既有 202 筆與玩家資料未刪除或重建。固定正式 `/catalog` 已實際顯示 208 台，並可見 9 月代表機種。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **370 / 370 passed**；Next.js 16.3.3 webpack production build 通過。
 
 ### Pachinko Catalog Phase 1 Expansion（2026-09-21，Production 已發佈）
 - 柏青哥 Catalog 由 10 台擴充至 **252 台**，範圍為 P-WORLD 2025-01 至 2026-09 公開新台；2025 年 147 台、2026 年 105 台。
@@ -1352,6 +1361,13 @@ Regression QA：
 
 ## Verified QA
 
+### SLOT September Catalog + Scoped Identification Production QA（2026-09-21，自動 QA）
+- Catalog artifact 為 208 筆；2026-09 新增 6 筆、0 merge、0 skip，並以 regression 固定新增 ID 與正式來源。
+- SLOT／柏青哥 prompt scope、錯誤機種類型提前停止、雙 Catalog 拍照入口與路由均有 regression；完整 automated tests **370 / 370 passed**，lint、typecheck 與 production build 通過。
+- Vercel release `e06c3a2` 為 success / Current Production；固定 `/`、`/catalog`、`/pachinko`、`/identify`、`/identify/pachinko` 全部 HTTP 200。
+- 正式 `/catalog` 顯示 208 台，並可見 `パチスロ見える子ちゃん` 與 `スマスロ リコリス・リコイル`；SLOT 與柏青哥辨識頁分別顯示自己的資料庫範圍。
+- 本項驗證路由、server-rendered 內容與自動 pipeline，不冒充實體機台照片、相機權限或日本現場辨識驗收。
+
 ### Pachinko Catalog Phase 1 Production QA（2026-09-21，自動 QA）
 - 資料 artifact 為 252 筆唯一、可追溯、全數具封面的 2025-01 至 2026-09 Pachinko records；已加入數量、ID、日期、來源 URL、reviewed metadata 與手機分批載入 regression。
 - lint、typecheck 通過；完整 automated tests **367 / 367 passed**；Next.js 16.3.3 webpack production build 通過。
@@ -1524,11 +1540,13 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 73. 使用者已變更發布流程：完成本機工程檢查後直接 push `main` 並在固定 Production 網址驗證，不再建立或使用 Preview／測試網址。這不代表可略過 lint、typecheck、automated tests 或 production build，也不代表失敗時可隱瞞；只是把互動驗收環境改為正式站。
 74. Pachinko 圖文指南與 SLOT 一樣採按需建立，不預先批次生成整庫。AI 只能翻譯與整理 parser 已取得的結構化內容，所有新增數字必須被來源數字集合驗證；演出期待度不得改寫成即將中獎或獲利預測。
 75. AI 結構 schema 不能將全部可能段落都當成當前機種可用段落；必須以 parser 實際取得的 section keys 建立當次白名單，否則模型可能自行補出來源缺少的「基本打法」而被 grounded validator 拒絕。
+76. 同一作品 IP 可能同時存在 SLOT 與柏青哥，不能把 IP 相似度當成跨類型 identity 證據。拍照辨識必須先固定使用者所在 Catalog，再由 machine-kind gate 阻止另一類型進入 shortlist；需要切換時由使用者明確操作。
+77. repo JSON 更新不會自動覆蓋正常可讀的 Supabase primary Catalog；正式資料更新必須同步 primary 或明確確認 fallback 生效，並以固定 Production 實際筆數驗證，不能只看 build artifact。
 
 ## Current Work
-**Pachinko Catalog 第一階段 252 台與按需繁中圖文指南已發佈 Production，等待使用者手機操作驗收。**
+**SLOT 9 月資料更新與雙 Catalog 拍照辨識已發佈 Production；下一輪進入 AI 陪打助手產品討論。**
 
-核准穩定基準：**v0.2.4.4**
+核准穩定基準：**v0.2.4.5**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1542,16 +1560,21 @@ Pachinko On-demand Guide：**Completed；Production commit `795b1f6` 已部署�
 
 Pachinko Catalog Phase 1：**Completed；252 台已發佈，Production release `a411a5c` 已通過數量、分批載入、舊月份詳情與指南 smoke**
 
-Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
+SLOT September Catalog：**Completed；208 台已同步 repo JSON 與 Supabase，Production release `e06c3a2` 已通過正式筆數與代表機種 smoke**
+
+Scoped Photo Identification：**Completed；SLOT 與柏青哥入口、候選庫、機種類型 gate 與結果連結已分流，兩個正式 route 均為 HTTP 200**
+
+Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Pachinko Catalog 手機驗收與第二階段決策
+### AI 陪打助手產品範圍與互動設計
 
-Status：**252 台 Production Catalog、真實來源／OpenAI 生成、367 tests 與 production build 均通過。**
+Status：**先討論、確認產品邊界後再修改程式；不與本次 Catalog／拍照辨識 release 混在一起。**
 
-1. 由使用者在固定正式網址抽查搜尋、類型篩選、載入更多、機台詳情與指南手機排版。
-2. 第一階段驗收穩定後，再決定是否加入 2024 年 136 台，將 Catalog 擴充至約 388 台；不直接導入數十年全歷史庫。
-3. 修正 Supabase Storage `_manifest.json` 上傳 400，並視需要套用 `202609210001_pachinko_catalog.sql`；未套用期間繼續由 repo JSON fallback 承接。
+1. 盤點既有 Session AI 陪玩問答、場景照片辨識與 Guide drawer，區分已完成能力和這次要新增的「主動陪打」能力。
+2. 決定入口與觸發方式：玩家主動詢問、事件後建議、定時提醒，或混合模式；避免干擾實際操作。
+3. 決定 SLOT／柏青哥各自可讀取的 Session context、可回答範圍、成本與隱私邊界；AI 不自動修改 Session、不預測即將中獎、不保證獲利。
+4. 產品規格確認後，另開一個可獨立驗收的版本實作並直接發佈 Production。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1643,6 +1666,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待使用者在正式站抽查 252 台 Pachinko Catalog 的手機搜尋、分批載入與指南排版；驗收後再決定是否擴充 2024 年資料。**
+**與使用者討論 AI 陪打助手：先盤點現有功能，再確認它要在何時出現、看哪些遊玩資料、能做什麼與不能做什麼。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
