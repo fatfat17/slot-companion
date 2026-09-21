@@ -1,0 +1,8 @@
+import type {PachinkoCatalogRecord,PachinkoSession} from "@/types/pachinko";
+const KEY="slot-companion-pachinko-sessions-v1";
+export function loadPachinkoSessions():PachinkoSession[]{if(typeof window==="undefined")return[];try{return JSON.parse(window.localStorage.getItem(KEY)??"[]")as PachinkoSession[]}catch{return[]}}
+export function savePachinkoSession(session:PachinkoSession){try{const sessions=loadPachinkoSessions(),index=sessions.findIndex(item=>item.id===session.id);if(index>=0)sessions[index]=session;else sessions.unshift(session);window.localStorage.setItem(KEY,JSON.stringify(sessions));return true}catch{return false}}
+export function findActivePachinkoSession(){return loadPachinkoSessions().find(item=>item.status==="active")}
+export function completeActivePachinkoSessions(){try{const endedAt=new Date().toISOString();window.localStorage.setItem(KEY,JSON.stringify(loadPachinkoSessions().map(item=>item.status==="active"?{...item,status:"completed",endedAt}:item)));return true}catch{return false}}
+export function createPachinkoSession(record:PachinkoCatalogRecord,machineNumber:string,startSpins:number):PachinkoSession{return{id:crypto.randomUUID(),catalogId:record.id,machineName:record.displayNameZh||record.officialNameJa,machineNumber:machineNumber.trim()||"未填",startedAt:new Date().toISOString(),status:"active",playState:"normal",startSpins,currentSpins:startSpins,investmentYen:0,heldBalls:0,initialHits:0,rushEntries:0,rushHits:0,maxRushStreak:0,currentRushStreak:0,note:""}}
+export function pachinkoSessionSummary(session:PachinkoSession){const spins=Math.max(0,session.currentSpins-session.startSpins),rotationsPerThousand=session.investmentYen>0?spins/(session.investmentYen/1000):null;return{spins,rotationsPerThousand}}

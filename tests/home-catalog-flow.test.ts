@@ -14,11 +14,12 @@ test("home uses the guide-first player flow without rendering legacy Profile car
   assert.doesNotMatch(home,/machines\.map/);
   assert.match(home,/拍照辨識，或從熟悉的機種開始/);
   assert.match(home,/開始一局/);
-  assert.match(home,/搜尋機種・查看中文圖文指南・開始 Session/);
-  assert.match(home,/title: "機台攻略"/);
+  assert.match(home,/搜尋 Slot・查看中文圖文指南・開始 Session/);
+  assert.match(home,/title: "柏青嫂資料庫"/);
+  assert.match(home,/title: "柏青哥資料庫"/);
   assert.doesNotMatch(home,/title: "拍機台"/);
   assert.doesNotMatch(home,/快速中文攻略|title: "機種資料庫"/);
-  assert.match(home,/href=\{active \? `\/session\/\$\{active\.id\}` : "\/start"\}/);
+  assert.match(home,/activeHref=active\?`\/session\/\$\{active\.id\}`:activePachinko\?`\/pachinko\/session\/\$\{activePachinko\.id\}`:"\/start"/);
 });
 
 test("start flow separates unknown-machine identification from known-machine selection",()=>{
@@ -26,6 +27,7 @@ test("start flow separates unknown-machine identification from known-machine sel
   assert.match(start,/href="\/identify"/);
   assert.match(start,/知道機種/);
   assert.match(start,/href="\/catalog"/);
+  assert.match(start,/href="\/pachinko"/);
   assert.match(start,/href="\/catalog\?view=recent"/);
   assert.match(start,/href="\/catalog\?view=favorites"/);
   assert.match(start,/拍現在畫面/);
