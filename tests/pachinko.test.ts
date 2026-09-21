@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {classifyPachinkoType,searchPachinkoCatalog} from "../src/lib/pachinko/catalog.ts";
 import {parsePWorldPachinkoCalendar,parsePWorldPachinkoFullGuide,parsePWorldPachinkoGuide} from "../src/lib/pachinko/pworld.ts";
-import {buildRuleBasedPachinkoGuide,validatePachinkoChineseGuide} from "../src/lib/pachinko/chineseGuide.ts";
+import {buildRuleBasedPachinkoGuide,pachinkoGuideSchema,validatePachinkoChineseGuide} from "../src/lib/pachinko/chineseGuide.ts";
 import {pachinkoSessionSummary} from "../src/lib/pachinko/storage.ts";
 import type {PachinkoCatalogRecord,PachinkoSession} from "../src/types/pachinko.ts";
 
@@ -21,5 +21,6 @@ test("full Pachinko guide keeps sections, tables and official-scope images outsi
 
 test("Pachinko Chinese guide fallback is grounded and validator rejects invented numbers",()=>{const guide=parsePWorldPachinkoFullGuide(`<h4>基本スペック</h4><p>大当り確率は約1/119.8。</p><h4>ゲームフロー</h4><p>初当り後にRUSH突入を判定する。</p><h4>大当り割合</h4><p>通常時は300個。</p>`,record,"2026-09-21T00:00:00Z"),fallback=buildRuleBasedPachinkoGuide(guide);assert.equal(fallback.generator,"rules");assert.equal(validatePachinkoChineseGuide({...fallback,generator:"openai",overview:"大當機率約1/999。"},guide),false)});
 test("Pachinko Chinese guide accepts thousands separators without weakening numeric grounding",()=>{const guide=parsePWorldPachinkoFullGuide(`<h4>基本スペック</h4><p>右打ち中は1500個。</p>`,record,"2026-09-21T00:00:00Z"),fallback=buildRuleBasedPachinkoGuide(guide),candidate={...fallback,generator:"openai"as const,overview:"右打中為 1,500 玉。"};assert.equal(validatePachinkoChineseGuide(candidate,guide),true)});
+test("Pachinko AI schema only permits sections present in the source",()=>{const schema=pachinkoGuideSchema(["features","flow"]),sectionKey=(schema.properties.sections.items.properties.key as{enum:string[]});assert.deepEqual(sectionKey.enum,["features","flow"]);assert.equal(sectionKey.enum.includes("play"),false)});
 
 test("Pachinko architecture uses independent catalog, play log, guide cache and route",()=>{const repository=fs.readFileSync(new URL("../src/lib/pachinko/repository.server.ts",import.meta.url),"utf8"),storage=fs.readFileSync(new URL("../src/lib/pachinko/storage.ts",import.meta.url),"utf8"),guideStorage=fs.readFileSync(new URL("../src/lib/pachinko/guideStorage.ts",import.meta.url),"utf8"),detail=fs.readFileSync(new URL("../src/app/pachinko/[id]/page.tsx",import.meta.url),"utf8");assert.match(repository,/pachinko_catalog_records/);assert.match(storage,/pachinko-sessions-v1/);assert.match(guideStorage,/pachinko-guides/);assert.match(detail,/kind=pachinko/);assert.match(detail,/PachinkoGuideActions/)});
