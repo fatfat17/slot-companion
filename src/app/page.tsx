@@ -53,7 +53,10 @@ export default function Home() {
         ))}
       </div>
 
-      <Link href="/glossary" className="home-glossary-link"><span>新手第一次玩？</span><strong>用繁體中文看懂 Pachislot 常用術語</strong><b>›</b></Link>
+      <section className="home-beginner card">
+        <div><span>📖 NEW PLAYER</span><strong>新手第一次玩？</strong><small>先用繁體中文看懂現場常用術語</small></div>
+        <nav aria-label="新手常用術語"><Link href="/glossary?kind=slot" className="slot"><b>🎰</b><span>SLOT 術語<small>CZ・AT・天井・設定示唆</small></span></Link><Link href="/glossary?kind=pachinko" className="pachinko"><b>🔴</b><span>柏青哥術語<small>大當・RUSH・ST・右打ち</small></span></Link></nav>
+      </section>
 
     </main>
   );

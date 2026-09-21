@@ -7,7 +7,7 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.5.1**
+目前核准穩定基準：**v0.2.5.2**
 
 正式 Production 基準：**release commit `b7741ff`（SLOT Catalog AI Selector）**
 
@@ -32,6 +32,13 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Home Beginner Buttons + Dual Glossary（2026-09-21，本機完成）
+- 首頁原本接近一般文字連結的「新手第一次玩？」改為獨立卡片與兩個 67px 高按鈕，直接分流至「SLOT 術語」與「柏青哥術語」，不再要求新手先進頁面後才判斷機種類型。
+- 既有 SLOT 術語保留，`/glossary` 預設仍顯示 SLOT，確保舊連結相容；頁面上方新增 SLOT／柏青哥雙分頁，可隨時切換。
+- 新增 22 個柏青哥常用術語，分為基本數字、大當後流程、盤面與操作三組，涵蓋回轉數、千圓回轉、大當、RUSH、確變、ST、LT、ヘソ、電チュー、保留、左右打與交換率。
+- 術語說明維持教育用途，明確區分已發生紀錄、長期機率與單次結果，不把保留演出、連莊或累積回轉解釋成中獎保證。
+- 本機工程 QA：lint、typecheck 通過；完整 automated tests **383 / 383 passed**；Next.js 16.3.3 webpack production build 通過。
 
 ### SLOT Catalog AI Selector（2026-09-21，Production 已發佈）
 - SLOT Catalog 新增獨立 `/catalog/assistant` 選台助手，不與 Session 內陪打 drawer 或柏青哥流程混用。Catalog 首頁以「朝一選台・晚間撿台」卡片進入。
@@ -1391,6 +1398,11 @@ Regression QA：
 
 ## Verified QA
 
+### Home Beginner Buttons + Dual Glossary QA（2026-09-21，自動 QA）
+- localhost 390 × 844 首頁實測顯示 SLOT／柏青哥兩個新手按鈕，按鈕高 67px；文件 width／scroll width 為 390／390，沒有水平溢出。
+- 從首頁點入柏青哥術語後，正確顯示 `Pachinko Basics`、3 組共 22 個詞，並能由頁面分頁切回既有 SLOT 術語；SLOT 頁共 18 個既有詞。
+- 本項是自動瀏覽器 QA，不冒充使用者在日本現場的實體手機人工驗收。
+
 ### SLOT Catalog AI Selector QA（2026-09-21，自動 QA）
 - lint、typecheck、完整 automated tests **382 / 382 passed**；Next.js 16.3.3 webpack production build通過，新增 `/catalog/assistant` 與 `/api/ai/slot-selection` routes。
 - Regression 覆蓋日本時間模式、朝一單台、晚間最多五台且去重、Guide 摘要 section／長度邊界、無來源不得補猜 Reset／天井，以及五張圖片總量低於 request ceiling。
@@ -1603,7 +1615,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 ## Current Work
 **SLOT Catalog AI Selector 已完成並發佈 Production；等待使用者以真實履歷照片驗證選台體感。**
 
-核准穩定基準：**v0.2.5.1**
+核准穩定基準：**v0.2.5.2**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1626,6 +1638,8 @@ Direct Home Play Split：**Completed；Production release `57f69d9` 已部署，
 SLOT AI Companion Phase 1：**Completed；Production release `0d33f53` 已部署，三模式、deterministic 預算／Profit Lock、照片問答與確認記錄分流及個人設定均已上線**
 
 SLOT Catalog AI Selector：**Completed；Production release `b7741ff` 已部署，朝一單台、晚間最多五台、Guide grounding 與履歷照片流程均已上線**
+
+首頁新手入口與雙機種術語：**本機完成；SLOT／柏青哥按鈕、22 個柏青哥術語與手機版 QA 已通過，待本輪 Production 發佈**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
