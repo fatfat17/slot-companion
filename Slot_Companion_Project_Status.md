@@ -7,9 +7,9 @@ Last Updated: 2026-09-21
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.4.1**
+目前核准穩定基準：**v0.2.4.4**
 
-正式 Production 基準：**commit `795b1f6`（Pachinko On-demand Chinese Visual Guide）**
+正式 Production 基準：**release commit `a411a5c`（Pachinko Catalog Phase 1 Expansion）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -32,6 +32,16 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Pachinko Catalog Phase 1 Expansion（2026-09-21，Production 已發佈）
+- 柏青哥 Catalog 由 10 台擴充至 **252 台**，範圍為 P-WORLD 2025-01 至 2026-09 公開新台；2025 年 147 台、2026 年 105 台。
+- 252 台全部具有唯一 Catalog ID、P-WORLD 機種詳細來源、廠商、導入日與封面；無重複 ID、無未知廠商。分類為智慧柏青哥 112、數位柏青哥 121、羽根物 6、其他 13。
+- 原有 10 台 reviewed 機種保留人工中文名、別名與標籤；其餘機種先保留 P-WORLD 正式日文名，不用 AI 批次猜譯作品名。個別指南內容仍於使用者按下建立後才翻譯。
+- 新增可重現的 `scripts/build-pachinko-catalog.ts`，以月份頁批次取得、依 P-WORLD database ID 去重、保留 reviewed metadata，並以新到舊輸出 repo JSON fallback。
+- Catalog 手機列表首次只顯示 24 台，以「載入更多」每次增加 24 台；搜尋與類型篩選仍運算完整 252 台，不會只搜目前顯示卡片。
+- 產品 commit `2906583` 已 push `dev`；release commit `a411a5c` 已 push `main`，Vercel Production 顯示 **Deployment has completed**。
+- 正式站 `/pachinko` 實測顯示 252 台與 24 / 252 分批載入；2025 年代表機 `pachi-10148` 詳情頁 HTTP 200，按需指南狀態 `usable`、`generator: openai`、6 個段落、17 張圖片儲存成功。1 張 1,066,330 bytes 來源圖依 1 MB 安全上限排除。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **367 / 367 passed**；Next.js 16.3.3 webpack production build 通過。
 
 ### Pachinko On-demand Chinese Visual Guide（2026-09-21，Production 已發佈）
 - 柏青哥詳細頁新增與 SLOT 相同概念的按需建立入口：只有使用者按「建立中文圖文指南」或「重新整理」時，server 才抓取該台 P-WORLD 公開頁、整理繁中內容與來源圖解；平常開頁不呼叫 AI 或重爬完整內容。
@@ -1342,6 +1352,12 @@ Regression QA：
 
 ## Verified QA
 
+### Pachinko Catalog Phase 1 Production QA（2026-09-21，自動 QA）
+- 資料 artifact 為 252 筆唯一、可追溯、全數具封面的 2025-01 至 2026-09 Pachinko records；已加入數量、ID、日期、來源 URL、reviewed metadata 與手機分批載入 regression。
+- lint、typecheck 通過；完整 automated tests **367 / 367 passed**；Next.js 16.3.3 webpack production build 通過。
+- Production `/pachinko` 與 `/pachinko/pachi-10148` 均為 HTTP 200；首頁 server output 確認 252 台與「已顯示 24 / 252」。
+- 2025 年機種真實指南 API smoke 確認 OpenAI 繁中、6 段來源結構與 17 張合規圖片可用；過大圖片被安全排除。
+
 ### Pachinko On-demand Guide Production QA（2026-09-21，自動 QA）
 - lint、typecheck 通過；完整 automated tests **366 / 366 passed**；Next.js 16.3.3 webpack production build 通過。
 - 真實 P-WORLD `pachi-10504` 按需建立結果：OpenAI 繁中指南成功、段落 ownership 與來源一致、18 / 18 張圖片儲存成功。
@@ -1510,9 +1526,9 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 75. AI 結構 schema 不能將全部可能段落都當成當前機種可用段落；必須以 parser 實際取得的 section keys 建立當次白名單，否則模型可能自行補出來源缺少的「基本打法」而被 grounded validator 拒絕。
 
 ## Current Work
-**Pachinko 按需繁中圖文指南已完成並發佈 Production，等待使用者手機操作驗收。**
+**Pachinko Catalog 第一階段 252 台與按需繁中圖文指南已發佈 Production，等待使用者手機操作驗收。**
 
-核准穩定基準：**v0.2.4.1**
+核准穩定基準：**v0.2.4.4**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1524,16 +1540,18 @@ Pachinko Pilot：**Completed；Production release `2927233` 已部署並通過�
 
 Pachinko On-demand Guide：**Completed；Production commit `795b1f6` 已部署，固定網址與真實按需建立已通過自動 QA**
 
+Pachinko Catalog Phase 1：**Completed；252 台已發佈，Production release `a411a5c` 已通過數量、分批載入、舊月份詳情與指南 smoke**
+
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Pachinko On-demand Guide 手機驗收與雲端收尾
+### Pachinko Catalog 手機驗收與第二階段決策
 
-Status：**Production 功能、真實來源／OpenAI 生成、366 tests 與 production build 均通過。**
+Status：**252 台 Production Catalog、真實來源／OpenAI 生成、367 tests 與 production build 均通過。**
 
-1. 由使用者在固定正式網址進行手機操作／排版驗收，包含首次建立、快取載入與重新整理。
-2. 修正 Supabase Storage `_manifest.json` 上傳 400，再驗證舊圖清理 report；圖片本體目前不受影響。
-3. 視實際需要將 `202609210001_pachinko_catalog.sql` 套用至既有 Supabase project；未套用期間繼續由 repo JSON seed fallback 承接。
+1. 由使用者在固定正式網址抽查搜尋、類型篩選、載入更多、機台詳情與指南手機排版。
+2. 第一階段驗收穩定後，再決定是否加入 2024 年 136 台，將 Catalog 擴充至約 388 台；不直接導入數十年全歷史庫。
+3. 修正 Supabase Storage `_manifest.json` 上傳 400，並視需要套用 `202609210001_pachinko_catalog.sql`；未套用期間繼續由 repo JSON fallback 承接。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
@@ -1625,6 +1643,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**等待使用者在正式站進行 Pachinko Guide 手機操作／排版驗收；後續再處理 Supabase manifest 400 與遠端 Pachinko Catalog migration。**
+**等待使用者在正式站抽查 252 台 Pachinko Catalog 的手機搜尋、分批載入與指南排版；驗收後再決定是否擴充 2024 年資料。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
