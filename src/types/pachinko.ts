@@ -30,6 +30,13 @@ export type PachinkoGuide={
   retrievedAt:string;
 };
 
+import type {MachineGuideImage,MachineGuideSectionKey,MachineGuideTable,VisualGuideAssetReport} from "./machineGuide";
+export type PachinkoFullGuideSection={key:MachineGuideSectionKey;titleZh:string;titleJa:string;summaryZh:string;paragraphsJa:string[];tables:MachineGuideTable[]};
+export type PachinkoPlayerGuideZh={generator:"rules"|"openai";overview:string;goals:string[];sections:Array<{key:MachineGuideSectionKey;title:string;summary:string;points:string[]}>;generatedAt:string};
+export type PachinkoFullGuide={schemaVersion:1;catalogId:string;officialNameJa:string;displayNameZh:string;manufacturer:string;status:"usable"|"partial";sections:PachinkoFullGuideSection[];images:MachineGuideImage[];playerGuideZh:PachinkoPlayerGuideZh;sourceName:string;sourceUrl:string;retrievedAt:string;missingSections:MachineGuideSectionKey[];visualAssetReport?:VisualGuideAssetReport;sourceWarnings:string[]};
+export type CachedPachinkoGuide={guide:PachinkoFullGuide;cachedAt:string;compilerRevision:string};
+export type PachinkoGuideApiResponse={guide:PachinkoFullGuide}|{error:string;code:string};
+
 export type PachinkoPlayState="normal"|"rush"|"st"|"time_short"|"other";
 export type PachinkoSession={
   id:string;

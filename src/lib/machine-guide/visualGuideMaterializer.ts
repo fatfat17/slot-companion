@@ -1,4 +1,4 @@
-import type { MachineGuide,MachineGuideImage } from "../../types/machineGuide.ts";
+import type { MachineGuideImage,VisualGuideAssetReport } from "../../types/machineGuide.ts";
 import { supabaseServerHeaders } from "../catalog/supabaseAuth.ts";
 import { VISUAL_GUIDE_BUCKET,VISUAL_GUIDE_MAX_IMAGE_BYTES,visualGuideAssetId,visualGuideAssetUrl,visualGuideObjectPath } from "./visualGuide.ts";
 import { buildVisualGuideAssetManifest,buildVisualGuideAssetReport,uniqueVisualGuideImages } from "./visualGuideGovernance.ts";
@@ -67,7 +67,8 @@ async function materializeOne(catalogId:string,image:MachineGuideImage,config:Cl
   return{...image,displayUrl:visualGuideAssetUrl(catalogId,image.sourceImageUrl),byteSize:bytes.byteLength,contentType,storageStatus:config?"stored":"source"};
 }
 
-export async function materializeVisualGuideAssets(guide:MachineGuide,environment:ServerEnvironment=process.env,request:Requester=fetch){
+type VisualGuideCarrier={catalogId:string;images?:MachineGuideImage[];visualAssetReport?:VisualGuideAssetReport;sourceWarnings?:string[]};
+export async function materializeVisualGuideAssets<T extends VisualGuideCarrier>(guide:T,environment:ServerEnvironment=process.env,request:Requester=fetch):Promise<T>{
   if(!guide.catalogId||!guide.images?.length)return guide;
   const originalImageCount=guide.images.length,images=uniqueVisualGuideImages(guide.images),config=cloudConfig(environment),warnings:string[]=[];
   if(config)try{await ensureBucket(config,request)}catch(error){warnings.push(error instanceof Error?error.message:"Supabase 圖片儲存初始化失敗");}
@@ -77,14 +78,14 @@ export async function materializeVisualGuideAssets(guide:MachineGuide,environmen
     const settled=await Promise.allSettled(batch.map(image=>materializeOne(guide.catalogId,image,canStore,request)));
     settled.forEach((result,at)=>{if(result.status==="fulfilled")next.push(result.value);else warnings.push(`${batch[at].captionZh}：${result.reason instanceof Error?result.reason.message:"圖片處理失敗"}`);});
   }
-  let cleanupStatus:NonNullable<MachineGuide["visualAssetReport"]>["cleanupStatus"]=canStore?"skipped":"not_applicable",removedAssetCount=0;
+  let cleanupStatus:VisualGuideAssetReport["cleanupStatus"]=canStore?"skipped":"not_applicable",removedAssetCount=0;
   if(canStore&&next.length===images.length){
     try{removedAssetCount=await reconcileStoredAssets(canStore,guide.catalogId,next,request);cleanupStatus="completed"}
     catch(error){cleanupStatus="failed";warnings.push(error instanceof Error?error.message:"Supabase 舊圖片治理失敗")}
   }
   const visualAssetReport=buildVisualGuideAssetReport({images:next,deduplicatedCount:originalImageCount-images.length,rejectedImageCount:images.length-next.length,cloud:Boolean(canStore),cleanupStatus,removedAssetCount});
   if(visualAssetReport.capacityLevel!=="normal")warnings.push(`圖文資產容量為 ${visualAssetReport.capacityLevel}（${visualAssetReport.totalBytes} bytes）`);
-  return{...guide,images:next,visualAssetReport,sourceWarnings:[...new Set([...(guide.sourceWarnings??[]),...warnings])]};
+  return{...guide,images:next,visualAssetReport,sourceWarnings:[...new Set([...(guide.sourceWarnings??[]),...warnings])]} as T;
 }
 
 export async function readStoredVisualGuideAsset(catalogId:string,sourceImageUrl:string,environment:ServerEnvironment=process.env,request:Requester=fetch){
