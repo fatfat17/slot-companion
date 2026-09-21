@@ -9,7 +9,7 @@ Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Pr
 
 目前核准穩定基準：**v0.2.5.0**
 
-正式 Production 基準：**release commit `57f69d9`（Direct Home Play Split + Per-catalog Recent Play）**
+正式 Production 基準：**release commit `0d33f53`（SLOT AI Companion Phase 1）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -33,7 +33,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
-### SLOT AI Companion Phase 1（2026-09-21，本機完成，待 Production 發佈）
+### SLOT AI Companion Phase 1（2026-09-21，Production 已發佈）
 - Session 內 AI 陪打改為三個明確模式：「陪玩」「冷靜判斷」「小回顧」。三者共用同一份有界 Session context，但使用不同提示與回答目的；不再把即時陪伴、停損判斷與結算整理混成同一種回答。
 - 新增 deterministic 決策層：預設 ¥10,000 重新判斷、¥20,000 單台停止線、獲利時最大回吐 30%；Profit Lock 與預算狀態由程式計算後再交給 AI 解釋，不讓模型自行算金額或改寫 Session。
 - AI context 新增日本時間、開局時間、最近事件、最高持枚、目前流程節點與個人設定；對話只保留目前 drawer 內的有限歷史，不建立跨局長期記憶。
@@ -41,6 +41,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 個人陪打設定保存在目前瀏覽器，包含玩法偏好、重新判斷金額、單台停止線與最大回吐比例；不放入 Catalog、Machine Guide 或雲端玩家帳號。
 - OpenAI Responses API 維持 server-only Key、`store:false`、有界文字／圖片輸入與明確錯誤；柏青哥 AI 助手與 Catalog 朝一／晚間選台助手本版尚未實作。
 - 工程 QA：lint、typecheck 通過；完整 automated tests **376 / 376 passed**；Next.js 16.3.3 webpack production build 通過。localhost 390 × 844 自動 QA 已確認三模式、設定、照片說明與確認分流，頁面 width／scroll width 390／390。
+- 產品 commit `4aabc6c` 已 push `dev`；release commit `0d33f53` 已 push `main`，Vercel 顯示 **Deployment has completed**。固定正式 `/` 與 `/catalog` 均回 HTTP 200。
 
 ### Direct Home Play Split + Per-catalog Recent Play（2026-09-21，Production 已發佈）
 - 首頁沒有 active play 時移除「開始一局」中繼操作，改為兩個直接玩家入口：「打柏青嫂（SLOT）」與「打柏青哥（Pachinko）」。兩張卡直接進入各自 Catalog，文案明確包含找機台、拍照辨識與最近打過。
@@ -1384,6 +1385,7 @@ Regression QA：
 - lint、typecheck、完整 automated tests **376 / 376 passed**；Next.js 16.3.3 webpack production build 通過。
 - Regression 覆蓋三種 mode prompt 分流、有界對話歷史、deterministic 預算／Profit Lock 計算、browser-local 個人設定，以及照片問答與人工確認記錄的分離。
 - localhost 390 × 844 實際建立 quick Session 並開啟 AI drawer；陪玩、冷靜判斷、小回顧均可切換，設定預設值為 ¥10,000／¥20,000／30%，文件寬度與 scroll width 均為 390px，無水平溢出。
+- Vercel release `0d33f53` 的 GitHub deployment status 為 success／Deployment has completed；固定 Production 首頁與 SLOT Catalog 均為 HTTP 200。
 - 自動 QA 沒有送出真實 OpenAI 問題、沒有上傳使用者照片，也不冒充日本現場或實體手機實戰驗收。
 
 ### Direct Home Play Split Production QA（2026-09-21，自動 QA）
@@ -1579,7 +1581,7 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 81. Session AI 的對話歷史目前只存在開啟中的 drawer，個人偏好只存在目前瀏覽器；這是刻意的第一階段隱私與成本邊界，不代表跨裝置或跨局記憶已完成。
 
 ## Current Work
-**SLOT AI Companion Phase 1 已完成本機實作與 QA，正在發佈 Production。**
+**SLOT AI Companion Phase 1 已完成並發佈 Production；等待使用者以真實 Session／照片驗證陪打體感。**
 
 核准穩定基準：**v0.2.5.0**
 
@@ -1601,7 +1603,7 @@ Scoped Photo Identification：**Completed；SLOT 與柏青哥入口、候選庫�
 
 Direct Home Play Split：**Completed；Production release `57f69d9` 已部署，舊 `/start` 相容導回首頁，SLOT／柏青哥 recent 與結算後返回均已分流**
 
-SLOT AI Companion Phase 1：**本機 Completed；三模式、deterministic 預算／Profit Lock、照片問答與確認記錄分流、個人設定及完整 QA 已完成，待本次 Production release**
+SLOT AI Companion Phase 1：**Completed；Production release `0d33f53` 已部署，三模式、deterministic 預算／Profit Lock、照片問答與確認記錄分流及個人設定均已上線**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
@@ -1705,6 +1707,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**發佈並驗證 SLOT AI Companion Phase 1；下一輪討論並實作 SLOT Catalog 的朝一／晚間選台助手，完成後才進入柏青哥 AI。**
+**由使用者在正式站驗證 SLOT AI Companion Phase 1 的真實陪打體感；下一輪討論並實作 SLOT Catalog 的朝一／晚間選台助手，完成後才進入柏青哥 AI。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
