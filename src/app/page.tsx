@@ -26,11 +26,11 @@ export default function Home() {
     <main className="page home-page">
       <div className="home-top">
         <div>
-          <p className="brand-kicker">SLOT COMPANION</p>
+          <p className="brand-kicker">PACHI COMPANION</p>
           <h1>今晚，打得更明白。</h1>
           <p>記錄節奏、看懂流程，專心享受每一局。</p>
         </div>
-        <div className="brand-mark">SC</div>
+        <div className="brand-mark">伴</div>
       </div>
 
       {activeHref&&<Link href={activeHref} className="session-hero">

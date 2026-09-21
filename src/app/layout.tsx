@@ -3,11 +3,11 @@ import "./globals.css";
 import { PwaRegister } from "@/components/PwaRegister";
 
 export const metadata: Metadata = {
-  title: "Slot Companion",
-  description: "手機優先的日本角子機實戰記錄助手",
-  applicationName: "Slot Companion",
+  title: "打台夥伴｜日本 SLOT・柏青哥",
+  description: "日本 SLOT・柏青哥機台指南、遊玩紀錄與 AI 陪打助手",
+  applicationName: "打台夥伴",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Slot Companion" },
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "打台夥伴" },
 };
 
 export const viewport: Viewport = {

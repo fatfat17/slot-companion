@@ -12,7 +12,7 @@ export async function GET(request:Request,{params}:{params:Promise<{catalogId:st
   if(!canonical||!allowed.includes(canonical))return new Response("Invalid image source",{status:400});
   const stored=await readStoredCatalogCover(catalogId,canonical);
   if(stored)return imageResponse(stored,"stored");
-  const upstream=await fetch(canonical,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Slot Companion catalog cover","Referer":record.sourceUrl},cache:"no-store",signal:AbortSignal.timeout(12_000)});
+  const upstream=await fetch(canonical,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Pachi Companion catalog cover","Referer":record.sourceUrl},cache:"no-store",signal:AbortSignal.timeout(12_000)});
   if(!upstream.ok)return new Response("Image unavailable",{status:upstream.status});
   const contentType=(upstream.headers.get("content-type")??"").split(";")[0].toLowerCase();
   if(!["image/jpeg","image/png","image/webp"].includes(contentType))return new Response("Invalid image",{status:415});

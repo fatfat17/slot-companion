@@ -23,7 +23,7 @@ export async function GET(request:Request,{params}:{params:Promise<{catalogId:st
   const sourceImageUrl=canonicalPWorldImageUrl(source,"https://www.p-world.co.jp/");
   if(!sourceImageUrl)return new Response("Invalid image source",{status:400});
   const stored=await readStoredVisualGuideAsset(catalogId,sourceImageUrl);
-  const response=stored??await fetch(sourceImageUrl,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Slot Companion visual guide pilot"},cache:"no-store",signal:AbortSignal.timeout(12_000)});
+  const response=stored??await fetch(sourceImageUrl,{headers:{Accept:"image/avif,image/webp,image/png,image/jpeg","User-Agent":"Pachi Companion visual guide"},cache:"no-store",signal:AbortSignal.timeout(12_000)});
   if(!response.ok)return new Response("Image unavailable",{status:response.status});
   const contentType=response.headers.get("content-type")??"application/octet-stream";
   if(!contentType.startsWith("image/"))return new Response("Invalid image",{status:415});

@@ -1,4 +1,4 @@
-# Slot Companion
+# 打台夥伴（Pachi Companion）
 
 手機優先的 Pachislot PWA 遊玩助手：拍照辨識陌生機台、查看繁體中文公開資料指南、建立本機 Session，並以實際紀錄做設定可能性的參考推測。
 

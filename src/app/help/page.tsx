@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 
 const topics=[
+  {href:"#install",icon:"📲",title:"加入 iPhone 主畫面",sub:"像一般 App 一樣開啟"},
   {href:"#identify",icon:"📷",title:"拍照找機台",sub:"不知道名稱時怎麼找"},
   {href:"#guide",icon:"📖",title:"中文機台指南",sub:"建立、閱讀與更新攻略"},
   {href:"#session",icon:"🎮",title:"遊玩紀錄",sub:"SLOT 與柏青哥分開記"},
@@ -21,6 +22,8 @@ export default function HelpPage(){return <><PageHeader title="APP 使用指南"
   </section>
 
   <section className="section"><div className="section-title"><h2>你想做什麼？</h2><span>點選查看</span></div><nav className="help-topic-grid" aria-label="使用指南目錄">{topics.map(topic=><a href={topic.href} key={topic.href}><b>{topic.icon}</b><span><strong>{topic.title}</strong><small>{topic.sub}</small></span><em>›</em></a>)}</nav></section>
+
+  <section className="section help-detail" id="install"><div className="section-title"><h2>📲 加入 iPhone 主畫面</h2><span>Safari</span></div><div className="help-install-visual card" aria-label="加入 iPhone 主畫面步驟示意"><div><b>1</b><span>在 Safari 開啟網站</span></div><i>→</i><div><b>2</b><span>點擊分享　□↑</span></div><i>→</i><div><b>3</b><span>加入主畫面</span></div></div><ol className="help-copy"><Step number={1}>請用 Safari 開啟正式網站，點擊下方工具列的分享按鈕。</Step><Step number={2}>往下找到「加入主畫面」，確認名稱是「打台夥伴」。</Step><Step number={3}>加入後會顯示專用圖示，點開時以獨立 App 視窗執行。</Step></ol><p className="help-note">如果桌面仍顯示舊的 Slot Companion／SC，請先刪除舊捷徑，再由 Safari 重新加入；這不會刪除網站內的遊玩紀錄。</p></section>
 
   <section className="section help-route-section" id="slot-path"><div className="section-title"><h2>SLOT 快速流程</h2><span>5 步驟</span></div><ol className="help-route"><Step number={1}>進入「打柏青嫂（SLOT）」</Step><Step number={2}>搜尋名稱，或用照片辨識機台</Step><Step number={3}>查看／建立繁體中文機台指南</Step><Step number={4}>開始一局，記錄 G 數、CZ、Bonus、AT</Step><Step number={5}>需要時問 AI，結束後查看今日紀錄</Step></ol><Link className="help-cta slot" href="/catalog">前往 SLOT 資料庫　›</Link></section>
 
