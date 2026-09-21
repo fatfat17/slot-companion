@@ -1,6 +1,6 @@
 # Slot Companion Project Status
 
-Last Updated: 2026-08-31
+Last Updated: 2026-09-21
 
 ## Current Version
 **Slot Companion Production Launch — current approved working release**
@@ -32,6 +32,13 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### Catalog Cloud Read Outage Fallback Hotfix（2026-09-21，本機完成）
+- 使用者回報正式站點入機台資訊顯示 Next.js「This page couldn’t load」。正式 HTTP 重現確認 `/catalog`、`/catalog/tokyo-ghoul` 與 `/catalog/machine-frx2z3` 均為 500，而 `/start` 維持 200；故障不是單一機台或瀏覽器快取，而是 Catalog server-side 讀取路徑。
+- 根因是 Production 設定 Supabase 後，Catalog repository 只使用雲端讀取；Supabase request 失敗會直接拋出，既有 repo JSON fallback 只在「未設定 Supabase」時啟用，無法承接暫時性雲端故障。
+- 新增 read-only resilience wrapper：Supabase Catalog `list`／`search` 失敗時記錄不含 Secret 的 server warning，並回退已提交的 `data/machine-catalog.json`。Supabase 正常時仍以雲端資料為準。
+- Catalog `approve` 與 import audit 寫入仍只走 primary Supabase；hotfix 不會把線上管理寫入靜默改成本機 JSON，也不修改 Catalog identity、Guide、Session 或玩家資料。
+- 本項本機修正與 QA 已完成；使用者已明確核准直接發佈正式版本，release 進行中。
 
 ### Unified Start Flow Architecture（2026-08-31，使用者已核准正式發佈）
 - 首頁在沒有 active Session 時，黃色主操作改為唯一的「開始一局」入口；原本與主操作同樣連到 `/identify` 的第二張「拍機台」卡已移除。有 active Session 時仍維持直接繼續既有 Session。
@@ -1311,6 +1318,11 @@ Regression QA：
 
 ## Verified QA
 
+### Catalog Cloud Read Fallback QA（2026-09-21，自動 QA）
+- lint、typecheck 通過；完整 automated tests **356 / 356 passed**；Next.js 16.3.3 webpack production build通過。
+- 新增 regression：cloud 正常時不呼叫 fallback；cloud throw 時回 repo JSON；兩個來源皆失敗時仍明確拋錯；Catalog 寫入與 audit 保持 primary-only。
+- 以 `SUPABASE_URL=http://127.0.0.1:9` 刻意模擬雲端不可達的本機 production server，`/catalog`、`/catalog/tokyo-ghoul`、`/catalog/machine-frx2z3` 全部回 HTTP 200；server log 明確顯示已使用 repo JSON fallback。
+
 ### Unified Start Flow QA（2026-08-31，自動 QA）
 - lint 通過、typecheck 通過、完整 automated tests **352 / 352 passed**、Next.js 16.3.3 webpack production build通過；預設 Turbopack 在受限環境仍因 CSS worker 無法 bind port 中止，沿用既有 webpack production QA 路徑。
 - localhost production 390 × 844：首頁寬度／scroll width 均為 390px；首頁沒有第二個「拍機台」連結，只保留 `/start` 的「開始一局」主操作。
@@ -1456,9 +1468,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 65. 旅行離線包應有明確生命週期：準備、原地更新、查看內容、刪除。刪除必須只清除旅行包自己的 Cache Storage 與 manifest，不得用 `localStorage.clear()` 或影響 Session／Guide／收藏。
 66. 正式網站可公開免登入使用；GitHub／Vercel 帳號只負責管理與部署。正式 Production 仍需持續監控外部 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的來源或服務變動。
 67. 「開始一局」才是首頁的主要玩家任務；AI 拍照只是未知機種的 identity 選擇方式，不能與主操作重複占用兩個入口。已知機種應可由搜尋、收藏或最近遊玩進入，兩種選擇方式最後共同收斂至 Catalog identity → Guide → Session。
+68. 設定雲端 Catalog 不代表可以移除讀取 fallback；Catalog identity 是玩家核心路徑，Supabase 暫時失敗時必須降級至版本庫 JSON。管理寫入則必須 fail closed，不能因讀取 fallback 而改寫非持久的 server filesystem。
 
 ## Current Work
-**Unified Start Flow 已由使用者核准並正式發佈；目前進入 Production 上線後監測與實戰回饋。**
+**Production Catalog 目前因 Supabase 讀取例外而整段回 HTTP 500；read-only JSON fallback hotfix 已通過 QA，使用者已核准正式發佈。**
 
 核准穩定基準：**v0.2.3.1**
 
@@ -1466,17 +1479,19 @@ Repository workflow：`main` 現為使用者核准的 Production release；後�
 
 Unified Start Flow：**Completed；Production release `2667925` 已部署並通過自動 smoke**
 
+Catalog Cloud Read Fallback：**Completed；Production release 進行中**
+
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Production 上線後監測
+### Catalog Outage Hotfix Production 發佈
 
-Status：**Unified Start Flow 正式部署與自動 smoke 完成。**
+Status：**正式故障已重現，根因與 hotfix 已驗證；使用者已要求直接發佈正式版本。**
 
-1. 使用者以實體手機確認「開始一局」的未知機種／已知機種分流與觸控層級符合現場操作。
-2. 實戰觀察 active Session 返回首頁後是否能直接繼續，以及 Session 結束後最近遊玩是否正確出現。
-3. 持續監控 P-WORLD、OpenAI、Supabase 與瀏覽器儲存政策造成的外部服務變動。
-4. 未收到新的實戰問題前，不自行開始下一版本。
+1. 將 hotfix commit／push 至 `dev`，再經 release merge 發佈 `main` Production。
+2. 部署後確認 `/catalog` 與多筆 `/catalog/[id]` 由 500 恢復 200，Catalog 顯示 202 台且可進入機台指南。
+3. 確認 Vercel runtime 只記錄 fallback warning，不輸出 Supabase Secret；Importer 寫入在 Supabase 故障時仍明確失敗。
+4. Production smoke 完成後補記 release commit，回到上線後監測。
 
 ## Machine Catalog Schema Direction
 v0.2.2 目前實際保存：
