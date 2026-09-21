@@ -12,7 +12,7 @@ export default function StartPage(){
     <div className="start-path-list">
       <Link href="/identify" className="start-path-card unknown">
         <span className="start-path-icon">📷</span>
-        <span className="start-path-copy"><small>不知道機種</small><strong>拍照辨識機台</strong><em>拍整台、正式機種名稱或筐體上方</em></span>
+        <span className="start-path-copy"><small>不知道 SLOT 機種</small><strong>拍照辨識 SLOT</strong><em>只比對 SLOT 資料庫，避免與同 IP 柏青哥混淆</em></span>
         <b>›</b>
       </Link>
       <Link href="/catalog" className="start-path-card known">
@@ -22,7 +22,7 @@ export default function StartPage(){
       </Link>
       <Link href="/pachinko" className="start-path-card pachinko-path">
         <span className="start-path-icon">🔴</span>
-        <span className="start-path-copy"><small>玩柏青哥</small><strong>搜尋柏青哥機種</strong><em>查看機台說明，或開始簡易遊玩紀錄</em></span>
+        <span className="start-path-copy"><small>玩柏青哥</small><strong>進入柏青哥資料庫</strong><em>可搜尋機種，或使用柏青哥專用拍照辨識</em></span>
         <b>›</b>
       </Link>
     </div>

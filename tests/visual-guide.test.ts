@@ -49,7 +49,7 @@ test("catalog records outside earlier pilots receive the same evidence-gated vis
 });
 
 test("all Catalog records use the same evidence-gated visual guide pipeline",()=>{
-  assert.equal(catalogRecords.length,202);
+  assert.equal(catalogRecords.length,208);
   for(const catalogRecord of catalogRecords){
     const facts=parsePWorldMachineFacts(fixture,catalogRecord,"2026-08-30T00:00:00Z");
     assert.equal(facts.images?.length,3,catalogRecord.id);

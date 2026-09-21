@@ -15,6 +15,7 @@ test("E. Bullet / Reload 類演出文字不得 identified",async()=>{const resul
 test("F. 非 Slot 圖片 → unknown",async()=>assert.equal((await identify("non-slot.jpg")).status,"unknown"));
 test("G. 正式 title 明確但本機無 Profile，不自動建立 Profile",async()=>{const result=await identify("unprofiled.jpg");assert.equal(result.status,"identified");assert.equal(result.candidates[0].matchedMachineId,undefined);assert.equal(result.candidates[0].matchedCatalogId,null)});
 test("catalog prompt 包含 id、正式名稱、manufacturer 與 aliases",()=>{const prompt=buildMachineIdentityPrompt(machineCatalog);assert.match(prompt,/tokyo-ghoul/);assert.match(prompt,/L 東京喰種/);assert.match(prompt,/manufacturer/);assert.match(prompt,/aliases/)});
+test("SLOT 與 Pachinko prompt 明確使用不同候選類型",()=>{assert.match(buildMachineIdentityPrompt(machineCatalog,"slot"),/Pachislot/);assert.match(buildMachineIdentityPrompt(machineCatalog,"pachinko"),/Pachinko/);assert.match(buildMachineIdentityPrompt(machineCatalog,"pachinko"),/同 IP/)});
 test("多候選不超過三個",async()=>assert.equal((await identify("multi.jpg")).candidates.length,3));
 test("API Key 缺失",async()=>await assert.rejects(()=>new OpenAIProvider(undefined,"test-model").identifyMachine(image("clear.jpg")),(error:unknown)=>error instanceof Error&&error.message.includes("OPENAI_API_KEY")));
 test("API request failure",async()=>await assert.rejects(()=>new OpenAIProvider("test-key","test-model",async()=>{throw new Error("offline")}).identifyMachine(image("clear.jpg")),/暫時無法連線/));

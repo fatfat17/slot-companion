@@ -23,7 +23,7 @@ test("home uses the guide-first player flow without rendering legacy Profile car
 });
 
 test("start flow separates unknown-machine identification from known-machine selection",()=>{
-  assert.match(start,/不知道機種/);
+  assert.match(start,/不知道 SLOT 機種/);
   assert.match(start,/href="\/identify"/);
   assert.match(start,/知道機種/);
   assert.match(start,/href="\/catalog"/);
@@ -40,6 +40,9 @@ test("Catalog importer entry is reachable in development or a configured cloud a
   assert.deepEqual(getCatalogImporterPresentation("production"),{available:false,label:"更新機種資料庫",notice:"目前僅能在本機管理環境執行"});
   assert.deepEqual(getCatalogImporterPresentation("production",true),{available:true,href:"/admin/catalog-import",label:"更新機種資料庫"});
   assert.match(catalog,/\{summary\.total\} 台機種，隨時可查/);
+  assert.match(catalog,/href="\/identify"[^>]*>📷 拍照找 SLOT/);
+  const pachinko=fs.readFileSync(new URL("../src/app/pachinko/PachinkoLibraryClient.tsx",import.meta.url),"utf8");
+  assert.match(pachinko,/href="\/identify\/pachinko"[^>]*>📷 拍照找柏青哥/);
   assert.match(catalog,/importer\.available/);
   assert.match(catalog,/onClick=\{\(\)=>setManagementOpen\(true\)\}/);
   assert.match(catalog,/線上版目前不能永久寫入專案 Catalog/);

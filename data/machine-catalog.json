@@ -5274,5 +5274,161 @@
         "retrievedAt": "2026-08-27T06:28:10.652Z"
       }
     ]
+  },
+  {
+    "id": "machine-1s1565m",
+    "sourceId": "/machine/database/10501",
+    "officialNameJa": "パチスロ見える子ちゃん",
+    "displayNameZh": "",
+    "manufacturer": "パイオニア",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "パチスロ",
+    "introducedAt": "2026-09-07",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10501",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10501/image/thumb_1.jpg",
+    "retrievedAt": "2026-09-21T08:01:35.218Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10501",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10501/image/thumb_1.jpg",
+        "retrievedAt": "2026-09-21T08:01:35.218Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1i64uwl",
+    "sourceId": "/machine/database/10503",
+    "officialNameJa": "スマスロ リコリス・リコイル",
+    "displayNameZh": "",
+    "manufacturer": "サミー",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-09-07",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10503",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10503/image/thumb_1.jpg",
+    "retrievedAt": "2026-09-21T08:01:35.218Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10503",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10503/image/thumb_1.jpg",
+        "retrievedAt": "2026-09-21T08:01:35.218Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-xyvadx",
+    "sourceId": "/machine/database/10510",
+    "officialNameJa": "スマスロ タコスロ",
+    "displayNameZh": "",
+    "manufacturer": "ユニバーサルブロス",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-09-07",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10510",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10510/image/thumb_1.jpg",
+    "retrievedAt": "2026-09-21T08:01:35.218Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10510",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10510/image/thumb_1.jpg",
+        "retrievedAt": "2026-09-21T08:01:35.218Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1lywcsz",
+    "sourceId": "/machine/database/10523",
+    "officialNameJa": "モグモグ風林火山 大海戦の巻",
+    "displayNameZh": "",
+    "manufacturer": "ネット",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "パチスロ",
+    "introducedAt": "2026-09-07",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10523",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10523/image/thumb_1.jpg",
+    "retrievedAt": "2026-09-21T08:01:35.218Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10523",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10523/image/thumb_1.jpg",
+        "retrievedAt": "2026-09-21T08:01:35.218Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-33kqny",
+    "sourceId": "/machine/database/10527",
+    "officialNameJa": "L青春ブタ野郎はバニーガール先輩の夢を見ない",
+    "displayNameZh": "",
+    "manufacturer": "オリンピア",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-09-07",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10527",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10527/image/thumb_1.jpg",
+    "retrievedAt": "2026-09-21T08:01:35.218Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10527",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10527/image/thumb_1.jpg",
+        "retrievedAt": "2026-09-21T08:01:35.218Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-uqor12",
+    "sourceId": "/machine/database/10543",
+    "officialNameJa": "Lパチスロ 彼女、お借りします",
+    "displayNameZh": "",
+    "manufacturer": "SANKYO",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-09-07",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10543",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10543/image/thumb_1.jpg",
+    "retrievedAt": "2026-09-21T08:01:35.218Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10543",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10543/image/thumb_1.jpg",
+        "retrievedAt": "2026-09-21T08:01:35.218Z"
+      }
+    ]
   }
 ]
