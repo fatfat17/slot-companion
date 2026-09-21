@@ -9,7 +9,7 @@ Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Pr
 
 目前核准穩定基準：**v0.2.4.1**
 
-正式 Production 基準：**release commit `2927233`（Pachinko Pilot）**
+正式 Production 基準：**commit `795b1f6`（Pachinko On-demand Chinese Visual Guide）**
 
 正式網址：**https://slot-companion.vercel.app**
 
@@ -33,14 +33,17 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 
 ## Completed
 
-### Pachinko On-demand Chinese Visual Guide（2026-09-21，待 Production 發佈）
+### Pachinko On-demand Chinese Visual Guide（2026-09-21，Production 已發佈）
 - 柏青哥詳細頁新增與 SLOT 相同概念的按需建立入口：只有使用者按「建立中文圖文指南」或「重新整理」時，server 才抓取該台 P-WORLD 公開頁、整理繁中內容與來源圖解；平常開頁不呼叫 AI 或重爬完整內容。
 - 新增獨立 `PachinkoFullGuide` schema、P-WORLD 柏青哥 parser、grounded 繁中產生器、`/api/pachinko-guides/[catalogId]` 與 `/pachinko/guides/[catalogId]`。不共用 SLOT 的天井、CZ／AT、Machine Profile 或 Setting Estimator。
 - 指南章節依柏青哥語意整理為基本規格、遊戲流程、大當分配、RUSH／ST／LT、基本打法、演出參考與交換率／回轉參考；原始日文與表格集中於預設收合的查證區。
 - 圖片只接受 P-WORLD 核准 host、可靠內容區段與既有限制，單台最多 18 張；掲示板、玩家投稿、店家圖片與外站圖片不進指南。圖片沿用 private Supabase Storage／來源 fallback，但以獨立 Pachinko catalog ownership 驗證。
 - 指南使用獨立 IndexedDB `slot-companion-pachinko-guides`，不與 SLOT Guide 或遊玩 Session 混用、不跨裝置同步；更新失敗會保留上一份有效快取。
 - 真實 P-WORLD `pachi-10504` source smoke：解析出 6 個可用內容區、18 張來源圖解，指南狀態 `usable`；未取得獨立打法區時保持 missing，不補猜內容。
-- 工程 QA：lint、typecheck 通過；完整 automated tests **364 / 364 passed**；Next.js 16.3.3 webpack production build 通過。
+- 工程 QA：lint、typecheck 通過；完整 automated tests **366 / 366 passed**；Next.js 16.3.3 webpack production build 通過。
+- 產品 commit `1c73f83` 已發佈，後續以 `16cdcb9` 修正數字千分位對應，再以 `795b1f6` 限制 AI 只能產生來源實際存在的段落；Vercel Production 部署為 **success / Deployment has completed**。
+- 正式 API 實測 `pachi-10504`：狀態 `usable`、`generator: openai`、來源與翻譯均為 6 個相同段落、18 張圖片全數 `stored`；未取得的 `play` 維持 missing，沒有補猜。
+- 固定正式網址 `/pachinko/pachi-10504` 與 `/pachinko/guides/pachi-10504` 均回應 HTTP 200。目前 Supabase 圖片檔本體可正常儲存，但 `_manifest.json` 上傳回 400，因此 cleanup report 會顯示警告；不影響這份指南圖片顯示，待後續單獨修正。
 
 ### Pachinko Pilot — 獨立 Catalog、機台說明與簡易紀錄（2026-09-21，Production 已發佈）
 - 新增與 Pachislot 完全分離的 `PachinkoCatalogRecord`、repo JSON、Supabase table migration、搜尋／分類與 P-WORLD 月曆 parser；本機 seed 目前包含 10 台 2026-09 可追溯 P-WORLD 機台。`pachinko_catalog_records` migration 已建立於版本庫，但**尚未套用遠端 Supabase**。
@@ -1339,6 +1342,12 @@ Regression QA：
 
 ## Verified QA
 
+### Pachinko On-demand Guide Production QA（2026-09-21，自動 QA）
+- lint、typecheck 通過；完整 automated tests **366 / 366 passed**；Next.js 16.3.3 webpack production build 通過。
+- 真實 P-WORLD `pachi-10504` 按需建立結果：OpenAI 繁中指南成功、段落 ownership 與來源一致、18 / 18 張圖片儲存成功。
+- Production commit `795b1f6` 的 Vercel status 為 success；機種詳情與指南 route 均為 HTTP 200。
+- 上述為正式站 API／HTTP 自動驗證，不冒充使用者實體手機人工驗收。
+
 ### Catalog Cloud Read Fallback QA（2026-09-21，自動 QA）
 - lint、typecheck 通過；完整 automated tests **356 / 356 passed**；Next.js 16.3.3 webpack production build通過。
 - 新增 regression：cloud 正常時不呼叫 fallback；cloud throw 時回 repo JSON；兩個來源皆失敗時仍明確拋錯；Catalog 寫入與 audit 保持 primary-only。
@@ -1498,9 +1507,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 72. 使用者已明確決定目前不升級 Vercel／Supabase；Supabase Free 低活動暫停是已接受的營運風險，後續應靠 fallback、部署前恢復檢查與清楚告警管理，不把新增柏青哥資料筆數誤認為付費容量壓力。
 73. 使用者已變更發布流程：完成本機工程檢查後直接 push `main` 並在固定 Production 網址驗證，不再建立或使用 Preview／測試網址。這不代表可略過 lint、typecheck、automated tests 或 production build，也不代表失敗時可隱瞞；只是把互動驗收環境改為正式站。
 74. Pachinko 圖文指南與 SLOT 一樣採按需建立，不預先批次生成整庫。AI 只能翻譯與整理 parser 已取得的結構化內容，所有新增數字必須被來源數字集合驗證；演出期待度不得改寫成即將中獎或獲利預測。
+75. AI 結構 schema 不能將全部可能段落都當成當前機種可用段落；必須以 parser 實際取得的 section keys 建立當次白名單，否則模型可能自行補出來源缺少的「基本打法」而被 grounded validator 拒絕。
 
 ## Current Work
-**Pachinko 按需繁中圖文指南已完成本機工程 QA，正在依 direct-to-production 流程發佈。**
+**Pachinko 按需繁中圖文指南已完成並發佈 Production，等待使用者手機操作驗收。**
 
 核准穩定基準：**v0.2.4.1**
 
@@ -1512,17 +1522,17 @@ Catalog Cloud Read Fallback：**Completed；Production release `b38c28d` 已部�
 
 Pachinko Pilot：**Completed；Production release `2927233` 已部署並通過固定網址 smoke**
 
-Pachinko On-demand Guide：**本機完成；等待 Production push 與固定網址驗證**
+Pachinko On-demand Guide：**Completed；Production commit `795b1f6` 已部署，固定網址與真實按需建立已通過自動 QA**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 202 台均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
-### Pachinko On-demand Guide 正式站驗證
+### Pachinko On-demand Guide 手機驗收與雲端收尾
 
-Status：**本機功能、真實來源 parser smoke、364 tests 與 production build 通過。**
+Status：**Production 功能、真實來源／OpenAI 生成、366 tests 與 production build 均通過。**
 
-1. 直接 push Production，確認代表機台詳細頁可建立指南、繁中區段與來源圖解可載入、重新整理保留有效快取。
-2. 由使用者在固定正式網址進行手機操作驗證；目前不宣稱實體手機人工驗收。
+1. 由使用者在固定正式網址進行手機操作／排版驗收，包含首次建立、快取載入與重新整理。
+2. 修正 Supabase Storage `_manifest.json` 上傳 400，再驗證舊圖清理 report；圖片本體目前不受影響。
 3. 視實際需要將 `202609210001_pachinko_catalog.sql` 套用至既有 Supabase project；未套用期間繼續由 repo JSON seed fallback 承接。
 
 ## Machine Catalog Schema Direction
@@ -1615,6 +1625,6 @@ v0.2.2 目前實際保存：
 > 上傳最新版 `Slot_Companion_Project_Status.md`，並以此檔作為專案進度主要依據。
 
 ## Immediate Next Action
-**完成 Pachinko On-demand Guide Production 發佈，然後等待使用者直接在正式站建立第一份指南並回報。**
+**等待使用者在正式站進行 Pachinko Guide 手機操作／排版驗收；後續再處理 Supabase manifest 400 與遠端 Pachinko Catalog migration。**
 
 目前不要擴張 Estimator 數學、不要用缺失資料補值，也不要將 TEST DATA benchmark 描述為真實機種資料。
