@@ -35,8 +35,10 @@ test("weekly Pachinko update syncs repo-only records and skips existing cloud id
   assert.deepEqual(newPachinkoCatalogRecords([pachinkoRecord],[pachinkoRecord],[pachinkoRecord]),[]);
 });
 
-test("Vercel schedules daily health and weekly update routes",()=>{
+test("Vercel schedules daily health while GitHub performs the verified weekly update",()=>{
   const config=JSON.parse(fs.readFileSync(new URL("../vercel.json",import.meta.url),"utf8"))as{crons:Array<{path:string;schedule:string}>};
-  assert.deepEqual(config.crons,[{path:"/api/cron/catalog-health",schedule:"15 0 * * *"},{path:"/api/cron/catalog-update",schedule:"30 0 * * 1"}]);
-  for(const route of ["catalog-health","catalog-update"]){const source=fs.readFileSync(new URL(`../src/app/api/cron/${route}/route.ts`,import.meta.url),"utf8");assert.match(source,/isAuthorizedCronRequest/);assert.match(source,/status:401/)}
+  assert.deepEqual(config.crons,[{path:"/api/cron/catalog-health",schedule:"15 0 * * *"}]);
+  const route=fs.readFileSync(new URL("../src/app/api/cron/catalog-health/route.ts",import.meta.url),"utf8"),workflow=fs.readFileSync(new URL("../.github/workflows/catalog-update.yml",import.meta.url),"utf8");
+  assert.match(route,/isAuthorizedCronRequest/);assert.match(route,/status:401/);
+  assert.match(workflow,/cron: "30 0 \* \* 1"/);assert.match(workflow,/scripts\/update-current-catalogs\.ts/);assert.match(workflow,/pnpm test/);assert.match(workflow,/git push origin HEAD:main/);
 });

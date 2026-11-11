@@ -4,10 +4,6 @@
     {
       "path": "/api/cron/catalog-health",
       "schedule": "15 0 * * *"
-    },
-    {
-      "path": "/api/cron/catalog-update",
-      "schedule": "30 0 * * 1"
     }
   ]
 }
