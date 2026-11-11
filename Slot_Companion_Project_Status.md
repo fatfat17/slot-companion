@@ -34,12 +34,12 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 ## Completed
 
 ### Scheduled Catalog Health + Weekly Incremental Update（2026-11-12，本機完成）
-- 新增受 `CRON_SECRET` Bearer 保護的 `/api/cron/catalog-health`：每天 00:15 UTC（日本 09:15／台灣 08:15）直接查詢 Supabase 的 SLOT／Pachinko table 與精確筆數，不走 JSON fallback、不寫假資料或玩家資料。
-- 新增 `/api/cron/catalog-update`：每週一 00:30 UTC（日本 09:30／台灣 08:30）讀取 P-WORLD 當月 SLOT／Pachinko 月曆，完成來源、月份、封面、唯一 ID／URL 與數量上限驗證後，只 upsert 雲端尚不存在的新 identity。
-- 週更不刪除舊機種、不覆蓋雲端已有 record，也不批次建立 AI 指南；版本庫已有但雲端缺少的當月 record 會以既有 reviewed metadata 同步，真正新 record 才使用 parser 結果。
-- P-WORLD 或 Supabase 任何讀取／驗證失敗時回 503 並停止該次更新；兩個 route 未帶正確 secret 一律回 401。Vercel logs 保留結果，玩家 UI 不新增公開管理入口。
-- `vercel.json` 已登錄每日健康檢查與每週更新。這能產生合理的實際資料庫查詢並降低 Free 專案因低活動暫停的風險，但不宣稱取代 Supabase 付費方案的 availability 保證。
-- 本機 QA：lint、typecheck 通過；完整 automated tests **394 / 394 passed**；Next.js 16.3.3 webpack production build 通過。Production secret、排程註冊與實際 cron smoke 尚待本次發佈完成。
+- 新增受 `CRON_SECRET` Bearer 保護的 `/api/cron/catalog-health`：每天 00:15 UTC（日本 09:15／台灣 08:15）直接查詢既有 Supabase `machine_catalog_records` 與精確筆數，不走 JSON fallback、不寫假資料或玩家資料。
+- 新增 GitHub Actions `Weekly Catalog Update`：每週一 00:30 UTC（日本 09:30／台灣 08:30）讀取 P-WORLD 當月 SLOT／Pachinko 月曆，完成來源、月份、封面、唯一 ID／URL 與數量上限驗證後，只把新 identity 加入兩份 repo JSON。
+- 週更不刪除或重寫舊機種、不改人工 reviewed metadata，也不批次建立 AI 指南；有實際 JSON diff 時才依序通過 lint、typecheck、完整 tests，最後由 GitHub bot commit `main` 觸發正式部署，無異動時不建立空 commit。
+- P-WORLD 讀取或驗證失敗時 workflow 直接失敗、不 commit；健康 route 未帶正確 secret 回 401，Supabase 查詢失敗回 503。玩家 UI 不新增公開管理入口。
+- `vercel.json` 只登錄每日健康檢查；每週更新放在版本庫 workflow，確保 JSON fallback 與正式 Catalog 同步，而不是嘗試寫入 Vercel ephemeral filesystem。
+- 本機 QA：lint、typecheck 通過；完整 automated tests **394 / 394 passed**；Next.js 16.3.3 webpack production build 通過。Production 排程重新部署、健康 smoke 與 GitHub workflow smoke 尚待完成。
 
 ### SLOT／Pachinko 2026-10～11 機種資料更新（2026-11-11，Production 已發佈）
 - SLOT Catalog 由 208 台更新至 **222 台**：2026-10 新增 7 台、2026-11 新增 7 台；柏青哥 Catalog 由 252 台更新至 **275 台**：2026-10 新增 9 台、2026-11 新增 14 台。
@@ -1432,9 +1432,9 @@ Regression QA：
 ## Verified QA
 
 ### Scheduled Catalog Automation QA（2026-11-12，自動 QA）
-- regression 覆蓋 Bearer secret、Asia/Tokyo 月份邊界、來源欄位／月份／重複驗證、repo-only 同步、cloud identity 不覆蓋，以及兩個 Vercel cron schedule。
+- regression 覆蓋 Bearer secret、Asia/Tokyo 月份邊界、來源欄位／月份／重複驗證、既有 identity 不重寫、Vercel 每日 health schedule 與 GitHub 每週 update workflow。
 - 每週更新安全上限為 SLOT 50／Pachinko 80 筆當月來源；來源為空、月份不符、缺封面、非 P-WORLD 詳情 URL 或重複資料皆在寫入前拒絕。
-- lint、typecheck、完整 automated tests **394 / 394 passed**；Next.js 16.3.3 webpack production build 通過，build route manifest 包含兩個 dynamic cron endpoints。本項目前是本機 QA，不冒充 Vercel 排程或 Production 實際執行驗證。
+- lint、typecheck、完整 automated tests **394 / 394 passed**；Next.js 16.3.3 webpack production build 通過。本項目前是修正架構前的本機 QA；Production health smoke 已發現遠端 Pachinko table 404 並安全回 503，尚待單表 health 版本與 workflow 重新驗證。
 
 ### 2026-10～11 Catalog Update QA（2026-11-11，自動 QA）
 - SLOT artifact：222 筆、唯一 ID 222、唯一來源 URL 222；2026-10／11 分別 7／7 台，來源與封面缺漏均為 0。
@@ -1673,10 +1673,11 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 89. 正常可讀但未同步的 Supabase 也可能遮住新版 repo JSON；玩家讀取改採 union baseline，repo-only record 保留、相同 ID 以 cloud record 覆蓋。管理寫入仍必須 primary-only，不能把 deployment filesystem 當雲端持久層。
 90. Release commit 已進入 `main` 不等於 Vercel Production 已更新；本次 `f745313` 的 deployment 立即失敗，而固定網址仍回 200 舊版。必須取得 Vercel build log、修復後重新部署並核對 222／275，才能標成正式發佈。
 91. Vercel CLI live inspection 已確認專案資源 `supabase-indigo-nest` 為 `Supabase Free Plan · Suspended`，且連接 production／preview；Git 與 CLI direct deploy 都在 0ms provisioning 階段失敗。恢復 Supabase 或明確解除該資源連接前，重試 deployment 不會解決問題。
-92. 每日真正的 Catalog 健康查詢與每週增量更新可降低 Free 專案因低活動暫停的風險，但 Supabase 官方只說通常足夠、沒有提供 Free availability 保證；UI 與狀態文件不得把排程描述為「永不暫停」。
+92. 每日真正的 Catalog 健康查詢可降低 Free 專案因低活動暫停的風險，但 Supabase 官方只說通常足夠、沒有提供 Free availability 保證；UI 與狀態文件不得把排程描述為「永不暫停」。
+93. Production cron smoke 確認 `pachinko_catalog_records` 回 404，與早期「migration 尚未套用遠端」紀錄一致；Pachinko 目前由 repo JSON fallback 正常服務。自動更新改由 GitHub workflow 維護兩份 JSON，不應在 cron route 中偷偷建立 schema 或假裝雙表雲端已就緒。
 
 ## Current Work
-**每日 Catalog 健康檢查與每週安全增量更新已完成本機 QA；正在設定 Production secret 與正式發佈。**
+**每日 Supabase 健康檢查與 GitHub 每週 Catalog 安全增量更新正在完成修正版 QA 與正式發佈。**
 
 目前工作版本：**v0.2.5.6**
 
@@ -1710,7 +1711,7 @@ APP 圖文使用指南：**Completed；Production release `726551b` 已部署，
 
 2026-10～11 Catalog Update：**Completed；SLOT 222 台、Pachinko 275 台，release `f745313` 與 Production deployment `dpl_8H4fWTb94HZCVsxVFg51ezkaPGTo` 已通過固定網址驗證**
 
-Scheduled Catalog Automation：**本機 Completed；每日健康檢查、每週一增量更新、secret gate 與 fail-closed 驗證完成，Production 設定／smoke 進行中**
+Scheduled Catalog Automation：**修正版進行中；Vercel 每日健康檢查保留，雙 Catalog 週更改由 GitHub workflow 維護 repo JSON，等待重新 QA／Production smoke**
 
 Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 222 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
@@ -1719,9 +1720,9 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 
 Status：**本機 QA 完成；等待 Production secret、部署與 cron smoke。**
 
-1. 在 Vercel Production 建立不進 Git／browser 的 `CRON_SECRET`，部署兩個受保護 route 與 schedules。
-2. 驗證未授權 request 回 401；以 Production secret 執行健康檢查與一次安全週更 smoke，確認 Supabase 回應與新增數量。
-3. 確認 Vercel 已登錄每日／每週 cron，固定首頁與兩個 Catalog 維持 HTTP 200，再完成 v0.2.5.6 狀態紀錄。
+1. 重新執行 lint、typecheck、完整 tests 與 production build，確認單一 health route、current-month updater script 與 GitHub workflow。
+2. 發佈後確認未授權 health request 回 401、Vercel cron runner 回 200，並手動觸發一次 GitHub workflow 驗證無異動安全結束。
+3. 確認固定首頁與兩個 Catalog 維持 HTTP 200，再完成 v0.2.5.6 狀態紀錄。
 
 ### SLOT AI 實戰驗證與柏青哥 AI 範圍
 
