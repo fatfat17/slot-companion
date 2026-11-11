@@ -39,7 +39,7 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 - 柏青哥既有 10 台 reviewed metadata 完整保留，沒有重建或刪除舊資料；SLOT 與柏青哥仍維持獨立 Catalog。
 - 柏青哥批次腳本改為接受 `YYYY-MM` 結束月份；未指定時使用執行當月，避免更新範圍持續停在硬編碼的 2026-09。
 - Catalog 讀取改為版本庫 JSON baseline 與 Supabase primary 合併：版本新增機種不會被仍在線但較舊的雲端資料遮住；相同 ID 仍由雲端人工修訂覆蓋，Catalog 管理寫入仍只走 Supabase。
-- 本機 QA：lint、typecheck 通過；完整 automated tests **388 / 388 passed**；Next.js 16.3.3 webpack production build 通過。產品 commit `e61dc41` 已 push `dev`，release commit `f745313` 已 push `main`；Vercel deployment `dpl_2eXQPy6r57YH3u5bxjzY7pFyGDbD` 失敗，固定 Production 仍由舊版正常服務，因此本次資料尚未完成正式上線。
+- 本機 QA：lint、typecheck 通過；完整 automated tests **388 / 388 passed**；Next.js 16.3.3 webpack production build 通過。產品 commit `e61dc41` 已 push `dev`，release commit `f745313` 已 push `main`；Git deployment `dpl_2eXQPy6r57YH3u5bxjzY7pFyGDbD` 與 CLI production deployment `dpl_2EKoJmh4x2UmDzSnEGUtAsyXQXNc` 均在 build 前因 `Resource provisioning failed` 中止。固定 Production 仍由舊版正常服務，因此本次資料尚未完成正式上線。
 
 ### 打台夥伴 Brand + iPhone Home Screen Icon（2026-09-21，Production 已發佈）
 - 使用者核准 App 品牌由 `Slot Companion` 更新為「打台夥伴｜日本 SLOT・柏青哥」，iPhone／PWA 短名稱為「打台夥伴」，首頁英文品牌改為 `PACHI COMPANION`，不再只指向 SLOT。
@@ -1658,9 +1658,10 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 88. P-WORLD 月曆可能公開同月稍後才導入的預定機種；Catalog 應保留來源公布的導入日，但不可把尚未到日期的資料描述為已在店內設置。本次 `2026-11-16` SLOT 紀錄屬公開預定資料。
 89. 正常可讀但未同步的 Supabase 也可能遮住新版 repo JSON；玩家讀取改採 union baseline，repo-only record 保留、相同 ID 以 cloud record 覆蓋。管理寫入仍必須 primary-only，不能把 deployment filesystem 當雲端持久層。
 90. Release commit 已進入 `main` 不等於 Vercel Production 已更新；本次 `f745313` 的 deployment 立即失敗，而固定網址仍回 200 舊版。必須取得 Vercel build log、修復後重新部署並核對 222／275，才能標成正式發佈。
+91. Vercel CLI live inspection 已確認專案資源 `supabase-indigo-nest` 為 `Supabase Free Plan · Suspended`，且連接 production／preview；Git 與 CLI direct deploy 都在 0ms provisioning 階段失敗。恢復 Supabase 或明確解除該資源連接前，重試 deployment 不會解決問題。
 
 ## Current Work
-**SLOT／Pachinko 2026-10～11 機種資料與雲端讀取合併保護已完成本機 QA並進入 `main`；Vercel 正式部署失敗，等待取得 deployment log 後修復。**
+**SLOT／Pachinko 2026-10～11 機種資料與雲端讀取合併保護已完成本機 QA並進入 `main`；Vercel 正式部署被已暫停的 Supabase Marketplace 資源阻擋。**
 
 目前工作版本：**v0.2.5.5**
 
@@ -1699,10 +1700,10 @@ Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-loc
 ## Next Step
 ### 修復 v0.2.5.5 Vercel Production deployment
 
-Status：**Blocked by missing Vercel CLI credentials／deployment log；固定 Production 舊版仍正常服務。**
+Status：**Blocked by suspended `supabase-indigo-nest` Marketplace resource；固定 Production 舊版仍正常服務。**
 
-1. 完成 Vercel CLI device login，讀取 `dpl_2eXQPy6r57YH3u5bxjzY7pFyGDbD` build log，確認是 Marketplace integration provisioning、環境設定或雲端 build 問題。
-2. 修復後重新部署 `f745313` 或後續修正 commit，等待 GitHub Vercel status success。
+1. 在 Supabase 恢復 Free 專案，或由使用者明確決定把 suspended resource 從 Vercel 專案解除連接；後者會改變正式環境資料庫設定，不可自行執行。
+2. 資源恢復或解除阻擋後，重新部署 `f745313` 或後續修正 commit，等待 Vercel status success。
 3. 固定 Production 驗證 SLOT 222 台、Pachinko 275 台及兩個 2026-11 代表機種詳情 route，再把本版標為 Production 完成。
 
 ### SLOT AI 實戰驗證與柏青哥 AI 範圍
