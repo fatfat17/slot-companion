@@ -4,8 +4,9 @@ import {parsePWorldPachinkoCalendar} from "../src/lib/pachinko/pworld.ts";
 import type {PachinkoCatalogRecord} from "../src/types/pachinko.ts";
 
 const START_MONTH="2025-01";
-const END_MONTH="2026-09";
+const END_MONTH=process.argv[2]??new Date().toISOString().slice(0,7);
 const OUTPUT_PATH=path.join(process.cwd(),"data","pachinko-catalog.json");
+if(!/^\d{4}-(?:0[1-9]|1[0-2])$/.test(END_MONTH))throw new Error("結束月份必須是 YYYY-MM。");
 
 function monthsBetween(start:string,end:string){
   const [startYear,startMonth]=start.split("-").map(Number),[endYear,endMonth]=end.split("-").map(Number),months:string[]=[];
@@ -18,7 +19,7 @@ function monthsBetween(start:string,end:string){
 
 async function fetchMonth(month:string,retrievedAt:string){
   const sourceUrl=`https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?year_month=${month}`;
-  const response=await fetch(sourceUrl,{headers:{"User-Agent":"Slot Companion Pachinko catalog builder"},signal:AbortSignal.timeout(15000)});
+  const response=await fetch(sourceUrl,{headers:{"User-Agent":"Pachi Companion Pachinko catalog builder"},signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw new Error(`${month} 的 P-WORLD 新台頁讀取失敗（${response.status}）`);
   return parsePWorldPachinkoCalendar(await response.text(),sourceUrl,retrievedAt);
 }

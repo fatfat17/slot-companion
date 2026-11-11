@@ -5430,5 +5430,369 @@
         "retrievedAt": "2026-09-21T08:01:35.218Z"
       }
     ]
+  },
+  {
+    "id": "machine-79d1py",
+    "sourceId": "/machine/database/10563",
+    "officialNameJa": "L魔法少女にあこがれて",
+    "displayNameZh": "",
+    "manufacturer": "ニューギン",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-10-19",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10563",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10563/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10563",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10563/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-rciqg4",
+    "sourceId": "/machine/database/10579",
+    "officialNameJa": "L海人",
+    "displayNameZh": "",
+    "manufacturer": "岡崎産業",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-10-19",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10579",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10579/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10579",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10579/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1v8s19k",
+    "sourceId": "/machine/database/10513",
+    "officialNameJa": "マイジャグラーVI",
+    "displayNameZh": "",
+    "manufacturer": "北電子",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "パチスロ",
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10513",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10513/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10513",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10513/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-cqk78",
+    "sourceId": "/machine/database/10518",
+    "officialNameJa": "スマスロパリピ孔明",
+    "displayNameZh": "",
+    "manufacturer": "山佐",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10518",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10518/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10518",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10518/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1j9hxnf",
+    "sourceId": "/machine/database/10521",
+    "officialNameJa": "スマスロ 獣王",
+    "displayNameZh": "",
+    "manufacturer": "サミー",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10521",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10521/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10521",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10521/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-k0trzz",
+    "sourceId": "/machine/database/10550",
+    "officialNameJa": "L転生王女と天才令嬢の魔法革命",
+    "displayNameZh": "",
+    "manufacturer": "オリンピアエステート",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10550",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10550/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10550",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10550/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1brdpw3",
+    "sourceId": "/machine/database/10570",
+    "officialNameJa": "スマスロ モンスターハンターライズ:サンブレイク",
+    "displayNameZh": "",
+    "manufacturer": "アデリオン",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10570",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10570/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:16.576Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10570",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10570/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:16.576Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-qj4c93",
+    "sourceId": "/machine/database/10553",
+    "officialNameJa": "スマート沖スロ ハイハイシオサイRe",
+    "displayNameZh": "",
+    "manufacturer": "パイオニア",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-11-16",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10553",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10553/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10553",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10553/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1yqclp2",
+    "sourceId": "/machine/database/10535",
+    "officialNameJa": "L ソードアート・オンライン オルタナティブ ガンゲイル・オンライン",
+    "displayNameZh": "",
+    "manufacturer": "京楽",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10535",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10535/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10535",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10535/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-1xgtwgv",
+    "sourceId": "/machine/database/10536",
+    "officialNameJa": "L聖闘士星矢 黄金十二宮",
+    "displayNameZh": "",
+    "manufacturer": "サンスリー",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10536",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10536/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10536",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10536/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-xt2wmm",
+    "sourceId": "/machine/database/10546",
+    "officialNameJa": "スマスロ ラグナドール",
+    "displayNameZh": "",
+    "manufacturer": "ミズホ",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10546",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10546/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10546",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10546/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-171sbve",
+    "sourceId": "/machine/database/10581",
+    "officialNameJa": "スロット Vivy ‐Fluorite Eye's Song‐",
+    "displayNameZh": "",
+    "manufacturer": "大都技研",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "パチスロ",
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10581",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10581/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10581",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10581/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-g6v9mb",
+    "sourceId": "/machine/database/10582",
+    "officialNameJa": "L牙狼 闇を照らす者",
+    "displayNameZh": "",
+    "manufacturer": "サンセイR&D",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10582",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10582/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10582",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10582/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
+  },
+  {
+    "id": "machine-ze14v9",
+    "sourceId": "/machine/database/10590",
+    "officialNameJa": "Lパチスロ ゴジラ対エヴァンゲリオン 2",
+    "displayNameZh": "",
+    "manufacturer": "ビスティ",
+    "brand": "",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "スマスロ",
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10590",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10590/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:27.598Z",
+    "verified": false,
+    "catalogStatus": "imported",
+    "sources": [
+      {
+        "sourceName": "P-WORLD",
+        "sourceUrl": "https://www.p-world.co.jp/machine/database/10590",
+        "sourceImageUrl": "https://idn.p-world.co.jp/machines/10590/image/thumb_1.jpg",
+        "retrievedAt": "2026-11-11T15:20:27.598Z"
+      }
+    ]
   }
 ]

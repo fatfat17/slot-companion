@@ -1,13 +1,13 @@
 # Slot Companion Project Status
 
-Last Updated: 2026-09-21
+Last Updated: 2026-11-11
 
 ## Current Version
 **Slot Companion Production Launch — current approved working release**
 
 Status：**已由使用者明確核准正式上線；GitHub `main` 與 Vercel Production 已發佈**
 
-目前核准穩定基準：**v0.2.5.4**
+目前工作版本：**v0.2.5.5**
 
 正式 Production 基準：**release commit `16cb5a8`（打台夥伴 Brand + iPhone Icon）**
 
@@ -32,6 +32,14 @@ Catalog-only 辨識後目前可部署的 Production 流程：
 5. localhost development 仍保留既有 Profile Builder，供 extraction／Evidence 流程測試
 
 ## Completed
+
+### SLOT／Pachinko 2026-10～11 機種資料更新（2026-11-11，本機完成）
+- SLOT Catalog 由 208 台更新至 **222 台**：2026-10 新增 7 台、2026-11 新增 7 台；柏青哥 Catalog 由 252 台更新至 **275 台**：2026-10 新增 9 台、2026-11 新增 14 台。
+- 所有新增資料均由 P-WORLD 公開新台月曆與機種詳細頁取得，保留正式日文名、廠商、導入日、來源 URL 與封面；兩庫皆無重複 ID、無重複來源 URL、無缺少來源或封面。
+- 柏青哥既有 10 台 reviewed metadata 完整保留，沒有重建或刪除舊資料；SLOT 與柏青哥仍維持獨立 Catalog。
+- 柏青哥批次腳本改為接受 `YYYY-MM` 結束月份；未指定時使用執行當月，避免更新範圍持續停在硬編碼的 2026-09。
+- Catalog 讀取改為版本庫 JSON baseline 與 Supabase primary 合併：版本新增機種不會被仍在線但較舊的雲端資料遮住；相同 ID 仍由雲端人工修訂覆蓋，Catalog 管理寫入仍只走 Supabase。
+- 本機 QA：lint、typecheck 通過；完整 automated tests **388 / 388 passed**；Next.js 16.3.3 webpack production build 通過。正式發佈與固定 Production 筆數驗證尚待本次 push 完成。
 
 ### 打台夥伴 Brand + iPhone Home Screen Icon（2026-09-21，Production 已發佈）
 - 使用者核准 App 品牌由 `Slot Companion` 更新為「打台夥伴｜日本 SLOT・柏青哥」，iPhone／PWA 短名稱為「打台夥伴」，首頁英文品牌改為 `PACHI COMPANION`，不再只指向 SLOT。
@@ -1415,6 +1423,12 @@ Regression QA：
 
 ## Verified QA
 
+### 2026-10～11 Catalog Update QA（2026-11-11，自動 QA）
+- SLOT artifact：222 筆、唯一 ID 222、唯一來源 URL 222；2026-10／11 分別 7／7 台，來源與封面缺漏均為 0。
+- Pachinko artifact：275 筆、唯一 ID 275、唯一來源 URL 275；2026-10／11 分別 9／14 台，來源與封面缺漏均為 0，原有 reviewed 10 台保持不變。
+- regression 覆蓋月份數量、代表機種、完整 Catalog 視覺指南 pipeline，以及 JSON baseline 與 Supabase primary 合併時「repo-only 保留、同 ID cloud override、cloud failure fallback」。
+- lint、typecheck、完整 automated tests **388 / 388 passed**；Next.js 16.3.3 webpack production build通過。本項目前是本機資料與工程驗證，不冒充正式站或實體機台人工驗收。
+
 ### 打台夥伴 Brand + iPhone Icon QA（2026-09-21，自動 QA）
 - 本機實際渲染 `/icon` 為 512 × 512 RGBA PNG、`/apple-icon` 為 180 × 180 RGBA PNG；人工視覺檢查確認兩種尺寸的金色 C、紅球與三格符號均清楚，安全區未貼邊。
 - localhost 390 × 844 首頁 title 為「打台夥伴｜日本 SLOT・柏青哥」、品牌為 `PACHI COMPANION`／「伴」，head 有自動產生的 `apple-touch-icon` 與 Manifest link，width／scroll width 為 390／390。
@@ -1641,11 +1655,13 @@ CZ 偏高設定 + Trial 1/10 偏低設定 → 分布拉回中間，多證據正�
 85. 新手術語應先按遊戲類型分流；`/glossary` 維持 SLOT 預設可保留舊連結相容，而柏青哥術語必須使用回轉、玉、大當／RUSH 與盤面操作語意，不套用 SLOT 的天井、CZ／AT 或設定示唆。
 86. APP 使用指南應由使用者主動開啟，不以 browser-local「第一次進入」狀態強制彈出；視覺教學以可維護的介面示意呈現操作位置，避免保存玩家實戰畫面，也避免 UI 小幅調整後大量固定截圖失效。
 87. 品牌名稱必須涵蓋 SLOT 與柏青哥，因此玩家顯示名稱使用「打台夥伴／PACHI COMPANION」；repository 與既有 browser storage key 暫不更名，避免品牌更新造成 Session、Guide、收藏或離線包資料遺失。
+88. P-WORLD 月曆可能公開同月稍後才導入的預定機種；Catalog 應保留來源公布的導入日，但不可把尚未到日期的資料描述為已在店內設置。本次 `2026-11-16` SLOT 紀錄屬公開預定資料。
+89. 正常可讀但未同步的 Supabase 也可能遮住新版 repo JSON；玩家讀取改採 union baseline，repo-only record 保留、相同 ID 以 cloud record 覆蓋。管理寫入仍必須 primary-only，不能把 deployment filesystem 當雲端持久層。
 
 ## Current Work
-**「打台夥伴」品牌、跨平台圖示與 iPhone 加入主畫面教學已完成並發佈 Production；等待使用者在 iPhone 重新加入主畫面驗收。**
+**SLOT／Pachinko 2026-10～11 機種資料與雲端讀取合併保護已完成本機 QA；正在進行正式發佈。**
 
-核准穩定基準：**v0.2.5.4**
+目前工作版本：**v0.2.5.5**
 
 Repository workflow：日常修改仍先在 `dev` 建立可追溯 commit；完成本機工程檢查後直接合併並 push `main`，以固定 Production 網址進行使用者驗證，不再維護 Preview 測試網址。
 
@@ -1675,7 +1691,9 @@ APP 圖文使用指南：**Completed；Production release `726551b` 已部署，
 
 打台夥伴 Brand + iPhone Icon：**Completed；Production release `16cb5a8` 已部署，名稱、首頁品牌、Manifest、512px 圖示、180px Apple 圖示與安裝教學均已通過正式手機版 QA**
 
-Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 208 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
+2026-10～11 Catalog Update：**本機 Completed；SLOT 222 台、Pachinko 275 台，正式 push 與 Production 驗證進行中**
+
+Catalog 仍只負責 Machine Identity；Machine Guide JSON 是獨立 browser-local IndexedDB cache，不把攻略欄位寫入 Catalog JSON。全 222 台 SLOT 均可按需建立圖文 Guide；圖片資產使用 private Supabase Storage 或來源 fallback。Guide JSON 仍未跨裝置同步。
 
 ## Next Step
 ### SLOT AI 實戰驗證與柏青哥 AI 範圍
