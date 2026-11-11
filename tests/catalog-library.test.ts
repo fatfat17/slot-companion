@@ -11,6 +11,7 @@ const query=(patch:Partial<typeof defaultCatalogLibraryFilters>)=>queryCatalogLi
 
 test("Catalog 總數由 runtime records 計算",()=>assert.equal(catalogSummary(records,profiles).total,records.length));
 test("Catalog 已收錄 2026 年 9 月 SLOT 新台",()=>{const september=records.filter(item=>item.introducedAt?.startsWith("2026-09"));assert.equal(september.length,6);assert.ok(september.every(item=>item.sourceUrl.startsWith("https://www.p-world.co.jp/machine/database/")&&item.sourceImageUrl))});
+test("Catalog 已收錄 2026 年 10 月與 11 月 SLOT 新台",()=>{const october=records.filter(item=>item.introducedAt?.startsWith("2026-10")),november=records.filter(item=>item.introducedAt?.startsWith("2026-11"));assert.equal(october.length,7);assert.equal(november.length,7);assert.ok([...october,...november].every(item=>item.sourceUrl.startsWith("https://www.p-world.co.jp/machine/database/")&&item.sourceImageUrl));assert.ok(november.some(item=>item.officialNameJa==="L ソードアート・オンライン オルタナティブ ガンゲイル・オンライン"))});
 test("Profile ready / Catalog only 分類正確",()=>{const summary=catalogSummary(records,profiles);assert.equal(summary.profileReady,3);assert.equal(summary.catalogOnly,records.length-3)});
 test("officialNameJa 名稱搜尋",()=>assert.ok(query({query:"ビッグドリーム"}).items.some(item=>item.id==="machine-1ryjocr")));
 test("alias 搜尋",()=>assert.equal(query({query:"Tokyo Ghoul"}).items[0]?.id,"tokyo-ghoul"));

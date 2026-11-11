@@ -1,5 +1,373 @@
 [
   {
+    "id": "pachi-10537",
+    "officialNameJa": "eグランベルム 319ver.",
+    "displayNameZh": "",
+    "manufacturer": "サンスリー",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10537",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10537/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10538",
+    "officialNameJa": "e ノーゲーム・ノーライフ 119Ver.",
+    "displayNameZh": "",
+    "manufacturer": "高尾",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10538",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10538/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10549",
+    "officialNameJa": "eF妖怪ウォッチ",
+    "displayNameZh": "",
+    "manufacturer": "SANKYO",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10549",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10549/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10551",
+    "officialNameJa": "e 獣王 獅子の一撃",
+    "displayNameZh": "",
+    "manufacturer": "サミー",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10551",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10551/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10552",
+    "officialNameJa": "P羽根BASTARD!! ‐暗黒の破壊神‐",
+    "displayNameZh": "",
+    "manufacturer": "SANKYO",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "hanemono",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10552",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10552/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10565",
+    "officialNameJa": "eグランベルム 249ver.",
+    "displayNameZh": "",
+    "manufacturer": "サンスリー",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10565",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10565/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10566",
+    "officialNameJa": "eとある魔術の禁書目録3",
+    "displayNameZh": "",
+    "manufacturer": "オレンジ",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10566",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10566/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10567",
+    "officialNameJa": "eプリンセス・プリンシパル",
+    "displayNameZh": "",
+    "manufacturer": "平和",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10567",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10567/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10573",
+    "officialNameJa": "P天羽一閃 ‐王道の「紅」‐",
+    "displayNameZh": "",
+    "manufacturer": "D-light",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "digital",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10573",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10573/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10574",
+    "officialNameJa": "P天羽一閃 ‐一撃の「蒼」‐",
+    "displayNameZh": "",
+    "manufacturer": "D-light",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "digital",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10574",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10574/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10575",
+    "officialNameJa": "桃太郎電鉄 ~ぱちんこも定番!~",
+    "displayNameZh": "",
+    "manufacturer": "コナミアミューズメント",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "other",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10575",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10575/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10576",
+    "officialNameJa": "桃太郎電鉄 ~ぱちんこも定番!~ LTver.",
+    "displayNameZh": "",
+    "manufacturer": "コナミアミューズメント",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "other",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10576",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10576/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10584",
+    "officialNameJa": "e 仮面ライダーBLACK デカヘソ Light Version",
+    "displayNameZh": "",
+    "manufacturer": "京楽",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10584",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10584/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10588",
+    "officialNameJa": "eワンパンマン2~正義執行 99ver.",
+    "displayNameZh": "",
+    "manufacturer": "ニューギン",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-11-02",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10588",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10588/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10583",
+    "officialNameJa": "P 新世紀エヴァンゲリオン ‐319 RED‐",
+    "displayNameZh": "",
+    "manufacturer": "ビスティ",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "digital",
+    "tags": [],
+    "introducedAt": "2026-10-19",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10583",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10583/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10528",
+    "officialNameJa": "Pドラムde 電音部 超ドラ熱4500ver.",
+    "displayNameZh": "",
+    "manufacturer": "ミズホ",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "digital",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10528",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10528/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10532",
+    "officialNameJa": "eACわんわんパラダイスCELEBRATION",
+    "displayNameZh": "",
+    "manufacturer": "三洋物産",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10532",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10532/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10540",
+    "officialNameJa": "P中森明菜・歌姫伝説~FORFANS~",
+    "displayNameZh": "",
+    "manufacturer": "D-light",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "digital",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10540",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10540/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10541",
+    "officialNameJa": "e中森明菜・歌姫伝説~FORFANS~",
+    "displayNameZh": "",
+    "manufacturer": "D-light",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10541",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10541/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10547",
+    "officialNameJa": "e範馬刃牙 129ver.",
+    "displayNameZh": "",
+    "manufacturer": "アムテックス",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10547",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10547/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10557",
+    "officialNameJa": "e Re:ゼロから始める異世界生活 鬼がかり2",
+    "displayNameZh": "",
+    "manufacturer": "大都技研",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "smart_pachinko",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10557",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10557/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10562",
+    "officialNameJa": "デカスタeGODZILLA7 超震撼ver.",
+    "displayNameZh": "",
+    "manufacturer": "ニューギン",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "other",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10562",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10562/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
+    "id": "pachi-10580",
+    "officialNameJa": "SMART‐PACHINKO GANTZ",
+    "displayNameZh": "",
+    "manufacturer": "オッケー.",
+    "seriesName": "",
+    "aliases": [],
+    "machineType": "other",
+    "tags": [],
+    "introducedAt": "2026-10-05",
+    "sourceName": "P-WORLD",
+    "sourceUrl": "https://www.p-world.co.jp/machine/database/10580",
+    "sourceImageUrl": "https://idn.p-world.co.jp/machines/10580/image/thumb_1.jpg",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
+    "catalogStatus": "imported"
+  },
+  {
     "id": "pachi-10504",
     "officialNameJa": "e 甲鉄城のカバネリ2 輪廻の果報119ver.",
     "displayNameZh": "甲鐵城的卡巴內里2 輪迴之果報 119ver.",
@@ -18,7 +386,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10504",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10504/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -38,7 +406,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10509",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10509/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -59,7 +427,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10511",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10511/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -79,7 +447,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10529",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10529/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -99,7 +467,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10539",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10539/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -120,7 +488,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10544",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10544/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -140,7 +508,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10545",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10545/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -160,7 +528,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10548",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10548/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -180,7 +548,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10554",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10554/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -201,7 +569,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10556",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10556/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "reviewed"
   },
   {
@@ -217,7 +585,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10522",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10522/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -233,7 +601,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10533",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10533/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -249,7 +617,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10492",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10492/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -265,7 +633,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10506",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10506/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -281,7 +649,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10519",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10519/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -297,7 +665,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10524",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10524/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -313,7 +681,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10525",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10525/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -329,7 +697,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10526",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10526/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -345,7 +713,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10534",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10534/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -361,7 +729,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10520",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10520/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -377,7 +745,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10472",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10472/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -393,7 +761,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10476",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10476/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -409,7 +777,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10480",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10480/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -425,7 +793,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10486",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10486/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -441,7 +809,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10487",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10487/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -457,7 +825,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10494",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10494/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -473,7 +841,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10495",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10495/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -489,7 +857,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10502",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10502/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -505,7 +873,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10505",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10505/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -521,7 +889,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10507",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10507/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -537,7 +905,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10512",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10512/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -553,7 +921,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10515",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10515/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -569,7 +937,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10497",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10497/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -585,7 +953,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10450",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10450/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -601,7 +969,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10457",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10457/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -617,7 +985,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10459",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10459/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -633,7 +1001,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10462",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10462/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -649,7 +1017,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10477",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10477/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -665,7 +1033,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10481",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10481/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -681,7 +1049,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10484",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10484/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -697,7 +1065,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10490",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10490/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -713,7 +1081,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10499",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10499/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -729,7 +1097,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10500",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10500/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -745,7 +1113,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10482",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10482/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -761,7 +1129,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10437",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10437/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -777,7 +1145,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10461",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10461/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -793,7 +1161,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10464",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10464/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -809,7 +1177,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10466",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10466/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -825,7 +1193,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10467",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10467/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -841,7 +1209,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10469",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10469/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -857,7 +1225,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10475",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10475/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -873,7 +1241,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10478",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10478/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -889,7 +1257,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10447",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10447/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -905,7 +1273,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10470",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10470/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -921,7 +1289,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10432",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10432/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -937,7 +1305,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10451",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10451/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -953,7 +1321,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10456",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10456/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -969,7 +1337,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10426",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10426/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -985,7 +1353,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10428",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10428/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1001,7 +1369,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10438",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10438/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1017,7 +1385,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10452",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10452/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1033,7 +1401,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10453",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10453/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1049,7 +1417,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10454",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10454/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1065,7 +1433,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10463",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10463/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1081,7 +1449,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10404",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10404/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1097,7 +1465,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10442",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10442/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1113,7 +1481,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10443",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10443/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1129,7 +1497,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10444",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10444/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1145,7 +1513,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10445",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10445/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1161,7 +1529,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10400",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10400/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1177,7 +1545,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10407",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10407/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1193,7 +1561,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10413",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10413/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1209,7 +1577,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10417",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10417/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1225,7 +1593,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10423",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10423/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1241,7 +1609,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10429",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10429/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1257,7 +1625,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10431",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10431/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1273,7 +1641,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10433",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10433/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1289,7 +1657,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10434",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10434/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1305,7 +1673,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10435",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10435/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1321,7 +1689,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10439",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10439/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1337,7 +1705,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10441",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10441/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1353,7 +1721,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10385",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10385/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1369,7 +1737,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10388",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10388/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1385,7 +1753,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10402",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10402/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1401,7 +1769,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10403",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10403/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1417,7 +1785,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10410",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10410/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1433,7 +1801,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10416",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10416/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1449,7 +1817,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10419",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10419/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1465,7 +1833,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10420",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10420/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1481,7 +1849,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10421",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10421/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1497,7 +1865,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10422",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10422/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1513,7 +1881,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10393",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10393/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1529,7 +1897,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10408",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10408/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1545,7 +1913,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10409",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10409/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1561,7 +1929,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10371",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10371/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1577,7 +1945,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10380",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10380/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1593,7 +1961,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10381",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10381/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1609,7 +1977,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10382",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10382/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1625,7 +1993,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10394",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10394/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1641,7 +2009,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10396",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10396/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1657,7 +2025,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10397",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10397/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1673,7 +2041,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10398",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10398/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1689,7 +2057,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10406",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10406/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1705,7 +2073,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10411",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10411/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1721,7 +2089,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10412",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10412/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1737,7 +2105,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10353",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10353/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1753,7 +2121,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10369",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10369/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1769,7 +2137,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10378",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10378/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1785,7 +2153,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10337",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10337/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1801,7 +2169,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10357",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10357/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1817,7 +2185,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10359",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10359/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1833,7 +2201,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10365",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10365/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1849,7 +2217,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10366",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10366/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1865,7 +2233,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10377",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10377/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1881,7 +2249,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10384",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10384/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1897,7 +2265,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10386",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10386/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1913,7 +2281,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10389",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10389/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1929,7 +2297,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10344",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10344/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1945,7 +2313,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10328",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10328/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1961,7 +2329,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10329",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10329/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1977,7 +2345,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10334",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10334/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -1993,7 +2361,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10338",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10338/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2009,7 +2377,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10341",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10341/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2025,7 +2393,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10345",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10345/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2041,7 +2409,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10350",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10350/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2057,7 +2425,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10362",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10362/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2073,7 +2441,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10363",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10363/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2089,7 +2457,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10364",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10364/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2105,7 +2473,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10367",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10367/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2121,7 +2489,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10373",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10373/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2137,7 +2505,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10342",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10342/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2153,7 +2521,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10356",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10356/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2169,7 +2537,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10321",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10321/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2185,7 +2553,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10322",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10322/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2201,7 +2569,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10324",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10324/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2217,7 +2585,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10330",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10330/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2233,7 +2601,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10336",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10336/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2249,7 +2617,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10343",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10343/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2265,7 +2633,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10346",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10346/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2281,7 +2649,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10347",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10347/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2297,7 +2665,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10348",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10348/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2313,7 +2681,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10317",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10317/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2329,7 +2697,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10332",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10332/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2345,7 +2713,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10302",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10302/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2361,7 +2729,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10314",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10314/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2377,7 +2745,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10316",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10316/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2393,7 +2761,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10323",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10323/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2409,7 +2777,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10326",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10326/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2425,7 +2793,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10327",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10327/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2441,7 +2809,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10331",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10331/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2457,7 +2825,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10333",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10333/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2473,7 +2841,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10335",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10335/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2489,7 +2857,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10294",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10294/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2505,7 +2873,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10311",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10311/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2521,7 +2889,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10320",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10320/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2537,7 +2905,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10282",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10282/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2553,7 +2921,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10285",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10285/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2569,7 +2937,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10286",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10286/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2585,7 +2953,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10292",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10292/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2601,7 +2969,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10293",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10293/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2617,7 +2985,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10295",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10295/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2633,7 +3001,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10305",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10305/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2649,7 +3017,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10309",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10309/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2665,7 +3033,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10310",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10310/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2681,7 +3049,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10289",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10289/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2697,7 +3065,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10288",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10288/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2713,7 +3081,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10300",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10300/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2729,7 +3097,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10304",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10304/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2745,7 +3113,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10262",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10262/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2761,7 +3129,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10268",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10268/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2777,7 +3145,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10272",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10272/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2793,7 +3161,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10273",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10273/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2809,7 +3177,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10276",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10276/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2825,7 +3193,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10279",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10279/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2841,7 +3209,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10291",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10291/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2857,7 +3225,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10298",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10298/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2873,7 +3241,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10303",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10303/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2889,7 +3257,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10241",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10241/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2905,7 +3273,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10246",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10246/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2921,7 +3289,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10253",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10253/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2937,7 +3305,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10257",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10257/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2953,7 +3321,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10260",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10260/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2969,7 +3337,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10264",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10264/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -2985,7 +3353,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10274",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10274/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3001,7 +3369,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10278",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10278/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3017,7 +3385,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10280",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10280/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3033,7 +3401,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10281",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10281/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3049,7 +3417,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10284",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10284/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3065,7 +3433,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10244",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10244/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3081,7 +3449,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10245",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10245/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3097,7 +3465,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10219",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10219/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3113,7 +3481,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10225",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10225/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3129,7 +3497,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10229",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10229/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3145,7 +3513,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10235",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10235/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3161,7 +3529,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10237",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10237/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3177,7 +3545,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10238",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10238/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3193,7 +3561,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10243",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10243/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3209,7 +3577,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10248",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10248/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3225,7 +3593,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10252",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10252/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3241,7 +3609,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10256",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10256/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3257,7 +3625,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10263",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10263/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3273,7 +3641,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10227",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10227/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3289,7 +3657,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10228",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10228/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3305,7 +3673,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10249",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10249/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3321,7 +3689,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10210",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10210/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3337,7 +3705,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10212",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10212/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3353,7 +3721,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10213",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10213/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3369,7 +3737,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10214",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10214/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3385,7 +3753,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10231",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10231/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3401,7 +3769,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10233",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10233/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3417,7 +3785,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10240",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10240/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3433,7 +3801,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10204",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10204/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3449,7 +3817,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10208",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10208/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3465,7 +3833,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10218",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10218/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3481,7 +3849,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10222",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10222/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3497,7 +3865,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10230",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10230/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3513,7 +3881,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10183",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10183/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3529,7 +3897,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10184",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10184/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3545,7 +3913,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10185",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10185/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3561,7 +3929,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10191",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10191/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3577,7 +3945,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10197",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10197/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3593,7 +3961,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10203",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10203/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3609,7 +3977,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10221",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10221/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3625,7 +3993,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10223",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10223/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3641,7 +4009,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10170",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10170/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3657,7 +4025,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10200",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10200/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3673,7 +4041,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10201",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10201/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3689,7 +4057,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10202",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10202/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3705,7 +4073,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10155",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10155/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3721,7 +4089,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10171",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10171/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3737,7 +4105,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10175",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10175/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3753,7 +4121,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10189",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10189/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3769,7 +4137,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10192",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10192/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3785,7 +4153,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10193",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10193/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3801,7 +4169,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10194",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10194/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3817,7 +4185,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10195",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10195/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3833,7 +4201,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10199",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10199/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3849,7 +4217,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10205",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10205/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3865,7 +4233,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10206",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10206/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3881,7 +4249,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10152",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10152/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3897,7 +4265,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10159",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10159/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3913,7 +4281,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10166",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10166/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3929,7 +4297,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10181",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10181/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3945,7 +4313,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10182",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10182/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3961,7 +4329,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10148",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10148/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3977,7 +4345,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10149",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10149/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -3993,7 +4361,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10158",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10158/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -4009,7 +4377,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10161",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10161/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -4025,7 +4393,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10165",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10165/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -4041,7 +4409,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10173",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10173/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -4057,7 +4425,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10178",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10178/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   },
   {
@@ -4073,7 +4441,7 @@
     "sourceName": "P-WORLD",
     "sourceUrl": "https://www.p-world.co.jp/machine/database/10179",
     "sourceImageUrl": "https://idn.p-world.co.jp/machines/10179/image/thumb_1.jpg",
-    "retrievedAt": "2026-09-21T07:47:44.642Z",
+    "retrievedAt": "2026-11-11T15:20:36.782Z",
     "catalogStatus": "imported"
   }
 ]
